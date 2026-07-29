@@ -1,17 +1,23 @@
 {
   "$schema": "../../schemas/repository_profile.schema.json",
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "repository": "grandchallenge/gcl-standards",
   "profile": "standards",
-  "constitutional_role": "Cross-programme standards, schemas, templates, fixtures, adoption, and deprecation authority.",
-  "authority_scope": "Versioned cross-programme policy admitted by Council review.",
+  "constitutional_role": "Registry and publication repository for constitutionally admitted cross-programme standards, schemas, templates, fixtures, adoption, and deprecation records.",
+  "authority_scope": "Subordinate versioned cross-programme operating policy; custody does not create constitutional authority.",
   "claim_promotion_role": "policy_only",
   "risk_tier": "critical",
   "required_workflow_profile": "standards-policy",
-  "canonical_policy_source": {
+  "constitutional_source": {
+    "repository": "grandchallenge/INTELLECT",
+    "path": "CONSTITUTION.md",
+    "effective_version": "1.0.0"
+  },
+  "operating_policy_source": {
     "repository": "grandchallenge/gcl-standards",
     "path": "standards/GCL-GHOS-00.md",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "status": "candidate"
   },
   "public_interfaces": ["issues", "pull_requests", "releases"],
   "release_policy": "immutable_admitted"
