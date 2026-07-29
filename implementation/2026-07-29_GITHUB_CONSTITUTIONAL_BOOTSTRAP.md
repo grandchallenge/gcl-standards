@@ -54,6 +54,35 @@ Both Apps are webhook-free. They mint short-lived installation tokens from
 repository or protected-environment secrets. Neither App has review-approval
 authority, a ruleset bypass, or a protected-branch write path.
 
+### Release Trust proof
+
+- ruleset-native administration change:
+  <https://github.com/grandchallenge/MATH-PROGRAMME/pull/135>
+- exact-head Programme policy before administration:
+  <https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/30446169969>
+- exact-head Pages publication:
+  <https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/30446339153>
+- protected `mode: apply`, `close_child_issues: true` run:
+  <https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/30446399649>
+- release-trust evidence artifact: `8721612194`
+- artifact SHA-256:
+  `719c28ea73b69cfcb07049988ab48f231c235160e8c2b01f48761b49623ac33e`
+- canonical evidence SHA-256:
+  `a3cfeea6a58de0e193015b96fd5929567bae9a3ee2aca68efe52795474669a85`
+- App-only verify run after removal of the temporary human PAT:
+  <https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/30446476966>
+- admitted audit:
+  <https://github.com/grandchallenge/MATH-PROGRAMME/pull/136>
+- exact-head Programme policy after audit merge:
+  <https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/30446915861>
+- exact-head Pages publication after audit merge:
+  <https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/30447093527>
+
+The authoritative Programme audit records
+`operational_release_complete: true`, no remaining blockers, and a `CLOSE`
+umbrella disposition. MATH-PROGRAMME issue #6 remains closed with the refreshed
+evidence chain.
+
 ## Live controls
 
 - Base repository permission: read.
@@ -72,6 +101,9 @@ authority, a ruleset bypass, or a protected-branch write path.
   private vulnerability reporting, and CodeQL default setup enabled.
 - Protected admission environments use protected branches and disallow admin
   bypass.
+- The Grand Challenge Portfolio has saved Portfolio, Promotion Queue, Council
+  Review, Certification, Blocked Work, Overdue Review, Releases, and Security
+  views. Their filters consume organization issue fields or governed labels.
 
 The organization-owned forks `grandchallenge/lean-action` and
 `grandchallenge/upload-pages-artifact` exist solely to pin nested composite
@@ -95,6 +127,11 @@ human member:
 These gates are tracked in
 [issue 4](https://github.com/grandchallenge/gcl-standards/issues/4). No
 bootstrap record may describe them as active.
+
+GitHub Projects custom charts currently do not expose the organization issue
+fields as grouping axes. Promotion Gate and Next Review therefore remain
+truthfully represented by filtered views; no proxy chart is published as gate
+distribution, review latency, blocked age, or evidence freshness.
 
 ## Completion criterion
 
