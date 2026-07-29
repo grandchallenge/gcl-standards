@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: Cite an immutable gcl-standards release and exact adopted standard version.
+title: Grand Challenge Labs Standards
+type: software
+authors:
+  - name: Grand Challenge Labs Council
+repository-code: https://github.com/grandchallenge/gcl-standards
+license: MIT
