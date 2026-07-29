@@ -88,8 +88,10 @@ evidence chain.
 - Base repository permission: read.
 - Member repository creation, deletion, transfer, visibility changes, team
   creation, and App installation: owner-only.
-- Actions: organization-local, GitHub-owned, `leanprover/*`, and `ossf/*`
-  allowlist only; full commit SHA policy enabled.
+- Actions: organization-local and GitHub-owned plus only `leanprover/*`,
+  `ossf/*`, `raven-actions/actionlint@*`, `azohra/shell-linter@*`,
+  `release-drafter/release-drafter@*`, and
+  `zulip/github-actions-zulip@*`; full commit SHA policy enabled.
 - Default `GITHUB_TOKEN`: read-only and cannot approve pull requests.
 - One active repository main ruleset per profile, with no bypass actors,
   strict required checks, pull requests, resolved conversations, stale-review
@@ -109,6 +111,10 @@ The organization-owned forks `grandchallenge/lean-action` and
 `grandchallenge/upload-pages-artifact` exist solely to pin nested composite
 Action dependencies that upstream still references by mutable version tags.
 Governance consumes their exact commits.
+
+The final live read-back, ruleset digests, exact heads, custom properties,
+security settings, merge settings, and contract-file inventory are recorded in
+[the live settings audit](2026-07-29_LIVE_SETTINGS_AUDIT.md).
 
 ## Deliberately pending controls
 
