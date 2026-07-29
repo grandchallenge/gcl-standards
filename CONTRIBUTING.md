@@ -9,4 +9,6 @@ Every standards change must:
 5. arrive through a focused pull request with exact validation evidence.
 
 Candidate text is not binding until an adoption record pins an accepted
-version and commit.
+version and commit. No standard may conflict with the compact INTELLECT
+Constitution, an effective amendment, or AETHER's production semantic
+authority. Merge and CI success are evidence, not ratification.

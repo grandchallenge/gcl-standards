@@ -1,6 +1,6 @@
 {
   "$schema": "../../schemas/repository_profile.schema.json",
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "repository": "grandchallenge/MATHSOLVE",
   "profile": "solve",
   "constitutional_role": "Governed mathematical work packages, theorem spines, reductions, and failure accounting.",
@@ -8,10 +8,16 @@
   "claim_promotion_role": "work_package_only",
   "risk_tier": "high",
   "required_workflow_profile": "solve-ledgers",
-  "canonical_policy_source": {
+  "constitutional_source": {
+    "repository": "grandchallenge/INTELLECT",
+    "path": "CONSTITUTION.md",
+    "effective_version": "1.0.0"
+  },
+  "operating_policy_source": {
     "repository": "grandchallenge/gcl-standards",
     "path": "standards/GCL-GHOS-00.md",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "status": "candidate"
   },
   "public_interfaces": ["issues", "pull_requests", "releases", "packages"],
   "release_policy": "prerelease"

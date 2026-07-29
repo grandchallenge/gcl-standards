@@ -22,14 +22,22 @@ Adopt `GCL-GHOS-00` as the candidate cross-programme contract and validate the
 implementation through a mathematics pilot before organization-wide
 activation.
 
-`gcl-standards` owns cross-programme standards. `MATH-PROGRAMME` retains
-mathematics-specific authority and records the exact cross-programme revision
-it adopts.
+`gcl-standards` registers and publishes cross-programme standards admitted
+through the Grand Intellect constitutional process. It does not own
+constitutional power. `MATH-PROGRAMME` retains mathematics-specific authority
+and records the exact cross-programme revision it adopts.
+
+This decision is subordinate to the compact Constitution in
+`grandchallenge/INTELLECT`, its effective amendments, and INTELLECT's
+constitutional schedules. It is coordinated with proposed amendment
+`GI-AMEND-0001`. AETHER retains production semantic authority under Article IX.
 
 ## Non-negotiable boundaries
 
 - GitHub automation cannot certify mathematics.
-- Project and Discussion state cannot replace repository artifacts.
+- GitHub state cannot amend the Constitution, establish AETHER production
+  facts, or replace authoritative domain records.
+- Project and Discussion state cannot replace repository or AETHER records.
 - Independent Referee review cannot be simulated by a bot or the author.
 - Candidate standards are not binding until an exact revision is admitted.
 
@@ -37,16 +45,21 @@ it adopts.
 
 This ADR becomes accepted only after:
 
-1. at least two independent contributors join the organization;
-2. a non-author Referee reviews the exact candidate revision;
-3. validation and settings-readback evidence pass;
-4. the mathematics pilot records its adoption commit;
-5. no critical exception remains.
+1. `GI-AMEND-0001` is ratified and effective;
+2. at least two independent contributors join the organization;
+3. a non-author Adversary and a non-author Referee review the exact candidate
+   revision;
+4. validation and settings-readback evidence pass;
+5. the mathematics pilot records its adoption commit;
+6. exact INTELLECT and `gcl-standards` commits are cross-recorded; and
+7. no critical exception remains.
 
 ## Alternatives rejected
 
 - Expanding MATH-PROGRAMME into the authority for unrelated programmes would
   collapse the mathematics-specific and cross-programme policy boundaries.
+- Treating `gcl-standards` as the source of constitutional authority would
+  invert the Constitution and confuse custody with power.
 - Treating GitHub settings as self-documenting would omit semantic decisions,
   exceptions, and authoritative integrated versions.
 - Treating automated council checks as independent review would contradict the

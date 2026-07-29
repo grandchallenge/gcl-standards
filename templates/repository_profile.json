@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/repository_profile.schema.json",
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "repository": "grandchallenge/REPOSITORY",
   "profile": "provider",
   "constitutional_role": "REPLACE",
@@ -8,10 +8,16 @@
   "claim_promotion_role": "none",
   "risk_tier": "moderate",
   "required_workflow_profile": "REPLACE",
-  "canonical_policy_source": {
+  "constitutional_source": {
+    "repository": "grandchallenge/INTELLECT",
+    "path": "CONSTITUTION.md",
+    "effective_version": "1.0.0"
+  },
+  "operating_policy_source": {
     "repository": "grandchallenge/gcl-standards",
     "path": "standards/GCL-GHOS-00.md",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "status": "candidate"
   },
   "public_interfaces": ["issues", "pull_requests"],
   "release_policy": "none"

@@ -1,9 +1,11 @@
 # GCL-GHOS-00: GitHub Constitutional Operating System
 
-**Version:** 0.1.0  
-**Status:** Candidate  
-**Authority:** Grand Challenge Council  
-**Owner:** Amanuensis with Security and Referee review  
+**Version:** 0.1.0
+**Status:** Candidate
+**Constitutional source:** `grandchallenge/INTELLECT/CONSTITUTION.md`
+**Proposed authorization:** `GI-AMEND-0001`
+**Registry:** `grandchallenge/gcl-standards`
+**Owner:** Amanuensis with Security and Referee review
 **Scope:** All repositories owned by `grandchallenge`
 
 ## Purpose
@@ -12,11 +14,18 @@ This standard binds GitHub capabilities to the Grand Challenge constitutional
 model without allowing platform state to replace authoritative programme
 artifacts or mathematical certification.
 
+It is a subordinate operating standard, not a constitution. The compact
+INTELLECT Constitution and effective amendments prevail. INTELLECT owns
+constitutional policy and gates. AETHER owns production append order, semantic
+cuts, replay, policy visibility, provenance-bearing facts, recursive
+derivation, and proof traces. This repository registers and publishes an
+admitted standard but does not originate constitutional authority.
+
 ## Authority map
 
 | GitHub capability | Permitted authority | Forbidden inference |
 | --- | --- | --- |
-| Repository content | Canonical artifacts, standards, ledgers, decisions | Placement alone does not certify a claim |
+| Repository content | Authoring, review, integration, and publication of artifacts, standards, ledgers, and decisions | Placement or merge alone does not establish a production fact or certify a claim |
 | Issue | Owns the next operational action | Open or closed state is not mathematical status |
 | Pull request | Reviewed integration route | Mergeability is not approval or certification |
 | Actions and checks | Reproducible validation and evidence | Green CI is not mathematical truth unless the declared MATHCERT route says so |
@@ -26,6 +35,11 @@ artifacts or mathematical certification.
 | Release | Immutable publication of an already-admitted artifact | Release creation cannot admit an unsupported claim |
 | Package | Content-addressed execution environment or tool | A container or package is not evidence by itself |
 | Pages | Public orientation generated from canonical records | Pages must not outlive or contradict source records |
+
+Where a GitHub artifact is admitted into authoritative production
+coordination, its record identifies the exact repository artifact, commit or
+digest, evidence, and applicable AETHER fact or cut. GitHub does not compete
+with AETHER for production semantic authority.
 
 ## Repository profiles
 
@@ -38,7 +52,8 @@ Every repository carries a validated profile with:
 - required workflow profile;
 - public-interface obligations;
 - release policy;
-- canonical policy source.
+- compact constitutional source; and
+- subordinate operating-policy source.
 
 Profiles are descriptive inputs to automation. They do not grant authority.
 
@@ -74,6 +89,7 @@ An independent Referee decision requires a reviewer who:
 
 Automation may request review, validate record completeness, annotate a diff,
 and report drift. It may not approve, merge, certify, or promote a claim.
+It also may not ratify a constitutional amendment.
 
 ## Actions and automation
 
@@ -131,6 +147,7 @@ and Council disposition. An expired exception is blocking.
 
 Adoption is explicit and commit-addressed. A programme records:
 
+- the effective constitutional version and amendment commit;
 - adopted standard version;
 - exact standards commit;
 - adoption decision;
@@ -138,3 +155,8 @@ Adoption is explicit and commit-addressed. A programme records:
 - activation date.
 
 Candidate status does not create binding authority.
+
+The authority order is: compact Constitution, effective amendments, INTELLECT
+constitutional schedules, accepted cross-programme standards, programme
+adoption records, repository profiles, then GitHub projections. A lower layer
+cannot enlarge its authority by configuration or publication.

@@ -1,17 +1,23 @@
 {
   "$schema": "../../schemas/repository_profile.schema.json",
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "repository": "grandchallenge/INTELLECT",
-  "profile": "provider",
-  "constitutional_role": "Integration provider for governed programme state.",
-  "authority_scope": "Derived integration state only; upstream repositories remain authoritative.",
-  "claim_promotion_role": "none",
-  "risk_tier": "high",
-  "required_workflow_profile": "provider-integration",
-  "canonical_policy_source": {
+  "profile": "constitutional",
+  "constitutional_role": "Constitutional law, office obligations, work-package contracts, application projections, and gate reports.",
+  "authority_scope": "Constitutional policy subject to Human Steward reserved powers; no mathematical certification or production semantic authority.",
+  "claim_promotion_role": "policy_only",
+  "risk_tier": "critical",
+  "required_workflow_profile": "constitutional-policy",
+  "constitutional_source": {
+    "repository": "grandchallenge/INTELLECT",
+    "path": "CONSTITUTION.md",
+    "effective_version": "1.0.0"
+  },
+  "operating_policy_source": {
     "repository": "grandchallenge/gcl-standards",
     "path": "standards/GCL-GHOS-00.md",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "status": "candidate"
   },
   "public_interfaces": ["issues", "pull_requests", "releases"],
   "release_policy": "immutable_admitted"
