@@ -54,6 +54,12 @@ This ADR becomes accepted only after:
 6. exact INTELLECT and `gcl-standards` commits are cross-recorded; and
 7. no critical exception remains.
 
+The Adversary, Referee, and Human Steward may sign one shared exact-revision
+packet through separate role-bound attestations. The Council Clerk performs
+identity, permission, staleness, check, digest, and receipt bookkeeping.
+Authenticated sign-off minimizes transcription but does not reduce the
+substantive duty to inspect or record blocking findings.
+
 ## Alternatives rejected
 
 - Expanding MATH-PROGRAMME into the authority for unrelated programmes would

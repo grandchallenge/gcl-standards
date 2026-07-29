@@ -72,12 +72,13 @@ def validate() -> None:
         if (
             constitutional["amendment_status"] != "effective"
             or not constitutional["amendment_commit"]
+            or not constitutional["review_receipt"]
             or not adoption["standards_commit"]
             or not adoption["decision_ref"]
         ):
             raise ValueError(
-                "active adoption requires an effective amendment, exact commits, "
-                "and a decision"
+                "active adoption requires an effective amendment, review receipt, "
+                "exact commits, and a decision"
             )
 
     standard = (ROOT / "standards" / "GCL-GHOS-00.md").read_text(encoding="utf-8")
@@ -87,6 +88,7 @@ def validate() -> None:
         "Automation may request review",
         "It may not approve, merge, certify, or promote a claim.",
         "may not ratify a constitutional amendment",
+        "one digest-addressed exact-revision packet",
         "Candidate status does not create binding authority.",
     ]
     for boundary in required_boundaries:

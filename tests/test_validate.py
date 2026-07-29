@@ -42,6 +42,7 @@ class StandardsValidationTests(unittest.TestCase):
         text = adoption_path.read_text(encoding="utf-8")
         self.assertIn("amendment_status: proposed", text)
         self.assertIn("amendment_commit: null", text)
+        self.assertIn("review_receipt: null", text)
         self.assertIn("standards_commit: null", text)
         self.assertIn("status: proposed", text)
 

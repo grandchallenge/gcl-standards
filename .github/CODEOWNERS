@@ -1,8 +1,8 @@
 * @grandchallenge/amanuensis
 
-/standards/ @grandchallenge/the-council @grandchallenge/amanuensis
-/schemas/ @grandchallenge/the-council @grandchallenge/amanuensis
-/decisions/ @grandchallenge/the-council @grandchallenge/amanuensis
-/programme-adoption/ @grandchallenge/the-council @grandchallenge/amanuensis
+/standards/ @grandchallenge/the-council @grandchallenge/referees @grandchallenge/amanuensis
+/schemas/ @grandchallenge/the-council @grandchallenge/referees @grandchallenge/amanuensis
+/decisions/ @grandchallenge/the-council @grandchallenge/referees @grandchallenge/amanuensis
+/programme-adoption/ @grandchallenge/the-council @grandchallenge/referees @grandchallenge/amanuensis
 /.github/ @grandchallenge/security @grandchallenge/amanuensis
 /ci/ @grandchallenge/security @grandchallenge/amanuensis

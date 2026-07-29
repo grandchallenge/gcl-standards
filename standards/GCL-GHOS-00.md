@@ -91,6 +91,13 @@ Automation may request review, validate record completeness, annotate a diff,
 and report drift. It may not approve, merge, certify, or promote a claim.
 It also may not ratify a constitutional amendment.
 
+For coordinated constitutional changes, automation should minimize clerical
+work by assembling one digest-addressed exact-revision packet, publishing
+separate role-specific attestations, validating authenticated human sign-offs,
+and transcribing them into a receipt. A new subject commit invalidates the old
+packet. Humans retain the duties to inspect, raise blocking findings, and sign;
+automation must never create the sign-off action.
+
 ## Actions and automation
 
 Workflows use:
@@ -148,6 +155,7 @@ and Council disposition. An expired exception is blocking.
 Adoption is explicit and commit-addressed. A programme records:
 
 - the effective constitutional version and amendment commit;
+- the admitted constitutional review receipt;
 - adopted standard version;
 - exact standards commit;
 - adoption decision;
