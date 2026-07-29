@@ -111,6 +111,16 @@ administrative rulesets at exact head
 - live and admitted index SHA-256:
   `9a54a3831d6fb0922b1e21a792c246051d1d8f078621fac5da5e87cdd59535c7`.
 
+## Portfolio reconciliation
+
+The App-backed Council Clerk reconciliation
+<https://github.com/grandchallenge/.github/actions/runs/30451002957>
+ran at exact `.github` head
+`0957c09297f9d625b9225a234f5c29a2200318b4` and reported
+`missing_before: 0`. Evidence artifact `8723478494` has SHA-256
+`168cd591b9f1d15fd3027ab59ebfd4d705218865b72e252b7f79e9c9c137ddd1`.
+The App changed no claim status.
+
 ## Controls awaiting real human or plan prerequisites
 
 The current single-member organization cannot truthfully enable independent
