@@ -1,0 +1,10 @@
+programme: grandchallenge/MATH-PROGRAMME
+standard: GCL-GHOS-00
+standard_version: 0.1.0
+standards_commit: null
+status: proposed
+decision_ref: null
+activation_date: null
+unresolved_deviations:
+  - Independent Council membership and Referee approval are not yet available.
+  - The mathematics repositories have not yet completed the pilot migration.

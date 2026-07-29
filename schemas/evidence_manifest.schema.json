@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grandchallenge/gcl-standards/schemas/evidence_manifest.schema.json",
+  "title": "Grand Challenge evidence manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "evidence_id",
+    "repository",
+    "head_sha",
+    "workflow_run_url",
+    "generated_at",
+    "artifacts",
+    "checks",
+    "evidence_sha256"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "evidence_id": { "type": "string", "pattern": "^[A-Z0-9][A-Z0-9._-]+$" },
+    "repository": { "type": "string", "pattern": "^grandchallenge/[A-Za-z0-9._-]+$" },
+    "head_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "workflow_run_url": { "type": "string", "format": "uri" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "sha256"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "attestation_url": { "type": ["string", "null"], "format": "uri" }
+        }
+      }
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "conclusion"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "conclusion": { "enum": ["success", "failure", "cancelled", "skipped"] }
+        }
+      }
+    },
+    "evidence_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}

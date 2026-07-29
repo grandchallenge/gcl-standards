@@ -1,0 +1,18 @@
+{
+  "$schema": "../../schemas/repository_profile.schema.json",
+  "schema_version": "1.0.0",
+  "repository": "grandchallenge/MATHCERT",
+  "profile": "cert",
+  "constitutional_role": "Formal proof, exact replay, and bounded claim classification.",
+  "authority_scope": "Exact certification dispositions for identified statements and support routes.",
+  "claim_promotion_role": "certification",
+  "risk_tier": "critical",
+  "required_workflow_profile": "cert-replay",
+  "canonical_policy_source": {
+    "repository": "grandchallenge/gcl-standards",
+    "path": "standards/GCL-GHOS-00.md",
+    "version": "0.1.0"
+  },
+  "public_interfaces": ["issues", "pull_requests", "releases", "packages"],
+  "release_policy": "immutable_certified"
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "../../schemas/repository_profile.schema.json",
+  "schema_version": "1.0.0",
+  "repository": "grandchallenge/INTELLECT",
+  "profile": "provider",
+  "constitutional_role": "Integration provider for governed programme state.",
+  "authority_scope": "Derived integration state only; upstream repositories remain authoritative.",
+  "claim_promotion_role": "none",
+  "risk_tier": "high",
+  "required_workflow_profile": "provider-integration",
+  "canonical_policy_source": {
+    "repository": "grandchallenge/gcl-standards",
+    "path": "standards/GCL-GHOS-00.md",
+    "version": "0.1.0"
+  },
+  "public_interfaces": ["issues", "pull_requests", "releases"],
+  "release_policy": "immutable_admitted"
+}

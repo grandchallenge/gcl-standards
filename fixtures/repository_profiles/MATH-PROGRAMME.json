@@ -1,0 +1,18 @@
+{
+  "$schema": "../../schemas/repository_profile.schema.json",
+  "schema_version": "1.0.0",
+  "repository": "grandchallenge/MATH-PROGRAMME",
+  "profile": "programme",
+  "constitutional_role": "Mathematics governance, integration, publication, and archival authority.",
+  "authority_scope": "Mathematics-specific standards, schemas, domain registry, roadmap, and admitted public documentation.",
+  "claim_promotion_role": "policy_only",
+  "risk_tier": "critical",
+  "required_workflow_profile": "programme-policy",
+  "canonical_policy_source": {
+    "repository": "grandchallenge/gcl-standards",
+    "path": "standards/GCL-GHOS-00.md",
+    "version": "0.1.0"
+  },
+  "public_interfaces": ["issues", "pull_requests", "pages", "releases"],
+  "release_policy": "immutable_admitted"
+}

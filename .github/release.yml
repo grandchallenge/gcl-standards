@@ -1,0 +1,10 @@
+changelog:
+  categories:
+    - title: Standards
+      labels: [standard]
+    - title: Schemas and compatibility
+      labels: [schema, compatibility]
+    - title: Governance
+      labels: [governance]
+    - title: Other changes
+      labels: ["*"]

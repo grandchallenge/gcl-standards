@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grandchallenge/gcl-standards/schemas/repository_profile.schema.json",
+  "title": "Grand Challenge repository profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "repository",
+    "profile",
+    "constitutional_role",
+    "authority_scope",
+    "claim_promotion_role",
+    "risk_tier",
+    "required_workflow_profile",
+    "canonical_policy_source",
+    "public_interfaces",
+    "release_policy"
+  ],
+  "properties": {
+    "$schema": { "type": "string", "minLength": 1 },
+    "schema_version": { "const": "1.0.0" },
+    "repository": { "type": "string", "pattern": "^grandchallenge/[A-Za-z0-9._-]+$" },
+    "profile": {
+      "enum": ["forge", "solve", "cert", "programme", "provider", "community", "standards"]
+    },
+    "constitutional_role": { "type": "string", "minLength": 1 },
+    "authority_scope": { "type": "string", "minLength": 1 },
+    "claim_promotion_role": {
+      "enum": ["none", "candidate_only", "work_package_only", "certification", "policy_only"]
+    },
+    "risk_tier": { "enum": ["low", "moderate", "high", "critical"] },
+    "required_workflow_profile": { "type": "string", "minLength": 1 },
+    "canonical_policy_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "path", "version"],
+      "properties": {
+        "repository": { "const": "grandchallenge/gcl-standards" },
+        "path": { "const": "standards/GCL-GHOS-00.md" },
+        "version": { "const": "0.1.0" }
+      }
+    },
+    "public_interfaces": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": ["issues", "pull_requests", "discussions", "pages", "releases", "packages"]
+      }
+    },
+    "release_policy": {
+      "enum": ["none", "prerelease", "immutable_admitted", "immutable_certified"]
+    }
+  }
+}

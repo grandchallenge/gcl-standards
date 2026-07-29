@@ -1,0 +1,18 @@
+{
+  "$schema": "../../schemas/repository_profile.schema.json",
+  "schema_version": "1.0.0",
+  "repository": "grandchallenge/.github",
+  "profile": "community",
+  "constitutional_role": "Organization profile, community health, reusable automation, and public deliberation entrypoint.",
+  "authority_scope": "Shared contributor interfaces and automation templates; not programme policy.",
+  "claim_promotion_role": "none",
+  "risk_tier": "high",
+  "required_workflow_profile": "community-contract",
+  "canonical_policy_source": {
+    "repository": "grandchallenge/gcl-standards",
+    "path": "standards/GCL-GHOS-00.md",
+    "version": "0.1.0"
+  },
+  "public_interfaces": ["issues", "pull_requests", "discussions", "releases"],
+  "release_policy": "none"
+}
