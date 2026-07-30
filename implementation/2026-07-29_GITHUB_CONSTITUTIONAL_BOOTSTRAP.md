@@ -2,7 +2,7 @@
 
 Date: 2026-07-29  
 Operator: `fyremael`  
-Status: technical bootstrap complete; independent-human ratification pending
+Status: technical bootstrap complete; Steward-supervised agent review pending
 
 This ledger records operational installation evidence. It does not adopt
 ADR-0001, certify mathematics, or change a claim disposition.
@@ -116,23 +116,27 @@ The final live read-back, ruleset digests, exact heads, custom properties,
 security settings, merge settings, and contract-file inventory are recorded in
 [the live settings audit](2026-07-29_LIVE_SETTINGS_AUDIT.md).
 
-## Deliberately pending controls
+## Temporary staffing override
 
-The following cannot be truthfully activated with the organization’s single
-human member:
+`GI-STEWARD-0001` makes the Human Steward the only required human during
+bootstrap and permits agents to staff every other office. The additional-human
+controls below remain inactive, but their absence is no longer an activation
+blocker:
 
 1. independent approval, CODEOWNER review, and last-push approval;
 2. Referee environment approval with self-review prevention;
 3. a second recovery owner and two independent contributors;
 4. MATH-PROGRAMME and MATHCERT merge queues;
-5. the fixed-revision non-author review for Programme issue 108 / PR 109;
+5. an additional-human fixed-revision review for Programme issue 108 / PR 109;
 6. secure-methods-only organization 2FA (the current owner must first remove
    SMS 2FA);
 7. Team-plan organization rulesets.
 
-These gates are tracked in
+Future human onboarding is tracked in
 [issue 4](https://github.com/grandchallenge/gcl-standards/issues/4). No
-bootstrap record may describe them as active.
+bootstrap record may describe these deferred controls as active. The active
+bootstrap review path instead requires distinct non-author agent findings and
+Human Steward authorization.
 
 GitHub Projects custom charts currently do not expose the organization issue
 fields as grouping axes. Promotion Gate and Next Review therefore remain
@@ -141,7 +145,7 @@ distribution, review latency, blocked age, or evidence freshness.
 
 ## Completion criterion
 
-After independent-human activation, two consecutive weekly Council Clerk,
-policy, security, project, and release-trust runs must report no unexplained
-drift. Only then may the Council accept a completion PR that references exact
-run IDs and evidence digests.
+After the Steward-supervised agent staffing changes are admitted, two
+consecutive weekly Council Clerk, policy, security, project, and release-trust
+runs must report no unexplained drift. Only then may the Council accept a
+completion PR that references exact run IDs and evidence digests.

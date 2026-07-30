@@ -77,26 +77,30 @@ Every governed issue identifies:
 ## Council and review
 
 Council office records remain machine-readable repository artifacts. GitHub
-teams and CODEOWNERS route human review but do not substitute for office
+teams and CODEOWNERS route review but do not substitute for office
 findings.
 
-An independent Referee decision requires a reviewer who:
+While `GI-STEWARD-0001` is effective, every non-Steward office may be staffed
+by an agent under the single Human Steward. An independent Referee decision
+requires a reviewer who:
 
 1. is not the author of the reviewed revision;
 2. reviews an exact commit;
 3. records the disposition and evidence location;
-4. cannot self-approve the protected publication environment.
+4. has a distinct recorded agent identity and session from the Adversary; and
+5. cannot self-approve the protected publication environment.
 
 Automation may request review, validate record completeness, annotate a diff,
 and report drift. It may not approve, merge, certify, or promote a claim.
 It also may not ratify a constitutional amendment.
 
-For coordinated constitutional changes, automation should minimize clerical
-work by assembling one digest-addressed exact-revision packet, publishing
-separate role-specific attestations, validating authenticated human sign-offs,
-and transcribing them into a receipt. A new subject commit invalidates the old
-packet. Humans retain the duties to inspect, raise blocking findings, and sign;
-automation must never create the sign-off action.
+For coordinated constitutional changes during this staffing mode, automation
+should minimize clerical work by assembling one digest-addressed exact-revision
+packet, validating distinct structured agent Adversary and Referee findings,
+publishing the Human Steward attestation, and transcribing the records into a
+receipt. A new subject commit invalidates the old packet. The Human Steward
+retains the duty to inspect, raise blocking findings, and authorize; automation
+must never create that sign-off action.
 
 ## Actions and automation
 
@@ -120,9 +124,11 @@ updates, secret scanning and push protection, private vulnerability reporting,
 and CodeQL where the language is supported.
 
 Protected branches require pull requests, strict checks, resolved review
-conversations, no force pushes, no deletion, and no bypass actors. Independent
-approval and CODEOWNER enforcement activate when the required human membership
-exists; the absence of reviewers must be reported as an activation blocker.
+conversations, no force pushes, no deletion, and no bypass actors. During
+`GI-STEWARD-0001`, additional-human approval counts, CODEOWNER approval,
+last-push approval by another human, and human environment approval remain
+deferred and nonblocking. Bootstrap review retains Human Steward reserved authorization.
+Distinct agent office findings provide the non-Steward review path.
 
 ## Promotion and publication
 
@@ -147,8 +153,11 @@ Settings, rulesets, workflows, issue metadata, and release evidence are audited
 against checked-in profiles. Drift creates a governed remediation issue or pull
 request. Automation must not silently rewrite canonical records.
 
-An exception identifies owner, scope, rationale, expiry, compensating control,
-and Council disposition. An expired exception is blocking.
+An exception identifies owner, scope, rationale, expiry or supersession
+condition, compensating control, and Council disposition. An expired exception
+is blocking. `GI-STEWARD-0001` is a superior staffing directive, not a
+standards-layer waiver, and remains in force until the Human Steward supersedes
+it.
 
 ## Adoption
 

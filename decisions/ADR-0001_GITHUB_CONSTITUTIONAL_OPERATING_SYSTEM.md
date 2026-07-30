@@ -1,7 +1,7 @@
 # ADR-0001: Establish the GitHub Constitutional Operating System
 
 **Date:** 2026-07-29  
-**Status:** Proposed for independent Council review  
+**Status:** Proposed for separated agent Council review
 **Owner:** Amanuensis with Security and Referee review
 
 ## Context
@@ -38,7 +38,9 @@ constitutional schedules. It is coordinated with proposed amendment
 - GitHub state cannot amend the Constitution, establish AETHER production
   facts, or replace authoritative domain records.
 - Project and Discussion state cannot replace repository or AETHER records.
-- Independent Referee review cannot be simulated by a bot or the author.
+- A proposal author cannot supply its own Adversary or Referee disposition.
+- One agent identity or session cannot be relabelled as multiple independent
+  offices.
 - Candidate standards are not binding until an exact revision is admitted.
 
 ## Activation conditions
@@ -46,19 +48,19 @@ constitutional schedules. It is coordinated with proposed amendment
 This ADR becomes accepted only after:
 
 1. `GI-AMEND-0001` is ratified and effective;
-2. at least two independent contributors join the organization;
-3. a non-author Adversary and a non-author Referee review the exact candidate
-   revision;
+2. a non-author agent Adversary and a different non-author agent Referee review
+   the exact candidate revision under `GI-STEWARD-0001`;
 4. validation and settings-readback evidence pass;
 5. the mathematics pilot records its adoption commit;
 6. exact INTELLECT and `gcl-standards` commits are cross-recorded; and
 7. no critical exception remains.
 
-The Adversary, Referee, and Human Steward may sign one shared exact-revision
-packet through separate role-bound attestations. The Council Clerk performs
-identity, permission, staleness, check, digest, and receipt bookkeeping.
-Authenticated sign-off minimizes transcription but does not reduce the
-substantive duty to inspect or record blocking findings.
+The Adversary and Referee publish separate structured agent findings for one
+shared exact-revision packet. The Human Steward then supplies the sole human
+authorization. The Council Clerk performs identity, separation, staleness,
+check, digest, and receipt bookkeeping. Authenticated Steward sign-off
+minimizes transcription but does not reduce the substantive duty to inspect or
+record blocking findings.
 
 ## Alternatives rejected
 
