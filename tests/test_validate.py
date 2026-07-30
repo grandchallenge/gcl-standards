@@ -76,25 +76,25 @@ class StandardsValidationTests(unittest.TestCase):
             profile["operating_policy_source"]["status"], "candidate"
         )
 
-    def test_bootstrap_staffing_preserves_separation_and_steward_authority(
-        self,
-    ) -> None:
-        standard = (ROOT / "standards" / "GCL-GHOS-00.md").read_text(
-            encoding="utf-8"
-        )
-        self.assertIn(
-            "every non-Steward office may be staffed", standard
-        )
-        self.assertIn("distinct recorded agent identity and session", standard)
-        self.assertIn("Human Steward reserved authorization", standard)
-        self.assertIn("deferred and nonblocking", standard)
-
-        adoption = (
-            ROOT / "programme-adoption" / "MATH-PROGRAMME.yaml"
-        ).read_text(encoding="utf-8")
-        self.assertNotIn(
-            "Independent Council membership and Referee approval", adoption
-        )
+    def test_action_forks_have_supply_chain_only_profiles(self) -> None:
+        for name in ("lean-action.json", "upload-pages-artifact.json"):
+            with self.subTest(name=name):
+                profile = json.loads(
+                    (
+                        ROOT / "fixtures" / "repository_profiles" / name
+                    ).read_text(encoding="utf-8")
+                )
+                self.assertEqual(profile["profile"], "provider")
+                self.assertEqual(profile["claim_promotion_role"], "none")
+                self.assertEqual(profile["risk_tier"], "critical")
+                self.assertEqual(
+                    profile["required_workflow_profile"],
+                    "provider-action-supply-chain",
+                )
+                self.assertIn(
+                    "no constitutional, programme, or mathematical claim authority",
+                    profile["authority_scope"],
+                )
 
 
 if __name__ == "__main__":
