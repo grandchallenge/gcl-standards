@@ -88,7 +88,10 @@ def validate() -> None:
         "Automation may request review",
         "It may not approve, merge, certify, or promote a claim.",
         "may not ratify a constitutional amendment",
-        "one digest-addressed exact-revision packet",
+        "one digest-addressed exact-revision",
+        "every non-Steward office may be staffed",
+        "additional-human approval counts",
+        "Human Steward reserved authorization",
         "Candidate status does not create binding authority.",
     ]
     for boundary in required_boundaries:

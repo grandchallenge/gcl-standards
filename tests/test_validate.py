@@ -76,6 +76,26 @@ class StandardsValidationTests(unittest.TestCase):
             profile["operating_policy_source"]["status"], "candidate"
         )
 
+    def test_bootstrap_staffing_preserves_separation_and_steward_authority(
+        self,
+    ) -> None:
+        standard = (ROOT / "standards" / "GCL-GHOS-00.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn(
+            "every non-Steward office may be staffed", standard
+        )
+        self.assertIn("distinct recorded agent identity and session", standard)
+        self.assertIn("Human Steward reserved authorization", standard)
+        self.assertIn("deferred and nonblocking", standard)
+
+        adoption = (
+            ROOT / "programme-adoption" / "MATH-PROGRAMME.yaml"
+        ).read_text(encoding="utf-8")
+        self.assertNotIn(
+            "Independent Council membership and Referee approval", adoption
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
