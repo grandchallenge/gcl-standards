@@ -19,6 +19,8 @@ EXPECTED_PROFILES = {
     "MATHFORGE.json",
     "MATHSOLVE.json",
     "gcl-standards.json",
+    "lean-action.json",
+    "upload-pages-artifact.json",
 }
 
 
