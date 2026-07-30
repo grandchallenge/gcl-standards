@@ -76,6 +76,26 @@ class StandardsValidationTests(unittest.TestCase):
             profile["operating_policy_source"]["status"], "candidate"
         )
 
+    def test_action_forks_have_supply_chain_only_profiles(self) -> None:
+        for name in ("lean-action.json", "upload-pages-artifact.json"):
+            with self.subTest(name=name):
+                profile = json.loads(
+                    (
+                        ROOT / "fixtures" / "repository_profiles" / name
+                    ).read_text(encoding="utf-8")
+                )
+                self.assertEqual(profile["profile"], "provider")
+                self.assertEqual(profile["claim_promotion_role"], "none")
+                self.assertEqual(profile["risk_tier"], "critical")
+                self.assertEqual(
+                    profile["required_workflow_profile"],
+                    "provider-action-supply-chain",
+                )
+                self.assertIn(
+                    "no constitutional, programme, or mathematical claim authority",
+                    profile["authority_scope"],
+                )
+
 
 if __name__ == "__main__":
     unittest.main()

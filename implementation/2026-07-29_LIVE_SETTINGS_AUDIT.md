@@ -10,6 +10,15 @@ custom-property values, active rulesets, security configuration, default-branch
 trees, and exact heads. Ruleset digests are SHA-256 hashes of the compact update
 payload: name, target, enforcement, bypass actors, conditions, and rules.
 
+## Post-snapshot authority reconciliation
+
+This snapshot predates the INTELLECT and GCL-GHOS authority reconciliation
+merged through INTELLECT PR #13 and `gcl-standards` PR #10. Its INTELLECT
+`Provider` row and live ruleset name are therefore historical observations,
+not the current canonical profile. Live custom-property and ruleset-name
+reconciliation is tracked in
+[issue #12](https://github.com/grandchallenge/gcl-standards/issues/12).
+
 ## Organization controls
 
 - Base repository permission is `read`.
