@@ -1,0 +1,71 @@
+standard_id: GCL-RC-00
+standard_version: 1.0.0
+status: candidate_migrated
+standards_commit: null
+decision_ref: decisions/ADR-0002_REGRET_CONTRACT_STANDARD.md
+source_lock:
+  repository: fyremael/MODULUS
+  pull_request: 1
+  head_sha: 641ba766fe8eec613a01cd4726841b1d4e93ad78
+  artifacts:
+    standard:
+      path: docs/standards/REGRET_CONTRACT_STANDARD.md
+      git_blob_sha1: 8e8b998cb84051b728c4a8c623e754fc20b0a6e6
+    schema:
+      path: schemas/regret_contract.schema.json
+      git_blob_sha1: 7bf9ba77df36d1646f123c174b0116c1552bb4cd
+    template:
+      path: templates/regret_contract.yaml
+      git_blob_sha1: 6d0f041248d520715061bf1af8b1d97e27da0a43
+    rollout:
+      path: docs/standards/ONLINE_CONTROL_ROLLOUT.md
+      git_blob_sha1: f42e90a9feba0661fbf313417a798954917a85e9
+reference_implementation:
+  repository: fyremael/MODULUS
+  pull_request: 1
+  commit_sha: 641ba766fe8eec613a01cd4726841b1d4e93ad78
+  package: modulus.online
+  status: candidate_unmerged
+programmes:
+  - programme: MODULUS
+    status: reference_implementation_candidate
+    work_package: WP-RC-01
+    unresolved_obligations:
+      - Repin MODULUS documentation and schema references to the protected gcl-standards admission commit.
+      - Complete MODULUS repository CI and protected review of pull request 1.
+  - programme: KIBO/KOOP
+    status: planned
+    work_package: WP-RC-02
+    unresolved_obligations:
+      - Implement zero-hint and Koopman-hinted OMD baselines.
+      - Report dual-norm hint error, comparator path length, boundary gain, and fallback activation.
+  - programme: AETHER
+    status: planned
+    work_package: WP-RC-03
+    unresolved_obligations:
+      - Preserve governance eligibility as a hard pre-routing filter.
+      - Implement typed delayed-bandit decision and outcome provenance.
+  - programme: SPINDLE/SPLICE
+    status: planned
+    work_package: WP-RC-04
+    unresolved_obligations:
+      - Evaluate controlled phase-switch and gradual-drift fixtures.
+      - Report static and one-switch tracking regret with boundary and compute costs.
+  - programme: Tricorder
+    status: planned
+    work_package: WP-RC-05
+    unresolved_obligations:
+      - Restrict confidence sequences to bounded observables with explicit stochastic assumptions.
+      - Record false-alarm and late-alarm costs under repeated inspection.
+  - programme: adaptive-beta
+    status: planned
+    work_package: WP-RC-06
+    unresolved_obligations:
+      - Declare counterfactual-loss provenance for shadow moments, approximations, or replay.
+      - Compare against stable optimizer baselines without promoting surrogate regret to end-task utility.
+claim_boundaries:
+  standard_activation_complete: false
+  any_programme_conformant: false
+  convergence_claim_authorized: false
+  safety_claim_authorized: false
+  novelty_claim_authorized: false
