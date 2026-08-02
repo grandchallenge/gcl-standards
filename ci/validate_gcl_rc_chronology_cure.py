@@ -57,6 +57,8 @@ def validate_record(record: dict[str, object]) -> None:
             raise ValueError("completed retrospective ratification must be Human Steward-authored")
         if not isinstance(ratification["comment_id"], int):
             raise ValueError("completed retrospective ratification requires comment ID")
+        if ratification["comment_id"] in EXPECTED_COMMENTS:
+            raise ValueError("prospective post-merge comment cannot serve as retrospective cure")
         if not isinstance(ratification["recorded_at"], str):
             raise ValueError("completed retrospective ratification requires timestamp")
 
