@@ -20,16 +20,37 @@ adjudicate a claim through an accepted certification route.
 - `schemas/` contains machine-readable contracts.
 - `templates/` contains non-authoritative starting points.
 - `fixtures/` contains validation examples and repository profiles.
-- `programme-adoption/` records exact programme adoption decisions.
+- `programme-adoption/` records exact programme adoption decisions and
+  unresolved adoption obligations.
 - `deprecations/` records compatibility and retirement boundaries.
 - `decisions/` contains one canonical file per cross-programme ADR.
 
-The first candidate standard is
-[`GCL-GHOS-00`](standards/GCL-GHOS-00.md), the GitHub Constitutional Operating
-System. Its current status is `candidate`; no programme is bound until its
-adoption record identifies an accepted revision and immutable commit. Its
-constitutional reconciliation also depends on proposed INTELLECT amendment
-`GI-AMEND-0001`; neither proposal may be treated as ratified by merge or CI.
+## Candidate standards
+
+### GCL-GHOS-00
+
+[`GCL-GHOS-00`](standards/GCL-GHOS-00.md) is the candidate GitHub
+Constitutional Operating System. No programme is bound until its adoption
+record identifies an accepted revision and immutable commit. Its constitutional
+reconciliation depends on the applicable INTELLECT authority; merge and CI do
+not constitute ratification.
+
+### GCL-RC-00
+
+[`GCL-RC-00`](standards/GCL-RC-00.md) is the candidate Regret Contract Standard
+version 1.0.0. Its Draft 2020-12 schema is
+[`schemas/regret_contract.schema.json`](schemas/regret_contract.schema.json),
+and its reusable example is
+[`templates/regret_contract.yaml`](templates/regret_contract.yaml).
+
+The migration is source-locked to `fyremael/MODULUS` pull request #1 at exact
+head `641ba766fe8eec613a01cd4726841b1d4e93ad78`. `modulus.online` remains the
+candidate reference implementation. The adoption frontier and unresolved work
+for MODULUS, KIBO/KOOP, AETHER, SPINDLE/SPLICE, Tricorder, and adaptive-beta are
+recorded in
+[`programme-adoption/REGRET-CONTRACT-1.0.0.yaml`](programme-adoption/REGRET-CONTRACT-1.0.0.yaml).
+Canonical custody does not activate the standard or establish programme
+conformance.
 
 ## Validation
 
