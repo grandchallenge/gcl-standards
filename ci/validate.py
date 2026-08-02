@@ -10,6 +10,9 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 PROFILE_SCHEMA_PATH = ROOT / "schemas" / "repository_profile.schema.json"
+REGRET_SCHEMA_PATH = ROOT / "schemas" / "regret_contract.schema.json"
+REGRET_TEMPLATE_PATH = ROOT / "templates" / "regret_contract.yaml"
+REGRET_ADOPTION_PATH = ROOT / "programme-adoption" / "REGRET-CONTRACT-1.0.0.yaml"
 EXPECTED_PROFILES = {
     ".github.json",
     "GLOSS.json",
@@ -22,10 +25,147 @@ EXPECTED_PROFILES = {
     "lean-action.json",
     "upload-pages-artifact.json",
 }
+EXPECTED_REGRET_SOURCE_LOCK = {
+    "repository": "fyremael/MODULUS",
+    "pull_request": 1,
+    "head_sha": "641ba766fe8eec613a01cd4726841b1d4e93ad78",
+    "artifacts": {
+        "standard": {
+            "path": "docs/standards/REGRET_CONTRACT_STANDARD.md",
+            "git_blob_sha1": "8e8b998cb84051b728c4a8c623e754fc20b0a6e6",
+        },
+        "schema": {
+            "path": "schemas/regret_contract.schema.json",
+            "git_blob_sha1": "7bf9ba77df36d1646f123c174b0116c1552bb4cd",
+        },
+        "template": {
+            "path": "templates/regret_contract.yaml",
+            "git_blob_sha1": "6d0f041248d520715061bf1af8b1d97e27da0a43",
+        },
+        "rollout": {
+            "path": "docs/standards/ONLINE_CONTROL_ROLLOUT.md",
+            "git_blob_sha1": "f42e90a9feba0661fbf313417a798954917a85e9",
+        },
+    },
+}
+EXPECTED_REGRET_PROGRAMMES = {
+    "MODULUS",
+    "KIBO/KOOP",
+    "AETHER",
+    "SPINDLE/SPLICE",
+    "Tricorder",
+    "adaptive-beta",
+}
 
 
 def load_json(path: Path) -> object:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def load_yaml(path: Path) -> object:
+    return yaml.safe_load(path.read_text(encoding="utf-8"))
+
+
+def validate_regret_contract() -> None:
+    schema = load_json(REGRET_SCHEMA_PATH)
+    jsonschema.Draft202012Validator.check_schema(schema)
+    if not isinstance(schema, dict):
+        raise ValueError("regret contract schema must be an object")
+    if schema.get("$id") != "https://grandchallenge.ai/schemas/regret-contract-1.0.0.json":
+        raise ValueError("regret contract schema identity drift")
+
+    template = load_yaml(REGRET_TEMPLATE_PATH)
+    if not isinstance(template, dict):
+        raise ValueError("regret contract template must be an object")
+    jsonschema.validate(
+        template,
+        schema,
+        cls=jsonschema.Draft202012Validator,
+        format_checker=jsonschema.FormatChecker(),
+    )
+    loss = template["loss"]
+    if loss["lower_bound"] > loss["upper_bound"]:
+        raise ValueError("regret contract loss bounds are inverted")
+
+    adoption = load_yaml(REGRET_ADOPTION_PATH)
+    if not isinstance(adoption, dict):
+        raise ValueError("regret contract adoption ledger must be an object")
+    if adoption.get("standard_id") != "GCL-RC-00":
+        raise ValueError("regret contract standard identity drift")
+    if adoption.get("standard_version") != "1.0.0":
+        raise ValueError("regret contract version drift")
+    if adoption.get("status") != "candidate_migrated":
+        raise ValueError("regret contract may not claim activation before admission")
+    if adoption.get("standards_commit") is not None:
+        raise ValueError("candidate migration cannot pre-pin its future merge commit")
+    if adoption.get("decision_ref") != "decisions/ADR-0002_REGRET_CONTRACT_STANDARD.md":
+        raise ValueError("regret contract decision reference drift")
+    if adoption.get("source_lock") != EXPECTED_REGRET_SOURCE_LOCK:
+        raise ValueError("regret contract source lock drift")
+
+    reference = adoption.get("reference_implementation", {})
+    if reference != {
+        "repository": "fyremael/MODULUS",
+        "pull_request": 1,
+        "commit_sha": "641ba766fe8eec613a01cd4726841b1d4e93ad78",
+        "package": "modulus.online",
+        "status": "candidate_unmerged",
+    }:
+        raise ValueError("regret contract reference implementation drift")
+
+    programme_rows = adoption.get("programmes", [])
+    if not isinstance(programme_rows, list):
+        raise ValueError("regret contract programme adoption rows must be a list")
+    programme_map = {
+        row.get("programme"): row
+        for row in programme_rows
+        if isinstance(row, dict) and isinstance(row.get("programme"), str)
+    }
+    if set(programme_map) != EXPECTED_REGRET_PROGRAMMES:
+        raise ValueError("regret contract programme adoption coverage drift")
+    if len(programme_map) != len(programme_rows):
+        raise ValueError("duplicate or malformed regret contract programme row")
+    for programme, row in programme_map.items():
+        if row.get("status") not in {"reference_implementation_candidate", "planned"}:
+            raise ValueError(f"invalid regret contract adoption status: {programme}")
+        obligations = row.get("unresolved_obligations")
+        if not isinstance(obligations, list) or not obligations or not all(
+            isinstance(item, str) and item.strip() for item in obligations
+        ):
+            raise ValueError(f"missing regret contract obligations: {programme}")
+
+    boundaries = adoption.get("claim_boundaries", {})
+    for field in (
+        "standard_activation_complete",
+        "any_programme_conformant",
+        "convergence_claim_authorized",
+        "safety_claim_authorized",
+        "novelty_claim_authorized",
+    ):
+        if boundaries.get(field) is not False:
+            raise ValueError(f"regret contract claim-boundary inflation: {field}")
+
+    standard = (ROOT / "standards" / "GCL-RC-00.md").read_text(encoding="utf-8")
+    for required in (
+        "**Status:** Candidate migrated for Council admission",
+        "641ba766fe8eec613a01cd4726841b1d4e93ad78",
+        "Canonical custody in this repository does not by itself activate the standard.",
+        "Programme adoption is explicit, versioned, and commit-addressed.",
+        "Conformance does not prove global neural-network convergence",
+    ):
+        if required not in standard:
+            raise ValueError(f"missing Regret Contract boundary: {required}")
+
+    decision = (
+        ROOT / "decisions" / "ADR-0002_REGRET_CONTRACT_STANDARD.md"
+    ).read_text(encoding="utf-8")
+    for required in (
+        "**Status:** Proposed for exact-head Council review",
+        "Registry custody and green CI do not activate the standard.",
+        "protected MODULUS revision",
+    ):
+        if required not in decision:
+            raise ValueError(f"missing Regret Contract decision boundary: {required}")
 
 
 def validate() -> None:
@@ -99,6 +239,8 @@ def validate() -> None:
     for boundary in required_boundaries:
         if boundary not in standard:
             raise ValueError(f"missing constitutional boundary: {boundary}")
+
+    validate_regret_contract()
 
 
 if __name__ == "__main__":
