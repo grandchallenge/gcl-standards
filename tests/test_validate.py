@@ -7,6 +7,7 @@ import unittest
 from pathlib import Path
 
 import jsonschema
+import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -95,6 +96,85 @@ class StandardsValidationTests(unittest.TestCase):
                     "no constitutional, programme, or mathematical claim authority",
                     profile["authority_scope"],
                 )
+
+    def regret_schema(self) -> dict[str, object]:
+        return json.loads(
+            (ROOT / "schemas" / "regret_contract.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+
+    def regret_template(self) -> dict[str, object]:
+        return yaml.safe_load(
+            (ROOT / "templates" / "regret_contract.yaml").read_text(
+                encoding="utf-8"
+            )
+        )
+
+    def regret_adoption(self) -> dict[str, object]:
+        return yaml.safe_load(
+            (
+                ROOT
+                / "programme-adoption"
+                / "REGRET-CONTRACT-1.0.0.yaml"
+            ).read_text(encoding="utf-8")
+        )
+
+    def test_regret_contract_template_validates(self) -> None:
+        jsonschema.validate(
+            self.regret_template(),
+            self.regret_schema(),
+            cls=jsonschema.Draft202012Validator,
+        )
+
+    def test_tracking_requires_switch_comparator(self) -> None:
+        broken = copy.deepcopy(self.regret_template())
+        broken["guarantee"] = "tracking"
+        broken["comparator"] = "fixed"
+        with self.assertRaises(jsonschema.ValidationError):
+            jsonschema.validate(
+                broken,
+                self.regret_schema(),
+                cls=jsonschema.Draft202012Validator,
+            )
+
+    def test_delayed_feedback_requires_delay_field(self) -> None:
+        broken = copy.deepcopy(self.regret_template())
+        broken["feedback"] = "delayed_bandit"
+        del broken["delayed_feedback_max_steps"]
+        with self.assertRaises(jsonschema.ValidationError):
+            jsonschema.validate(
+                broken,
+                self.regret_schema(),
+                cls=jsonschema.Draft202012Validator,
+            )
+
+    def test_regret_source_lock_is_exact(self) -> None:
+        adoption = self.regret_adoption()
+        self.assertEqual(
+            adoption["source_lock"], validate_module.EXPECTED_REGRET_SOURCE_LOCK
+        )
+        self.assertEqual(
+            adoption["reference_implementation"]["commit_sha"],
+            "641ba766fe8eec613a01cd4726841b1d4e93ad78",
+        )
+
+    def test_regret_adoption_coverage_and_obligations(self) -> None:
+        adoption = self.regret_adoption()
+        rows = adoption["programmes"]
+        self.assertEqual(
+            {row["programme"] for row in rows},
+            validate_module.EXPECTED_REGRET_PROGRAMMES,
+        )
+        self.assertTrue(all(row["unresolved_obligations"] for row in rows))
+
+    def test_regret_candidate_cannot_claim_activation(self) -> None:
+        adoption = self.regret_adoption()
+        self.assertEqual(adoption["status"], "candidate_migrated")
+        self.assertIsNone(adoption["standards_commit"])
+        self.assertTrue(
+            all(value is False for value in adoption["claim_boundaries"].values())
+        )
 
 
 if __name__ == "__main__":
