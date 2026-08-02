@@ -75,7 +75,7 @@ def validate_record(record: dict[str, object]) -> None:
 
     document = DOCUMENT_PATH.read_text(encoding="utf-8")
     for required in (
-        "no Human Steward disposition was recorded before merge",
+        "but no Human Steward disposition was recorded before merge",
         "Neither may be represented as pre-merge authorization",
         "No content revert is required",
         "`GCL-RC-00` remains a candidate",
