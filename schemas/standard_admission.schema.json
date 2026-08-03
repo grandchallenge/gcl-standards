@@ -62,17 +62,8 @@
         }
       }
     },
-    "decision": {"$ref": "#/$defs/admittedArtifact"},
-    "standard": {
-      "allOf": [
-        {"$ref": "#/$defs/admittedArtifact"},
-        {
-          "type": "object",
-          "required": ["version"],
-          "properties": {"version": {"const": "0.1.0"}}
-        }
-      ]
-    },
+    "decision": {"$ref": "#/$defs/decisionArtifact"},
+    "standard": {"$ref": "#/$defs/standardArtifact"},
     "review_staffing": {
       "type": "object",
       "additionalProperties": false,
@@ -117,14 +108,27 @@
     }
   },
   "$defs": {
-    "admittedArtifact": {
+    "decisionArtifact": {
       "type": "object",
       "additionalProperties": false,
       "required": ["identifier", "status", "path", "reviewed_commit", "git_blob_sha1"],
       "properties": {
-        "identifier": {"type": "string", "minLength": 1},
-        "status": {"enum": ["accepted", "admitted"]},
-        "path": {"type": "string", "minLength": 1},
+        "identifier": {"const": "ADR-0001"},
+        "status": {"const": "accepted"},
+        "path": {"const": "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"},
+        "reviewed_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "standardArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identifier", "version", "status", "path", "reviewed_commit", "git_blob_sha1"],
+      "properties": {
+        "identifier": {"const": "GCL-GHOS-00"},
+        "version": {"const": "0.1.0"},
+        "status": {"const": "admitted"},
+        "path": {"const": "standards/GCL-GHOS-00.md"},
         "reviewed_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
         "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
       }
