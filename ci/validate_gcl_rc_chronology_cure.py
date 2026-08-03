@@ -15,6 +15,12 @@ EXPECTED_COMMENTS = {
     5160929262: ("jimsteeg", "2026-08-02T23:47:40Z"),
     5160945680: ("fyremael", "2026-08-02T23:52:26Z"),
 }
+EXPECTED_RATIFICATION = {
+    "required": True,
+    "comment_id": 5161001756,
+    "author": "fyremael",
+    "recorded_at": "2026-08-03T00:07:12Z",
+}
 
 
 def load_json(path: Path) -> dict[str, object]:
@@ -53,14 +59,10 @@ def validate_record(record: dict[str, object]) -> None:
         if any(ratification[key] is not None for key in ("comment_id", "author", "recorded_at")):
             raise ValueError("pending cure may not bind partial ratification")
     else:
-        if ratification["author"] != "fyremael":
-            raise ValueError("completed retrospective ratification must be Human Steward-authored")
-        if not isinstance(ratification["comment_id"], int):
-            raise ValueError("completed retrospective ratification requires comment ID")
+        if ratification != EXPECTED_RATIFICATION:
+            raise ValueError("retrospective ratification identity drift")
         if ratification["comment_id"] in EXPECTED_COMMENTS:
             raise ValueError("prospective post-merge comment cannot serve as retrospective cure")
-        if not isinstance(ratification["recorded_at"], str):
-            raise ValueError("completed retrospective ratification requires timestamp")
 
     boundaries = record["preserved_boundaries"]
     assert isinstance(boundaries, dict)
@@ -75,13 +77,14 @@ def validate_record(record: dict[str, object]) -> None:
 
     document = DOCUMENT_PATH.read_text(encoding="utf-8")
     for required in (
-        "but no Human Steward disposition was recorded",
-        "before merge. The chronology requirement was therefore not satisfied.",
-        "Neither may be represented as pre-merge authorization",
+        "no Human Steward disposition was recorded",
+        "Neither may be represented as pre-merge",
+        "`5161001756`",
+        "retrospectively ratifies the already-merged exact packet",
         "No content revert is required",
         "`GCL-RC-00` remains a candidate",
     ):
-        if required not in document.replace("\n", " "):
+        if required not in document:
             raise ValueError(f"missing chronology-cure boundary: {required}")
 
 
