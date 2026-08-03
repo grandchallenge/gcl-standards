@@ -1,0 +1,67 @@
+{
+  "$schema": "../../schemas/settings_readback_owner_export_reference.schema.json",
+  "claim_boundaries": {
+    "certification_claim_authorized": false,
+    "commercial_claim_authorized": false,
+    "deployment_claim_authorized": false,
+    "mathematical_claim_authorized": false,
+    "novelty_claim_authorized": false,
+    "organization_wide_conformance": false
+  },
+  "coverage": {
+    "administrative_security_endpoints_complete": true,
+    "repositories": [
+      "grandchallenge/.github",
+      "grandchallenge/INTELLECT",
+      "grandchallenge/gcl-standards",
+      "grandchallenge/MATH-PROGRAMME",
+      "grandchallenge/MATHFORGE",
+      "grandchallenge/MATHSOLVE",
+      "grandchallenge/MATHCERT",
+      "grandchallenge/MODULUS",
+      "grandchallenge/GLOSS",
+      "grandchallenge/QUANTUM-TECHNOLOGIES",
+      "grandchallenge/lean-action",
+      "grandchallenge/upload-pages-artifact"
+    ],
+    "repository_count": 12,
+    "repository_ruleset_list_detail_complete": true
+  },
+  "effective_condition": "protected_merge_of_this_exact_record",
+  "operation_id": "GCL-GHOS-OWNER-EXPORT-REFERENCE-001",
+  "organization_settings": {
+    "actions": {
+      "allowed_actions": "selected",
+      "enabled_repositories": "all",
+      "sha_pinning_required": true
+    },
+    "rulesets": {
+      "availability": "plan_unavailable",
+      "documentation_url": "https://docs.github.com/rest/orgs/rules#get-all-organization-repository-rulesets",
+      "message": "Upgrade to GitHub Team to enable this feature.",
+      "status": 403
+    },
+    "workflow": {
+      "can_approve_pull_request_reviews": false,
+      "default_workflow_permissions": "read"
+    }
+  },
+  "source": {
+    "collector": {
+      "login": "fyremael",
+      "membership_state": "active",
+      "organization_role": "admin"
+    },
+    "digest_path": "governance/settings-readback/evidence/GCL-GHOS-OWNER-EXPORT-001.json.sha256",
+    "exact_head": "bbbfa03561c52ae839118e2a035c0d78c85ce20c",
+    "git_blob_sha1": "c15d10b3ad5287d625642850ed5d0986e9afaefc",
+    "merge_commit": "45792900aa0198ea30ff2315a897d3c71f119f9a",
+    "path": "governance/settings-readback/evidence/GCL-GHOS-OWNER-EXPORT-001.json",
+    "pull_request": 42,
+    "recorded_at": "2026-08-03T13:15:59Z",
+    "repository": "grandchallenge/.github",
+    "schema_version": "1.1.0",
+    "sha256": "b60f42d46e6044358d70d0f673f08afbc4e295afba95cd2fe3e9a65d8ab57d7c"
+  },
+  "status": "admitted"
+}
