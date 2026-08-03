@@ -75,12 +75,13 @@ def validate_record(record: dict[str, object]) -> None:
 
     document = DOCUMENT_PATH.read_text(encoding="utf-8")
     for required in (
-        "but no Human Steward disposition was recorded before merge",
+        "but no Human Steward disposition was recorded",
+        "before merge. The chronology requirement was therefore not satisfied.",
         "Neither may be represented as pre-merge authorization",
         "No content revert is required",
         "`GCL-RC-00` remains a candidate",
     ):
-        if required not in document:
+        if required not in document.replace("\n", " "):
             raise ValueError(f"missing chronology-cure boundary: {required}")
 
 
