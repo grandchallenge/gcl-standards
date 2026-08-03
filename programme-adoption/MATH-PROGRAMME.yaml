@@ -2,21 +2,47 @@ programme: grandchallenge/MATH-PROGRAMME
 constitutional_source:
   repository: grandchallenge/INTELLECT
   path: CONSTITUTION.md
-  effective_version: 1.0.0
+  effective_version: 1.1.0
   amendment: GI-AMEND-0001
-  amendment_status: proposed
-  amendment_commit: null
-  review_receipt: null
+  amendment_status: effective
+  amendment_commit: 8d47ed8930d33253ae476c64dfec7c748185a535
+  documentary_closure_commit: d9c659f70490c328b9b4c068224136c02edc534c
+  review_receipt:
+    campaign_id: GI-AMEND-0001
+    repository: grandchallenge/INTELLECT
+    path: governance/reviews/GI-AMEND-0001-22dbfa0ea0e6.json
+    commit_sha: 8d47ed8930d33253ae476c64dfec7c748185a535
+    admission_commit: ad4eac22321f87c42d34884eca5405ffea250f75
+    packet_sha256: 22dbfa0ea0e652161126dd4647477036b89e6c13ecbd9101cda60ce00e9f95c5
 standard: GCL-GHOS-00
 standard_version: 0.1.0
-standards_commit: null
-status: proposed
+standards_commit: 31211b286a9c4a2874da5559118ef2f026f7de52
+standard_admission:
+  repository: grandchallenge/gcl-standards
+  path: admissions/GCL-GHOS-00-0.1.0.json
+  operation_id: GI-AMEND-0001-STANDARDS-ADMISSION-001
+  commit_sha: 31211b286a9c4a2874da5559118ef2f026f7de52
+  reviewed_source_commit: fa90ffc2bd23a6b0c8e184c7da2dd6ef1174a4ee
+  decision_git_blob_sha1: 9fcf918d16b768f9949869abda4fc4a191edc4e9
+  standard_git_blob_sha1: b93c57f1fb27bf2a017a4b90719290342424f6d5
+status: active
 decision_ref: decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md
-decision_status: proposed
-activation_date: null
+decision_status: accepted
+activation_date: 2026-08-03
+pilot_scope:
+  - Repository-governance operations within grandchallenge/MATH-PROGRAMME.
+  - Adoption of the GCL-GHOS authority map without changing MATHCERT certification routes.
+  - Evidence and settings-readback work required before any organization-wide conformance claim.
 unresolved_deviations:
-  - GI-AMEND-0001 has not been ratified or activated through the successor exact packet.
-  - No complete successor constitutional review receipt has been admitted.
-  - ADR-0001 remains proposed and GCL-GHOS-00 remains a candidate standard.
-  - The exact admitted standards commit is not yet available for programme adoption.
-  - Organization-wide activation and conformance claims remain blocked until the pilot adoption is complete.
+  - Organization-wide activation and conformance claims remain blocked pending repository settings-readback and disposition of cross-repository deviations.
+  - This pilot adoption does not certify mathematics, alter MATHCERT authority, or promote any programme claim.
+claim_boundaries:
+  programme_pilot_adoption_complete: true
+  organization_wide_activation_complete: false
+  organization_wide_conformance_authorized: false
+  mathematical_claim_authorized: false
+  certification_claim_authorized: false
+  novelty_claim_authorized: false
+  deployment_claim_authorized: false
+  manufacturing_claim_authorized: false
+  commercial_claim_authorized: false
