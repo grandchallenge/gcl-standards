@@ -2,24 +2,21 @@ programme: grandchallenge/MATH-PROGRAMME
 constitutional_source:
   repository: grandchallenge/INTELLECT
   path: CONSTITUTION.md
-  effective_version: 1.1.0
+  effective_version: 1.0.0
   amendment: GI-AMEND-0001
-  amendment_status: effective
-  amendment_commit: 8d47ed8930d33253ae476c64dfec7c748185a535
-  review_receipt:
-    campaign_id: GI-AMEND-0001
-    repository: grandchallenge/INTELLECT
-    path: governance/reviews/GI-AMEND-0001-22dbfa0ea0e6.json
-    commit_sha: 8d47ed8930d33253ae476c64dfec7c748185a535
-    packet_sha256: 22dbfa0ea0e652161126dd4647477036b89e6c13ecbd9101cda60ce00e9f95c5
+  amendment_status: proposed
+  amendment_commit: null
+  review_receipt: null
 standard: GCL-GHOS-00
 standard_version: 0.1.0
-standards_commit: fa90ffc2bd23a6b0c8e184c7da2dd6ef1174a4ee
+standards_commit: null
 status: proposed
 decision_ref: decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md
-decision_status: accepted
+decision_status: proposed
 activation_date: null
 unresolved_deviations:
-  - The MATH-PROGRAMME pilot adoption has not yet been independently reviewed or merged.
-  - No programme-specific adoption record binds the admitted standard within MATH-PROGRAMME protected main.
-  - Organization-wide activation and conformance claims remain blocked until the pilot adoption is complete and unresolved deviations are dispositioned.
+  - GI-AMEND-0001 has not been ratified or activated through the successor exact packet.
+  - No complete successor constitutional review receipt has been admitted.
+  - ADR-0001 remains proposed and GCL-GHOS-00 remains a candidate standard.
+  - The exact admitted standards commit is not yet available for programme adoption.
+  - Organization-wide activation and conformance claims remain blocked until the pilot adoption is complete.
