@@ -1,0 +1,158 @@
+{
+  "$id": "https://grandchallenge.ai/schemas/settings-readback-owner-export-reference-1.0.0.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "const": "../../schemas/settings_readback_owner_export_reference.schema.json"
+    },
+    "claim_boundaries": {
+      "additionalProperties": false,
+      "properties": {
+        "certification_claim_authorized": {"const": false},
+        "commercial_claim_authorized": {"const": false},
+        "deployment_claim_authorized": {"const": false},
+        "mathematical_claim_authorized": {"const": false},
+        "novelty_claim_authorized": {"const": false},
+        "organization_wide_conformance": {"const": false}
+      },
+      "required": [
+        "certification_claim_authorized",
+        "commercial_claim_authorized",
+        "deployment_claim_authorized",
+        "mathematical_claim_authorized",
+        "novelty_claim_authorized",
+        "organization_wide_conformance"
+      ],
+      "type": "object"
+    },
+    "coverage": {
+      "additionalProperties": false,
+      "properties": {
+        "administrative_security_endpoints_complete": {"const": true},
+        "repositories": {
+          "items": {
+            "enum": [
+              "grandchallenge/.github",
+              "grandchallenge/INTELLECT",
+              "grandchallenge/gcl-standards",
+              "grandchallenge/MATH-PROGRAMME",
+              "grandchallenge/MATHFORGE",
+              "grandchallenge/MATHSOLVE",
+              "grandchallenge/MATHCERT",
+              "grandchallenge/MODULUS",
+              "grandchallenge/GLOSS",
+              "grandchallenge/QUANTUM-TECHNOLOGIES",
+              "grandchallenge/lean-action",
+              "grandchallenge/upload-pages-artifact"
+            ]
+          },
+          "maxItems": 12,
+          "minItems": 12,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "repository_count": {"const": 12},
+        "repository_ruleset_list_detail_complete": {"const": true}
+      },
+      "required": [
+        "administrative_security_endpoints_complete",
+        "repositories",
+        "repository_count",
+        "repository_ruleset_list_detail_complete"
+      ],
+      "type": "object"
+    },
+    "effective_condition": {"const": "protected_merge_of_this_exact_record"},
+    "operation_id": {"const": "GCL-GHOS-OWNER-EXPORT-REFERENCE-001"},
+    "organization_settings": {
+      "additionalProperties": false,
+      "properties": {
+        "actions": {
+          "additionalProperties": false,
+          "properties": {
+            "allowed_actions": {"const": "selected"},
+            "enabled_repositories": {"const": "all"},
+            "sha_pinning_required": {"const": true}
+          },
+          "required": ["allowed_actions", "enabled_repositories", "sha_pinning_required"],
+          "type": "object"
+        },
+        "rulesets": {
+          "additionalProperties": false,
+          "properties": {
+            "availability": {"const": "plan_unavailable"},
+            "documentation_url": {"const": "https://docs.github.com/rest/orgs/rules#get-all-organization-repository-rulesets"},
+            "message": {"const": "Upgrade to GitHub Team to enable this feature."},
+            "status": {"const": 403}
+          },
+          "required": ["availability", "documentation_url", "message", "status"],
+          "type": "object"
+        },
+        "workflow": {
+          "additionalProperties": false,
+          "properties": {
+            "can_approve_pull_request_reviews": {"const": false},
+            "default_workflow_permissions": {"const": "read"}
+          },
+          "required": ["can_approve_pull_request_reviews", "default_workflow_permissions"],
+          "type": "object"
+        }
+      },
+      "required": ["actions", "rulesets", "workflow"],
+      "type": "object"
+    },
+    "source": {
+      "additionalProperties": false,
+      "properties": {
+        "collector": {
+          "additionalProperties": false,
+          "properties": {
+            "login": {"const": "fyremael"},
+            "membership_state": {"const": "active"},
+            "organization_role": {"const": "admin"}
+          },
+          "required": ["login", "membership_state", "organization_role"],
+          "type": "object"
+        },
+        "digest_path": {"const": "governance/settings-readback/evidence/GCL-GHOS-OWNER-EXPORT-001.json.sha256"},
+        "exact_head": {"pattern": "^[0-9a-f]{40}$", "type": "string"},
+        "git_blob_sha1": {"pattern": "^[0-9a-f]{40}$", "type": "string"},
+        "merge_commit": {"pattern": "^[0-9a-f]{40}$", "type": "string"},
+        "path": {"const": "governance/settings-readback/evidence/GCL-GHOS-OWNER-EXPORT-001.json"},
+        "pull_request": {"const": 42},
+        "recorded_at": {"format": "date-time", "type": "string"},
+        "repository": {"const": "grandchallenge/.github"},
+        "schema_version": {"const": "1.1.0"},
+        "sha256": {"pattern": "^[0-9a-f]{64}$", "type": "string"}
+      },
+      "required": [
+        "collector",
+        "digest_path",
+        "exact_head",
+        "git_blob_sha1",
+        "merge_commit",
+        "path",
+        "pull_request",
+        "recorded_at",
+        "repository",
+        "schema_version",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "status": {"const": "admitted"}
+  },
+  "required": [
+    "$schema",
+    "claim_boundaries",
+    "coverage",
+    "effective_condition",
+    "operation_id",
+    "organization_settings",
+    "source",
+    "status"
+  ],
+  "title": "GCL-GHOS owner export reference",
+  "type": "object"
+}
