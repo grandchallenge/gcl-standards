@@ -1,0 +1,860 @@
+{
+  "campaign_id": "GCL-GHOS-SETTINGS-READBACK-001",
+  "recorded_at": "2026-08-03T11:18:20Z",
+  "repositories": {
+    ".github": {
+      "codeowners": {
+        "entry": {
+          "name": "CODEOWNERS",
+          "path": ".github/CODEOWNERS",
+          "sha": "edef59e3ba1eee66d5ab47a6a1b962a54fd7f542",
+          "type": "file"
+        },
+        "path": ".github/CODEOWNERS",
+        "status": 200
+      },
+      "dependabot": {
+        "entry": {
+          "name": "dependabot.yml",
+          "path": ".github/dependabot.yml",
+          "sha": "236b487b01548f56201f7e43abf0e75606928d37",
+          "type": "file"
+        },
+        "path": ".github/dependabot.yml",
+        "status": 200
+      },
+      "security_policy": {
+        "entry": {
+          "name": "SECURITY.md",
+          "path": "SECURITY.md",
+          "sha": "89ea9b88b64b00db5a5e129d186a203ce215da6d",
+          "type": "file"
+        },
+        "path": "SECURITY.md",
+        "status": 200
+      },
+      "workflows": {
+        "entries": [
+          {
+            "name": "constitutional-review-clerk.yml",
+            "path": ".github/workflows/constitutional-review-clerk.yml",
+            "sha": "3efa7c9b4e453ef5040cd9c6c8f67f5ef989fda9",
+            "type": "file"
+          },
+          {
+            "name": "constitutional-review-tests.yml",
+            "path": ".github/workflows/constitutional-review-tests.yml",
+            "sha": "9acda56723f4b332cfedf9f3e97cdcd6ee8311d4",
+            "type": "file"
+          },
+          {
+            "name": "gcl-conformance.yml",
+            "path": ".github/workflows/gcl-conformance.yml",
+            "sha": "833e5c63b1e72b681f95a4dc232e817c986284fe",
+            "type": "file"
+          },
+          {
+            "name": "gcl-policy.yml",
+            "path": ".github/workflows/gcl-policy.yml",
+            "sha": "cb7bc8221755623270af4906a8ac69258702bf3e",
+            "type": "file"
+          },
+          {
+            "name": "gcl-project-sync.yml",
+            "path": ".github/workflows/gcl-project-sync.yml",
+            "sha": "629e812ad180400f6ccbfde0813c2ec70ada17b3",
+            "type": "file"
+          },
+          {
+            "name": "gcl-release.yml",
+            "path": ".github/workflows/gcl-release.yml",
+            "sha": "aa0f688851639adc482743c2562d3c32768b4016",
+            "type": "file"
+          },
+          {
+            "name": "gcl-security.yml",
+            "path": ".github/workflows/gcl-security.yml",
+            "sha": "75243089fa5ccf81f4f6dfd21fc782c4b517bd57",
+            "type": "file"
+          },
+          {
+            "name": "qtr-incubator.yml",
+            "path": ".github/workflows/qtr-incubator.yml",
+            "sha": "59f290ce85f33d83e0a8a27b0701e1f67cbaaae7",
+            "type": "file"
+          }
+        ],
+        "path": ".github/workflows",
+        "status": 200
+      }
+    },
+    "GLOSS": {
+      "codeowners": {
+        "entry": {
+          "name": "CODEOWNERS",
+          "path": ".github/CODEOWNERS",
+          "sha": "bb98922bbd82670e089f57abf59c6c22584a1d7a",
+          "type": "file"
+        },
+        "path": ".github/CODEOWNERS",
+        "status": 200
+      },
+      "dependabot": {
+        "entry": {
+          "name": "dependabot.yml",
+          "path": ".github/dependabot.yml",
+          "sha": "236b487b01548f56201f7e43abf0e75606928d37",
+          "type": "file"
+        },
+        "path": ".github/dependabot.yml",
+        "status": 200
+      },
+      "security_policy": {
+        "entry": {
+          "name": "SECURITY.md",
+          "path": "SECURITY.md",
+          "sha": "ff6002544d613ce3966f74ba174478303c684cd6",
+          "type": "file"
+        },
+        "path": "SECURITY.md",
+        "status": 200
+      },
+      "workflows": {
+        "entries": [
+          {
+            "name": "ci.yml",
+            "path": ".github/workflows/ci.yml",
+            "sha": "7e8afdb9eaca659f537ead597d275d591e66e2e4",
+            "type": "file"
+          },
+          {
+            "name": "gcl-conformance.yml",
+            "path": ".github/workflows/gcl-conformance.yml",
+            "sha": "7107b3133bf05c3f2862ec68780a2e738d169a47",
+            "type": "file"
+          },
+          {
+            "name": "nightly-compat.yml",
+            "path": ".github/workflows/nightly-compat.yml",
+            "sha": "ae418cdfcd94ec3865ec6697a572fe4574851ebc",
+            "type": "file"
+          }
+        ],
+        "path": ".github/workflows",
+        "status": 200
+      }
+    },
+    "INTELLECT": {
+      "codeowners": {
+        "entry": {
+          "name": "CODEOWNERS",
+          "path": ".github/CODEOWNERS",
+          "sha": "c2297a3e474f2f931c106b803129525fd9c87a4e",
+          "type": "file"
+        },
+        "path": ".github/CODEOWNERS",
+        "status": 200
+      },
+      "dependabot": {
+        "entry": {
+          "name": "dependabot.yml",
+          "path": ".github/dependabot.yml",
+          "sha": "236b487b01548f56201f7e43abf0e75606928d37",
+          "type": "file"
+        },
+        "path": ".github/dependabot.yml",
+        "status": 200
+      },
+      "security_policy": {
+        "entry": {
+          "name": "SECURITY.md",
+          "path": "SECURITY.md",
+          "sha": "ff6002544d613ce3966f74ba174478303c684cd6",
+          "type": "file"
+        },
+        "path": "SECURITY.md",
+        "status": 200
+      },
+      "workflows": {
+        "entries": [
+          {
+            "name": "ci.yml",
+            "path": ".github/workflows/ci.yml",
+            "sha": "78c23ae3b0d31749ba34bea8b680a6768daee642",
+            "type": "file"
+          },
+          {
+            "name": "gcl-conformance.yml",
+            "path": ".github/workflows/gcl-conformance.yml",
+            "sha": "181925784eadec6c6c3f9fdd331a24fb9804441a",
+            "type": "file"
+          },
+          {
+            "name": "trove-curata-fixture.yml",
+            "path": ".github/workflows/trove-curata-fixture.yml",
+            "sha": "b527b4b69f00cb007f6d97fef658d291e03b13c5",
+            "type": "file"
+          },
+          {
+            "name": "trove-curata-pii-fixture.yml",
+            "path": ".github/workflows/trove-curata-pii-fixture.yml",
+            "sha": "4b2f64354bb7af7f8e3f6f3ea7db79d375b28bda",
+            "type": "file"
+          }
+        ],
+        "path": ".github/workflows",
+        "status": 200
+      }
+    },
+    "MATH-PROGRAMME": {
+      "codeowners": {
+        "entry": {
+          "name": "CODEOWNERS",
+          "path": ".github/CODEOWNERS",
+          "sha": "6d293688c2e2ac80f8a9fcea70205ea2d08a6b18",
+          "type": "file"
+        },
+        "path": ".github/CODEOWNERS",
+        "status": 200
+      },
+      "dependabot": {
+        "entry": {
+          "name": "dependabot.yml",
+          "path": ".github/dependabot.yml",
+          "sha": "236b487b01548f56201f7e43abf0e75606928d37",
+          "type": "file"
+        },
+        "path": ".github/dependabot.yml",
+        "status": 200
+      },
+      "security_policy": {
+        "entry": {
+          "name": "SECURITY.md",
+          "path": "SECURITY.md",
+          "sha": "4bb1f8e987a1a2d94e441bcf1d4f2131316f5292",
+          "type": "file"
+        },
+        "path": "SECURITY.md",
+        "status": 200
+      },
+      "workflows": {
+        "entries": [
+          {
+            "name": "administrative-maintenance-dispatch.yml",
+            "path": ".github/workflows/administrative-maintenance-dispatch.yml",
+            "sha": "786a90b4242d43947fbf8fb153f5cc384e77c07d",
+            "type": "file"
+          },
+          {
+            "name": "bsd-wp03-substrate.yml",
+            "path": ".github/workflows/bsd-wp03-substrate.yml",
+            "sha": "9caf3841c0203c7f56bd2f95a8ba960650317dbc",
+            "type": "file"
+          },
+          {
+            "name": "bsd-wp04-target.yml",
+            "path": ".github/workflows/bsd-wp04-target.yml",
+            "sha": "6a3c0d4e780790f4c8bbb1ba9314cebcefb4fc3a",
+            "type": "file"
+          },
+          {
+            "name": "ci.yml",
+            "path": ".github/workflows/ci.yml",
+            "sha": "dd8086c38982763cdf728a39f6ef848ab0995861",
+            "type": "file"
+          },
+          {
+            "name": "gcl-conformance.yml",
+            "path": ".github/workflows/gcl-conformance.yml",
+            "sha": "06b8cd29ffe91447ddb5d66b31d6f90847ad21a1",
+            "type": "file"
+          },
+          {
+            "name": "oz-next-004-independent-review.yml",
+            "path": ".github/workflows/oz-next-004-independent-review.yml",
+            "sha": "b6a31107417230d84a82f7e3385652bc937167e4",
+            "type": "file"
+          },
+          {
+            "name": "oz-rt-apery-brow.yml",
+            "path": ".github/workflows/oz-rt-apery-brow.yml",
+            "sha": "a3b8c358da6dc88d3d8f476794738e3b8a48100b",
+            "type": "file"
+          },
+          {
+            "name": "oz-rt-lb-instance.yml",
+            "path": ".github/workflows/oz-rt-lb-instance.yml",
+            "sha": "821779eb620a7edf07eaaf83168cba0a69bb9a6a",
+            "type": "file"
+          },
+          {
+            "name": "pages.yml",
+            "path": ".github/workflows/pages.yml",
+            "sha": "1e8d7a0792dcf36c1a0a89ebe7b3d9cd3b0d8642",
+            "type": "file"
+          },
+          {
+            "name": "pc-wp04.yml",
+            "path": ".github/workflows/pc-wp04.yml",
+            "sha": "74f1aea13148e1fe6768f9597581fd310fdadcb1",
+            "type": "file"
+          },
+          {
+            "name": "pc-wp05.yml",
+            "path": ".github/workflows/pc-wp05.yml",
+            "sha": "f34a6954b1859754ceafbb07cd4dd208c64c1e4a",
+            "type": "file"
+          },
+          {
+            "name": "release-trust-admin.yml",
+            "path": ".github/workflows/release-trust-admin.yml",
+            "sha": "805d01659cfb125e91733b6f71235feb41859711",
+            "type": "file"
+          }
+        ],
+        "path": ".github/workflows",
+        "status": 200
+      }
+    },
+    "MATHCERT": {
+      "codeowners": {
+        "entry": {
+          "name": "CODEOWNERS",
+          "path": ".github/CODEOWNERS",
+          "sha": "6e0922cca9ac36bd7f96d2dbd51815b21a01062a",
+          "type": "file"
+        },
+        "path": ".github/CODEOWNERS",
+        "status": 200
+      },
+      "dependabot": {
+        "entry": {
+          "name": "dependabot.yml",
+          "path": ".github/dependabot.yml",
+          "sha": "236b487b01548f56201f7e43abf0e75606928d37",
+          "type": "file"
+        },
+        "path": ".github/dependabot.yml",
+        "status": 200
+      },
+      "security_policy": {
+        "entry": {
+          "name": "SECURITY.md",
+          "path": "SECURITY.md",
+          "sha": "f43296c314ef673dcb6dfdc9cd94c5bbdd4f8e65",
+          "type": "file"
+        },
+        "path": "SECURITY.md",
+        "status": 200
+      },
+      "workflows": {
+        "entries": [
+          {
+            "name": "ci.yml",
+            "path": ".github/workflows/ci.yml",
+            "sha": "53b809617ebe3324a6628bc1e75b40143477c055",
+            "type": "file"
+          },
+          {
+            "name": "gcl-conformance.yml",
+            "path": ".github/workflows/gcl-conformance.yml",
+            "sha": "8bdfeb29675320769c1256310e276976206fba15",
+            "type": "file"
+          },
+          {
+            "name": "otp-compactness-evidence-refresh-control.yml",
+            "path": ".github/workflows/otp-compactness-evidence-refresh-control.yml",
+            "sha": "f3f647813bbc2b5a8645a1e7af3f2b86f51547fa",
+            "type": "file"
+          },
+          {
+            "name": "otp-ehrhart-adjudication.yml",
+            "path": ".github/workflows/otp-ehrhart-adjudication.yml",
+            "sha": "67d930e2a72d9341ba4a0e3e12c71bd1a771861f",
+            "type": "file"
+          },
+          {
+            "name": "otp-ehrhart-evidence-refresh.yml",
+            "path": ".github/workflows/otp-ehrhart-evidence-refresh.yml",
+            "sha": "66ab5b3b74c1882166bfb50ba75e0d03a5aaa3bb",
+            "type": "file"
+          },
+          {
+            "name": "otp-family-replay.yml",
+            "path": ".github/workflows/otp-family-replay.yml",
+            "sha": "b6758c61d22b0d8bda24cd4c22652afecc22f059",
+            "type": "file"
+          }
+        ],
+        "path": ".github/workflows",
+        "status": 200
+      }
+    },
+    "MATHFORGE": {
+      "codeowners": {
+        "entry": {
+          "name": "CODEOWNERS",
+          "path": ".github/CODEOWNERS",
+          "sha": "69d3dd20f8ffe94b5a30e77b2faa2adf882a0540",
+          "type": "file"
+        },
+        "path": ".github/CODEOWNERS",
+        "status": 200
+      },
+      "dependabot": {
+        "entry": {
+          "name": "dependabot.yml",
+          "path": ".github/dependabot.yml",
+          "sha": "236b487b01548f56201f7e43abf0e75606928d37",
+          "type": "file"
+        },
+        "path": ".github/dependabot.yml",
+        "status": 200
+      },
+      "security_policy": {
+        "entry": {
+          "name": "SECURITY.md",
+          "path": "SECURITY.md",
+          "sha": "86b3bb9e0aa9f0acd638b9b0918368b3036aae13",
+          "type": "file"
+        },
+        "path": "SECURITY.md",
+        "status": 200
+      },
+      "workflows": {
+        "entries": [
+          {
+            "name": "ci.yml",
+            "path": ".github/workflows/ci.yml",
+            "sha": "f48057846f0db791682b5e8abfd033d415ca80a0",
+            "type": "file"
+          },
+          {
+            "name": "formal-conjectures-replay.yml",
+            "path": ".github/workflows/formal-conjectures-replay.yml",
+            "sha": "d2b936c07cd92694a35a5c3166582c749bba04ca",
+            "type": "file"
+          },
+          {
+            "name": "gcl-conformance.yml",
+            "path": ".github/workflows/gcl-conformance.yml",
+            "sha": "c846a694f1789d50d08859ba0e6d791266743dd1",
+            "type": "file"
+          },
+          {
+            "name": "ns-ci-r014-source-lock.yml",
+            "path": ".github/workflows/ns-ci-r014-source-lock.yml",
+            "sha": "db7f5b0acea811d76c05f9c8b1c5c786074ff1bb",
+            "type": "file"
+          },
+          {
+            "name": "vgse-source-intake.yml",
+            "path": ".github/workflows/vgse-source-intake.yml",
+            "sha": "4cac1a055584ed43a704d0b6b886f36f825fd138",
+            "type": "file"
+          }
+        ],
+        "path": ".github/workflows",
+        "status": 200
+      }
+    },
+    "MATHSOLVE": {
+      "codeowners": {
+        "entry": {
+          "name": "CODEOWNERS",
+          "path": ".github/CODEOWNERS",
+          "sha": "bd1cd319ff04517847bb6a5765c4bef3dec0aa57",
+          "type": "file"
+        },
+        "path": ".github/CODEOWNERS",
+        "status": 200
+      },
+      "dependabot": {
+        "entry": {
+          "name": "dependabot.yml",
+          "path": ".github/dependabot.yml",
+          "sha": "236b487b01548f56201f7e43abf0e75606928d37",
+          "type": "file"
+        },
+        "path": ".github/dependabot.yml",
+        "status": 200
+      },
+      "security_policy": {
+        "entry": {
+          "name": "SECURITY.md",
+          "path": "SECURITY.md",
+          "sha": "c6b89c5ca772b02667c621e6ade41ca68842faa6",
+          "type": "file"
+        },
+        "path": "SECURITY.md",
+        "status": 200
+      },
+      "workflows": {
+        "entries": [
+          {
+            "name": "ci.yml",
+            "path": ".github/workflows/ci.yml",
+            "sha": "cadc96a63f3ca048b6906ca144fa30469b0b7ec7",
+            "type": "file"
+          },
+          {
+            "name": "gcl-conformance.yml",
+            "path": ".github/workflows/gcl-conformance.yml",
+            "sha": "03b7103240c63fb98b76a805fb5973aaaf779d77",
+            "type": "file"
+          },
+          {
+            "name": "vgse-wp00.yml",
+            "path": ".github/workflows/vgse-wp00.yml",
+            "sha": "d05a2b46a3b7779ddc751438af94bc10bed02e8f",
+            "type": "file"
+          }
+        ],
+        "path": ".github/workflows",
+        "status": 200
+      }
+    },
+    "MODULUS": {
+      "codeowners": {
+        "path": ".github/CODEOWNERS",
+        "payload": {
+          "documentation_url": "https://docs.github.com/rest/repos/contents#get-repository-content",
+          "message": "Not Found",
+          "status": "404"
+        },
+        "status": 404
+      },
+      "dependabot": {
+        "path": ".github/dependabot.yml",
+        "payload": {
+          "documentation_url": "https://docs.github.com/rest/repos/contents#get-repository-content",
+          "message": "Not Found",
+          "status": "404"
+        },
+        "status": 404
+      },
+      "security_policy": {
+        "entry": {
+          "name": "SECURITY.md",
+          "path": "SECURITY.md",
+          "sha": "6feafd91bcbf00820c3aee264aa039e1274b390f",
+          "type": "file"
+        },
+        "path": "SECURITY.md",
+        "status": 200
+      },
+      "workflows": {
+        "entries": [
+          {
+            "name": "ci.yml",
+            "path": ".github/workflows/ci.yml",
+            "sha": "c43b648f4dd0372f4b4eb560b3f8c673fd859b60",
+            "type": "file"
+          }
+        ],
+        "path": ".github/workflows",
+        "status": 200
+      }
+    },
+    "QUANTUM-TECHNOLOGIES": {
+      "codeowners": {
+        "path": ".github/CODEOWNERS",
+        "payload": {
+          "documentation_url": "https://docs.github.com/rest/repos/contents#get-repository-content",
+          "message": "Not Found",
+          "status": "404"
+        },
+        "status": 404
+      },
+      "dependabot": {
+        "path": ".github/dependabot.yml",
+        "payload": {
+          "documentation_url": "https://docs.github.com/rest/repos/contents#get-repository-content",
+          "message": "Not Found",
+          "status": "404"
+        },
+        "status": 404
+      },
+      "security_policy": {
+        "path": "SECURITY.md",
+        "payload": {
+          "documentation_url": "https://docs.github.com/rest/repos/contents#get-repository-content",
+          "message": "Not Found",
+          "status": "404"
+        },
+        "status": 404
+      },
+      "workflows": {
+        "entries": [
+          {
+            "name": "gcl-conformance.yml",
+            "path": ".github/workflows/gcl-conformance.yml",
+            "sha": "21706d93c2d2397c461d240f1263e22de1cda5d5",
+            "type": "file"
+          },
+          {
+            "name": "qtr-validation.yml",
+            "path": ".github/workflows/qtr-validation.yml",
+            "sha": "003e8869245bd124e77e097962dec820be011f44",
+            "type": "file"
+          }
+        ],
+        "path": ".github/workflows",
+        "status": 200
+      }
+    },
+    "gcl-standards": {
+      "codeowners": {
+        "entry": {
+          "name": "CODEOWNERS",
+          "path": ".github/CODEOWNERS",
+          "sha": "f7ab2b2ca9c4d8f1fc00912be2b557602159db13",
+          "type": "file"
+        },
+        "path": ".github/CODEOWNERS",
+        "status": 200
+      },
+      "dependabot": {
+        "entry": {
+          "name": "dependabot.yml",
+          "path": ".github/dependabot.yml",
+          "sha": "a460ff95cc80f899dc849c5690ea4f8404e4ab8e",
+          "type": "file"
+        },
+        "path": ".github/dependabot.yml",
+        "status": 200
+      },
+      "security_policy": {
+        "entry": {
+          "name": "SECURITY.md",
+          "path": "SECURITY.md",
+          "sha": "a10e9a459b1be6310389ed7d1e67ab0e84e00a84",
+          "type": "file"
+        },
+        "path": "SECURITY.md",
+        "status": 200
+      },
+      "workflows": {
+        "entries": [
+          {
+            "name": "ci.yml",
+            "path": ".github/workflows/ci.yml",
+            "sha": "bc746512a55fafdb05ed4fc95de7a3661128ee05",
+            "type": "file"
+          },
+          {
+            "name": "gcl-conformance.yml",
+            "path": ".github/workflows/gcl-conformance.yml",
+            "sha": "88992ac4939b3f659e4f7c59d84ca99a9b53d9eb",
+            "type": "file"
+          }
+        ],
+        "path": ".github/workflows",
+        "status": 200
+      }
+    },
+    "lean-action": {
+      "codeowners": {
+        "entry": {
+          "name": "CODEOWNERS",
+          "path": ".github/CODEOWNERS",
+          "sha": "2adc0cd748afe01a319b6722b4edd0a6557d82a5",
+          "type": "file"
+        },
+        "path": ".github/CODEOWNERS",
+        "status": 200
+      },
+      "dependabot": {
+        "entry": {
+          "name": "dependabot.yml",
+          "path": ".github/dependabot.yml",
+          "sha": "37239ee588e30aea700cac685bc7996da5d1d443",
+          "type": "file"
+        },
+        "path": ".github/dependabot.yml",
+        "status": 200
+      },
+      "security_policy": {
+        "entry": {
+          "name": "SECURITY.md",
+          "path": "SECURITY.md",
+          "sha": "d547851b622470f8e8b514ed145bc55450fd3338",
+          "type": "file"
+        },
+        "path": "SECURITY.md",
+        "status": 200
+      },
+      "workflows": {
+        "entries": [
+          {
+            "name": "actionlint.yml",
+            "path": ".github/workflows/actionlint.yml",
+            "sha": "cc427d27b207f4a3dc2843eb23eefc01f4d721b0",
+            "type": "file"
+          },
+          {
+            "name": "functional_tests.yml",
+            "path": ".github/workflows/functional_tests.yml",
+            "sha": "339dc38f409dfc1e46c352a4dbdb2c9e6456c905",
+            "type": "file"
+          },
+          {
+            "name": "gcl-conformance.yml",
+            "path": ".github/workflows/gcl-conformance.yml",
+            "sha": "974d982fe0bc699918cf9850bd9f9dfc188abd31",
+            "type": "file"
+          },
+          {
+            "name": "nanoda-daily.yml",
+            "path": ".github/workflows/nanoda-daily.yml",
+            "sha": "e286f6ebc2a17ec5644763af3434c57216f341d2",
+            "type": "file"
+          },
+          {
+            "name": "shellcheck.yml",
+            "path": ".github/workflows/shellcheck.yml",
+            "sha": "1acb9189f90a6f5a53f5c3b633ec06febe74ab60",
+            "type": "file"
+          }
+        ],
+        "path": ".github/workflows",
+        "status": 200
+      }
+    },
+    "upload-pages-artifact": {
+      "codeowners": {
+        "entry": {
+          "name": "CODEOWNERS",
+          "path": ".github/CODEOWNERS",
+          "sha": "2adc0cd748afe01a319b6722b4edd0a6557d82a5",
+          "type": "file"
+        },
+        "path": ".github/CODEOWNERS",
+        "status": 200
+      },
+      "dependabot": {
+        "entry": {
+          "name": "dependabot.yml",
+          "path": ".github/dependabot.yml",
+          "sha": "7187169660aa7f481b6a121d70c7c4baf1d8dd98",
+          "type": "file"
+        },
+        "path": ".github/dependabot.yml",
+        "status": 200
+      },
+      "security_policy": {
+        "entry": {
+          "name": "SECURITY.md",
+          "path": "SECURITY.md",
+          "sha": "10091647aa607ffec378859430daa0a69beedb7a",
+          "type": "file"
+        },
+        "path": "SECURITY.md",
+        "status": 200
+      },
+      "workflows": {
+        "entries": [
+          {
+            "name": "draft-release.yml",
+            "path": ".github/workflows/draft-release.yml",
+            "sha": "ebfa0d9e0b52b1e0be9bcf517d5500fdb1af7d8a",
+            "type": "file"
+          },
+          {
+            "name": "gcl-conformance.yml",
+            "path": ".github/workflows/gcl-conformance.yml",
+            "sha": "8c33d6385eccebf7e0d35c8510aa4cf2c404023b",
+            "type": "file"
+          },
+          {
+            "name": "publish-immutable-actions.yml",
+            "path": ".github/workflows/publish-immutable-actions.yml",
+            "sha": "51ec4f778c5387392a511d593168269b4908daa0",
+            "type": "file"
+          },
+          {
+            "name": "release.yml",
+            "path": ".github/workflows/release.yml",
+            "sha": "b319f6b755866374252bbbfa292ddc6bb7bec1b8",
+            "type": "file"
+          },
+          {
+            "name": "test-hosted-runners.yml",
+            "path": ".github/workflows/test-hosted-runners.yml",
+            "sha": "fb393814f4a78aed86b101bd80a2d4d95fdb6c98",
+            "type": "file"
+          }
+        ],
+        "path": ".github/workflows",
+        "status": 200
+      }
+    }
+  },
+  "repository_profile_inventory": {
+    "entries": [
+      {
+        "name": ".github.json",
+        "path": "fixtures/repository_profiles/.github.json",
+        "sha": "1ee7f79bc54f19a5b875a419c3fc209a90872692",
+        "type": "file"
+      },
+      {
+        "name": "GLOSS.json",
+        "path": "fixtures/repository_profiles/GLOSS.json",
+        "sha": "598032d9f0ebf02c53f91a0dd9f69aaf0ee1c8c5",
+        "type": "file"
+      },
+      {
+        "name": "INTELLECT.json",
+        "path": "fixtures/repository_profiles/INTELLECT.json",
+        "sha": "ee8d19105b4e2a35f5f32965cacf351d934b45fa",
+        "type": "file"
+      },
+      {
+        "name": "MATH-PROGRAMME.json",
+        "path": "fixtures/repository_profiles/MATH-PROGRAMME.json",
+        "sha": "dce13203111a2ab1c1738c883c13a485193440e4",
+        "type": "file"
+      },
+      {
+        "name": "MATHCERT.json",
+        "path": "fixtures/repository_profiles/MATHCERT.json",
+        "sha": "5c9f681b999824a12d52d8b85dfa13a51bf4073e",
+        "type": "file"
+      },
+      {
+        "name": "MATHFORGE.json",
+        "path": "fixtures/repository_profiles/MATHFORGE.json",
+        "sha": "c032732215ff9f73b37261d23dd6201e73ba35e3",
+        "type": "file"
+      },
+      {
+        "name": "MATHSOLVE.json",
+        "path": "fixtures/repository_profiles/MATHSOLVE.json",
+        "sha": "6800820309ec35dd5b55eb21fa98b84251c60478",
+        "type": "file"
+      },
+      {
+        "name": "gcl-standards.json",
+        "path": "fixtures/repository_profiles/gcl-standards.json",
+        "sha": "36416b57d52f0709cb3ad09ea3f7ef6b2f1a10fb",
+        "type": "file"
+      },
+      {
+        "name": "lean-action.json",
+        "path": "fixtures/repository_profiles/lean-action.json",
+        "sha": "baca04a9107e70c7062237c3d80ccf4e7b62d05d",
+        "type": "file"
+      },
+      {
+        "name": "upload-pages-artifact.json",
+        "path": "fixtures/repository_profiles/upload-pages-artifact.json",
+        "sha": "012629ec3d65941459487f5aabdcfc87c758db0c",
+        "type": "file"
+      }
+    ],
+    "path": "fixtures/repository_profiles",
+    "status": 200
+  },
+  "schema_version": "1.0.0"
+}
