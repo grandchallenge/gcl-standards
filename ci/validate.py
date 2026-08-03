@@ -66,6 +66,36 @@ def load_yaml(path: Path) -> object:
     return yaml.safe_load(path.read_text(encoding="utf-8"))
 
 
+def validate_math_programme_adoption(adoption: object) -> None:
+    if not isinstance(adoption, dict):
+        raise ValueError("MATH-PROGRAMME adoption record must be an object")
+    if adoption.get("status") not in {"proposed", "active", "superseded"}:
+        raise ValueError("invalid adoption status")
+    if adoption.get("decision_status") not in {"proposed", "accepted", "superseded"}:
+        raise ValueError("invalid ADR decision status")
+    if adoption.get("decision_ref") != (
+        "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"
+    ):
+        raise ValueError("MATH-PROGRAMME adoption must bind ADR-0001")
+    if adoption["status"] == "active":
+        constitutional = adoption["constitutional_source"]
+        if adoption["decision_status"] != "accepted":
+            raise ValueError("active adoption requires accepted ADR-0001")
+        if (
+            constitutional["amendment_status"] != "effective"
+            or not constitutional["amendment_commit"]
+            or not constitutional["review_receipt"]
+            or not adoption["standards_commit"]
+            or not adoption["activation_date"]
+        ):
+            raise ValueError(
+                "active adoption requires an effective amendment, review receipt, "
+                "accepted decision, exact commits, and activation date"
+            )
+    if adoption["status"] == "proposed" and adoption["decision_status"] == "accepted":
+        raise ValueError("accepted ADR requires a separate standards-admission state")
+
+
 def validate_regret_contract() -> None:
     schema = load_json(REGRET_SCHEMA_PATH)
     jsonschema.Draft202012Validator.check_schema(schema)
@@ -204,24 +234,8 @@ def validate() -> None:
     if "Subordinate" not in standards["authority_scope"]:
         raise ValueError("gcl-standards must declare subordinate authority")
 
-    adoption = yaml.safe_load(
-        (ROOT / "programme-adoption" / "MATH-PROGRAMME.yaml").read_text(encoding="utf-8")
-    )
-    if adoption["status"] not in {"proposed", "active", "superseded"}:
-        raise ValueError("invalid adoption status")
-    if adoption["status"] == "active":
-        constitutional = adoption["constitutional_source"]
-        if (
-            constitutional["amendment_status"] != "effective"
-            or not constitutional["amendment_commit"]
-            or not constitutional["review_receipt"]
-            or not adoption["standards_commit"]
-            or not adoption["decision_ref"]
-        ):
-            raise ValueError(
-                "active adoption requires an effective amendment, review receipt, "
-                "exact commits, and a decision"
-            )
+    adoption = load_yaml(ROOT / "programme-adoption" / "MATH-PROGRAMME.yaml")
+    validate_math_programme_adoption(adoption)
 
     standard = (ROOT / "standards" / "GCL-GHOS-00.md").read_text(encoding="utf-8")
     required_boundaries = [
@@ -235,10 +249,32 @@ def validate() -> None:
         "additional-human approval counts",
         "Human Steward reserved authorization",
         "Candidate status does not create binding authority.",
+        "MATH-PROGRAMME pilot adoption follows that standards admission",
     ]
     for boundary in required_boundaries:
         if boundary not in standard:
             raise ValueError(f"missing constitutional boundary: {boundary}")
+
+    decision = (
+        ROOT / "decisions" / "ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"
+    ).read_text(encoding="utf-8")
+    required_sequence = [
+        "**Status:** Proposed for successor exact-packet review",
+        "`GI-AMEND-0001` is ratified and effective at an exact INTELLECT commit",
+        "the constitutional review receipt for the successor exact packet",
+        "MATH-PROGRAMME pilot adoption follows ADR acceptance and GCL-GHOS admission",
+        "It is not a prerequisite for this ADR to become accepted",
+    ]
+    for boundary in required_sequence:
+        if boundary not in decision:
+            raise ValueError(f"missing acyclic ADR boundary: {boundary}")
+    forbidden_sequence = [
+        "the mathematics pilot records its adoption commit",
+        "This ADR becomes accepted only after:\n\n1. `GI-AMEND-0001` is ratified and effective;\n2.",
+    ]
+    for stale in forbidden_sequence:
+        if stale in decision:
+            raise ValueError(f"circular ADR sequence remains: {stale}")
 
     validate_regret_contract()
 
