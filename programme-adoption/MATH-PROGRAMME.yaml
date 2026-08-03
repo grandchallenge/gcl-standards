@@ -28,7 +28,7 @@ standard_admission:
 status: active
 decision_ref: decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md
 decision_status: accepted
-activation_date: 2026-08-03
+activation_date: "2026-08-03"
 pilot_scope:
   - Repository-governance operations within grandchallenge/MATH-PROGRAMME.
   - Adoption of the GCL-GHOS authority map without changing MATHCERT certification routes.
