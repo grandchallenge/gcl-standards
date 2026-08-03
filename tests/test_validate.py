@@ -30,6 +30,8 @@ class StandardsValidationTests(unittest.TestCase):
 
     def admitted_standard_pending_programme_adoption(self) -> dict[str, object]:
         adoption = self.math_adoption()
+        adoption["status"] = "proposed"
+        adoption["activation_date"] = None
         adoption["decision_status"] = "accepted"
         adoption["constitutional_source"]["effective_version"] = "1.1.0"
         adoption["constitutional_source"]["amendment_status"] = "effective"
@@ -60,17 +62,26 @@ class StandardsValidationTests(unittest.TestCase):
         with self.assertRaises(jsonschema.ValidationError):
             jsonschema.validate(broken, schema)
 
-    def test_proposed_adoption_tracks_acyclic_sequence(self) -> None:
+    def test_active_adoption_tracks_completed_sequence(self) -> None:
         adoption = self.math_adoption()
-        self.assertEqual(adoption["status"], "proposed")
-        self.assertEqual(adoption["decision_status"], "proposed")
+        self.assertEqual(adoption["status"], "active")
+        self.assertEqual(adoption["decision_status"], "accepted")
         self.assertEqual(
             adoption["decision_ref"],
             "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md",
         )
-        self.assertIsNone(adoption["constitutional_source"]["amendment_commit"])
-        self.assertIsNone(adoption["constitutional_source"]["review_receipt"])
-        self.assertIsNone(adoption["standards_commit"])
+        self.assertEqual(
+            adoption["constitutional_source"]["amendment_commit"],
+            "8d47ed8930d33253ae476c64dfec7c748185a535",
+        )
+        self.assertIsInstance(
+            adoption["constitutional_source"]["review_receipt"], dict
+        )
+        self.assertEqual(
+            adoption["standards_commit"],
+            "31211b286a9c4a2874da5559118ef2f026f7de52",
+        )
+        self.assertEqual(adoption["activation_date"], "2026-08-03")
         validate_module.validate_math_programme_adoption(adoption)
 
     def test_accepted_adr_can_precede_programme_adoption(self) -> None:
@@ -82,6 +93,7 @@ class StandardsValidationTests(unittest.TestCase):
 
     def test_active_adoption_requires_accepted_adr(self) -> None:
         broken = self.math_adoption()
+        broken["decision_status"] = "proposed"
         broken["status"] = "active"
         broken["activation_date"] = "2026-08-03"
         with self.assertRaisesRegex(ValueError, "accepted ADR-0001"):
