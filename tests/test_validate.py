@@ -28,9 +28,20 @@ class StandardsValidationTests(unittest.TestCase):
             )
         )
 
+    def admitted_standard_pending_programme_adoption(self) -> dict[str, object]:
+        adoption = self.math_adoption()
+        adoption["decision_status"] = "accepted"
+        adoption["constitutional_source"]["amendment_status"] = "effective"
+        adoption["constitutional_source"]["amendment_commit"] = "a" * 40
+        adoption["constitutional_source"]["review_receipt"] = "receipt.json"
+        adoption["standards_commit"] = "b" * 40
+        return adoption
+
     def test_cert_profile_cannot_claim_policy_only(self) -> None:
         schema = json.loads(
-            (ROOT / "schemas" / "repository_profile.schema.json").read_text(encoding="utf-8")
+            (ROOT / "schemas" / "repository_profile.schema.json").read_text(
+                encoding="utf-8"
+            )
         )
         profile = json.loads(
             (ROOT / "fixtures" / "repository_profiles" / "MATHCERT.json").read_text(
@@ -55,6 +66,13 @@ class StandardsValidationTests(unittest.TestCase):
         self.assertIsNone(adoption["standards_commit"])
         validate_module.validate_math_programme_adoption(adoption)
 
+    def test_accepted_adr_can_precede_programme_adoption(self) -> None:
+        admitted = self.admitted_standard_pending_programme_adoption()
+        self.assertEqual(admitted["status"], "proposed")
+        self.assertEqual(admitted["decision_status"], "accepted")
+        self.assertIsNone(admitted["activation_date"])
+        validate_module.validate_math_programme_adoption(admitted)
+
     def test_active_adoption_requires_accepted_adr(self) -> None:
         broken = self.math_adoption()
         broken["status"] = "active"
@@ -66,19 +84,40 @@ class StandardsValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "accepted ADR-0001"):
             validate_module.validate_math_programme_adoption(broken)
 
-    def test_active_adoption_requires_complete_exact_identity(self) -> None:
-        active = self.math_adoption()
+    def test_accepted_adr_requires_complete_exact_identity(self) -> None:
+        admitted = self.admitted_standard_pending_programme_adoption()
+        validate_module.validate_math_programme_adoption(admitted)
+        mutations = (
+            ("amendment_commit", "short"),
+            ("standards_commit", "short"),
+            ("review_receipt", ""),
+        )
+        for field, value in mutations:
+            with self.subTest(field=field):
+                broken = copy.deepcopy(admitted)
+                if field in {"amendment_commit", "review_receipt"}:
+                    broken["constitutional_source"][field] = value
+                else:
+                    broken[field] = value
+                with self.assertRaisesRegex(
+                    ValueError, "effective amendment, review receipt"
+                ):
+                    validate_module.validate_math_programme_adoption(broken)
+
+    def test_active_adoption_adds_activation_date(self) -> None:
+        active = self.admitted_standard_pending_programme_adoption()
         active["status"] = "active"
-        active["decision_status"] = "accepted"
-        active["constitutional_source"]["amendment_status"] = "effective"
-        active["constitutional_source"]["amendment_commit"] = "a" * 40
-        active["constitutional_source"]["review_receipt"] = "receipt.json"
-        active["standards_commit"] = "b" * 40
         active["activation_date"] = "2026-08-03"
         validate_module.validate_math_programme_adoption(active)
-        active["standards_commit"] = None
-        with self.assertRaisesRegex(ValueError, "exact commits"):
+        active["activation_date"] = "03-08-2026"
+        with self.assertRaisesRegex(ValueError, "ISO activation date"):
             validate_module.validate_math_programme_adoption(active)
+
+    def test_non_active_adoption_cannot_claim_activation_date(self) -> None:
+        broken = self.admitted_standard_pending_programme_adoption()
+        broken["activation_date"] = "2026-08-03"
+        with self.assertRaisesRegex(ValueError, "cannot claim an activation date"):
+            validate_module.validate_math_programme_adoption(broken)
 
     def test_adr_sequence_is_acyclic_and_numbered(self) -> None:
         decision = (
