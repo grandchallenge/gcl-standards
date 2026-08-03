@@ -112,16 +112,27 @@ class GCLGHOSAdmissionTests(unittest.TestCase):
         with self.assertRaises(jsonschema.ValidationError):
             standard_admission.validate_standard_admission(broken)
 
-    def test_programme_adoption_remains_separate_and_proposed(self) -> None:
+    def test_programme_adoption_is_separate_and_now_active(self) -> None:
         adoption = yaml.safe_load(
             (ROOT / "programme-adoption" / "MATH-PROGRAMME.yaml").read_text(
                 encoding="utf-8"
             )
         )
-        self.assertEqual(adoption["status"], "proposed")
-        self.assertEqual(adoption["decision_status"], "proposed")
-        self.assertIsNone(adoption["standards_commit"])
-        self.assertIsNone(adoption["activation_date"])
+        self.assertEqual(adoption["status"], "active")
+        self.assertEqual(adoption["decision_status"], "accepted")
+        self.assertEqual(
+            adoption["standards_commit"],
+            "31211b286a9c4a2874da5559118ef2f026f7de52",
+        )
+        self.assertEqual(adoption["activation_date"], "2026-08-03")
+        self.assertTrue(
+            adoption["claim_boundaries"]["programme_pilot_adoption_complete"]
+        )
+        self.assertFalse(
+            adoption["claim_boundaries"][
+                "organization_wide_conformance_authorized"
+            ]
+        )
         self.assertFalse(
             self.admission()["claim_boundaries"]["programme_adoption_complete"]
         )
@@ -135,7 +146,10 @@ class GCLGHOSAdmissionTests(unittest.TestCase):
         )
         self.assertIn("**Status:** Proposed for successor exact-packet review", decision)
         self.assertIn("**Status:** Candidate", standard)
-        self.assertEqual(self.admission()["effective_condition"], "protected_merge_of_this_exact_record")
+        self.assertEqual(
+            self.admission()["effective_condition"],
+            "protected_merge_of_this_exact_record",
+        )
 
 
 if __name__ == "__main__":
