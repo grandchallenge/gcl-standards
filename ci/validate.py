@@ -16,6 +16,9 @@ REGRET_TEMPLATE_PATH = ROOT / "templates" / "regret_contract.yaml"
 REGRET_ADOPTION_PATH = ROOT / "programme-adoption" / "REGRET-CONTRACT-1.0.0.yaml"
 _COMMIT_PATTERN = re.compile(r"^[0-9a-f]{40}$")
 _DIGEST_PATTERN = re.compile(r"^[0-9a-f]{64}$")
+_RECEIPT_PATH_PATTERN = re.compile(
+    r"^governance/reviews/GI-AMEND-0001-([0-9a-f]{12})\.json$"
+)
 _DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 EXPECTED_PROFILES = {
     ".github.json",
@@ -81,7 +84,13 @@ def _validate_receipt_reference(receipt: object, amendment_commit: object) -> No
         raise ValueError("review receipt campaign identity drift")
     if receipt.get("repository") != "grandchallenge/INTELLECT":
         raise ValueError("review receipt repository identity drift")
-    if receipt.get("path") != "governance/reviews/GI-AMEND-0001.json":
+    path = receipt.get("path")
+    path_match = (
+        _RECEIPT_PATH_PATTERN.fullmatch(path)
+        if isinstance(path, str)
+        else None
+    )
+    if path_match is None:
         raise ValueError("review receipt path identity drift")
     receipt_commit = receipt.get("commit_sha")
     if not _is_exact_commit(receipt_commit) or receipt_commit != amendment_commit:
@@ -91,6 +100,10 @@ def _validate_receipt_reference(receipt: object, amendment_commit: object) -> No
         packet_digest
     ):
         raise ValueError("review receipt requires an exact packet digest")
+    if path_match.group(1) != packet_digest[:12]:
+        raise ValueError(
+            "review receipt path does not match the packet digest prefix"
+        )
 
 
 def validate_math_programme_adoption(adoption: object) -> None:
