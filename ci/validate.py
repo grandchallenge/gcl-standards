@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -13,6 +14,12 @@ PROFILE_SCHEMA_PATH = ROOT / "schemas" / "repository_profile.schema.json"
 REGRET_SCHEMA_PATH = ROOT / "schemas" / "regret_contract.schema.json"
 REGRET_TEMPLATE_PATH = ROOT / "templates" / "regret_contract.yaml"
 REGRET_ADOPTION_PATH = ROOT / "programme-adoption" / "REGRET-CONTRACT-1.0.0.yaml"
+_COMMIT_PATTERN = re.compile(r"^[0-9a-f]{40}$")
+_DIGEST_PATTERN = re.compile(r"^[0-9a-f]{64}$")
+_RECEIPT_PATH_PATTERN = re.compile(
+    r"^governance/reviews/GI-AMEND-0001-([0-9a-f]{12})\.json$"
+)
+_DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 EXPECTED_PROFILES = {
     ".github.json",
     "GLOSS.json",
@@ -64,6 +71,90 @@ def load_json(path: Path) -> object:
 
 def load_yaml(path: Path) -> object:
     return yaml.safe_load(path.read_text(encoding="utf-8"))
+
+
+def _is_exact_commit(value: object) -> bool:
+    return isinstance(value, str) and bool(_COMMIT_PATTERN.fullmatch(value))
+
+
+def _validate_receipt_reference(receipt: object, amendment_commit: object) -> None:
+    if not isinstance(receipt, dict):
+        raise ValueError("accepted ADR requires a structured review receipt")
+    if receipt.get("campaign_id") != "GI-AMEND-0001":
+        raise ValueError("review receipt campaign identity drift")
+    if receipt.get("repository") != "grandchallenge/INTELLECT":
+        raise ValueError("review receipt repository identity drift")
+    path = receipt.get("path")
+    path_match = (
+        _RECEIPT_PATH_PATTERN.fullmatch(path)
+        if isinstance(path, str)
+        else None
+    )
+    if path_match is None:
+        raise ValueError("review receipt path identity drift")
+    receipt_commit = receipt.get("commit_sha")
+    if not _is_exact_commit(receipt_commit) or receipt_commit != amendment_commit:
+        raise ValueError("review receipt commit must match the amendment commit")
+    packet_digest = receipt.get("packet_sha256")
+    if not isinstance(packet_digest, str) or not _DIGEST_PATTERN.fullmatch(
+        packet_digest
+    ):
+        raise ValueError("review receipt requires an exact packet digest")
+    if path_match.group(1) != packet_digest[:12]:
+        raise ValueError(
+            "review receipt path does not match the packet digest prefix"
+        )
+
+
+def validate_math_programme_adoption(adoption: object) -> None:
+    if not isinstance(adoption, dict):
+        raise ValueError("MATH-PROGRAMME adoption record must be an object")
+    if adoption.get("status") not in {"proposed", "active", "superseded"}:
+        raise ValueError("invalid adoption status")
+    if adoption.get("decision_status") not in {"proposed", "accepted", "superseded"}:
+        raise ValueError("invalid ADR decision status")
+    if adoption.get("decision_ref") != (
+        "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"
+    ):
+        raise ValueError("MATH-PROGRAMME adoption must bind ADR-0001")
+
+    constitutional = adoption.get("constitutional_source")
+    if not isinstance(constitutional, dict):
+        raise ValueError("MATH-PROGRAMME adoption requires constitutional_source")
+    if (
+        constitutional.get("repository") != "grandchallenge/INTELLECT"
+        or constitutional.get("path") != "CONSTITUTION.md"
+        or constitutional.get("amendment") != "GI-AMEND-0001"
+    ):
+        raise ValueError("MATH-PROGRAMME constitutional source identity drift")
+
+    decision_accepted = adoption["decision_status"] == "accepted"
+    if decision_accepted:
+        amendment_commit = constitutional.get("amendment_commit")
+        if (
+            constitutional.get("effective_version") != "1.1.0"
+            or constitutional.get("amendment_status") != "effective"
+            or not _is_exact_commit(amendment_commit)
+            or not _is_exact_commit(adoption.get("standards_commit"))
+        ):
+            raise ValueError(
+                "accepted ADR requires an effective amendment and exact "
+                "40-character commits"
+            )
+        _validate_receipt_reference(
+            constitutional.get("review_receipt"), amendment_commit
+        )
+
+    if adoption["status"] == "active":
+        if not decision_accepted:
+            raise ValueError("active adoption requires accepted ADR-0001")
+        activation_date = adoption.get("activation_date")
+        if not isinstance(activation_date, str) or not _DATE_PATTERN.fullmatch(
+            activation_date
+        ):
+            raise ValueError("active adoption requires an ISO activation date")
+    elif adoption.get("activation_date") is not None:
+        raise ValueError("non-active adoption cannot claim an activation date")
 
 
 def validate_regret_contract() -> None:
@@ -204,24 +295,8 @@ def validate() -> None:
     if "Subordinate" not in standards["authority_scope"]:
         raise ValueError("gcl-standards must declare subordinate authority")
 
-    adoption = yaml.safe_load(
-        (ROOT / "programme-adoption" / "MATH-PROGRAMME.yaml").read_text(encoding="utf-8")
-    )
-    if adoption["status"] not in {"proposed", "active", "superseded"}:
-        raise ValueError("invalid adoption status")
-    if adoption["status"] == "active":
-        constitutional = adoption["constitutional_source"]
-        if (
-            constitutional["amendment_status"] != "effective"
-            or not constitutional["amendment_commit"]
-            or not constitutional["review_receipt"]
-            or not adoption["standards_commit"]
-            or not adoption["decision_ref"]
-        ):
-            raise ValueError(
-                "active adoption requires an effective amendment, review receipt, "
-                "exact commits, and a decision"
-            )
+    adoption = load_yaml(ROOT / "programme-adoption" / "MATH-PROGRAMME.yaml")
+    validate_math_programme_adoption(adoption)
 
     standard = (ROOT / "standards" / "GCL-GHOS-00.md").read_text(encoding="utf-8")
     required_boundaries = [
@@ -235,10 +310,32 @@ def validate() -> None:
         "additional-human approval counts",
         "Human Steward reserved authorization",
         "Candidate status does not create binding authority.",
+        "MATH-PROGRAMME pilot adoption follows that standards admission",
     ]
     for boundary in required_boundaries:
         if boundary not in standard:
             raise ValueError(f"missing constitutional boundary: {boundary}")
+
+    decision = (
+        ROOT / "decisions" / "ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"
+    ).read_text(encoding="utf-8")
+    required_sequence = [
+        "**Status:** Proposed for successor exact-packet review",
+        "`GI-AMEND-0001` is ratified and effective at an exact INTELLECT commit",
+        "the constitutional review receipt for the successor exact packet",
+        "MATH-PROGRAMME pilot adoption follows ADR acceptance and GCL-GHOS admission",
+        "It is not a prerequisite for this ADR to become accepted",
+    ]
+    for boundary in required_sequence:
+        if boundary not in decision:
+            raise ValueError(f"missing acyclic ADR boundary: {boundary}")
+    forbidden_sequence = [
+        "the mathematics pilot records its adoption commit",
+        "This ADR becomes accepted only after:\n\n1. `GI-AMEND-0001` is ratified and effective;\n2.",
+    ]
+    for stale in forbidden_sequence:
+        if stale in decision:
+            raise ValueError(f"circular ADR sequence remains: {stale}")
 
     validate_regret_contract()
 

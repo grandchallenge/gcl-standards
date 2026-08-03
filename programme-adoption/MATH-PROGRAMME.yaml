@@ -11,11 +11,12 @@ standard: GCL-GHOS-00
 standard_version: 0.1.0
 standards_commit: null
 status: proposed
-decision_ref: null
+decision_ref: decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md
+decision_status: proposed
 activation_date: null
 unresolved_deviations:
-  - GI-AMEND-0001 has not been ratified or activated.
-  - No complete constitutional review receipt has been admitted.
-  - Independent Council membership and Referee approval are not yet available.
-  - The mathematics repositories have not completed constitutionally admitted
-    GCL-GHOS pilot adoption; the technical bootstrap does not satisfy this gate.
+  - GI-AMEND-0001 has not been ratified or activated through the successor exact packet.
+  - No complete successor constitutional review receipt has been admitted.
+  - ADR-0001 remains proposed and GCL-GHOS-00 remains a candidate standard.
+  - The exact admitted standards commit is not yet available for programme adoption.
+  - Organization-wide activation and conformance claims remain blocked until the pilot adoption is complete.

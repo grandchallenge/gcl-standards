@@ -77,8 +77,7 @@ Every governed issue identifies:
 ## Council and review
 
 Council office records remain machine-readable repository artifacts. GitHub
-teams and CODEOWNERS route review but do not substitute for office
-findings.
+teams and CODEOWNERS route review but do not substitute for office findings.
 
 While `GI-STEWARD-0001` is effective, every non-Steward office may be staffed
 by an agent under the single Human Steward. An independent Referee decision
@@ -127,8 +126,9 @@ Protected branches require pull requests, strict checks, resolved review
 conversations, no force pushes, no deletion, and no bypass actors. During
 `GI-STEWARD-0001`, additional-human approval counts, CODEOWNER approval,
 last-push approval by another human, and human environment approval remain
-deferred and nonblocking. Bootstrap review retains Human Steward reserved authorization.
-Distinct agent office findings provide the non-Steward review path.
+deferred and nonblocking. Human Steward reserved authorization remains intact
+during bootstrap. Distinct agent office findings provide the non-Steward review
+path.
 
 ## Promotion and publication
 
@@ -159,19 +159,29 @@ is blocking. `GI-STEWARD-0001` is a superior staffing directive, not a
 standards-layer waiver, and remains in force until the Human Steward supersedes
 it.
 
-## Adoption
+## Admission and adoption
 
-Adoption is explicit and commit-addressed. A programme records:
+The constitutional-review packet may bind an exact candidate GCL-GHOS commit
+without admitting the standard. Candidate review is evidence for amendment
+activation; it does not accept ADR-0001 or create programme adoption.
+
+After `GI-AMEND-0001` is effective and the constitutional review receipt is
+admitted, the Council may accept ADR-0001 and admit GCL-GHOS by protected,
+commit-addressed integration. MATH-PROGRAMME pilot adoption follows that standards admission. It is not a prerequisite for ADR acceptance.
+
+Programme adoption is explicit and commit-addressed. A programme records:
 
 - the effective constitutional version and amendment commit;
 - the admitted constitutional review receipt;
+- the accepted ADR decision;
 - adopted standard version;
-- exact standards commit;
-- adoption decision;
+- exact admitted standards commit;
 - unresolved deviations;
 - activation date.
 
-Candidate status does not create binding authority.
+Candidate status does not create binding authority. Programme adoption does
+not by itself authorize organization-wide activation or conformance claims;
+those claims require the declared pilot and deviation gates to be complete.
 
 The authority order is: compact Constitution, effective amendments, INTELLECT
 constitutional schedules, accepted cross-programme standards, programme
