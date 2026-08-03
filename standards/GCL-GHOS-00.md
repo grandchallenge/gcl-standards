@@ -167,8 +167,7 @@ activation; it does not accept ADR-0001 or create programme adoption.
 
 After `GI-AMEND-0001` is effective and the constitutional review receipt is
 admitted, the Council may accept ADR-0001 and admit GCL-GHOS by protected,
-commit-addressed integration. MATH-PROGRAMME pilot adoption follows that
-standards admission. It is not a prerequisite for ADR acceptance.
+commit-addressed integration. MATH-PROGRAMME pilot adoption follows that standards admission. It is not a prerequisite for ADR acceptance.
 
 Programme adoption is explicit and commit-addressed. A programme records:
 
