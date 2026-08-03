@@ -1,0 +1,98 @@
+name: Apply digest-addressed receipt path cure
+
+on:
+  push:
+    branches:
+      - agent/gi-amend-0001-activation-order-cure
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: agent/gi-amend-0001-activation-order-cure
+      - name: Apply exact correction
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from textwrap import dedent, indent
+
+          validator_path = Path('ci/validate.py')
+          validator = validator_path.read_text(encoding='utf-8')
+          validator = validator.replace(
+              '_DIGEST_PATTERN = re.compile(r"^[0-9a-f]{64}$")\n',
+              '_DIGEST_PATTERN = re.compile(r"^[0-9a-f]{64}$")\n'
+              '_RECEIPT_PATH_PATTERN = re.compile(\n'
+              '    r"^governance/reviews/GI-AMEND-0001-([0-9a-f]{12})\\.json$"\n'
+              ')\n',
+          )
+          start = validator.index('def _validate_receipt_reference(')
+          end = validator.index('def validate_math_programme_adoption(', start)
+          replacement = '''def _validate_receipt_reference(receipt: object, amendment_commit: object) -> None:
+              if not isinstance(receipt, dict):
+                  raise ValueError("accepted ADR requires a structured review receipt")
+              if receipt.get("campaign_id") != "GI-AMEND-0001":
+                  raise ValueError("review receipt campaign identity drift")
+              if receipt.get("repository") != "grandchallenge/INTELLECT":
+                  raise ValueError("review receipt repository identity drift")
+              path = receipt.get("path")
+              path_match = (
+                  _RECEIPT_PATH_PATTERN.fullmatch(path)
+                  if isinstance(path, str)
+                  else None
+              )
+              if path_match is None:
+                  raise ValueError("review receipt path identity drift")
+              receipt_commit = receipt.get("commit_sha")
+              if not _is_exact_commit(receipt_commit) or receipt_commit != amendment_commit:
+                  raise ValueError("review receipt commit must match the amendment commit")
+              packet_digest = receipt.get("packet_sha256")
+              if not isinstance(packet_digest, str) or not _DIGEST_PATTERN.fullmatch(
+                  packet_digest
+              ):
+                  raise ValueError("review receipt requires an exact packet digest")
+              if path_match.group(1) != packet_digest[:12]:
+                  raise ValueError(
+                      "review receipt path does not match the packet digest prefix"
+                  )
+
+
+          '''
+          validator = validator[:start] + replacement + validator[end:]
+          validator_path.write_text(validator, encoding='utf-8')
+
+          tests_path = Path('tests/test_validate.py')
+          tests = tests_path.read_text(encoding='utf-8')
+          tests = tests.replace(
+              '"path": "governance/reviews/GI-AMEND-0001.json",',
+              '"path": "governance/reviews/GI-AMEND-0001-cccccccccccc.json",',
+          )
+          marker = '    def test_constitutional_source_identity_is_fixed(self) -> None:\n'
+          method = dedent('''
+          def test_receipt_path_prefix_must_match_packet_digest(self) -> None:
+              broken = self.admitted_standard_pending_programme_adoption()
+              broken["constitutional_source"]["review_receipt"]["path"] = (
+                  "governance/reviews/GI-AMEND-0001-dddddddddddd.json"
+              )
+              with self.assertRaisesRegex(ValueError, "packet digest prefix"):
+                  validate_module.validate_math_programme_adoption(broken)
+
+          ''').lstrip()
+          method = indent(method, '    ')
+          if marker not in tests:
+              raise SystemExit('test marker not found')
+          tests_path.write_text(tests.replace(marker, method + marker), encoding='utf-8')
+
+          Path('.github/workflows/receipt-path-cure.yml').unlink()
+          PY
+      - name: Commit correction
+        run: |
+          git config user.name "gcl-receipt-path-cure"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "align receipt path with packet digest"
+          git push origin HEAD:agent/gi-amend-0001-activation-order-cure
