@@ -1,6 +1,6 @@
 # GCL-RC-CHRONOLOGY-CURE-001
 
-**State:** Retrospective ratification pending  
+**State:** Retrospectively ratified; corrective protected merge pending  
 **Subject:** `grandchallenge/gcl-standards` PR #15  
 **Reviewed head:** `f1a6ac165f8448dd949f7057c372dfc6cc151734`  
 **Protected merge:** `afea7dd8e952998596fc54e215b6b1e2fcd48645`
@@ -17,9 +17,18 @@ Two later comments used prospective authorization wording:
 - comment `5160945680`, posted by `fyremael` at `2026-08-02T23:52:26Z`.
 
 Both comments occurred after merge. Neither may be represented as pre-merge
-authorization. The second is attributable to the Human Steward account, but it
-does not acknowledge the chronology exception and therefore is not the required
-retrospective cure.
+authorization, and neither is the retrospective cure identity.
+
+## Retrospective ratification
+
+Human Steward comment `5161001756`, recorded by `fyremael` at
+`2026-08-03T00:07:12Z`, explicitly states that merge preceded authorization and
+retrospectively ratifies the already-merged exact packet within the bounded
+scope of `GCL-RC-MIGRATION-001`.
+
+The ratification preserves `GCL-RC-00` as candidate, preserves all recorded
+artifact identities and non-conformance boundaries, and does not mark any
+programme conformant.
 
 ## Preserved evidence
 
@@ -38,17 +47,18 @@ The protected packet remains exactly the reviewed packet:
 No content revert is required. This is an authority-chronology and documentary
 integrity defect.
 
-## Cure gate
+## Remaining cure gate
 
-The cure remains pending until all of the following occur:
+The corrective package may merge only after all of the following occur:
 
-1. the Human Steward posts a new top-level comment on PR #15 that explicitly
-   states the merge preceded authorization and retrospectively ratifies the
-   already-merged exact packet;
-2. this record is updated to bind that comment ID, author, and timestamp;
-3. the corrective PR passes exact-head validation;
-4. a fresh non-author approval is recorded on the corrective PR; and
-5. a genuine pre-merge Human Steward release names the corrective PR exact head.
+1. exact-head Standards policy and GCL conformance pass after binding comment
+   `5161001756`;
+2. a fresh non-author approval is recorded on corrective PR #17; and
+3. a genuine pre-merge Human Steward release names the corrective PR exact
+   head.
+
+After protected merge, a post-merge attestation must record the corrective
+merge identity before issue #16 and the `.github#4` migration mirror may close.
 
 ## Boundary
 
