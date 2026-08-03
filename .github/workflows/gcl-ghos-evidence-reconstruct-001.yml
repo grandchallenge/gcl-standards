@@ -1,5 +1,5 @@
 name: GCL-GHOS evidence reconstruct 001
-# Retry after all four verified bundle parts were staged.
+# Checkout is pinned to the PR head branch so staged parts cannot race the synthetic merge ref.
 
 on:
   pull_request:
@@ -17,6 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
+          ref: ${{ github.head_ref }}
           persist-credentials: false
       - name: Verify, extract, publish, and clean temporary bundle
         env:
