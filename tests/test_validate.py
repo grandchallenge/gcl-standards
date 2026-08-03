@@ -31,9 +31,16 @@ class StandardsValidationTests(unittest.TestCase):
     def admitted_standard_pending_programme_adoption(self) -> dict[str, object]:
         adoption = self.math_adoption()
         adoption["decision_status"] = "accepted"
+        adoption["constitutional_source"]["effective_version"] = "1.1.0"
         adoption["constitutional_source"]["amendment_status"] = "effective"
         adoption["constitutional_source"]["amendment_commit"] = "a" * 40
-        adoption["constitutional_source"]["review_receipt"] = "receipt.json"
+        adoption["constitutional_source"]["review_receipt"] = {
+            "campaign_id": "GI-AMEND-0001",
+            "repository": "grandchallenge/INTELLECT",
+            "path": "governance/reviews/GI-AMEND-0001.json",
+            "commit_sha": "a" * 40,
+            "packet_sha256": "c" * 64,
+        }
         adoption["standards_commit"] = "b" * 40
         return adoption
 
@@ -76,33 +83,53 @@ class StandardsValidationTests(unittest.TestCase):
     def test_active_adoption_requires_accepted_adr(self) -> None:
         broken = self.math_adoption()
         broken["status"] = "active"
-        broken["constitutional_source"]["amendment_status"] = "effective"
-        broken["constitutional_source"]["amendment_commit"] = "a" * 40
-        broken["constitutional_source"]["review_receipt"] = "receipt.json"
-        broken["standards_commit"] = "b" * 40
         broken["activation_date"] = "2026-08-03"
         with self.assertRaisesRegex(ValueError, "accepted ADR-0001"):
             validate_module.validate_math_programme_adoption(broken)
 
-    def test_accepted_adr_requires_complete_exact_identity(self) -> None:
+    def test_accepted_adr_requires_exact_commits(self) -> None:
         admitted = self.admitted_standard_pending_programme_adoption()
-        validate_module.validate_math_programme_adoption(admitted)
-        mutations = (
-            ("amendment_commit", "short"),
-            ("standards_commit", "short"),
-            ("review_receipt", ""),
-        )
-        for field, value in mutations:
+        for field in ("amendment_commit", "standards_commit"):
             with self.subTest(field=field):
                 broken = copy.deepcopy(admitted)
-                if field in {"amendment_commit", "review_receipt"}:
-                    broken["constitutional_source"][field] = value
+                if field == "amendment_commit":
+                    broken["constitutional_source"][field] = "short"
                 else:
-                    broken[field] = value
-                with self.assertRaisesRegex(
-                    ValueError, "effective amendment, review receipt"
-                ):
+                    broken[field] = "short"
+                with self.assertRaisesRegex(ValueError, "40-character commits"):
                     validate_module.validate_math_programme_adoption(broken)
+
+    def test_accepted_adr_requires_structured_receipt(self) -> None:
+        broken = self.admitted_standard_pending_programme_adoption()
+        broken["constitutional_source"]["review_receipt"] = "receipt.json"
+        with self.assertRaisesRegex(ValueError, "structured review receipt"):
+            validate_module.validate_math_programme_adoption(broken)
+
+    def test_receipt_commit_must_match_amendment_commit(self) -> None:
+        broken = self.admitted_standard_pending_programme_adoption()
+        broken["constitutional_source"]["review_receipt"]["commit_sha"] = "d" * 40
+        with self.assertRaisesRegex(ValueError, "match the amendment commit"):
+            validate_module.validate_math_programme_adoption(broken)
+
+    def test_receipt_path_and_packet_digest_are_exact(self) -> None:
+        admitted = self.admitted_standard_pending_programme_adoption()
+        mutations = (
+            ("path", "other.json", "path identity drift"),
+            ("packet_sha256", "short", "exact packet digest"),
+            ("campaign_id", "OTHER", "campaign identity drift"),
+        )
+        for field, value, message in mutations:
+            with self.subTest(field=field):
+                broken = copy.deepcopy(admitted)
+                broken["constitutional_source"]["review_receipt"][field] = value
+                with self.assertRaisesRegex(ValueError, message):
+                    validate_module.validate_math_programme_adoption(broken)
+
+    def test_constitutional_source_identity_is_fixed(self) -> None:
+        broken = self.math_adoption()
+        broken["constitutional_source"]["repository"] = "other/repository"
+        with self.assertRaisesRegex(ValueError, "source identity drift"):
+            validate_module.validate_math_programme_adoption(broken)
 
     def test_active_adoption_adds_activation_date(self) -> None:
         active = self.admitted_standard_pending_programme_adoption()
