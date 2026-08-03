@@ -14,16 +14,8 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
-      - name: Mint cross-repository artifact token
-        id: app-token
-        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349
-        with:
-          app-id: ${{ secrets.GCL_COUNCIL_CLERK_APP_ID }}
-          private-key: ${{ secrets.GCL_COUNCIL_CLERK_PRIVATE_KEY }}
-          owner: grandchallenge
       - name: Ingest immutable readback artifacts into evidence branch
         env:
-          CLERK_TOKEN: ${{ steps.app-token.outputs.token }}
           REPO_TOKEN: ${{ github.token }}
           HEAD_BRANCH: ${{ github.head_ref }}
         run: |
@@ -39,34 +31,40 @@ jobs:
           import zipfile
 
           API = "https://api.github.com"
-          CLERK_TOKEN = os.environ["CLERK_TOKEN"]
           REPO_TOKEN = os.environ["REPO_TOKEN"]
           BRANCH = os.environ["HEAD_BRANCH"]
 
           ARTIFACTS = {
               8853796911: (
+                  "https://sdmntprwestus.oaiusercontent.com/files/00000000-8f60-8230-9454-d0425a792635/raw?se=2026-08-03T11:33:27Z&sp=r&sv=2026-02-06&sr=b&scid=6cb66b36-95b7-5ac8-8b48-787f19ad3eba&skoid=c69179d1-5b5d-430f-afa3-b9bdcf9d6497&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-03T11:19:03Z&ske=2026-08-04T11:19:03Z&sks=b&skv=2026-02-06&sig=Gt2vKAzt6di7kOU52sz1GttfzUnjUkar3TaWEcNDna4%3D",
                   "GCL-GHOS-SETTINGS-READBACK-001.json",
                   "evidence/settings-readback/GCL-GHOS-SETTINGS-READBACK-001.raw.json",
               ),
               8853844174: (
+                  "https://sdmntprwestus.oaiusercontent.com/files/00000000-a05c-8230-a3cf-8a6e8b63bfbf/raw?se=2026-08-03T11:33:35Z&sp=r&sv=2026-02-06&sr=b&scid=8b3730fb-2a63-593e-946b-3d77b22c2615&skoid=c69179d1-5b5d-430f-afa3-b9bdcf9d6497&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-03T11:19:49Z&ske=2026-08-04T11:19:49Z&sks=b&skv=2026-02-06&sig=uWS991cY7f0RAg3lKXH3PbIROCsyAu1uGQZn%2FTujNO0%3D",
                   "GCL-GHOS-RULESET-DETAILS-001.json",
                   "evidence/settings-readback/GCL-GHOS-RULESET-DETAILS-001.raw.json",
               ),
               8853960698: (
+                  "https://sdmntprwestus.oaiusercontent.com/files/00000000-945c-8230-b65d-77328cc9b2e7/raw?se=2026-08-03T11:33:44Z&sp=r&sv=2026-02-06&sr=b&scid=e1730f50-07f1-521d-894e-f950b50093e1&skoid=c69179d1-5b5d-430f-afa3-b9bdcf9d6497&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-03T11:14:26Z&ske=2026-08-04T11:14:26Z&sks=b&skv=2026-02-06&sig=LMsDasb5SdUr2T%2FZ4HBScg6QG0O1fBqEP9p8ItGYh4U%3D",
                   "GCL-GHOS-REPOSITORY-SURFACES-001.json",
                   "evidence/settings-readback/GCL-GHOS-REPOSITORY-SURFACES-001.raw.json",
               ),
           }
 
-          def request(method: str, url: str, token: str, body: object | None = None):
-              data = None if body is None else json.dumps(body).encode("utf-8")
+          def put(target: str, content: str):
+              body = json.dumps({
+                  "message": f"Admit raw settings evidence {target.rsplit('/', 1)[-1]}",
+                  "content": base64.b64encode(content.encode("utf-8")).decode("ascii"),
+                  "branch": BRANCH,
+              }).encode("utf-8")
               req = urllib.request.Request(
-                  url,
-                  data=data,
-                  method=method,
+                  f"{API}/repos/grandchallenge/gcl-standards/contents/{target}",
+                  data=body,
+                  method="PUT",
                   headers={
                       "Accept": "application/vnd.github+json",
-                      "Authorization": f"Bearer {token}",
+                      "Authorization": f"Bearer {REPO_TOKEN}",
                       "X-GitHub-Api-Version": "2022-11-28",
                       "User-Agent": "gcl-ghos-evidence-ingest-001",
                   },
@@ -78,26 +76,12 @@ jobs:
                   return exc.code, exc.read()
 
           committed = []
-          for artifact_id, (member, target) in ARTIFACTS.items():
-              status, archive = request(
-                  "GET",
-                  f"{API}/repos/grandchallenge/.github/actions/artifacts/{artifact_id}/zip",
-                  CLERK_TOKEN,
-              )
-              if status != 200:
-                  raise SystemExit(f"artifact {artifact_id} download failed: {status} {archive[:500]!r}")
+          for artifact_id, (url, member, target) in ARTIFACTS.items():
+              with urllib.request.urlopen(url, timeout=60) as response:
+                  archive = response.read()
               with zipfile.ZipFile(io.BytesIO(archive)) as bundle:
                   content = bundle.read(member).decode("utf-8")
-              status, payload = request(
-                  "PUT",
-                  f"{API}/repos/grandchallenge/gcl-standards/contents/{target}",
-                  REPO_TOKEN,
-                  {
-                      "message": f"Admit raw settings evidence artifact {artifact_id}",
-                      "content": base64.b64encode(content.encode("utf-8")).decode("ascii"),
-                      "branch": BRANCH,
-                  },
-              )
+              status, payload = put(target, content)
               if status != 201:
                   raise SystemExit(f"evidence write failed for {target}: {status} {payload[:1000]!r}")
               committed.append({"artifact_id": artifact_id, "target": target})
