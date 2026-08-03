@@ -4,7 +4,7 @@
   "repository": "grandchallenge/MODULUS",
   "profile": "provider",
   "constitutional_role": "Optimization research, benchmark, and implementation provider.",
-  "authority_scope": "Versioned implementation and empirical evidence; no programme, certification, or claim-promotion authority.",
+  "authority_scope": "Versioned implementation, benchmark, and empirical evidence; no programme, certification, or claim-promotion authority.",
   "claim_promotion_role": "none",
   "risk_tier": "high",
   "required_workflow_profile": "provider-compatibility",
