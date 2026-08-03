@@ -1,0 +1,176 @@
+{
+  "$schema": "../schemas/settings_readback.schema.json",
+  "campaign_id": "GCL-GHOS-SETTINGS-READBACK-001",
+  "claim_boundaries": {
+    "certification_claim_authorized": false,
+    "commercial_claim_authorized": false,
+    "deployment_claim_authorized": false,
+    "mathematical_claim_authorized": false,
+    "novelty_claim_authorized": false,
+    "organization_wide_conformance": false
+  },
+  "next_gate": "close all P0/P1 rows, disposition remaining rows, and admit a post-repair reread",
+  "normalized_evidence": "evidence/settings-readback/GCL-GHOS-SETTINGS-READBACK-001.normalized.json",
+  "open_priority_counts": {
+    "P0": 0,
+    "P1": 3,
+    "P2": 2,
+    "P3": 0
+  },
+  "organization_wide_conformance": false,
+  "recorded_at": "2026-08-03T11:23:00Z",
+  "rows": [
+    {
+      "closure_condition": "Retain through post-repair reread; blocked administrative/security endpoints remain separately unresolved.",
+      "control": "observable_governance_baseline",
+      "disposition": "conformant",
+      "finding": "Public, unarchived main repository with active no-bypass branch ruleset, deletion/non-fast-forward protection, strict checks, stale-review dismissal, review-thread resolution, merge/squash-only policy, immutable release-tag ruleset, private vulnerability reporting, profile, CODEOWNERS, Dependabot, SECURITY.md, and GCL conformance workflow.",
+      "id": "OBS-DOTGITHUB-001",
+      "priority": "P3",
+      "remediation_issue": null,
+      "scope": "grandchallenge/.github"
+    },
+    {
+      "closure_condition": "Retain through post-repair reread; blocked administrative/security endpoints remain separately unresolved.",
+      "control": "observable_governance_baseline",
+      "disposition": "conformant",
+      "finding": "Public, unarchived main repository with active no-bypass branch ruleset, deletion/non-fast-forward protection, strict checks, stale-review dismissal, review-thread resolution, merge/squash-only policy, immutable release-tag ruleset, private vulnerability reporting, profile, CODEOWNERS, Dependabot, SECURITY.md, and GCL conformance workflow.",
+      "id": "OBS-INTELLECT-001",
+      "priority": "P3",
+      "remediation_issue": null,
+      "scope": "grandchallenge/INTELLECT"
+    },
+    {
+      "closure_condition": "Retain through post-repair reread; blocked administrative/security endpoints remain separately unresolved.",
+      "control": "observable_governance_baseline",
+      "disposition": "conformant",
+      "finding": "Public, unarchived main repository with active no-bypass branch ruleset, deletion/non-fast-forward protection, strict checks, stale-review dismissal, review-thread resolution, merge/squash-only policy, immutable release-tag ruleset, private vulnerability reporting, profile, CODEOWNERS, Dependabot, SECURITY.md, and GCL conformance workflow.",
+      "id": "OBS-GCL_STANDARDS-001",
+      "priority": "P3",
+      "remediation_issue": null,
+      "scope": "grandchallenge/gcl-standards"
+    },
+    {
+      "closure_condition": "Retain through post-repair reread; blocked administrative/security endpoints remain separately unresolved.",
+      "control": "observable_governance_baseline",
+      "disposition": "conformant",
+      "finding": "Public, unarchived main repository with active no-bypass branch ruleset, deletion/non-fast-forward protection, strict checks, stale-review dismissal, review-thread resolution, merge/squash-only policy, immutable release-tag ruleset, private vulnerability reporting, profile, CODEOWNERS, Dependabot, SECURITY.md, and GCL conformance workflow.",
+      "id": "OBS-MATH_PROGRAMME-001",
+      "priority": "P3",
+      "remediation_issue": null,
+      "scope": "grandchallenge/MATH-PROGRAMME"
+    },
+    {
+      "closure_condition": "Retain through post-repair reread; blocked administrative/security endpoints remain separately unresolved.",
+      "control": "observable_governance_baseline",
+      "disposition": "conformant",
+      "finding": "Public, unarchived main repository with active no-bypass branch ruleset, deletion/non-fast-forward protection, strict checks, stale-review dismissal, review-thread resolution, merge/squash-only policy, immutable release-tag ruleset, private vulnerability reporting, profile, CODEOWNERS, Dependabot, SECURITY.md, and GCL conformance workflow.",
+      "id": "OBS-MATHFORGE-001",
+      "priority": "P3",
+      "remediation_issue": null,
+      "scope": "grandchallenge/MATHFORGE"
+    },
+    {
+      "closure_condition": "Retain through post-repair reread; blocked administrative/security endpoints remain separately unresolved.",
+      "control": "observable_governance_baseline",
+      "disposition": "conformant",
+      "finding": "Public, unarchived main repository with active no-bypass branch ruleset, deletion/non-fast-forward protection, strict checks, stale-review dismissal, review-thread resolution, merge/squash-only policy, immutable release-tag ruleset, private vulnerability reporting, profile, CODEOWNERS, Dependabot, SECURITY.md, and GCL conformance workflow.",
+      "id": "OBS-MATHSOLVE-001",
+      "priority": "P3",
+      "remediation_issue": null,
+      "scope": "grandchallenge/MATHSOLVE"
+    },
+    {
+      "closure_condition": "Retain through post-repair reread; blocked administrative/security endpoints remain separately unresolved.",
+      "control": "observable_governance_baseline",
+      "disposition": "conformant",
+      "finding": "Public, unarchived main repository with active no-bypass branch ruleset, deletion/non-fast-forward protection, strict checks, stale-review dismissal, review-thread resolution, merge/squash-only policy, immutable release-tag ruleset, private vulnerability reporting, profile, CODEOWNERS, Dependabot, SECURITY.md, and GCL conformance workflow.",
+      "id": "OBS-MATHCERT-001",
+      "priority": "P3",
+      "remediation_issue": null,
+      "scope": "grandchallenge/MATHCERT"
+    },
+    {
+      "closure_condition": "Retain through post-repair reread; blocked administrative/security endpoints remain separately unresolved.",
+      "control": "observable_governance_baseline",
+      "disposition": "conformant",
+      "finding": "Public, unarchived main repository with active no-bypass branch ruleset, deletion/non-fast-forward protection, strict checks, stale-review dismissal, review-thread resolution, merge/squash-only policy, immutable release-tag ruleset, private vulnerability reporting, profile, CODEOWNERS, Dependabot, SECURITY.md, and GCL conformance workflow.",
+      "id": "OBS-GLOSS-001",
+      "priority": "P3",
+      "remediation_issue": null,
+      "scope": "grandchallenge/GLOSS"
+    },
+    {
+      "closure_condition": "Retain through post-repair reread; blocked administrative/security endpoints remain separately unresolved.",
+      "control": "observable_governance_baseline",
+      "disposition": "conformant",
+      "finding": "Public, unarchived main repository with active no-bypass branch ruleset, deletion/non-fast-forward protection, strict checks, stale-review dismissal, review-thread resolution, merge/squash-only policy, immutable release-tag ruleset, private vulnerability reporting, profile, CODEOWNERS, Dependabot, SECURITY.md, and GCL conformance workflow.",
+      "id": "OBS-LEAN_ACTION-001",
+      "priority": "P3",
+      "remediation_issue": null,
+      "scope": "grandchallenge/lean-action"
+    },
+    {
+      "closure_condition": "Retain through post-repair reread; blocked administrative/security endpoints remain separately unresolved.",
+      "control": "observable_governance_baseline",
+      "disposition": "conformant",
+      "finding": "Public, unarchived main repository with active no-bypass branch ruleset, deletion/non-fast-forward protection, strict checks, stale-review dismissal, review-thread resolution, merge/squash-only policy, immutable release-tag ruleset, private vulnerability reporting, profile, CODEOWNERS, Dependabot, SECURITY.md, and GCL conformance workflow.",
+      "id": "OBS-UPLOAD_PAGES_ARTIFACT-001",
+      "priority": "P3",
+      "remediation_issue": null,
+      "scope": "grandchallenge/upload-pages-artifact"
+    },
+    {
+      "closure_condition": "Admit a complete organization-owner export or a separately authorized minimum-read-only rerun covering all blocked endpoints.",
+      "control": "organization_actions_rulesets_and_repository_security_settings",
+      "disposition": "readback_blocked",
+      "finding": "Organization Actions/default-workflow/ruleset endpoints and repository Actions, legacy branch-protection, vulnerability-alert, automated-fix, and CodeQL endpoints returned HTTP 403 to the organization collector.",
+      "id": "ORG-READBACK-BLOCKED-001",
+      "priority": "P1",
+      "remediation_issue": "https://github.com/grandchallenge/.github/issues/38",
+      "scope": "grandchallenge"
+    },
+    {
+      "closure_condition": "Protected remediation plus exact post-repair ruleset/settings/surface reread.",
+      "control": "profile_security_and_protected_main_baseline",
+      "disposition": "repair_required",
+      "finding": "Missing profile, CODEOWNERS, Dependabot, GCL conformance workflow, GCL policy/security checks, private vulnerability reporting, and bootstrap-compatible review settings.",
+      "id": "MODULUS-P1-001",
+      "priority": "P1",
+      "remediation_issue": "https://github.com/grandchallenge/MODULUS/issues/6",
+      "scope": "grandchallenge/MODULUS"
+    },
+    {
+      "closure_condition": "Align settings/rulesets or admit a complete unexpired exception, then reread.",
+      "control": "merge_and_release_policy",
+      "disposition": "repair_required",
+      "finding": "Rebase merge is enabled and no immutable release-tag ruleset was observed; auto-merge differs from the admitted organization baseline.",
+      "id": "MODULUS-P2-001",
+      "priority": "P2",
+      "remediation_issue": "https://github.com/grandchallenge/MODULUS/issues/6",
+      "scope": "grandchallenge/MODULUS"
+    },
+    {
+      "closure_condition": "Protected remediation plus exact post-repair ruleset/settings/surface reread.",
+      "control": "profile_security_and_protected_main_baseline",
+      "disposition": "repair_required",
+      "finding": "Missing profile, CODEOWNERS, Dependabot, SECURITY.md, security check, private vulnerability reporting; stale-review dismissal disabled and status checks non-strict.",
+      "id": "QUANTUM-P1-001",
+      "priority": "P1",
+      "remediation_issue": "https://github.com/grandchallenge/QUANTUM-TECHNOLOGIES/issues/14",
+      "scope": "grandchallenge/QUANTUM-TECHNOLOGIES"
+    },
+    {
+      "closure_condition": "Align settings/rulesets or admit a complete unexpired exception, then reread.",
+      "control": "merge_and_release_policy",
+      "disposition": "repair_required",
+      "finding": "Rebase merge is enabled and no immutable release-tag ruleset was observed; auto-merge differs from the admitted organization baseline.",
+      "id": "QUANTUM-P2-001",
+      "priority": "P2",
+      "remediation_issue": "https://github.com/grandchallenge/QUANTUM-TECHNOLOGIES/issues/14",
+      "scope": "grandchallenge/QUANTUM-TECHNOLOGIES"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "status": "open"
+}
