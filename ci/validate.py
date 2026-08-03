@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -13,6 +14,8 @@ PROFILE_SCHEMA_PATH = ROOT / "schemas" / "repository_profile.schema.json"
 REGRET_SCHEMA_PATH = ROOT / "schemas" / "regret_contract.schema.json"
 REGRET_TEMPLATE_PATH = ROOT / "templates" / "regret_contract.yaml"
 REGRET_ADOPTION_PATH = ROOT / "programme-adoption" / "REGRET-CONTRACT-1.0.0.yaml"
+_COMMIT_PATTERN = re.compile(r"^[0-9a-f]{40}$")
+_DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 EXPECTED_PROFILES = {
     ".github.json",
     "GLOSS.json",
@@ -66,6 +69,14 @@ def load_yaml(path: Path) -> object:
     return yaml.safe_load(path.read_text(encoding="utf-8"))
 
 
+def _is_exact_commit(value: object) -> bool:
+    return isinstance(value, str) and bool(_COMMIT_PATTERN.fullmatch(value))
+
+
+def _is_nonempty_string(value: object) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
 def validate_math_programme_adoption(adoption: object) -> None:
     if not isinstance(adoption, dict):
         raise ValueError("MATH-PROGRAMME adoption record must be an object")
@@ -77,23 +88,34 @@ def validate_math_programme_adoption(adoption: object) -> None:
         "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"
     ):
         raise ValueError("MATH-PROGRAMME adoption must bind ADR-0001")
-    if adoption["status"] == "active":
-        constitutional = adoption["constitutional_source"]
-        if adoption["decision_status"] != "accepted":
-            raise ValueError("active adoption requires accepted ADR-0001")
+
+    constitutional = adoption.get("constitutional_source")
+    if not isinstance(constitutional, dict):
+        raise ValueError("MATH-PROGRAMME adoption requires constitutional_source")
+
+    decision_accepted = adoption["decision_status"] == "accepted"
+    if decision_accepted:
         if (
-            constitutional["amendment_status"] != "effective"
-            or not constitutional["amendment_commit"]
-            or not constitutional["review_receipt"]
-            or not adoption["standards_commit"]
-            or not adoption["activation_date"]
+            constitutional.get("amendment_status") != "effective"
+            or not _is_exact_commit(constitutional.get("amendment_commit"))
+            or not _is_nonempty_string(constitutional.get("review_receipt"))
+            or not _is_exact_commit(adoption.get("standards_commit"))
         ):
             raise ValueError(
-                "active adoption requires an effective amendment, review receipt, "
-                "accepted decision, exact commits, and activation date"
+                "accepted ADR requires an effective amendment, review receipt, "
+                "and exact 40-character commits"
             )
-    if adoption["status"] == "proposed" and adoption["decision_status"] == "accepted":
-        raise ValueError("accepted ADR requires a separate standards-admission state")
+
+    if adoption["status"] == "active":
+        if not decision_accepted:
+            raise ValueError("active adoption requires accepted ADR-0001")
+        activation_date = adoption.get("activation_date")
+        if not isinstance(activation_date, str) or not _DATE_PATTERN.fullmatch(
+            activation_date
+        ):
+            raise ValueError("active adoption requires an ISO activation date")
+    elif adoption.get("activation_date") is not None:
+        raise ValueError("non-active adoption cannot claim an activation date")
 
 
 def validate_regret_contract() -> None:
