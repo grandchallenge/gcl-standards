@@ -37,7 +37,7 @@ class StandardsValidationTests(unittest.TestCase):
         adoption["constitutional_source"]["review_receipt"] = {
             "campaign_id": "GI-AMEND-0001",
             "repository": "grandchallenge/INTELLECT",
-            "path": "governance/reviews/GI-AMEND-0001.json",
+            "path": "governance/reviews/GI-AMEND-0001-cccccccccccc.json",
             "commit_sha": "a" * 40,
             "packet_sha256": "c" * 64,
         }
@@ -124,6 +124,14 @@ class StandardsValidationTests(unittest.TestCase):
                 broken["constitutional_source"]["review_receipt"][field] = value
                 with self.assertRaisesRegex(ValueError, message):
                     validate_module.validate_math_programme_adoption(broken)
+
+    def test_receipt_path_prefix_must_match_packet_digest(self) -> None:
+        broken = self.admitted_standard_pending_programme_adoption()
+        broken["constitutional_source"]["review_receipt"]["path"] = (
+            "governance/reviews/GI-AMEND-0001-dddddddddddd.json"
+        )
+        with self.assertRaisesRegex(ValueError, "packet digest prefix"):
+            validate_module.validate_math_programme_adoption(broken)
 
     def test_constitutional_source_identity_is_fixed(self) -> None:
         broken = self.math_adoption()
