@@ -26,7 +26,7 @@ class ChronologyCureTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
 
-    def test_pending_record_validates(self) -> None:
+    def test_ratified_record_validates(self) -> None:
         validator.validate_record(self.record())
 
     def test_cannot_invent_pre_merge_authorization(self) -> None:
@@ -37,7 +37,6 @@ class ChronologyCureTests(unittest.TestCase):
 
     def test_cannot_treat_prospective_comment_as_cure(self) -> None:
         broken = copy.deepcopy(self.record())
-        broken["state"] = "ratified_pending_protected_merge"
         broken["retrospective_ratification"] = {
             "required": True,
             "comment_id": 5160945680,
@@ -47,9 +46,27 @@ class ChronologyCureTests(unittest.TestCase):
         with self.assertRaises(Exception):
             validator.validate_record(broken)
 
+    def test_ratification_comment_id_is_exact(self) -> None:
+        broken = copy.deepcopy(self.record())
+        broken["retrospective_ratification"]["comment_id"] = 5161001757
+        with self.assertRaises(ValueError):
+            validator.validate_record(broken)
+
+    def test_ratification_timestamp_is_exact(self) -> None:
+        broken = copy.deepcopy(self.record())
+        broken["retrospective_ratification"]["recorded_at"] = "2026-08-03T00:07:13Z"
+        with self.assertRaises(ValueError):
+            validator.validate_record(broken)
+
     def test_pending_record_rejects_partial_ratification(self) -> None:
         broken = copy.deepcopy(self.record())
-        broken["retrospective_ratification"]["comment_id"] = 999
+        broken["state"] = "ratification_pending"
+        broken["retrospective_ratification"] = {
+            "required": True,
+            "comment_id": 999,
+            "author": None,
+            "recorded_at": None,
+        }
         with self.assertRaises(ValueError):
             validator.validate_record(broken)
 
