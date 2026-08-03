@@ -15,6 +15,7 @@ REGRET_SCHEMA_PATH = ROOT / "schemas" / "regret_contract.schema.json"
 REGRET_TEMPLATE_PATH = ROOT / "templates" / "regret_contract.yaml"
 REGRET_ADOPTION_PATH = ROOT / "programme-adoption" / "REGRET-CONTRACT-1.0.0.yaml"
 _COMMIT_PATTERN = re.compile(r"^[0-9a-f]{40}$")
+_DIGEST_PATTERN = re.compile(r"^[0-9a-f]{64}$")
 _DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 EXPECTED_PROFILES = {
     ".github.json",
@@ -73,8 +74,23 @@ def _is_exact_commit(value: object) -> bool:
     return isinstance(value, str) and bool(_COMMIT_PATTERN.fullmatch(value))
 
 
-def _is_nonempty_string(value: object) -> bool:
-    return isinstance(value, str) and bool(value.strip())
+def _validate_receipt_reference(receipt: object, amendment_commit: object) -> None:
+    if not isinstance(receipt, dict):
+        raise ValueError("accepted ADR requires a structured review receipt")
+    if receipt.get("campaign_id") != "GI-AMEND-0001":
+        raise ValueError("review receipt campaign identity drift")
+    if receipt.get("repository") != "grandchallenge/INTELLECT":
+        raise ValueError("review receipt repository identity drift")
+    if receipt.get("path") != "governance/reviews/GI-AMEND-0001.json":
+        raise ValueError("review receipt path identity drift")
+    receipt_commit = receipt.get("commit_sha")
+    if not _is_exact_commit(receipt_commit) or receipt_commit != amendment_commit:
+        raise ValueError("review receipt commit must match the amendment commit")
+    packet_digest = receipt.get("packet_sha256")
+    if not isinstance(packet_digest, str) or not _DIGEST_PATTERN.fullmatch(
+        packet_digest
+    ):
+        raise ValueError("review receipt requires an exact packet digest")
 
 
 def validate_math_programme_adoption(adoption: object) -> None:
@@ -92,19 +108,29 @@ def validate_math_programme_adoption(adoption: object) -> None:
     constitutional = adoption.get("constitutional_source")
     if not isinstance(constitutional, dict):
         raise ValueError("MATH-PROGRAMME adoption requires constitutional_source")
+    if (
+        constitutional.get("repository") != "grandchallenge/INTELLECT"
+        or constitutional.get("path") != "CONSTITUTION.md"
+        or constitutional.get("amendment") != "GI-AMEND-0001"
+    ):
+        raise ValueError("MATH-PROGRAMME constitutional source identity drift")
 
     decision_accepted = adoption["decision_status"] == "accepted"
     if decision_accepted:
+        amendment_commit = constitutional.get("amendment_commit")
         if (
-            constitutional.get("amendment_status") != "effective"
-            or not _is_exact_commit(constitutional.get("amendment_commit"))
-            or not _is_nonempty_string(constitutional.get("review_receipt"))
+            constitutional.get("effective_version") != "1.1.0"
+            or constitutional.get("amendment_status") != "effective"
+            or not _is_exact_commit(amendment_commit)
             or not _is_exact_commit(adoption.get("standards_commit"))
         ):
             raise ValueError(
-                "accepted ADR requires an effective amendment, review receipt, "
-                "and exact 40-character commits"
+                "accepted ADR requires an effective amendment and exact "
+                "40-character commits"
             )
+        _validate_receipt_reference(
+            constitutional.get("review_receipt"), amendment_commit
+        )
 
     if adoption["status"] == "active":
         if not decision_accepted:
