@@ -126,8 +126,8 @@ Protected branches require pull requests, strict checks, resolved review
 conversations, no force pushes, no deletion, and no bypass actors. During
 `GI-STEWARD-0001`, additional-human approval counts, CODEOWNER approval,
 last-push approval by another human, and human environment approval remain
-deferred and nonblocking. Bootstrap review retains Human Steward reserved
-authorization. Distinct agent office findings provide the non-Steward review
+deferred and nonblocking. Human Steward reserved authorization remains intact
+during bootstrap. Distinct agent office findings provide the non-Steward review
 path.
 
 ## Promotion and publication
