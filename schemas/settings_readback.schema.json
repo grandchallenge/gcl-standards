@@ -1,0 +1,233 @@
+{
+  "$defs": {
+    "claimBoundaries": {
+      "additionalProperties": false,
+      "properties": {
+        "certification_claim_authorized": {
+          "const": false
+        },
+        "commercial_claim_authorized": {
+          "const": false
+        },
+        "deployment_claim_authorized": {
+          "const": false
+        },
+        "mathematical_claim_authorized": {
+          "const": false
+        },
+        "novelty_claim_authorized": {
+          "const": false
+        },
+        "organization_wide_conformance": {
+          "const": false
+        }
+      },
+      "required": [
+        "organization_wide_conformance",
+        "mathematical_claim_authorized",
+        "certification_claim_authorized",
+        "novelty_claim_authorized",
+        "deployment_claim_authorized",
+        "commercial_claim_authorized"
+      ],
+      "type": "object"
+    },
+    "ledger": {
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "const": "../schemas/settings_readback.schema.json"
+        },
+        "campaign_id": {
+          "const": "GCL-GHOS-SETTINGS-READBACK-001"
+        },
+        "claim_boundaries": {
+          "$ref": "#/$defs/claimBoundaries"
+        },
+        "next_gate": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "normalized_evidence": {
+          "const": "evidence/settings-readback/GCL-GHOS-SETTINGS-READBACK-001.normalized.json"
+        },
+        "open_priority_counts": {
+          "type": "object"
+        },
+        "organization_wide_conformance": {
+          "const": false
+        },
+        "recorded_at": {
+          "type": "string"
+        },
+        "rows": {
+          "items": {
+            "$ref": "#/$defs/row"
+          },
+          "minItems": 15,
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "status": {
+          "const": "open"
+        }
+      },
+      "required": [
+        "$schema",
+        "schema_version",
+        "campaign_id",
+        "status",
+        "recorded_at",
+        "normalized_evidence",
+        "rows",
+        "open_priority_counts",
+        "organization_wide_conformance",
+        "next_gate",
+        "claim_boundaries"
+      ],
+      "type": "object"
+    },
+    "normalized": {
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "const": "../../schemas/settings_readback.schema.json"
+        },
+        "authority": {
+          "type": "object"
+        },
+        "campaign_id": {
+          "const": "GCL-GHOS-SETTINGS-READBACK-001"
+        },
+        "claim_boundaries": {
+          "$ref": "#/$defs/claimBoundaries"
+        },
+        "evidence_sources": {
+          "minItems": 5,
+          "type": "array"
+        },
+        "normalized_at": {
+          "type": "string"
+        },
+        "organization": {
+          "const": "grandchallenge"
+        },
+        "organization_readback": {
+          "type": "object"
+        },
+        "repositories": {
+          "maxItems": 12,
+          "minItems": 12,
+          "type": "array"
+        },
+        "repository_count": {
+          "const": 12
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "status": {
+          "const": "adjudication_open"
+        }
+      },
+      "required": [
+        "$schema",
+        "schema_version",
+        "campaign_id",
+        "status",
+        "normalized_at",
+        "organization",
+        "repository_count",
+        "authority",
+        "evidence_sources",
+        "organization_readback",
+        "repositories",
+        "claim_boundaries"
+      ],
+      "type": "object"
+    },
+    "row": {
+      "additionalProperties": false,
+      "properties": {
+        "closure_condition": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "control": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "disposition": {
+          "enum": [
+            "conformant",
+            "repair_required",
+            "exception_required",
+            "exception_active",
+            "not_applicable",
+            "readback_blocked"
+          ]
+        },
+        "finding": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "priority": {
+          "enum": [
+            "P0",
+            "P1",
+            "P2",
+            "P3"
+          ]
+        },
+        "remediation_issue": {
+          "format": "uri",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scope": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "scope",
+        "control",
+        "priority",
+        "disposition",
+        "finding",
+        "remediation_issue",
+        "closure_condition"
+      ],
+      "type": "object"
+    },
+    "sha40": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "sha64": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    }
+  },
+  "$id": "https://grandchallenge.ai/schemas/settings-readback-1.0.0.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/normalized"
+    },
+    {
+      "$ref": "#/$defs/ledger"
+    }
+  ],
+  "title": "GCL-GHOS settings readback and deviation ledger",
+  "type": "object"
+}

@@ -1,0 +1,1901 @@
+{
+  "$schema": "../../schemas/settings_readback.schema.json",
+  "authority": {
+    "campaign_issue": "https://github.com/grandchallenge/gcl-standards/issues/22",
+    "constitution_version": "1.1.0",
+    "documentary_closure": "d9c659f70490c328b9b4c068224136c02edc534c",
+    "gcl_ghos_admission": "31211b286a9c4a2874da5559118ef2f026f7de52",
+    "gi_amend_0001_activation": "8d47ed8930d33253ae476c64dfec7c748185a535",
+    "math_programme_pilot_adoption": "9aea6a49153b9c524319544b8f94cf7eeea2e65e"
+  },
+  "campaign_id": "GCL-GHOS-SETTINGS-READBACK-001",
+  "claim_boundaries": {
+    "certification_claim_authorized": false,
+    "commercial_claim_authorized": false,
+    "deployment_claim_authorized": false,
+    "mathematical_claim_authorized": false,
+    "novelty_claim_authorized": false,
+    "organization_wide_conformance": false
+  },
+  "evidence_sources": [
+    {
+      "artifact_id": 8853796911,
+      "kind": "workflow_artifact",
+      "name": "gcl-ghos-settings-readback-001",
+      "recorded_at": "2026-08-03T11:12:01Z",
+      "run_id": 30808570423,
+      "sha256": "258156d9b029183601d6dfdbb5367871f05e52eda504dc28cd469a14c6dc19c6"
+    },
+    {
+      "artifact_id": 8853844174,
+      "kind": "workflow_artifact",
+      "name": "gcl-ghos-ruleset-details-001",
+      "recorded_at": "2026-08-03T11:13:58Z",
+      "run_id": 30808705755,
+      "sha256": "eeec47fb2b8f5e3523275380841cefdb9cc87577e5ccbeca7499ce8ce82fa90c"
+    },
+    {
+      "artifact_id": 8853960698,
+      "kind": "workflow_artifact",
+      "name": "gcl-ghos-repository-surfaces-001",
+      "recorded_at": "2026-08-03T11:18:20Z",
+      "run_id": 30808996401,
+      "sha256": "9c7bc3c5f67036fb1485697c0f2aaf4a8d388fbadae32c0e2a9ba605c7311d09"
+    },
+    {
+      "comment_id": 5165590292,
+      "kind": "issue_comment",
+      "number": 22,
+      "repository": "grandchallenge/gcl-standards"
+    },
+    {
+      "collector": "fyremael GitHub connection",
+      "fields": [
+        "visibility",
+        "archived",
+        "default_branch",
+        "allow_auto_merge",
+        "allow_merge_commit",
+        "allow_squash_merge",
+        "allow_rebase_merge",
+        "allow_update_branch"
+      ],
+      "kind": "authenticated_connector_readback",
+      "recorded_at": "2026-08-03T11:16:00Z"
+    }
+  ],
+  "normalized_at": "2026-08-03T11:23:00Z",
+  "organization": "grandchallenge",
+  "organization_readback": {
+    "actions_permissions_status": 403,
+    "actions_workflow_permissions_status": 403,
+    "blocked_evidence_issue": "https://github.com/grandchallenge/.github/issues/38",
+    "metadata_status": 200,
+    "rulesets_status": 403
+  },
+  "repositories": [
+    {
+      "blocked_endpoint_statuses": {
+        "actions_permissions": 403,
+        "actions_workflow_permissions": 403,
+        "automated_security_fixes": 403,
+        "code_scanning_default_setup": 403,
+        "main_protection": 403,
+        "vulnerability_alerts": 403
+      },
+      "metadata": {
+        "allow_auto_merge": true,
+        "allow_merge_commit": true,
+        "allow_rebase_merge": false,
+        "allow_squash_merge": true,
+        "allow_update_branch": false,
+        "archived": false,
+        "default_branch": "main",
+        "visibility": "public"
+      },
+      "private_vulnerability_reporting": {
+        "enabled": true,
+        "status": 200
+      },
+      "repository": "grandchallenge/.github",
+      "rulesets": {
+        "branch_ruleset_count": 1,
+        "branch_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/.github/rules/17137624"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/.github/rulesets/17137624"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "~DEFAULT_BRANCH"
+                ]
+              }
+            },
+            "created_at": "2026-06-01T22:33:09.589Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 17137624,
+            "name": "Community profile - main",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5K5ZXuzgEFf9g",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              },
+              {
+                "parameters": {
+                  "allowed_merge_methods": [
+                    "merge",
+                    "squash"
+                  ],
+                  "dismiss_stale_reviews_on_push": true,
+                  "dismissal_restriction": {
+                    "allowed_actors": [],
+                    "enabled": false
+                  },
+                  "require_code_owner_review": false,
+                  "require_last_push_approval": false,
+                  "required_approving_review_count": 0,
+                  "required_review_thread_resolution": true,
+                  "required_reviewers": []
+                },
+                "type": "pull_request"
+              },
+              {
+                "parameters": {
+                  "do_not_enforce_on_create": false,
+                  "required_status_checks": [
+                    {
+                      "context": "policy / policy"
+                    },
+                    {
+                      "context": "security / action-policy"
+                    }
+                  ],
+                  "strict_required_status_checks_policy": true
+                },
+                "type": "required_status_checks"
+              }
+            ],
+            "source": "grandchallenge/.github",
+            "source_type": "Repository",
+            "target": "branch",
+            "updated_at": "2026-07-29T12:07:37.708Z"
+          }
+        ],
+        "list_status": 200,
+        "tag_ruleset_count": 1,
+        "tag_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/.github/rules/19964097"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/.github/rulesets/19964097"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "refs/tags/*"
+                ]
+              }
+            },
+            "created_at": "2026-07-29T10:19:21.538Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 19964097,
+            "name": "Immutable release tags",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5K5ZXuzgEwoME",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              }
+            ],
+            "source": "grandchallenge/.github",
+            "source_type": "Repository",
+            "target": "tag",
+            "updated_at": "2026-07-29T10:19:21.557Z"
+          }
+        ]
+      },
+      "surfaces": {
+        "codeowners_present": true,
+        "dependabot_present": true,
+        "gcl_conformance_workflow_present": true,
+        "repository_profile_present": true,
+        "security_policy_present": true,
+        "workflow_names": [
+          "constitutional-review-clerk.yml",
+          "constitutional-review-tests.yml",
+          "gcl-conformance.yml",
+          "gcl-policy.yml",
+          "gcl-project-sync.yml",
+          "gcl-release.yml",
+          "gcl-security.yml",
+          "qtr-incubator.yml"
+        ]
+      }
+    },
+    {
+      "blocked_endpoint_statuses": {
+        "actions_permissions": 403,
+        "actions_workflow_permissions": 403,
+        "automated_security_fixes": 403,
+        "code_scanning_default_setup": 403,
+        "main_protection": 403,
+        "vulnerability_alerts": 403
+      },
+      "metadata": {
+        "allow_auto_merge": true,
+        "allow_merge_commit": true,
+        "allow_rebase_merge": false,
+        "allow_squash_merge": true,
+        "allow_update_branch": false,
+        "archived": false,
+        "default_branch": "main",
+        "visibility": "public"
+      },
+      "private_vulnerability_reporting": {
+        "enabled": true,
+        "status": 200
+      },
+      "repository": "grandchallenge/INTELLECT",
+      "rulesets": {
+        "branch_ruleset_count": 1,
+        "branch_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/INTELLECT/rules/19964077"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/INTELLECT/rulesets/19964077"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "~DEFAULT_BRANCH"
+                ]
+              }
+            },
+            "created_at": "2026-07-29T10:19:01.553Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 19964077,
+            "name": "Provider profile - main",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5NxRvKzgEwoK0",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              },
+              {
+                "parameters": {
+                  "allowed_merge_methods": [
+                    "merge",
+                    "squash"
+                  ],
+                  "dismiss_stale_reviews_on_push": true,
+                  "dismissal_restriction": {
+                    "allowed_actors": [],
+                    "enabled": false
+                  },
+                  "require_code_owner_review": false,
+                  "require_last_push_approval": false,
+                  "required_approving_review_count": 0,
+                  "required_review_thread_resolution": true,
+                  "required_reviewers": []
+                },
+                "type": "pull_request"
+              },
+              {
+                "parameters": {
+                  "do_not_enforce_on_create": false,
+                  "required_status_checks": [
+                    {
+                      "context": "test (3.11.14)"
+                    },
+                    {
+                      "context": "test (3.12.13)"
+                    },
+                    {
+                      "context": "policy / policy"
+                    },
+                    {
+                      "context": "security / action-policy"
+                    }
+                  ],
+                  "strict_required_status_checks_policy": true
+                },
+                "type": "required_status_checks"
+              }
+            ],
+            "source": "grandchallenge/INTELLECT",
+            "source_type": "Repository",
+            "target": "branch",
+            "updated_at": "2026-07-29T12:12:33.510Z"
+          }
+        ],
+        "list_status": 200,
+        "tag_ruleset_count": 1,
+        "tag_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/INTELLECT/rules/19964112"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/INTELLECT/rulesets/19964112"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "refs/tags/*"
+                ]
+              }
+            },
+            "created_at": "2026-07-29T10:19:29.551Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 19964112,
+            "name": "Immutable release tags",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5NxRvKzgEwoNA",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              }
+            ],
+            "source": "grandchallenge/INTELLECT",
+            "source_type": "Repository",
+            "target": "tag",
+            "updated_at": "2026-07-29T10:19:29.573Z"
+          }
+        ]
+      },
+      "surfaces": {
+        "codeowners_present": true,
+        "dependabot_present": true,
+        "gcl_conformance_workflow_present": true,
+        "repository_profile_present": true,
+        "security_policy_present": true,
+        "workflow_names": [
+          "ci.yml",
+          "gcl-conformance.yml",
+          "trove-curata-fixture.yml",
+          "trove-curata-pii-fixture.yml"
+        ]
+      }
+    },
+    {
+      "blocked_endpoint_statuses": {
+        "actions_permissions": 403,
+        "actions_workflow_permissions": 403,
+        "automated_security_fixes": 403,
+        "code_scanning_default_setup": 403,
+        "main_protection": 403,
+        "vulnerability_alerts": 403
+      },
+      "metadata": {
+        "allow_auto_merge": true,
+        "allow_merge_commit": true,
+        "allow_rebase_merge": false,
+        "allow_squash_merge": true,
+        "allow_update_branch": false,
+        "archived": false,
+        "default_branch": "main",
+        "visibility": "public"
+      },
+      "private_vulnerability_reporting": {
+        "enabled": true,
+        "status": 200
+      },
+      "repository": "grandchallenge/gcl-standards",
+      "rulesets": {
+        "branch_ruleset_count": 1,
+        "branch_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/gcl-standards/rules/19962512"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/gcl-standards/rulesets/19962512"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "~DEFAULT_BRANCH"
+                ]
+              }
+            },
+            "created_at": "2026-07-29T09:55:50.028Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 19962512,
+            "name": "Standards profile - main",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5OcAYqzgEwmpA",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              },
+              {
+                "parameters": {
+                  "allowed_merge_methods": [
+                    "merge",
+                    "squash"
+                  ],
+                  "dismiss_stale_reviews_on_push": true,
+                  "dismissal_restriction": {
+                    "allowed_actors": [],
+                    "enabled": false
+                  },
+                  "require_code_owner_review": false,
+                  "require_last_push_approval": false,
+                  "required_approving_review_count": 0,
+                  "required_review_thread_resolution": true,
+                  "required_reviewers": []
+                },
+                "type": "pull_request"
+              },
+              {
+                "parameters": {
+                  "do_not_enforce_on_create": false,
+                  "required_status_checks": [
+                    {
+                      "context": "standards-policy"
+                    },
+                    {
+                      "context": "policy / policy"
+                    },
+                    {
+                      "context": "security / action-policy"
+                    }
+                  ],
+                  "strict_required_status_checks_policy": true
+                },
+                "type": "required_status_checks"
+              }
+            ],
+            "source": "grandchallenge/gcl-standards",
+            "source_type": "Repository",
+            "target": "branch",
+            "updated_at": "2026-07-29T12:07:33.674Z"
+          }
+        ],
+        "list_status": 200,
+        "tag_ruleset_count": 1,
+        "tag_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/gcl-standards/rules/19964102"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/gcl-standards/rulesets/19964102"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "refs/tags/*"
+                ]
+              }
+            },
+            "created_at": "2026-07-29T10:19:22.928Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 19964102,
+            "name": "Immutable release tags",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5OcAYqzgEwoMY",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              }
+            ],
+            "source": "grandchallenge/gcl-standards",
+            "source_type": "Repository",
+            "target": "tag",
+            "updated_at": "2026-07-29T10:19:22.951Z"
+          }
+        ]
+      },
+      "surfaces": {
+        "codeowners_present": true,
+        "dependabot_present": true,
+        "gcl_conformance_workflow_present": true,
+        "repository_profile_present": true,
+        "security_policy_present": true,
+        "workflow_names": [
+          "ci.yml",
+          "gcl-conformance.yml"
+        ]
+      }
+    },
+    {
+      "blocked_endpoint_statuses": {
+        "actions_permissions": 403,
+        "actions_workflow_permissions": 403,
+        "automated_security_fixes": 403,
+        "code_scanning_default_setup": 403,
+        "main_protection": 403,
+        "vulnerability_alerts": 403
+      },
+      "metadata": {
+        "allow_auto_merge": true,
+        "allow_merge_commit": true,
+        "allow_rebase_merge": false,
+        "allow_squash_merge": true,
+        "allow_update_branch": false,
+        "archived": false,
+        "default_branch": "main",
+        "visibility": "public"
+      },
+      "private_vulnerability_reporting": {
+        "enabled": true,
+        "status": 200
+      },
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "rulesets": {
+        "branch_ruleset_count": 1,
+        "branch_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/MATH-PROGRAMME/rules/17137629"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/rulesets/17137629"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "~DEFAULT_BRANCH"
+                ]
+              }
+            },
+            "created_at": "2026-06-01T22:33:10.995Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 17137629,
+            "name": "Programme profile - main",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5K5ZXszgEFf90",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              },
+              {
+                "parameters": {
+                  "allowed_merge_methods": [
+                    "merge",
+                    "squash"
+                  ],
+                  "dismiss_stale_reviews_on_push": true,
+                  "dismissal_restriction": {
+                    "allowed_actors": [],
+                    "enabled": false
+                  },
+                  "require_code_owner_review": false,
+                  "require_last_push_approval": false,
+                  "required_approving_review_count": 0,
+                  "required_review_thread_resolution": true,
+                  "required_reviewers": []
+                },
+                "type": "pull_request"
+              },
+              {
+                "parameters": {
+                  "do_not_enforce_on_create": false,
+                  "required_status_checks": [
+                    {
+                      "context": "validate-json"
+                    },
+                    {
+                      "context": "Replay LOG-GCD-001 in Lean"
+                    },
+                    {
+                      "context": "Replay PC-WP04 bounded certificate"
+                    },
+                    {
+                      "context": "Replay pinned Union-Closed MATHCERT evidence"
+                    },
+                    {
+                      "context": "policy / policy"
+                    },
+                    {
+                      "context": "security / action-policy"
+                    }
+                  ],
+                  "strict_required_status_checks_policy": true
+                },
+                "type": "required_status_checks"
+              }
+            ],
+            "source": "grandchallenge/MATH-PROGRAMME",
+            "source_type": "Repository",
+            "target": "branch",
+            "updated_at": "2026-07-29T12:12:32.578Z"
+          }
+        ],
+        "list_status": 200,
+        "tag_ruleset_count": 1,
+        "tag_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/MATH-PROGRAMME/rules/19964106"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/MATH-PROGRAMME/rulesets/19964106"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "refs/tags/*"
+                ]
+              }
+            },
+            "created_at": "2026-07-29T10:19:24.277Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 19964106,
+            "name": "Immutable release tags",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5K5ZXszgEwoMo",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              }
+            ],
+            "source": "grandchallenge/MATH-PROGRAMME",
+            "source_type": "Repository",
+            "target": "tag",
+            "updated_at": "2026-07-29T10:19:24.291Z"
+          }
+        ]
+      },
+      "surfaces": {
+        "codeowners_present": true,
+        "dependabot_present": true,
+        "gcl_conformance_workflow_present": true,
+        "repository_profile_present": true,
+        "security_policy_present": true,
+        "workflow_names": [
+          "administrative-maintenance-dispatch.yml",
+          "bsd-wp03-substrate.yml",
+          "bsd-wp04-target.yml",
+          "ci.yml",
+          "gcl-conformance.yml",
+          "oz-next-004-independent-review.yml",
+          "oz-rt-apery-brow.yml",
+          "oz-rt-lb-instance.yml",
+          "pages.yml",
+          "pc-wp04.yml",
+          "pc-wp05.yml",
+          "release-trust-admin.yml"
+        ]
+      }
+    },
+    {
+      "blocked_endpoint_statuses": {
+        "actions_permissions": 403,
+        "actions_workflow_permissions": 403,
+        "automated_security_fixes": 403,
+        "code_scanning_default_setup": 403,
+        "main_protection": 403,
+        "vulnerability_alerts": 403
+      },
+      "metadata": {
+        "allow_auto_merge": true,
+        "allow_merge_commit": true,
+        "allow_rebase_merge": false,
+        "allow_squash_merge": true,
+        "allow_update_branch": false,
+        "archived": false,
+        "default_branch": "main",
+        "visibility": "public"
+      },
+      "private_vulnerability_reporting": {
+        "enabled": true,
+        "status": 200
+      },
+      "repository": "grandchallenge/MATHFORGE",
+      "rulesets": {
+        "branch_ruleset_count": 1,
+        "branch_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/MATHFORGE/rules/17137626"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/MATHFORGE/rulesets/17137626"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "~DEFAULT_BRANCH"
+                ]
+              }
+            },
+            "created_at": "2026-06-01T22:33:10.286Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 17137626,
+            "name": "Forge profile - main",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5K5TsrzgEFf9o",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              },
+              {
+                "parameters": {
+                  "allowed_merge_methods": [
+                    "merge",
+                    "squash"
+                  ],
+                  "dismiss_stale_reviews_on_push": true,
+                  "dismissal_restriction": {
+                    "allowed_actors": [],
+                    "enabled": false
+                  },
+                  "require_code_owner_review": false,
+                  "require_last_push_approval": false,
+                  "required_approving_review_count": 0,
+                  "required_review_thread_resolution": true,
+                  "required_reviewers": []
+                },
+                "type": "pull_request"
+              },
+              {
+                "parameters": {
+                  "do_not_enforce_on_create": false,
+                  "required_status_checks": [
+                    {
+                      "context": "reconnaissance"
+                    },
+                    {
+                      "context": "policy / policy"
+                    },
+                    {
+                      "context": "security / action-policy"
+                    }
+                  ],
+                  "strict_required_status_checks_policy": true
+                },
+                "type": "required_status_checks"
+              }
+            ],
+            "source": "grandchallenge/MATHFORGE",
+            "source_type": "Repository",
+            "target": "branch",
+            "updated_at": "2026-07-29T12:06:47.725Z"
+          }
+        ],
+        "list_status": 200,
+        "tag_ruleset_count": 1,
+        "tag_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/MATHFORGE/rules/19964108"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/MATHFORGE/rulesets/19964108"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "refs/tags/*"
+                ]
+              }
+            },
+            "created_at": "2026-07-29T10:19:25.470Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 19964108,
+            "name": "Immutable release tags",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5K5TsrzgEwoMw",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              }
+            ],
+            "source": "grandchallenge/MATHFORGE",
+            "source_type": "Repository",
+            "target": "tag",
+            "updated_at": "2026-07-29T10:19:25.488Z"
+          }
+        ]
+      },
+      "surfaces": {
+        "codeowners_present": true,
+        "dependabot_present": true,
+        "gcl_conformance_workflow_present": true,
+        "repository_profile_present": true,
+        "security_policy_present": true,
+        "workflow_names": [
+          "ci.yml",
+          "formal-conjectures-replay.yml",
+          "gcl-conformance.yml",
+          "ns-ci-r014-source-lock.yml",
+          "vgse-source-intake.yml"
+        ]
+      }
+    },
+    {
+      "blocked_endpoint_statuses": {
+        "actions_permissions": 403,
+        "actions_workflow_permissions": 403,
+        "automated_security_fixes": 403,
+        "code_scanning_default_setup": 403,
+        "main_protection": 403,
+        "vulnerability_alerts": 403
+      },
+      "metadata": {
+        "allow_auto_merge": true,
+        "allow_merge_commit": true,
+        "allow_rebase_merge": false,
+        "allow_squash_merge": true,
+        "allow_update_branch": false,
+        "archived": false,
+        "default_branch": "main",
+        "visibility": "public"
+      },
+      "private_vulnerability_reporting": {
+        "enabled": true,
+        "status": 200
+      },
+      "repository": "grandchallenge/MATHSOLVE",
+      "rulesets": {
+        "branch_ruleset_count": 1,
+        "branch_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/MATHSOLVE/rules/17137627"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/MATHSOLVE/rulesets/17137627"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "~DEFAULT_BRANCH"
+                ]
+              }
+            },
+            "created_at": "2026-06-01T22:33:10.846Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 17137627,
+            "name": "Solve profile - main",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5K5TsozgEFf9s",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              },
+              {
+                "parameters": {
+                  "allowed_merge_methods": [
+                    "merge",
+                    "squash"
+                  ],
+                  "dismiss_stale_reviews_on_push": true,
+                  "dismissal_restriction": {
+                    "allowed_actors": [],
+                    "enabled": false
+                  },
+                  "require_code_owner_review": false,
+                  "require_last_push_approval": false,
+                  "required_approving_review_count": 0,
+                  "required_review_thread_resolution": true,
+                  "required_reviewers": []
+                },
+                "type": "pull_request"
+              },
+              {
+                "parameters": {
+                  "do_not_enforce_on_create": false,
+                  "required_status_checks": [
+                    {
+                      "context": "ledgers"
+                    },
+                    {
+                      "context": "policy / policy"
+                    },
+                    {
+                      "context": "security / action-policy"
+                    }
+                  ],
+                  "strict_required_status_checks_policy": true
+                },
+                "type": "required_status_checks"
+              }
+            ],
+            "source": "grandchallenge/MATHSOLVE",
+            "source_type": "Repository",
+            "target": "branch",
+            "updated_at": "2026-07-29T12:12:31.661Z"
+          }
+        ],
+        "list_status": 200,
+        "tag_ruleset_count": 1,
+        "tag_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/MATHSOLVE/rules/19964109"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/MATHSOLVE/rulesets/19964109"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "refs/tags/*"
+                ]
+              }
+            },
+            "created_at": "2026-07-29T10:19:26.758Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 19964109,
+            "name": "Immutable release tags",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5K5TsozgEwoM0",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              }
+            ],
+            "source": "grandchallenge/MATHSOLVE",
+            "source_type": "Repository",
+            "target": "tag",
+            "updated_at": "2026-07-29T10:19:26.776Z"
+          }
+        ]
+      },
+      "surfaces": {
+        "codeowners_present": true,
+        "dependabot_present": true,
+        "gcl_conformance_workflow_present": true,
+        "repository_profile_present": true,
+        "security_policy_present": true,
+        "workflow_names": [
+          "ci.yml",
+          "gcl-conformance.yml",
+          "vgse-wp00.yml"
+        ]
+      }
+    },
+    {
+      "blocked_endpoint_statuses": {
+        "actions_permissions": 403,
+        "actions_workflow_permissions": 403,
+        "automated_security_fixes": 403,
+        "code_scanning_default_setup": 403,
+        "main_protection": 403,
+        "vulnerability_alerts": 403
+      },
+      "metadata": {
+        "allow_auto_merge": true,
+        "allow_merge_commit": true,
+        "allow_rebase_merge": false,
+        "allow_squash_merge": true,
+        "allow_update_branch": false,
+        "archived": false,
+        "default_branch": "main",
+        "visibility": "public"
+      },
+      "private_vulnerability_reporting": {
+        "enabled": true,
+        "status": 200
+      },
+      "repository": "grandchallenge/MATHCERT",
+      "rulesets": {
+        "branch_ruleset_count": 1,
+        "branch_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/MATHCERT/rules/17137628"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/MATHCERT/rulesets/17137628"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "~DEFAULT_BRANCH"
+                ]
+              }
+            },
+            "created_at": "2026-06-01T22:33:10.965Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 17137628,
+            "name": "Cert profile - main",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5K5TshzgEFf9w",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              },
+              {
+                "parameters": {
+                  "allowed_merge_methods": [
+                    "merge",
+                    "squash"
+                  ],
+                  "dismiss_stale_reviews_on_push": true,
+                  "dismissal_restriction": {
+                    "allowed_actors": [],
+                    "enabled": false
+                  },
+                  "require_code_owner_review": false,
+                  "require_last_push_approval": false,
+                  "required_approving_review_count": 0,
+                  "required_review_thread_resolution": true,
+                  "required_reviewers": []
+                },
+                "type": "pull_request"
+              },
+              {
+                "parameters": {
+                  "do_not_enforce_on_create": false,
+                  "required_status_checks": [
+                    {
+                      "context": "certify"
+                    },
+                    {
+                      "context": "policy / policy"
+                    },
+                    {
+                      "context": "security / action-policy"
+                    }
+                  ],
+                  "strict_required_status_checks_policy": true
+                },
+                "type": "required_status_checks"
+              }
+            ],
+            "source": "grandchallenge/MATHCERT",
+            "source_type": "Repository",
+            "target": "branch",
+            "updated_at": "2026-07-29T12:12:30.682Z"
+          }
+        ],
+        "list_status": 200,
+        "tag_ruleset_count": 1,
+        "tag_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/MATHCERT/rules/19964111"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/MATHCERT/rulesets/19964111"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "refs/tags/*"
+                ]
+              }
+            },
+            "created_at": "2026-07-29T10:19:28.187Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 19964111,
+            "name": "Immutable release tags",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5K5TshzgEwoM8",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              }
+            ],
+            "source": "grandchallenge/MATHCERT",
+            "source_type": "Repository",
+            "target": "tag",
+            "updated_at": "2026-07-29T10:19:28.206Z"
+          }
+        ]
+      },
+      "surfaces": {
+        "codeowners_present": true,
+        "dependabot_present": true,
+        "gcl_conformance_workflow_present": true,
+        "repository_profile_present": true,
+        "security_policy_present": true,
+        "workflow_names": [
+          "ci.yml",
+          "gcl-conformance.yml",
+          "otp-compactness-evidence-refresh-control.yml",
+          "otp-ehrhart-adjudication.yml",
+          "otp-ehrhart-evidence-refresh.yml",
+          "otp-family-replay.yml"
+        ]
+      }
+    },
+    {
+      "blocked_endpoint_statuses": {
+        "actions_permissions": 403,
+        "actions_workflow_permissions": 403,
+        "automated_security_fixes": 403,
+        "code_scanning_default_setup": 403,
+        "main_protection": 403,
+        "vulnerability_alerts": 403
+      },
+      "metadata": {
+        "allow_auto_merge": false,
+        "allow_merge_commit": true,
+        "allow_rebase_merge": true,
+        "allow_squash_merge": true,
+        "allow_update_branch": false,
+        "archived": false,
+        "default_branch": "main",
+        "visibility": "public"
+      },
+      "private_vulnerability_reporting": {
+        "enabled": false,
+        "status": 200
+      },
+      "repository": "grandchallenge/MODULUS",
+      "rulesets": {
+        "branch_ruleset_count": 1,
+        "branch_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/MODULUS/rules/20266757"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/MODULUS/rulesets/20266757"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "~DEFAULT_BRANCH"
+                ]
+              }
+            },
+            "created_at": "2026-08-03T03:18:26.112Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 20266757,
+            "name": "GCL protected main",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5F7MjYzgE1PwU",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              },
+              {
+                "parameters": {
+                  "allowed_merge_methods": [
+                    "merge",
+                    "squash",
+                    "rebase"
+                  ],
+                  "dismiss_stale_reviews_on_push": true,
+                  "dismissal_restriction": {
+                    "allowed_actors": [],
+                    "enabled": false
+                  },
+                  "require_code_owner_review": false,
+                  "require_last_push_approval": true,
+                  "required_approving_review_count": 1,
+                  "required_review_thread_resolution": true,
+                  "required_reviewers": []
+                },
+                "type": "pull_request"
+              },
+              {
+                "parameters": {
+                  "do_not_enforce_on_create": false,
+                  "required_status_checks": [
+                    {
+                      "context": "test-and-lint (3.10)",
+                      "integration_id": 15368
+                    },
+                    {
+                      "context": "test-and-lint (3.11)",
+                      "integration_id": 15368
+                    },
+                    {
+                      "context": "test-and-lint (3.12)",
+                      "integration_id": 15368
+                    },
+                    {
+                      "context": "benchmark-report",
+                      "integration_id": 15368
+                    }
+                  ],
+                  "strict_required_status_checks_policy": true
+                },
+                "type": "required_status_checks"
+              }
+            ],
+            "source": "grandchallenge/MODULUS",
+            "source_type": "Repository",
+            "target": "branch",
+            "updated_at": "2026-08-03T03:29:48.230Z"
+          }
+        ],
+        "list_status": 200,
+        "tag_ruleset_count": 0,
+        "tag_rulesets": []
+      },
+      "surfaces": {
+        "codeowners_present": false,
+        "dependabot_present": false,
+        "gcl_conformance_workflow_present": false,
+        "repository_profile_present": false,
+        "security_policy_present": true,
+        "workflow_names": [
+          "ci.yml"
+        ]
+      }
+    },
+    {
+      "blocked_endpoint_statuses": {
+        "actions_permissions": 403,
+        "actions_workflow_permissions": 403,
+        "automated_security_fixes": 403,
+        "code_scanning_default_setup": 403,
+        "main_protection": 403,
+        "vulnerability_alerts": 403
+      },
+      "metadata": {
+        "allow_auto_merge": true,
+        "allow_merge_commit": true,
+        "allow_rebase_merge": false,
+        "allow_squash_merge": true,
+        "allow_update_branch": false,
+        "archived": false,
+        "default_branch": "main",
+        "visibility": "public"
+      },
+      "private_vulnerability_reporting": {
+        "enabled": true,
+        "status": 200
+      },
+      "repository": "grandchallenge/GLOSS",
+      "rulesets": {
+        "branch_ruleset_count": 1,
+        "branch_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/GLOSS/rules/19964070"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/GLOSS/rulesets/19964070"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "~DEFAULT_BRANCH"
+                ]
+              }
+            },
+            "created_at": "2026-07-29T10:18:53.872Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 19964070,
+            "name": "Provider profile - main",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5Nr_hezgEwoKY",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              },
+              {
+                "parameters": {
+                  "allowed_merge_methods": [
+                    "merge",
+                    "squash"
+                  ],
+                  "dismiss_stale_reviews_on_push": true,
+                  "dismissal_restriction": {
+                    "allowed_actors": [],
+                    "enabled": false
+                  },
+                  "require_code_owner_review": false,
+                  "require_last_push_approval": false,
+                  "required_approving_review_count": 0,
+                  "required_review_thread_resolution": true,
+                  "required_reviewers": []
+                },
+                "type": "pull_request"
+              },
+              {
+                "parameters": {
+                  "do_not_enforce_on_create": false,
+                  "required_status_checks": [
+                    {
+                      "context": "package-contracts"
+                    },
+                    {
+                      "context": "lean-stable"
+                    },
+                    {
+                      "context": "policy / policy"
+                    },
+                    {
+                      "context": "security / action-policy"
+                    }
+                  ],
+                  "strict_required_status_checks_policy": true
+                },
+                "type": "required_status_checks"
+              }
+            ],
+            "source": "grandchallenge/GLOSS",
+            "source_type": "Repository",
+            "target": "branch",
+            "updated_at": "2026-07-29T12:06:51.814Z"
+          }
+        ],
+        "list_status": 200,
+        "tag_ruleset_count": 1,
+        "tag_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/GLOSS/rules/19964118"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/GLOSS/rulesets/19964118"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "refs/tags/*"
+                ]
+              }
+            },
+            "created_at": "2026-07-29T10:19:31.062Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 19964118,
+            "name": "Immutable release tags",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5Nr_hezgEwoNY",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              }
+            ],
+            "source": "grandchallenge/GLOSS",
+            "source_type": "Repository",
+            "target": "tag",
+            "updated_at": "2026-07-29T10:19:31.083Z"
+          }
+        ]
+      },
+      "surfaces": {
+        "codeowners_present": true,
+        "dependabot_present": true,
+        "gcl_conformance_workflow_present": true,
+        "repository_profile_present": true,
+        "security_policy_present": true,
+        "workflow_names": [
+          "ci.yml",
+          "gcl-conformance.yml",
+          "nightly-compat.yml"
+        ]
+      }
+    },
+    {
+      "blocked_endpoint_statuses": {
+        "actions_permissions": 403,
+        "actions_workflow_permissions": 403,
+        "automated_security_fixes": 403,
+        "code_scanning_default_setup": 403,
+        "main_protection": 403,
+        "vulnerability_alerts": 403
+      },
+      "metadata": {
+        "allow_auto_merge": false,
+        "allow_merge_commit": true,
+        "allow_rebase_merge": true,
+        "allow_squash_merge": true,
+        "allow_update_branch": false,
+        "archived": false,
+        "default_branch": "main",
+        "visibility": "public"
+      },
+      "private_vulnerability_reporting": {
+        "enabled": false,
+        "status": 200
+      },
+      "repository": "grandchallenge/QUANTUM-TECHNOLOGIES",
+      "rulesets": {
+        "branch_ruleset_count": 1,
+        "branch_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/QUANTUM-TECHNOLOGIES/rules/20106953"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/QUANTUM-TECHNOLOGIES/rulesets/20106953"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "~DEFAULT_BRANCH"
+                ]
+              }
+            },
+            "created_at": "2026-07-31T07:39:00.136Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 20106953,
+            "name": "branch_protect",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5Og3XKzgEyzsk",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              },
+              {
+                "parameters": {
+                  "allowed_merge_methods": [
+                    "merge",
+                    "squash",
+                    "rebase"
+                  ],
+                  "dismiss_stale_reviews_on_push": false,
+                  "dismissal_restriction": {
+                    "allowed_actors": [],
+                    "enabled": false
+                  },
+                  "require_code_owner_review": false,
+                  "require_last_push_approval": false,
+                  "required_approving_review_count": 0,
+                  "required_review_thread_resolution": true,
+                  "required_reviewers": []
+                },
+                "type": "pull_request"
+              },
+              {
+                "parameters": {
+                  "do_not_enforce_on_create": false,
+                  "required_status_checks": [
+                    {
+                      "context": "validate",
+                      "integration_id": 15368
+                    },
+                    {
+                      "context": "policy",
+                      "integration_id": 15368
+                    }
+                  ],
+                  "strict_required_status_checks_policy": false
+                },
+                "type": "required_status_checks"
+              }
+            ],
+            "source": "grandchallenge/QUANTUM-TECHNOLOGIES",
+            "source_type": "Repository",
+            "target": "branch",
+            "updated_at": "2026-07-31T07:42:38.169Z"
+          }
+        ],
+        "list_status": 200,
+        "tag_ruleset_count": 0,
+        "tag_rulesets": []
+      },
+      "surfaces": {
+        "codeowners_present": false,
+        "dependabot_present": false,
+        "gcl_conformance_workflow_present": true,
+        "repository_profile_present": false,
+        "security_policy_present": false,
+        "workflow_names": [
+          "gcl-conformance.yml",
+          "qtr-validation.yml"
+        ]
+      }
+    },
+    {
+      "blocked_endpoint_statuses": {
+        "actions_permissions": 403,
+        "actions_workflow_permissions": 403,
+        "automated_security_fixes": 403,
+        "code_scanning_default_setup": 403,
+        "main_protection": 403,
+        "vulnerability_alerts": 403
+      },
+      "metadata": {
+        "allow_auto_merge": true,
+        "allow_merge_commit": true,
+        "allow_rebase_merge": false,
+        "allow_squash_merge": true,
+        "allow_update_branch": false,
+        "archived": false,
+        "default_branch": "main",
+        "visibility": "public"
+      },
+      "private_vulnerability_reporting": {
+        "enabled": true,
+        "status": 200
+      },
+      "repository": "grandchallenge/lean-action",
+      "rulesets": {
+        "branch_ruleset_count": 1,
+        "branch_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/lean-action/rules/19965519"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/lean-action/rulesets/19965519"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "~DEFAULT_BRANCH"
+                ]
+              }
+            },
+            "created_at": "2026-07-29T10:43:27.002Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 19965519,
+            "name": "Provider profile - main",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5OcJ_tzgEwpk8",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              },
+              {
+                "parameters": {
+                  "allowed_merge_methods": [
+                    "merge",
+                    "squash"
+                  ],
+                  "dismiss_stale_reviews_on_push": true,
+                  "dismissal_restriction": {
+                    "allowed_actors": [],
+                    "enabled": false
+                  },
+                  "require_code_owner_review": false,
+                  "require_last_push_approval": false,
+                  "required_approving_review_count": 0,
+                  "required_review_thread_resolution": true,
+                  "required_reviewers": []
+                },
+                "type": "pull_request"
+              },
+              {
+                "parameters": {
+                  "do_not_enforce_on_create": false,
+                  "required_status_checks": [
+                    {
+                      "context": "policy / policy"
+                    },
+                    {
+                      "context": "security / action-policy"
+                    }
+                  ],
+                  "strict_required_status_checks_policy": true
+                },
+                "type": "required_status_checks"
+              }
+            ],
+            "source": "grandchallenge/lean-action",
+            "source_type": "Repository",
+            "target": "branch",
+            "updated_at": "2026-07-29T12:07:41.712Z"
+          }
+        ],
+        "list_status": 200,
+        "tag_ruleset_count": 1,
+        "tag_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/lean-action/rules/19965520"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/lean-action/rulesets/19965520"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "refs/tags/*"
+                ]
+              }
+            },
+            "created_at": "2026-07-29T10:43:27.684Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 19965520,
+            "name": "Immutable release tags",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5OcJ_tzgEwplA",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              }
+            ],
+            "source": "grandchallenge/lean-action",
+            "source_type": "Repository",
+            "target": "tag",
+            "updated_at": "2026-07-29T10:43:27.706Z"
+          }
+        ]
+      },
+      "surfaces": {
+        "codeowners_present": true,
+        "dependabot_present": true,
+        "gcl_conformance_workflow_present": true,
+        "repository_profile_present": true,
+        "security_policy_present": true,
+        "workflow_names": [
+          "actionlint.yml",
+          "functional_tests.yml",
+          "gcl-conformance.yml",
+          "nanoda-daily.yml",
+          "shellcheck.yml"
+        ]
+      }
+    },
+    {
+      "blocked_endpoint_statuses": {
+        "actions_permissions": 403,
+        "actions_workflow_permissions": 403,
+        "automated_security_fixes": 403,
+        "code_scanning_default_setup": 403,
+        "main_protection": 403,
+        "vulnerability_alerts": 403
+      },
+      "metadata": {
+        "allow_auto_merge": true,
+        "allow_merge_commit": true,
+        "allow_rebase_merge": false,
+        "allow_squash_merge": true,
+        "allow_update_branch": false,
+        "archived": false,
+        "default_branch": "main",
+        "visibility": "public"
+      },
+      "private_vulnerability_reporting": {
+        "enabled": true,
+        "status": 200
+      },
+      "repository": "grandchallenge/upload-pages-artifact",
+      "rulesets": {
+        "branch_ruleset_count": 1,
+        "branch_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/upload-pages-artifact/rules/19965833"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/upload-pages-artifact/rulesets/19965833"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "~DEFAULT_BRANCH"
+                ]
+              }
+            },
+            "created_at": "2026-07-29T10:48:21.356Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 19965833,
+            "name": "Provider profile - main",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5OcL1yzgEwp4k",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              },
+              {
+                "parameters": {
+                  "allowed_merge_methods": [
+                    "merge",
+                    "squash"
+                  ],
+                  "dismiss_stale_reviews_on_push": true,
+                  "dismissal_restriction": {
+                    "allowed_actors": [],
+                    "enabled": false
+                  },
+                  "require_code_owner_review": false,
+                  "require_last_push_approval": false,
+                  "required_approving_review_count": 0,
+                  "required_review_thread_resolution": true,
+                  "required_reviewers": []
+                },
+                "type": "pull_request"
+              },
+              {
+                "parameters": {
+                  "do_not_enforce_on_create": false,
+                  "required_status_checks": [
+                    {
+                      "context": "policy / policy"
+                    },
+                    {
+                      "context": "security / action-policy"
+                    }
+                  ],
+                  "strict_required_status_checks_policy": true
+                },
+                "type": "required_status_checks"
+              }
+            ],
+            "source": "grandchallenge/upload-pages-artifact",
+            "source_type": "Repository",
+            "target": "branch",
+            "updated_at": "2026-07-29T12:07:46.036Z"
+          }
+        ],
+        "list_status": 200,
+        "tag_ruleset_count": 1,
+        "tag_rulesets": [
+          {
+            "_links": {
+              "html": {
+                "href": "https://github.com/grandchallenge/upload-pages-artifact/rules/19965835"
+              },
+              "self": {
+                "href": "https://api.github.com/repos/grandchallenge/upload-pages-artifact/rulesets/19965835"
+              }
+            },
+            "conditions": {
+              "ref_name": {
+                "exclude": [],
+                "include": [
+                  "refs/tags/*"
+                ]
+              }
+            },
+            "created_at": "2026-07-29T10:48:22.145Z",
+            "current_user_can_bypass": "never",
+            "enforcement": "active",
+            "id": 19965835,
+            "name": "Immutable release tags",
+            "node_id": "RRS_lACqUmVwb3NpdG9yec5OcL1yzgEwp4s",
+            "rules": [
+              {
+                "type": "deletion"
+              },
+              {
+                "type": "non_fast_forward"
+              }
+            ],
+            "source": "grandchallenge/upload-pages-artifact",
+            "source_type": "Repository",
+            "target": "tag",
+            "updated_at": "2026-07-29T10:48:22.168Z"
+          }
+        ]
+      },
+      "surfaces": {
+        "codeowners_present": true,
+        "dependabot_present": true,
+        "gcl_conformance_workflow_present": true,
+        "repository_profile_present": true,
+        "security_policy_present": true,
+        "workflow_names": [
+          "draft-release.yml",
+          "gcl-conformance.yml",
+          "publish-immutable-actions.yml",
+          "release.yml",
+          "test-hosted-runners.yml"
+        ]
+      }
+    }
+  ],
+  "repository_count": 12,
+  "schema_version": "1.0.0",
+  "status": "adjudication_open"
+}
