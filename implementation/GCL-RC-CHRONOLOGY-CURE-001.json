@@ -2,7 +2,7 @@
   "$schema": "../schemas/gcl_rc_chronology_cure.schema.json",
   "schema_version": "1.0.0",
   "record_id": "GCL-RC-CHRONOLOGY-CURE-001",
-  "state": "ratification_pending",
+  "state": "ratified_pending_protected_merge",
   "subject": {
     "repository": "grandchallenge/gcl-standards",
     "pull_request": 15,
@@ -44,9 +44,9 @@
   ],
   "retrospective_ratification": {
     "required": true,
-    "comment_id": null,
-    "author": null,
-    "recorded_at": null
+    "comment_id": 5161001756,
+    "author": "fyremael",
+    "recorded_at": "2026-08-03T00:07:12Z"
   },
   "preserved_boundaries": {
     "standard_status": "candidate",
