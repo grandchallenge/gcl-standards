@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/standard-admission-1.0.0.json",
+  "title": "GCL standard admission record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "operation_id",
+    "status",
+    "effective_condition",
+    "council_issue",
+    "constitutional_authority",
+    "decision",
+    "standard",
+    "review_staffing",
+    "next_gate",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {"const": "../schemas/standard_admission.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "operation_id": {"const": "GI-AMEND-0001-STANDARDS-ADMISSION-001"},
+    "status": {"const": "admitted"},
+    "effective_condition": {"const": "protected_merge_of_this_exact_record"},
+    "council_issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "number"],
+      "properties": {
+        "repository": {"const": "grandchallenge/gcl-standards"},
+        "number": {"const": 3}
+      }
+    },
+    "constitutional_authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "amendment",
+        "effective_version",
+        "activation_commit",
+        "documentary_closure_commit",
+        "review_receipt"
+      ],
+      "properties": {
+        "repository": {"const": "grandchallenge/INTELLECT"},
+        "amendment": {"const": "GI-AMEND-0001"},
+        "effective_version": {"const": "1.1.0"},
+        "activation_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "documentary_closure_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "review_receipt": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "packet_sha256", "admission_commit"],
+          "properties": {
+            "path": {"type": "string", "pattern": "^governance/reviews/GI-AMEND-0001-[0-9a-f]{12}\\.json$"},
+            "packet_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+            "admission_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+          }
+        }
+      }
+    },
+    "decision": {"$ref": "#/$defs/decisionArtifact"},
+    "standard": {"$ref": "#/$defs/standardArtifact"},
+    "review_staffing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["acting_human_steward", "adversary", "referee"],
+      "properties": {
+        "acting_human_steward": {"const": "fyremael"},
+        "adversary": {"$ref": "#/$defs/agentReview"},
+        "referee": {"$ref": "#/$defs/agentReview"}
+      }
+    },
+    "next_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation", "status", "programme"],
+      "properties": {
+        "operation": {"const": "MATH-PROGRAMME pilot adoption"},
+        "status": {"const": "not_started"},
+        "programme": {"const": "grandchallenge/MATH-PROGRAMME"}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "programme_adoption_complete",
+        "organization_wide_conformance_authorized",
+        "mathematical_claim_authorized",
+        "certification_claim_authorized",
+        "novelty_claim_authorized",
+        "deployment_claim_authorized",
+        "commercial_claim_authorized"
+      ],
+      "properties": {
+        "programme_adoption_complete": {"const": false},
+        "organization_wide_conformance_authorized": {"const": false},
+        "mathematical_claim_authorized": {"const": false},
+        "certification_claim_authorized": {"const": false},
+        "novelty_claim_authorized": {"const": false},
+        "deployment_claim_authorized": {"const": false},
+        "commercial_claim_authorized": {"const": false}
+      }
+    }
+  },
+  "$defs": {
+    "decisionArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identifier", "status", "path", "reviewed_commit", "git_blob_sha1"],
+      "properties": {
+        "identifier": {"const": "ADR-0001"},
+        "status": {"const": "accepted"},
+        "path": {"const": "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"},
+        "reviewed_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "standardArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identifier", "version", "status", "path", "reviewed_commit", "git_blob_sha1"],
+      "properties": {
+        "identifier": {"const": "GCL-GHOS-00"},
+        "version": {"const": "0.1.0"},
+        "status": {"const": "admitted"},
+        "path": {"const": "standards/GCL-GHOS-00.md"},
+        "reviewed_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "agentReview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewer_id", "session_id", "record_ref"],
+      "properties": {
+        "reviewer_id": {"type": "string", "minLength": 1},
+        "session_id": {"type": "string", "minLength": 1},
+        "record_ref": {"type": "string", "format": "uri"}
+      }
+    }
+  }
+}
