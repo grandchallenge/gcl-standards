@@ -1,0 +1,24 @@
+{
+  "$schema": "../../schemas/repository_profile.schema.json",
+  "schema_version": "1.1.0",
+  "repository": "grandchallenge/MODULUS",
+  "profile": "provider",
+  "constitutional_role": "Optimization research, benchmark, and implementation provider.",
+  "authority_scope": "Versioned implementation and empirical evidence; no programme, certification, or claim-promotion authority.",
+  "claim_promotion_role": "none",
+  "risk_tier": "high",
+  "required_workflow_profile": "provider-compatibility",
+  "constitutional_source": {
+    "repository": "grandchallenge/INTELLECT",
+    "path": "CONSTITUTION.md",
+    "effective_version": "1.0.0"
+  },
+  "operating_policy_source": {
+    "repository": "grandchallenge/gcl-standards",
+    "path": "standards/GCL-GHOS-00.md",
+    "version": "0.1.0",
+    "status": "candidate"
+  },
+  "public_interfaces": ["issues", "pull_requests", "releases", "packages"],
+  "release_policy": "immutable_admitted"
+}
