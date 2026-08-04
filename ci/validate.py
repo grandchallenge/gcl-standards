@@ -26,6 +26,7 @@ EXPECTED_PROFILES = {
     "INTELLECT.json",
     "MATH-PROGRAMME.json",
     "MODULUS.json",
+    "QUANTUM-TECHNOLOGIES.json",
     "MATHCERT.json",
     "MATHFORGE.json",
     "MATHSOLVE.json",
