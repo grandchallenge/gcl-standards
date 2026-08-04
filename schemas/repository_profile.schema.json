@@ -19,8 +19,13 @@
     "release_policy"
   ],
   "properties": {
-    "$schema": {"type": "string", "minLength": 1},
-    "schema_version": {"const": "1.1.0"},
+    "$schema": {
+      "type": "string",
+      "minLength": 1
+    },
+    "schema_version": {
+      "const": "1.1.0"
+    },
     "repository": {
       "type": "string",
       "pattern": "^grandchallenge/[A-Za-z0-9._-]+$"
@@ -37,8 +42,14 @@
         "standards"
       ]
     },
-    "constitutional_role": {"type": "string", "minLength": 1},
-    "authority_scope": {"type": "string", "minLength": 1},
+    "constitutional_role": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authority_scope": {
+      "type": "string",
+      "minLength": 1
+    },
     "claim_promotion_role": {
       "enum": [
         "none",
@@ -48,27 +59,164 @@
         "policy_only"
       ]
     },
-    "risk_tier": {"enum": ["low", "moderate", "high", "critical"]},
-    "required_workflow_profile": {"type": "string", "minLength": 1},
+    "risk_tier": {
+      "enum": [
+        "low",
+        "moderate",
+        "high",
+        "critical"
+      ]
+    },
+    "required_workflow_profile": {
+      "type": "string",
+      "minLength": 1
+    },
     "constitutional_source": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["repository", "path", "effective_version"],
+      "required": [
+        "repository",
+        "path",
+        "effective_version"
+      ],
       "properties": {
-        "repository": {"const": "grandchallenge/INTELLECT"},
-        "path": {"const": "CONSTITUTION.md"},
-        "effective_version": {"const": "1.0.0"}
+        "repository": {
+          "const": "grandchallenge/INTELLECT"
+        },
+        "path": {
+          "const": "CONSTITUTION.md"
+        },
+        "effective_version": {
+          "enum": [
+            "1.0.0",
+            "1.1.0"
+          ]
+        },
+        "amendment": {
+          "type": "string",
+          "minLength": 1
+        },
+        "amendment_status": {
+          "enum": [
+            "proposed",
+            "effective",
+            "superseded"
+          ]
+        },
+        "activation_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        }
       }
     },
     "operating_policy_source": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["repository", "path", "version", "status"],
+      "required": [
+        "repository",
+        "path",
+        "version",
+        "status"
+      ],
       "properties": {
-        "repository": {"const": "grandchallenge/gcl-standards"},
-        "path": {"const": "standards/GCL-GHOS-00.md"},
-        "version": {"const": "0.1.0"},
-        "status": {"const": "candidate"}
+        "repository": {
+          "const": "grandchallenge/gcl-standards"
+        },
+        "path": {
+          "const": "standards/GCL-GHOS-00.md"
+        },
+        "version": {
+          "const": "0.1.0"
+        },
+        "status": {
+          "enum": [
+            "candidate",
+            "admitted",
+            "superseded"
+          ]
+        },
+        "decision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "decision_status": {
+          "enum": [
+            "proposed",
+            "accepted",
+            "superseded"
+          ]
+        },
+        "admission_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        }
+      }
+    },
+    "github_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "projection_semantics",
+        "custom_properties",
+        "default_branch_ruleset"
+      ],
+      "properties": {
+        "projection_semantics": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "canonical_claim_promotion_role",
+            "live_claim_promotion_role",
+            "rationale"
+          ],
+          "properties": {
+            "canonical_claim_promotion_role": {
+              "const": "policy_only"
+            },
+            "live_claim_promotion_role": {
+              "const": "none"
+            },
+            "rationale": {
+              "type": "string",
+              "minLength": 80
+            }
+          }
+        },
+        "custom_properties": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "constitutional_profile",
+            "authority_scope",
+            "claim_promotion_role",
+            "risk_tier",
+            "workflow_profile",
+            "public_programme"
+          ],
+          "properties": {
+            "constitutional_profile": {
+              "const": "Constitutional"
+            },
+            "authority_scope": {
+              "const": "constitutional"
+            },
+            "claim_promotion_role": {
+              "const": "none"
+            },
+            "risk_tier": {
+              "const": "critical"
+            },
+            "workflow_profile": {
+              "const": "governance"
+            },
+            "public_programme": {
+              "const": "true"
+            }
+          }
+        },
+        "default_branch_ruleset": {
+          "const": "Constitutional profile - main"
+        }
       }
     },
     "public_interfaces": {
@@ -94,5 +242,101 @@
         "immutable_certified"
       ]
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "repository": {
+            "const": "grandchallenge/INTELLECT"
+          }
+        },
+        "required": [
+          "repository"
+        ]
+      },
+      "then": {
+        "required": [
+          "github_projection"
+        ],
+        "properties": {
+          "profile": {
+            "const": "constitutional"
+          },
+          "claim_promotion_role": {
+            "const": "policy_only"
+          },
+          "risk_tier": {
+            "const": "critical"
+          },
+          "required_workflow_profile": {
+            "const": "constitutional-policy"
+          },
+          "constitutional_source": {
+            "properties": {
+              "effective_version": {
+                "const": "1.1.0"
+              },
+              "amendment": {
+                "const": "GI-AMEND-0001"
+              },
+              "amendment_status": {
+                "const": "effective"
+              },
+              "activation_commit": {
+                "const": "8d47ed8930d33253ae476c64dfec7c748185a535"
+              }
+            },
+            "required": [
+              "amendment",
+              "amendment_status",
+              "activation_commit"
+            ]
+          },
+          "operating_policy_source": {
+            "properties": {
+              "status": {
+                "const": "admitted"
+              },
+              "decision": {
+                "const": "ADR-0001"
+              },
+              "decision_status": {
+                "const": "accepted"
+              },
+              "admission_commit": {
+                "const": "31211b286a9c4a2874da5559118ef2f026f7de52"
+              }
+            },
+            "required": [
+              "decision",
+              "decision_status",
+              "admission_commit"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "repository": {
+            "not": {
+              "const": "grandchallenge/INTELLECT"
+            }
+          }
+        },
+        "required": [
+          "repository"
+        ]
+      },
+      "then": {
+        "not": {
+          "required": [
+            "github_projection"
+          ]
+        }
+      }
+    }
+  ]
 }
