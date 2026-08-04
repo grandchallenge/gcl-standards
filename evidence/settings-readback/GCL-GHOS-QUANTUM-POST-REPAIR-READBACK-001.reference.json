@@ -1,0 +1,101 @@
+{
+  "$schema": "../../schemas/settings_readback_quantum_reference.schema.json",
+  "claim_boundaries": {
+    "certification_claim_authorized": false,
+    "commercial_claim_authorized": false,
+    "deployment_claim_authorized": false,
+    "hardware_validation_claim_authorized": false,
+    "manufacturing_claim_authorized": false,
+    "mathematical_claim_authorized": false,
+    "novelty_claim_authorized": false,
+    "organization_wide_conformance": false,
+    "priority_claim_authorized": false,
+    "product_claim_authorized": false,
+    "quantum_advantage_claim_authorized": false
+  },
+  "effective_condition": "protected_merge_of_this_exact_record",
+  "operation_id": "GCL-GHOS-QUANTUM-POST-REPAIR-READBACK-REFERENCE-001",
+  "source": {
+    "actor": {
+      "id": 17925951,
+      "login": "fyremael",
+      "repository_admin": true
+    },
+    "attestation_git_blob_sha1": "208a975c6486a7570f27a01ce236342799a22b61",
+    "attestation_path": "governance/settings-readback/evidence/GCL-GHOS-QUANTUM-POST-REPAIR-READBACK-001.attestation.md",
+    "digest_git_blob_sha1": "d62888783ca3348ab6a77daea8f3f3b867ac889f",
+    "digest_path": "governance/settings-readback/evidence/GCL-GHOS-QUANTUM-POST-REPAIR-READBACK-001.receipt.json.sha256",
+    "exact_head": "b659f44e8223d172e07ede7ef6fc9ca36b15f9c1",
+    "git_blob_sha1": "c80b813a0c7978554b0538a6aa109854a44dee9e",
+    "merge_commit": "008745514436b95abd30abaa9dcad3597522dc1f",
+    "owner_controls_evidence_baseline": "a8f2441cd75e717ff30f05d32c0f5e90a7dd7394",
+    "path": "governance/settings-readback/evidence/GCL-GHOS-QUANTUM-POST-REPAIR-READBACK-001.receipt.json",
+    "protected_main": "a8f2441cd75e717ff30f05d32c0f5e90a7dd7394",
+    "pull_request": 26,
+    "recorded_at": "2026-08-04T07:20:26.7913380Z",
+    "repository": "grandchallenge/QUANTUM-TECHNOLOGIES",
+    "schema_version": "1.0.0",
+    "sha256": "83109c5c7f7461480bc5f0119c96295716a194a71dce3fdebe3552d8602efe37",
+    "size_bytes": 9029,
+    "source_bundle_git_blob_sha1": "d8f5a1def415218850e156d057039353772db54a",
+    "source_bundle_path": "governance/settings-readback/evidence/source/GCL-GHOS-QUANTUM-POST-REPAIR-READBACK-001.source-bundle.json",
+    "source_bundle_sha256": "3d17fbc44356c614a0b96c9f0aa3973fc4653f7fa85ebd8bc576cf4f7cf48080"
+  },
+  "standards_profile": {
+    "exact_head": "ad4493a386ec1f0cab2b9fbc2da98953f39b23db",
+    "git_blob_sha1": "c7467171e9cc28271fee20d5c85691c5b2015267",
+    "merge_commit": "5ec22de5d18e02ba91b47f74f23c7acde6bc3ddc",
+    "path": "fixtures/repository_profiles/QUANTUM-TECHNOLOGIES.json",
+    "repository": "grandchallenge/gcl-standards"
+  },
+  "status": "admitted",
+  "verified_state": {
+    "allowed_merge_methods": [
+      "merge",
+      "squash"
+    ],
+    "codeql_default_setup_configured": true,
+    "codeql_languages": [
+      "actions",
+      "python"
+    ],
+    "codeql_query_suite": "extended",
+    "codeql_runner_type": "standard",
+    "codeql_threat_model": "remote",
+    "dependabot_security_updates_enabled": true,
+    "dependabot_security_updates_paused": false,
+    "dismiss_stale_reviews_on_push": true,
+    "governed_surfaces": [
+      ".github/CODEOWNERS",
+      ".github/dependabot.yml",
+      "SECURITY.md"
+    ],
+    "immutable_release_tag_ruleset_id": 20355165,
+    "private_vulnerability_reporting_enabled": true,
+    "protected_main_ruleset_id": 20106953,
+    "readback_gaps": [],
+    "repository_merge_settings": {
+      "allow_auto_merge": true,
+      "allow_merge_commit": true,
+      "allow_rebase_merge": false,
+      "allow_squash_merge": true,
+      "allow_update_branch": false,
+      "delete_branch_on_merge": true
+    },
+    "repository_merge_settings_conformant": true,
+    "required_contexts": [
+      "policy",
+      "security / action-policy",
+      "validate"
+    ],
+    "required_review_thread_resolution": true,
+    "required_workflows": [
+      ".github/workflows/gcl-conformance.yml",
+      ".github/workflows/qtr-validation.yml"
+    ],
+    "ruleset_list_detail_complete": true,
+    "strict_required_status_checks_policy": true,
+    "validation_findings": [],
+    "vulnerability_alerts_enabled": true
+  }
+}
