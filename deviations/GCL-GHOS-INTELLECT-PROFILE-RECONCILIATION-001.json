@@ -1,0 +1,97 @@
+{
+  "$schema": "../schemas/intellect_profile_reconciliation.schema.json",
+  "operation_id": "GCL-GHOS-INTELLECT-PROFILE-RECONCILIATION-001",
+  "status": "phase_a_repair_required",
+  "effective_condition": "protected_merge_of_this_exact_record",
+  "authorization": {
+    "issue": "https://github.com/grandchallenge/gcl-standards/issues/12",
+    "assessment_comment": 5173490960,
+    "human_steward_authorization_comment": 5173499807
+  },
+  "authority": {
+    "constitution_version": "1.1.0",
+    "amendment": "GI-AMEND-0001",
+    "amendment_status": "effective",
+    "activation_commit": "8d47ed8930d33253ae476c64dfec7c748185a535",
+    "decision": "ADR-0001",
+    "decision_status": "accepted",
+    "standard": "GCL-GHOS-00",
+    "standard_version": "0.1.0",
+    "standard_status": "admitted",
+    "standards_admission_commit": "31211b286a9c4a2874da5559118ef2f026f7de52"
+  },
+  "base_records": {
+    "campaign_admission": {
+      "path": "deviations/GCL-GHOS-SETTINGS-READBACK-001.json",
+      "merge_commit": "3d5e35a8635cb8864a816cf0e589a5831dc2c706"
+    },
+    "owner_export_overlay": {
+      "path": "deviations/GCL-GHOS-SETTINGS-READBACK-001.owner-export-overlay.json",
+      "merge_commit": "692ff6a1b8ec4113c8917470cb0e4c094ff7d334"
+    },
+    "owner_export_reference": {
+      "path": "evidence/settings-readback/GCL-GHOS-OWNER-EXPORT-001.reference.json",
+      "source_merge_commit": "45792900aa0198ea30ff2315a897d3c71f119f9a",
+      "source_git_blob_sha1": "c15d10b3ad5287d625642850ed5d0986e9afaefc",
+      "source_sha256": "b60f42d46e6044358d70d0f673f08afbc4e295afba95cd2fe3e9a65d8ab57d7c",
+      "recorded_at": "2026-08-03T13:15:59Z"
+    }
+  },
+  "superseded_observation": {
+    "id": "OBS-INTELLECT-001",
+    "prior_disposition": "conformant",
+    "reason": "The generic observable-baseline row omitted authority-sensitive custom-property and ruleset-name drift."
+  },
+  "repair_row": {
+    "id": "INTELLECT-P0-001",
+    "priority": "P0",
+    "scope": "grandchallenge/INTELLECT",
+    "control": "constitutional_profile_projection",
+    "disposition": "repair_required",
+    "remediation_issue": "https://github.com/grandchallenge/gcl-standards/issues/12",
+    "finding": "The live GitHub projection identifies the constitutional-policy repository as a provider through four stale custom properties and the ruleset name Provider profile - main.",
+    "closure_condition": "Complete protected Phase A canonical correction, then Phase B vocabulary extension, live property and ruleset repair, owner-authenticated readback, and separate evidence-admission merge."
+  },
+  "carried_open_rows": [
+    "MODULUS-P1-001",
+    "MODULUS-P2-001",
+    "QUANTUM-P1-001",
+    "QUANTUM-P2-001"
+  ],
+  "canonical_profile": {
+    "path": "fixtures/repository_profiles/INTELLECT.json",
+    "canonical_claim_promotion_role": "policy_only"
+  },
+  "intended_live_projection": {
+    "custom_properties": {
+      "constitutional_profile": "Constitutional",
+      "authority_scope": "constitutional",
+      "claim_promotion_role": "none",
+      "risk_tier": "critical",
+      "workflow_profile": "governance",
+      "public_programme": "true"
+    },
+    "default_branch_ruleset": "Constitutional profile - main"
+  },
+  "phase_boundaries": {
+    "phase_a_live_mutation_authorized": false,
+    "phase_b_requires_phase_a_protected_merge": true,
+    "profile_conformance_authorized": false,
+    "organization_wide_conformance": false
+  },
+  "open_priority_counts": {
+    "P0": 1,
+    "P1": 2,
+    "P2": 2,
+    "P3": 0
+  },
+  "claim_boundaries": {
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "novelty_claim_authorized": false,
+    "deployment_claim_authorized": false,
+    "manufacturing_claim_authorized": false,
+    "commercial_claim_authorized": false
+  },
+  "next_gate": "Independent exact-head review and protected merge of Phase A before any live GitHub settings mutation."
+}
