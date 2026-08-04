@@ -1,56 +1,63 @@
 from __future__ import annotations
 
+import copy
+import hashlib
 import json
-from collections import Counter
 from pathlib import Path
 
 import jsonschema
 
-
 ROOT = Path(__file__).resolve().parents[1]
-PROFILE = ROOT / "fixtures" / "repository_profiles" / "INTELLECT.json"
-PROFILE_SCHEMA = ROOT / "schemas" / "repository_profile.schema.json"
-RECONCILIATION = (
-    ROOT
-    / "deviations"
-    / "GCL-GHOS-INTELLECT-PROFILE-RECONCILIATION-001.json"
-)
-RECONCILIATION_SCHEMA = (
-    ROOT / "schemas" / "intellect_profile_reconciliation.schema.json"
-)
-BASE_CAMPAIGN = ROOT / "deviations" / "GCL-GHOS-SETTINGS-READBACK-001.json"
-OWNER_OVERLAY = (
-    ROOT
-    / "deviations"
-    / "GCL-GHOS-SETTINGS-READBACK-001.owner-export-overlay.json"
-)
-OWNER_REFERENCE = (
-    ROOT
-    / "evidence"
-    / "settings-readback"
-    / "GCL-GHOS-OWNER-EXPORT-001.reference.json"
-)
+PROFILE = ROOT / "fixtures/repository_profiles/INTELLECT.json"
+PROFILE_SCHEMA = ROOT / "schemas/repository_profile.schema.json"
+RECONCILIATION = ROOT / "deviations/GCL-GHOS-INTELLECT-PROFILE-RECONCILIATION-001.json"
+RECONCILIATION_SCHEMA = ROOT / "schemas/intellect_profile_reconciliation.schema.json"
+EVIDENCE = ROOT / "evidence/settings-readback/GCL-GHOS-INTELLECT-PROFILE-RECONCILIATION-001.json"
+EVIDENCE_DIGEST = ROOT / "evidence/settings-readback/GCL-GHOS-INTELLECT-PROFILE-RECONCILIATION-001.json.sha256"
+EVIDENCE_REFERENCE = ROOT / "evidence/settings-readback/GCL-GHOS-INTELLECT-PROFILE-RECONCILIATION-001.reference.json"
+EVIDENCE_REFERENCE_SCHEMA = ROOT / "schemas/intellect_profile_phase_b_evidence_reference.schema.json"
+BASE_CAMPAIGN = ROOT / "deviations/GCL-GHOS-SETTINGS-READBACK-001.json"
+OWNER_OVERLAY = ROOT / "deviations/GCL-GHOS-SETTINGS-READBACK-001.owner-export-overlay.json"
+OWNER_REFERENCE = ROOT / "evidence/settings-readback/GCL-GHOS-OWNER-EXPORT-001.reference.json"
 
-EXPECTED_CUSTOM_PROPERTIES = {
-    "constitutional_profile": "Constitutional",
+EXPECTED_PROPERTIES = {
     "authority_scope": "constitutional",
     "claim_promotion_role": "none",
+    "constitutional_profile": "Constitutional",
+    "public_programme": "true",
     "risk_tier": "critical",
     "workflow_profile": "governance",
+}
+EXPECTED_BEFORE = {
+    "authority_scope": "provider",
+    "claim_promotion_role": "none",
+    "constitutional_profile": "Provider",
     "public_programme": "true",
+    "risk_tier": "high",
+    "workflow_profile": "provider",
 }
-EXPECTED_CARRIED_ROWS = {
-    "MODULUS-P1-001": "P1",
-    "MODULUS-P2-001": "P2",
-    "QUANTUM-P1-001": "P1",
-    "QUANTUM-P2-001": "P2",
+EXPECTED_CHECKS = [
+    "test (3.11.14)",
+    "test (3.12.13)",
+    "policy / policy",
+    "security / action-policy",
+]
+EXPECTED_OPEN_ROWS = {
+    "MODULUS-P1-001",
+    "MODULUS-P2-001",
+    "QUANTUM-P1-001",
+    "QUANTUM-P2-001",
 }
-FALSE_BOUNDARIES = {
+FALSE_EVIDENCE_BOUNDARIES = {
+    "profile_conformance_authorized",
+    "organization_wide_conformance",
     "mathematical_claim_authorized",
     "certification_claim_authorized",
     "novelty_claim_authorized",
+    "priority_claim_authorized",
     "deployment_claim_authorized",
     "manufacturing_claim_authorized",
+    "product_claim_authorized",
     "commercial_claim_authorized",
 }
 
@@ -62,195 +69,160 @@ def load(path: Path) -> dict:
     return value
 
 
+def canonical_sha256(value: object) -> str:
+    payload = json.dumps(value, sort_keys=True, separators=(",", ":")).encode()
+    return hashlib.sha256(payload).hexdigest()
+
+
+def rule(ruleset: dict, kind: str) -> dict:
+    for row in ruleset.get("rules", []):
+        if row.get("type") == kind:
+            return row
+    raise ValueError(f"INTELLECT ruleset lacks {kind}")
+
+
 def validate_records(
     profile: dict,
     reconciliation: dict,
     base_campaign: dict,
     owner_overlay: dict,
     owner_reference: dict,
+    evidence: dict,
+    evidence_bytes: bytes,
+    digest_text: str,
+    reference: dict,
 ) -> None:
-    profile_schema = load(PROFILE_SCHEMA)
-    reconciliation_schema = load(RECONCILIATION_SCHEMA)
-    jsonschema.Draft202012Validator.check_schema(profile_schema)
-    jsonschema.Draft202012Validator.check_schema(reconciliation_schema)
-    jsonschema.validate(
-        profile,
-        profile_schema,
-        cls=jsonschema.Draft202012Validator,
-        format_checker=jsonschema.FormatChecker(),
-    )
-    jsonschema.validate(
-        reconciliation,
-        reconciliation_schema,
-        cls=jsonschema.Draft202012Validator,
-        format_checker=jsonschema.FormatChecker(),
-    )
+    schemas = [load(PROFILE_SCHEMA), load(RECONCILIATION_SCHEMA), load(EVIDENCE_REFERENCE_SCHEMA)]
+    for schema in schemas:
+        jsonschema.Draft202012Validator.check_schema(schema)
+    for value, schema in ((profile, schemas[0]), (reconciliation, schemas[1]), (reference, schemas[2])):
+        jsonschema.validate(value, schema, cls=jsonschema.Draft202012Validator,
+                            format_checker=jsonschema.FormatChecker())
 
-    if profile.get("repository") != "grandchallenge/INTELLECT":
-        raise ValueError("INTELLECT repository identity drift")
-    if profile.get("profile") != "constitutional":
-        raise ValueError("INTELLECT profile must remain constitutional")
-    if profile.get("claim_promotion_role") != "policy_only":
-        raise ValueError("canonical INTELLECT claim role drift")
-    if profile.get("risk_tier") != "critical":
-        raise ValueError("INTELLECT risk tier drift")
+    if profile.get("repository") != "grandchallenge/INTELLECT" or profile.get("profile") != "constitutional":
+        raise ValueError("INTELLECT profile identity drift")
+    if profile.get("claim_promotion_role") != "policy_only" or profile.get("risk_tier") != "critical":
+        raise ValueError("INTELLECT canonical authority drift")
+    if profile.get("github_projection", {}).get("custom_properties") != EXPECTED_PROPERTIES:
+        raise ValueError("INTELLECT canonical projection drift")
+    if profile.get("github_projection", {}).get("default_branch_ruleset") != "Constitutional profile - main":
+        raise ValueError("INTELLECT canonical ruleset drift")
 
-    constitutional = profile.get("constitutional_source", {})
-    expected_constitutional = {
-        "repository": "grandchallenge/INTELLECT",
-        "path": "CONSTITUTION.md",
-        "effective_version": "1.1.0",
-        "amendment": "GI-AMEND-0001",
-        "amendment_status": "effective",
-        "activation_commit": "8d47ed8930d33253ae476c64dfec7c748185a535",
-    }
-    if constitutional != expected_constitutional:
-        raise ValueError("INTELLECT constitutional authority identity drift")
-
-    operating = profile.get("operating_policy_source", {})
-    expected_operating = {
-        "repository": "grandchallenge/gcl-standards",
-        "path": "standards/GCL-GHOS-00.md",
-        "version": "0.1.0",
-        "status": "admitted",
-        "decision": "ADR-0001",
-        "decision_status": "accepted",
-        "admission_commit": "31211b286a9c4a2874da5559118ef2f026f7de52",
-    }
-    if operating != expected_operating:
-        raise ValueError("INTELLECT operating-policy identity drift")
-
-    projection = profile.get("github_projection")
-    if not isinstance(projection, dict):
-        raise ValueError("INTELLECT requires an explicit GitHub projection")
-    if projection.get("custom_properties") != EXPECTED_CUSTOM_PROPERTIES:
-        raise ValueError("INTELLECT GitHub custom-property projection drift")
-    if projection.get("default_branch_ruleset") != "Constitutional profile - main":
-        raise ValueError("INTELLECT GitHub ruleset projection drift")
-    semantics = projection.get("projection_semantics", {})
-    if (
-        semantics.get("canonical_claim_promotion_role") != "policy_only"
-        or semantics.get("live_claim_promotion_role") != "none"
-    ):
-        raise ValueError("INTELLECT claim-role projection is ambiguous")
-    rationale = semantics.get("rationale")
-    if not isinstance(rationale, str) or len(rationale.strip()) < 80:
-        raise ValueError("INTELLECT claim-role projection rationale is incomplete")
-
-    if reconciliation["canonical_profile"]["path"] != str(
-        PROFILE.relative_to(ROOT)
-    ).replace("\\", "/"):
-        raise ValueError("canonical profile path drift")
-    if (
-        reconciliation["canonical_profile"]["canonical_claim_promotion_role"]
-        != profile["claim_promotion_role"]
-    ):
-        raise ValueError("canonical claim role is not cross-bound")
-    if reconciliation["intended_live_projection"] != {
-        "custom_properties": projection["custom_properties"],
-        "default_branch_ruleset": projection["default_branch_ruleset"],
-    }:
-        raise ValueError("live projection is not cross-bound to the canonical profile")
-
-    base_rows = {
-        row.get("id"): row
-        for row in base_campaign.get("rows", [])
-        if isinstance(row, dict)
-    }
-    prior = base_rows.get("OBS-INTELLECT-001")
-    if not prior:
-        raise ValueError("base INTELLECT observation is missing")
-    if (
-        prior.get("scope") != "grandchallenge/INTELLECT"
-        or prior.get("disposition") != "conformant"
-    ):
-        raise ValueError("base INTELLECT observation identity drift")
-    superseded = reconciliation["superseded_observation"]
-    if (
-        superseded["id"] != "OBS-INTELLECT-001"
-        or superseded["prior_disposition"] != prior["disposition"]
-    ):
-        raise ValueError("false-conformance supersession is not cross-bound")
-
-    owner_open = {
-        row.get("id"): row
-        for row in owner_overlay.get("open_rows", [])
-        if isinstance(row, dict)
-    }
-    if set(owner_open) != set(EXPECTED_CARRIED_ROWS):
-        raise ValueError("owner-overlay open-row coverage drift")
-    for row_id, priority in EXPECTED_CARRIED_ROWS.items():
-        if owner_open[row_id].get("priority") != priority:
-            raise ValueError(f"owner-overlay priority drift: {row_id}")
-    carried = reconciliation["carried_open_rows"]
-    if set(carried) != set(EXPECTED_CARRIED_ROWS) or len(carried) != len(
-        EXPECTED_CARRIED_ROWS
-    ):
-        raise ValueError("carried open-row identity drift")
-
+    base_rows = {row.get("id"): row for row in base_campaign.get("rows", []) if isinstance(row, dict)}
+    if base_rows.get("OBS-INTELLECT-001", {}).get("disposition") != "conformant":
+        raise ValueError("base false-conformance identity drift")
+    owner_rows = {row.get("id") for row in owner_overlay.get("open_rows", []) if isinstance(row, dict)}
+    if owner_rows != EXPECTED_OPEN_ROWS:
+        raise ValueError("carried owner-overlay row drift")
     source = owner_reference.get("source", {})
-    reference = reconciliation["base_records"]["owner_export_reference"]
-    source_bindings = {
-        "source_merge_commit": source.get("merge_commit"),
-        "source_git_blob_sha1": source.get("git_blob_sha1"),
-        "source_sha256": source.get("sha256"),
-        "recorded_at": source.get("recorded_at"),
+    owner_binding = reconciliation["base_records"]["owner_export_reference"]
+    if owner_binding["source_sha256"] != source.get("sha256") or owner_binding["source_git_blob_sha1"] != source.get("git_blob_sha1"):
+        raise ValueError("owner-export evidence binding drift")
+
+    if evidence.get("operation_id") != "GCL-GHOS-INTELLECT-PROFILE-RECONCILIATION-001" or evidence.get("phase") != "B" or evidence.get("mode") != "apply" or evidence.get("verified") is not True:
+        raise ValueError("Phase B execution identity drift")
+    if evidence.get("repository") != "grandchallenge/INTELLECT" or evidence.get("organization") != "grandchallenge":
+        raise ValueError("Phase B repository identity drift")
+    actor = evidence.get("actor", {})
+    names = [row.get("full_name") for row in actor.get("repositories", [])]
+    if actor.get("authentication") != "github_app_installation" or actor.get("repository_count") != 2 or names != ["grandchallenge/INTELLECT", "grandchallenge/MATH-PROGRAMME"]:
+        raise ValueError("Phase B installation scope drift")
+    if evidence.get("main_sha_before") != evidence.get("main_sha_after") or evidence.get("main_sha_after") != "0096eb21ca62c5ef7f6e458f358edcb1cd963a20":
+        raise ValueError("protected INTELLECT main drift")
+    if evidence.get("property_values_before") != EXPECTED_BEFORE or evidence.get("property_values_after") != EXPECTED_PROPERTIES:
+        raise ValueError("INTELLECT property readback drift")
+
+    extensions = {"constitutional_profile": "Constitutional", "authority_scope": "constitutional"}
+    for name, required in extensions.items():
+        before = evidence["property_schemas_before"][name]
+        after = evidence["property_schemas_after"][name]
+        allowed = list(before["allowed_values"])
+        if required not in allowed:
+            allowed.append(required)
+        if after["allowed_values"] != allowed:
+            raise ValueError(f"property vocabulary drift: {name}")
+        for field in ("property_name", "source_type", "value_type", "required", "description", "values_editable_by", "require_explicit_values"):
+            if before.get(field) != after.get(field):
+                raise ValueError(f"property non-vocabulary drift: {name}.{field}")
+
+    before_ruleset = evidence.get("ruleset_before", {})
+    after_ruleset = evidence.get("ruleset_after", {})
+    if before_ruleset != after_ruleset:
+        raise ValueError("ruleset changed during final execution")
+    if after_ruleset.get("id") != 19964077 or after_ruleset.get("name") != "Constitutional profile - main" or after_ruleset.get("enforcement") != "active":
+        raise ValueError("ruleset identity drift")
+    if after_ruleset.get("conditions") != {"ref_name": {"exclude": [], "include": ["~DEFAULT_BRANCH"]}}:
+        raise ValueError("ruleset branch condition drift")
+    if after_ruleset.get("bypass_actors") != [] or after_ruleset.get("current_user_can_bypass") != "never":
+        raise ValueError("ruleset bypass drift")
+    status = rule(after_ruleset, "required_status_checks")["parameters"]
+    if status.get("strict_required_status_checks_policy") is not True or [row.get("context") for row in status.get("required_status_checks", [])] != EXPECTED_CHECKS:
+        raise ValueError("required status-check drift")
+    pr = rule(after_ruleset, "pull_request")["parameters"]
+    expected_pr = {
+        "required_approving_review_count": 0,
+        "dismiss_stale_reviews_on_push": True,
+        "require_last_push_approval": False,
+        "require_code_owner_review": False,
+        "required_review_thread_resolution": True,
+        "allowed_merge_methods": ["merge", "squash"],
     }
-    for field, actual in source_bindings.items():
-        if reference.get(field) != actual:
-            raise ValueError(f"owner-export evidence binding drift: {field}")
-    if reference.get("path") != str(OWNER_REFERENCE.relative_to(ROOT)).replace(
-        "\\", "/"
+    for field, expected in expected_pr.items():
+        if pr.get(field) != expected:
+            raise ValueError(f"pull-request protection drift: {field}")
+    types = {row.get("type") for row in after_ruleset.get("rules", [])}
+    if not {"deletion", "non_fast_forward"}.issubset(types):
+        raise ValueError("destructive-change protection drift")
+
+    expected_mutations = [
+        {"operation": "extend_property_schemas", "properties": [
+            {"property_name": "constitutional_profile", "required_value": "Constitutional"},
+            {"property_name": "authority_scope", "required_value": "constitutional"},
+        ]},
+        {"operation": "apply_repository_property_values", "repository": "grandchallenge/INTELLECT"},
+        {"operation": "rename_ruleset", "ruleset_id": 19964077, "target_name": "Constitutional profile - main"},
+    ]
+    if evidence.get("mutations") != expected_mutations:
+        raise ValueError("Phase B mutation-set drift")
+    for field in FALSE_EVIDENCE_BOUNDARIES:
+        if evidence.get("claim_boundaries", {}).get(field) is not False:
+            raise ValueError(f"evidence claim inflation: {field}")
+
+    semantic = evidence.get("evidence_sha256")
+    payload = copy.deepcopy(evidence)
+    payload.pop("evidence_sha256", None)
+    if semantic != canonical_sha256(payload):
+        raise ValueError("semantic evidence digest mismatch")
+    if digest_text != f"{semantic}  intellect-profile-admin-evidence.json\n":
+        raise ValueError("digest companion mismatch")
+    final_sha = hashlib.sha256(evidence_bytes).hexdigest()
+    retained = reference["retained_evidence"]
+    if retained["json_sha256"] != final_sha or retained["json_size_bytes"] != len(evidence_bytes) or retained["semantic_sha256"] != semantic or retained["companion_value"] != semantic:
+        raise ValueError("retained evidence binding drift")
+    source_ref = reference["source"]
+    if (source_ref["workflow_run"], source_ref["job_id"], source_ref["artifact_id"], source_ref["head_sha"], source_ref["artifact_zip_sha256"]) != (
+        30882443280, 91906476034, 8881792628,
+        "e5713330aa983501ec7a5c0c89caf0b827f9a6e6",
+        "21116b3d91e962a6e2bf017ffb2ed9ebfd406b11a0f99f22fe146c865829d6f7",
     ):
-        raise ValueError("owner-export reference path drift")
-
-    repair = reconciliation["repair_row"]
-    if (
-        repair["id"] != "INTELLECT-P0-001"
-        or repair["priority"] != "P0"
-        or repair["scope"] != "grandchallenge/INTELLECT"
-        or repair["disposition"] != "repair_required"
-        or repair["remediation_issue"]
-        != "https://github.com/grandchallenge/gcl-standards/issues/12"
-    ):
-        raise ValueError("INTELLECT repair disposition drift")
-
-    counts = Counter(EXPECTED_CARRIED_ROWS.values())
-    counts["P0"] += 1
-    expected_counts = {
-        "P0": counts.get("P0", 0),
-        "P1": counts.get("P1", 0),
-        "P2": counts.get("P2", 0),
-        "P3": counts.get("P3", 0),
-    }
-    if reconciliation["open_priority_counts"] != expected_counts:
-        raise ValueError("reconciliation priority counts drift")
-
-    phase = reconciliation["phase_boundaries"]
-    if phase != {
-        "phase_a_live_mutation_authorized": False,
-        "phase_b_requires_phase_a_protected_merge": True,
-        "profile_conformance_authorized": False,
-        "organization_wide_conformance": False,
-    }:
-        raise ValueError("phase or conformance boundary drift")
-
-    boundaries = reconciliation["claim_boundaries"]
-    for field in FALSE_BOUNDARIES:
-        if boundaries.get(field) is not False:
-            raise ValueError(f"claim-boundary inflation: {field}")
+        raise ValueError("source workflow binding drift")
+    for field in FALSE_EVIDENCE_BOUNDARIES:
+        if reference.get("claim_boundaries", {}).get(field) is not False:
+            raise ValueError(f"reference claim inflation: {field}")
+    phase = reconciliation["phase_b_evidence"]
+    if phase["workflow_run"] != source_ref["workflow_run"] or phase["job_id"] != source_ref["job_id"] or phase["artifact_id"] != source_ref["artifact_id"] or phase["source_head"] != source_ref["head_sha"] or phase["semantic_sha256"] != semantic or phase["json_sha256"] != final_sha or phase["artifact_zip_sha256"] != source_ref["artifact_zip_sha256"]:
+        raise ValueError("reconciliation evidence cross-binding drift")
 
 
 def validate() -> None:
     validate_records(
-        load(PROFILE),
-        load(RECONCILIATION),
-        load(BASE_CAMPAIGN),
-        load(OWNER_OVERLAY),
-        load(OWNER_REFERENCE),
+        load(PROFILE), load(RECONCILIATION), load(BASE_CAMPAIGN),
+        load(OWNER_OVERLAY), load(OWNER_REFERENCE), load(EVIDENCE),
+        EVIDENCE.read_bytes(), EVIDENCE_DIGEST.read_text(encoding="utf-8"),
+        load(EVIDENCE_REFERENCE),
     )
 
 
 if __name__ == "__main__":
     validate()
-    print("INTELLECT profile reconciliation validation passed")
+    print("INTELLECT profile reconciliation and Phase B evidence validation passed")

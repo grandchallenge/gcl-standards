@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/intellect-profile-phase-b-evidence-reference-1.0.0.json",
+  "title": "INTELLECT Phase B evidence reference",
+  "const": {
+    "$schema": "../../schemas/intellect_profile_phase_b_evidence_reference.schema.json",
+    "operation_id": "GCL-GHOS-INTELLECT-PROFILE-RECONCILIATION-001",
+    "phase": "B",
+    "status": "admitted",
+    "effective_condition": "protected_merge_of_this_exact_record",
+    "source": {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "workflow_name": "Release trust administration",
+      "workflow_path": ".github/workflows/release-trust-admin.yml",
+      "workflow_run": 30882443280,
+      "workflow_run_url": "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/30882443280",
+      "job_id": 91906476034,
+      "job_name": "administer-intellect-profile",
+      "head_sha": "e5713330aa983501ec7a5c0c89caf0b827f9a6e6",
+      "artifact_id": 8881792628,
+      "artifact_name": "intellect-profile-admin-evidence",
+      "artifact_zip_sha256": "21116b3d91e962a6e2bf017ffb2ed9ebfd406b11a0f99f22fe146c865829d6f7",
+      "artifact_size_bytes": 9892,
+      "recorded_at": "2026-08-04T05:59:48.591925+00:00"
+    },
+    "authority": {
+      "issue": "https://github.com/grandchallenge/gcl-standards/issues/12",
+      "phase_a_pr": "https://github.com/grandchallenge/gcl-standards/pull/26",
+      "phase_a_head": "6f908c9897d6ec06971c5e961fde68bb0a393fa6",
+      "phase_a_merge": "eaa87bfebab9adbfd39778364aac89aa8c479297",
+      "phase_a_post_merge_attestation_comment": 5173619262,
+      "phase_b_executor_pr": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/214",
+      "phase_b_executor_head": "819c2b2559408baadad8f7f2fb87982d1308152c",
+      "phase_b_executor_merge": "ed0145f1295e066e8d731c8f6493feb3278c042f",
+      "permission_hardening_pr": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/215",
+      "permission_hardening_head": "d328d96b3c24b0279d733f04bb29f6ff9a1c4fa5",
+      "permission_hardening_merge": "e5713330aa983501ec7a5c0c89caf0b827f9a6e6"
+    },
+    "retained_evidence": {
+      "json_path": "evidence/settings-readback/GCL-GHOS-INTELLECT-PROFILE-RECONCILIATION-001.json",
+      "json_size_bytes": 9420,
+      "json_sha256": "a8a516bfa3089ddce09b37d0a352536a9c63ab0dd0fdd9eeb23f4e8cc2fc845a",
+      "semantic_sha256": "3fd0de683adc5592e26b037ce41a0f5b88cd6785c11ad3309969202a335c35dd",
+      "semantic_digest_scope": "canonical_json_without_evidence_sha256",
+      "companion_path": "evidence/settings-readback/GCL-GHOS-INTELLECT-PROFILE-RECONCILIATION-001.json.sha256",
+      "companion_size_bytes": 104,
+      "companion_value": "3fd0de683adc5592e26b037ce41a0f5b88cd6785c11ad3309969202a335c35dd"
+    },
+    "verified_state": {
+      "repository": "grandchallenge/INTELLECT",
+      "protected_main_sha": "0096eb21ca62c5ef7f6e458f358edcb1cd963a20",
+      "protected_main_unchanged": true,
+      "installation_scope": [
+        "grandchallenge/INTELLECT",
+        "grandchallenge/MATH-PROGRAMME"
+      ],
+      "property_schema_extensions": {
+        "constitutional_profile": "Constitutional",
+        "authority_scope": "constitutional"
+      },
+      "custom_properties": {
+        "constitutional_profile": "Constitutional",
+        "authority_scope": "constitutional",
+        "claim_promotion_role": "none",
+        "risk_tier": "critical",
+        "workflow_profile": "governance",
+        "public_programme": "true"
+      },
+      "ruleset": {
+        "id": 19964077,
+        "name": "Constitutional profile - main",
+        "target": "branch",
+        "enforcement": "active",
+        "default_branch_only": true,
+        "strict_required_status_checks": true,
+        "required_status_checks": [
+          "test (3.11.14)",
+          "test (3.12.13)",
+          "policy / policy",
+          "security / action-policy"
+        ],
+        "required_approving_review_count": 0,
+        "dismiss_stale_reviews_on_push": true,
+        "require_last_push_approval": false,
+        "require_code_owner_review": false,
+        "required_review_thread_resolution": true,
+        "allowed_merge_methods": [
+          "merge",
+          "squash"
+        ],
+        "deletion_blocked": true,
+        "non_fast_forward_blocked": true,
+        "bypass_actors": []
+      },
+      "mutation_set": [
+        "extend_property_schemas",
+        "apply_repository_property_values",
+        "rename_ruleset"
+      ],
+      "executor_verified": true
+    },
+    "claim_boundaries": {
+      "profile_conformance_authorized": false,
+      "organization_wide_conformance": false,
+      "mathematical_claim_authorized": false,
+      "certification_claim_authorized": false,
+      "novelty_claim_authorized": false,
+      "priority_claim_authorized": false,
+      "deployment_claim_authorized": false,
+      "manufacturing_claim_authorized": false,
+      "product_claim_authorized": false,
+      "commercial_claim_authorized": false
+    },
+    "next_gate": "Independent exact-head review and protected merge, followed by protected-main verification and documentary closure of issue #12."
+  }
+}

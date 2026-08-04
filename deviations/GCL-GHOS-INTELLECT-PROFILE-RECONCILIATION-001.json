@@ -1,7 +1,7 @@
 {
   "$schema": "../schemas/intellect_profile_reconciliation.schema.json",
   "operation_id": "GCL-GHOS-INTELLECT-PROFILE-RECONCILIATION-001",
-  "status": "phase_a_repair_required",
+  "status": "closed_repair_verified",
   "effective_condition": "protected_merge_of_this_exact_record",
   "authorization": {
     "issue": "https://github.com/grandchallenge/gcl-standards/issues/12",
@@ -35,6 +35,10 @@
       "source_git_blob_sha1": "c15d10b3ad5287d625642850ed5d0986e9afaefc",
       "source_sha256": "b60f42d46e6044358d70d0f673f08afbc4e295afba95cd2fe3e9a65d8ab57d7c",
       "recorded_at": "2026-08-03T13:15:59Z"
+    },
+    "modulus_closure_overlay": {
+      "path": "deviations/GCL-GHOS-SETTINGS-READBACK-001.modulus-closure-overlay.json",
+      "merge_commit": "4884001459e1346aebd21e44c49a8ab2c695d09b"
     }
   },
   "superseded_observation": {
@@ -47,14 +51,13 @@
     "priority": "P0",
     "scope": "grandchallenge/INTELLECT",
     "control": "constitutional_profile_projection",
-    "disposition": "repair_required",
+    "disposition": "closed_repair_verified",
     "remediation_issue": "https://github.com/grandchallenge/gcl-standards/issues/12",
-    "finding": "The live GitHub projection identifies the constitutional-policy repository as a provider through four stale custom properties and the ruleset name Provider profile - main.",
-    "closure_condition": "Complete protected Phase A canonical correction, then Phase B vocabulary extension, live property and ruleset repair, owner-authenticated readback, and separate evidence-admission merge."
+    "finding": "The live GitHub projection had identified the constitutional-policy repository as a provider through four stale custom properties and a provider-class ruleset name.",
+    "resolution": "The admitted Phase B readback verifies the constitutional vocabulary extensions, all six intended INTELLECT property values, the Constitutional profile ruleset, preserved protected-main controls, and unchanged protected-main content.",
+    "closure_condition": "Effective on protected merge of this evidence-admission record; documentary closure of issue #12 follows protected-main verification."
   },
   "carried_open_rows": [
-    "MODULUS-P1-001",
-    "MODULUS-P2-001",
     "QUANTUM-P1-001",
     "QUANTUM-P2-001"
   ],
@@ -73,16 +76,29 @@
     },
     "default_branch_ruleset": "Constitutional profile - main"
   },
+  "phase_b_evidence": {
+    "reference_path": "evidence/settings-readback/GCL-GHOS-INTELLECT-PROFILE-RECONCILIATION-001.reference.json",
+    "workflow_run": 30882443280,
+    "job_id": 91906476034,
+    "artifact_id": 8881792628,
+    "source_head": "e5713330aa983501ec7a5c0c89caf0b827f9a6e6",
+    "semantic_sha256": "3fd0de683adc5592e26b037ce41a0f5b88cd6785c11ad3309969202a335c35dd",
+    "json_sha256": "a8a516bfa3089ddce09b37d0a352536a9c63ab0dd0fdd9eeb23f4e8cc2fc845a",
+    "artifact_zip_sha256": "21116b3d91e962a6e2bf017ffb2ed9ebfd406b11a0f99f22fe146c865829d6f7",
+    "recorded_at": "2026-08-04T05:59:48.591925+00:00"
+  },
   "phase_boundaries": {
     "phase_a_live_mutation_authorized": false,
     "phase_b_requires_phase_a_protected_merge": true,
+    "phase_b_execution_complete": true,
+    "phase_b_evidence_admitted_on_protected_merge": true,
     "profile_conformance_authorized": false,
     "organization_wide_conformance": false
   },
   "open_priority_counts": {
-    "P0": 1,
-    "P1": 2,
-    "P2": 2,
+    "P0": 0,
+    "P1": 1,
+    "P2": 1,
     "P3": 0
   },
   "claim_boundaries": {
@@ -93,5 +109,5 @@
     "manufacturing_claim_authorized": false,
     "commercial_claim_authorized": false
   },
-  "next_gate": "Independent exact-head review and protected merge of Phase A before any live GitHub settings mutation."
+  "next_gate": "Independent exact-head review and protected merge of Phase B evidence admission, then protected-main verification, documentary closure of issue #12, and continuation of the QUANTUM-TECHNOLOGIES remediation track."
 }

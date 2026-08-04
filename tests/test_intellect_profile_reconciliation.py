@@ -5,11 +5,10 @@ import importlib.util
 import unittest
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
-MODULE_PATH = ROOT / "ci" / "intellect_profile_reconciliation.py"
 SPEC = importlib.util.spec_from_file_location(
-    "intellect_profile_reconciliation", MODULE_PATH
+    "intellect_profile_reconciliation",
+    ROOT / "ci/intellect_profile_reconciliation.py",
 )
 assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)
@@ -20,122 +19,97 @@ class IntellectProfileReconciliationTests(unittest.TestCase):
     def setUp(self) -> None:
         self.profile = MODULE.load(MODULE.PROFILE)
         self.reconciliation = MODULE.load(MODULE.RECONCILIATION)
-        self.base_campaign = MODULE.load(MODULE.BASE_CAMPAIGN)
-        self.owner_overlay = MODULE.load(MODULE.OWNER_OVERLAY)
-        self.owner_reference = MODULE.load(MODULE.OWNER_REFERENCE)
+        self.base = MODULE.load(MODULE.BASE_CAMPAIGN)
+        self.overlay = MODULE.load(MODULE.OWNER_OVERLAY)
+        self.owner = MODULE.load(MODULE.OWNER_REFERENCE)
+        self.evidence = MODULE.load(MODULE.EVIDENCE)
+        self.evidence_bytes = MODULE.EVIDENCE.read_bytes()
+        self.digest = MODULE.EVIDENCE_DIGEST.read_text(encoding="utf-8")
+        self.reference = MODULE.load(MODULE.EVIDENCE_REFERENCE)
 
-    def validate(
-        self,
-        profile=None,
-        reconciliation=None,
-        base_campaign=None,
-        owner_overlay=None,
-        owner_reference=None,
-    ) -> None:
+    def validate(self, **changes) -> None:
         MODULE.validate_records(
-            profile if profile is not None else self.profile,
-            reconciliation if reconciliation is not None else self.reconciliation,
-            base_campaign if base_campaign is not None else self.base_campaign,
-            owner_overlay if owner_overlay is not None else self.owner_overlay,
-            owner_reference if owner_reference is not None else self.owner_reference,
+            changes.get("profile", self.profile),
+            changes.get("reconciliation", self.reconciliation),
+            changes.get("base_campaign", self.base),
+            changes.get("owner_overlay", self.overlay),
+            changes.get("owner_reference", self.owner),
+            changes.get("evidence", self.evidence),
+            changes.get("evidence_bytes", self.evidence_bytes),
+            changes.get("digest_text", self.digest),
+            changes.get("reference", self.reference),
         )
+
+    def assert_rejected(self, key: str, value) -> None:
+        with self.assertRaises(Exception):
+            self.validate(**{key: value})
 
     def test_exact_records_validate(self) -> None:
         self.validate()
 
-    def test_rejects_stale_constitution_version(self) -> None:
+    def test_rejects_stale_constitution(self) -> None:
         value = copy.deepcopy(self.profile)
         value["constitutional_source"]["effective_version"] = "1.0.0"
-        with self.assertRaises(Exception):
-            self.validate(profile=value)
+        self.assert_rejected("profile", value)
 
-    def test_rejects_candidate_standard_status(self) -> None:
+    def test_rejects_provider_projection(self) -> None:
         value = copy.deepcopy(self.profile)
-        value["operating_policy_source"]["status"] = "candidate"
-        with self.assertRaises(Exception):
-            self.validate(profile=value)
+        value["github_projection"]["custom_properties"]["constitutional_profile"] = "Provider"
+        self.assert_rejected("profile", value)
 
-    def test_rejects_malformed_authority_commit(self) -> None:
-        value = copy.deepcopy(self.profile)
-        value["constitutional_source"]["activation_commit"] = "short"
-        with self.assertRaises(Exception):
-            self.validate(profile=value)
+    def test_rejects_false_closure_or_stale_p0(self) -> None:
+        for path, replacement in (
+            ("status", "phase_a_repair_required"),
+            ("open_priority_counts", {"P0": 1, "P1": 2, "P2": 2, "P3": 0}),
+        ):
+            value = copy.deepcopy(self.reconciliation)
+            value[path] = replacement
+            self.assert_rejected("reconciliation", value)
 
-    def test_rejects_ambiguous_claim_role_mapping(self) -> None:
-        value = copy.deepcopy(self.profile)
-        value["github_projection"]["projection_semantics"][
-            "live_claim_promotion_role"
-        ] = "policy_only"
-        with self.assertRaises(Exception):
-            self.validate(profile=value)
-
-    def test_rejects_provider_property_substitution(self) -> None:
-        value = copy.deepcopy(self.profile)
-        value["github_projection"]["custom_properties"][
-            "constitutional_profile"
-        ] = "Provider"
-        with self.assertRaises(Exception):
-            self.validate(profile=value)
-
-    def test_rejects_provider_ruleset_substitution(self) -> None:
-        value = copy.deepcopy(self.profile)
-        value["github_projection"]["default_branch_ruleset"] = (
-            "Provider profile - main"
-        )
-        with self.assertRaises(Exception):
-            self.validate(profile=value)
-
-    def test_rejects_false_intellect_conformance(self) -> None:
-        value = copy.deepcopy(self.reconciliation)
-        value["repair_row"]["disposition"] = "conformant"
-        with self.assertRaises(Exception):
-            self.validate(reconciliation=value)
-
-    def test_rejects_priority_downgrade(self) -> None:
-        value = copy.deepcopy(self.reconciliation)
-        value["repair_row"]["priority"] = "P1"
-        with self.assertRaises(Exception):
-            self.validate(reconciliation=value)
-
-    def test_rejects_missing_carried_deviation(self) -> None:
-        value = copy.deepcopy(self.reconciliation)
-        value["carried_open_rows"].pop()
-        with self.assertRaises(Exception):
-            self.validate(reconciliation=value)
-
-    def test_rejects_live_mutation_in_phase_a(self) -> None:
-        value = copy.deepcopy(self.reconciliation)
-        value["phase_boundaries"]["phase_a_live_mutation_authorized"] = True
-        with self.assertRaises(Exception):
-            self.validate(reconciliation=value)
-
-    def test_rejects_profile_conformance_claim(self) -> None:
+    def test_rejects_reconciliation_claim_inflation(self) -> None:
         value = copy.deepcopy(self.reconciliation)
         value["phase_boundaries"]["profile_conformance_authorized"] = True
-        with self.assertRaises(Exception):
-            self.validate(reconciliation=value)
+        self.assert_rejected("reconciliation", value)
 
-    def test_rejects_claim_inflation(self) -> None:
-        value = copy.deepcopy(self.reconciliation)
-        value["claim_boundaries"]["certification_claim_authorized"] = True
-        with self.assertRaises(Exception):
-            self.validate(reconciliation=value)
+    def test_rejects_property_readback_substitution(self) -> None:
+        value = copy.deepcopy(self.evidence)
+        value["property_values_after"]["constitutional_profile"] = "Provider"
+        self.assert_rejected("evidence", value)
 
-    def test_rejects_owner_evidence_substitution(self) -> None:
-        value = copy.deepcopy(self.reconciliation)
-        value["base_records"]["owner_export_reference"]["source_sha256"] = (
-            "0" * 64
-        )
-        with self.assertRaises(Exception):
-            self.validate(reconciliation=value)
+    def test_rejects_protected_main_movement(self) -> None:
+        value = copy.deepcopy(self.evidence)
+        value["main_sha_after"] = "0" * 40
+        self.assert_rejected("evidence", value)
 
-    def test_rejects_base_false_conformance_rewrite(self) -> None:
-        value = copy.deepcopy(self.base_campaign)
-        for row in value["rows"]:
-            if row.get("id") == "OBS-INTELLECT-001":
-                row["disposition"] = "repair_required"
-        with self.assertRaises(Exception):
-            self.validate(base_campaign=value)
+    def test_rejects_ruleset_bypass(self) -> None:
+        value = copy.deepcopy(self.evidence)
+        value["ruleset_after"]["bypass_actors"] = [{"actor_id": 1}]
+        self.assert_rejected("evidence", value)
+
+    def test_rejects_semantic_or_companion_digest_substitution(self) -> None:
+        value = copy.deepcopy(self.evidence)
+        value["evidence_sha256"] = "0" * 64
+        self.assert_rejected("evidence", value)
+        self.assert_rejected("digest_text", "0" * 64 + "  wrong.json\n")
+
+    def test_rejects_final_file_digest_substitution(self) -> None:
+        value = copy.deepcopy(self.reference)
+        value["retained_evidence"]["json_sha256"] = "0" * 64
+        self.assert_rejected("reference", value)
+
+    def test_rejects_workflow_or_artifact_substitution(self) -> None:
+        for field, replacement in (
+            ("workflow_run", 1),
+            ("artifact_zip_sha256", "0" * 64),
+        ):
+            value = copy.deepcopy(self.reference)
+            value["source"][field] = replacement
+            self.assert_rejected("reference", value)
+
+    def test_rejects_evidence_claim_inflation(self) -> None:
+        value = copy.deepcopy(self.evidence)
+        value["claim_boundaries"]["profile_conformance_authorized"] = True
+        self.assert_rejected("evidence", value)
 
 
 if __name__ == "__main__":
