@@ -1,0 +1,78 @@
+{
+  "$id": "https://grandchallenge.ai/schemas/settings-readback-modulus-reference-1.0.0.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {"const": "../../schemas/settings_readback_modulus_reference.schema.json"},
+    "claim_boundaries": {
+      "additionalProperties": false,
+      "properties": {
+        "certification_claim_authorized": {"const": false},
+        "commercial_claim_authorized": {"const": false},
+        "deployment_claim_authorized": {"const": false},
+        "mathematical_claim_authorized": {"const": false},
+        "novelty_claim_authorized": {"const": false},
+        "organization_wide_conformance": {"const": false}
+      },
+      "required": ["certification_claim_authorized", "commercial_claim_authorized", "deployment_claim_authorized", "mathematical_claim_authorized", "novelty_claim_authorized", "organization_wide_conformance"],
+      "type": "object"
+    },
+    "effective_condition": {"const": "protected_merge_of_this_exact_record"},
+    "operation_id": {"const": "GCL-GHOS-MODULUS-POST-REPAIR-READBACK-REFERENCE-001"},
+    "source": {
+      "additionalProperties": false,
+      "properties": {
+        "actor": {
+          "additionalProperties": false,
+          "properties": {
+            "id": {"const": 17925951},
+            "login": {"const": "fyremael"},
+            "repository_admin": {"const": true}
+          },
+          "required": ["id", "login", "repository_admin"],
+          "type": "object"
+        },
+        "attestation_git_blob_sha1": {"pattern": "^[0-9a-f]{40}$", "type": "string"},
+        "attestation_path": {"const": "governance/settings-readback/evidence/GCL-GHOS-MODULUS-POST-REPAIR-READBACK-001.attestation.md"},
+        "digest_path": {"const": "governance/settings-readback/evidence/GCL-GHOS-MODULUS-POST-REPAIR-READBACK-001.json.sha256"},
+        "exact_head": {"pattern": "^[0-9a-f]{40}$", "type": "string"},
+        "git_blob_sha1": {"pattern": "^[0-9a-f]{40}$", "type": "string"},
+        "merge_commit": {"pattern": "^[0-9a-f]{40}$", "type": "string"},
+        "owner_controls_evidence_baseline": {"pattern": "^[0-9a-f]{40}$", "type": "string"},
+        "path": {"const": "governance/settings-readback/evidence/GCL-GHOS-MODULUS-POST-REPAIR-READBACK-001.json"},
+        "protected_main": {"pattern": "^[0-9a-f]{40}$", "type": "string"},
+        "pull_request": {"const": 17},
+        "recorded_at": {"const": "2026-08-04T00:13:03Z"},
+        "repository": {"const": "grandchallenge/MODULUS"},
+        "schema_version": {"const": "1.1.0"},
+        "sha256": {"pattern": "^[0-9a-f]{64}$", "type": "string"},
+        "size_bytes": {"const": 272012}
+      },
+      "required": ["actor", "attestation_git_blob_sha1", "attestation_path", "digest_path", "exact_head", "git_blob_sha1", "merge_commit", "owner_controls_evidence_baseline", "path", "protected_main", "pull_request", "recorded_at", "repository", "schema_version", "sha256", "size_bytes"],
+      "type": "object"
+    },
+    "status": {"const": "admitted"},
+    "verified_state": {
+      "additionalProperties": false,
+      "properties": {
+        "codeql_default_setup_configured": {"const": true},
+        "dependabot_security_updates_enabled": {"const": true},
+        "governed_surfaces": {"items": {"type": "string"}, "maxItems": 6, "minItems": 6, "type": "array", "uniqueItems": true},
+        "immutable_release_tag_ruleset_id": {"const": 20334249},
+        "private_vulnerability_reporting_enabled": {"const": true},
+        "protected_main_ruleset_id": {"const": 20266757},
+        "repository_merge_settings_conformant": {"const": true},
+        "required_contexts": {"items": {"type": "string"}, "maxItems": 6, "minItems": 6, "type": "array", "uniqueItems": true},
+        "required_workflows": {"items": {"type": "string"}, "maxItems": 2, "minItems": 2, "type": "array", "uniqueItems": true},
+        "ruleset_list_detail_complete": {"const": true},
+        "validation_findings": {"maxItems": 0, "type": "array"},
+        "vulnerability_alerts_enabled": {"const": true}
+      },
+      "required": ["codeql_default_setup_configured", "dependabot_security_updates_enabled", "governed_surfaces", "immutable_release_tag_ruleset_id", "private_vulnerability_reporting_enabled", "protected_main_ruleset_id", "repository_merge_settings_conformant", "required_contexts", "required_workflows", "ruleset_list_detail_complete", "validation_findings", "vulnerability_alerts_enabled"],
+      "type": "object"
+    }
+  },
+  "required": ["$schema", "claim_boundaries", "effective_condition", "operation_id", "source", "status", "verified_state"],
+  "title": "MODULUS focused post-repair readback reference",
+  "type": "object"
+}

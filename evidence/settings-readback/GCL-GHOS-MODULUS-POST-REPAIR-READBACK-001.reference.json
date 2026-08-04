@@ -1,0 +1,67 @@
+{
+  "$schema": "../../schemas/settings_readback_modulus_reference.schema.json",
+  "claim_boundaries": {
+    "certification_claim_authorized": false,
+    "commercial_claim_authorized": false,
+    "deployment_claim_authorized": false,
+    "mathematical_claim_authorized": false,
+    "novelty_claim_authorized": false,
+    "organization_wide_conformance": false
+  },
+  "effective_condition": "protected_merge_of_this_exact_record",
+  "operation_id": "GCL-GHOS-MODULUS-POST-REPAIR-READBACK-REFERENCE-001",
+  "source": {
+    "actor": {
+      "id": 17925951,
+      "login": "fyremael",
+      "repository_admin": true
+    },
+    "attestation_git_blob_sha1": "70eaa895b786e61a5681ee720bb97dda21b01c29",
+    "attestation_path": "governance/settings-readback/evidence/GCL-GHOS-MODULUS-POST-REPAIR-READBACK-001.attestation.md",
+    "digest_path": "governance/settings-readback/evidence/GCL-GHOS-MODULUS-POST-REPAIR-READBACK-001.json.sha256",
+    "exact_head": "a9350368e3dfd7272f7c21d2ddbb37fd9d458b5b",
+    "git_blob_sha1": "b6fb29688329511b5b006ebcdd00e2addf99e296",
+    "merge_commit": "2a6fb6f190e52d23a9c65b710d82f9d4527bbe71",
+    "owner_controls_evidence_baseline": "f54dd2c0b26ea46ef6b598f6a65dfcef2c47da47",
+    "path": "governance/settings-readback/evidence/GCL-GHOS-MODULUS-POST-REPAIR-READBACK-001.json",
+    "protected_main": "d23c285e7f9245c1504a64d108373dccedaf05e6",
+    "pull_request": 17,
+    "recorded_at": "2026-08-04T00:13:03Z",
+    "repository": "grandchallenge/MODULUS",
+    "schema_version": "1.1.0",
+    "sha256": "be189dda6d5ee0b0b9a2d0c9af64f6910215bc24e3e524c9344ef06cbafd9143",
+    "size_bytes": 272012
+  },
+  "status": "admitted",
+  "verified_state": {
+    "codeql_default_setup_configured": true,
+    "dependabot_security_updates_enabled": true,
+    "governed_surfaces": [
+      ".github/CODEOWNERS",
+      ".github/dependabot.yml",
+      ".github/workflows/ci.yml",
+      ".github/workflows/gcl-conformance.yml",
+      "AGENTS.md",
+      "SUPPORT.md"
+    ],
+    "immutable_release_tag_ruleset_id": 20334249,
+    "private_vulnerability_reporting_enabled": true,
+    "protected_main_ruleset_id": 20266757,
+    "repository_merge_settings_conformant": true,
+    "required_contexts": [
+      "test-and-lint (3.10)",
+      "test-and-lint (3.11)",
+      "test-and-lint (3.12)",
+      "benchmark-report",
+      "policy / policy",
+      "security / action-policy"
+    ],
+    "required_workflows": [
+      ".github/workflows/ci.yml",
+      ".github/workflows/gcl-conformance.yml"
+    ],
+    "ruleset_list_detail_complete": true,
+    "validation_findings": [],
+    "vulnerability_alerts_enabled": true
+  }
+}

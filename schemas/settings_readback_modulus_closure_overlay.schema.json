@@ -1,0 +1,101 @@
+{
+  "$id": "https://grandchallenge.ai/schemas/settings-readback-modulus-closure-overlay-1.0.0.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {"const": "../schemas/settings_readback_modulus_closure_overlay.schema.json"},
+    "base_campaign_record": {
+      "additionalProperties": false,
+      "properties": {
+        "admission_merge": {"const": "3d5e35a8635cb8864a816cf0e589a5831dc2c706"},
+        "path": {"const": "deviations/GCL-GHOS-SETTINGS-READBACK-001.json"},
+        "repository": {"const": "grandchallenge/gcl-standards"}
+      },
+      "required": ["admission_merge", "path", "repository"],
+      "type": "object"
+    },
+    "campaign_id": {"const": "GCL-GHOS-SETTINGS-READBACK-001"},
+    "claim_boundaries": {
+      "additionalProperties": false,
+      "properties": {
+        "certification_claim_authorized": {"const": false},
+        "commercial_claim_authorized": {"const": false},
+        "deployment_claim_authorized": {"const": false},
+        "mathematical_claim_authorized": {"const": false},
+        "novelty_claim_authorized": {"const": false},
+        "organization_wide_conformance": {"const": false}
+      },
+      "required": ["certification_claim_authorized", "commercial_claim_authorized", "deployment_claim_authorized", "mathematical_claim_authorized", "novelty_claim_authorized", "organization_wide_conformance"],
+      "type": "object"
+    },
+    "closed_rows": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "closure_condition": {"minLength": 20, "type": "string"},
+          "disposition": {"enum": ["closed_evidence_admitted", "closed_repair_verified"]},
+          "id": {"enum": ["ORG-READBACK-BLOCKED-001", "MODULUS-P1-001", "MODULUS-P2-001"]},
+          "priority": {"enum": ["P1", "P2"]},
+          "remediation_issue": {"format": "uri", "type": "string"},
+          "resolution": {"minLength": 20, "type": "string"},
+          "scope": {"enum": ["grandchallenge", "grandchallenge/MODULUS"]}
+        },
+        "required": ["closure_condition", "disposition", "id", "priority", "remediation_issue", "resolution", "scope"],
+        "type": "object"
+      },
+      "maxItems": 3,
+      "minItems": 3,
+      "type": "array"
+    },
+    "effective_condition": {"const": "protected_merge_of_this_exact_record"},
+    "next_gate": {"minLength": 20, "type": "string"},
+    "open_priority_counts": {
+      "additionalProperties": false,
+      "properties": {
+        "P0": {"const": 0},
+        "P1": {"const": 1},
+        "P2": {"const": 1},
+        "P3": {"const": 0}
+      },
+      "required": ["P0", "P1", "P2", "P3"],
+      "type": "object"
+    },
+    "open_rows": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "closure_condition": {"minLength": 20, "type": "string"},
+          "disposition": {"const": "repair_required"},
+          "finding": {"minLength": 20, "type": "string"},
+          "id": {"enum": ["QUANTUM-P1-001", "QUANTUM-P2-001"]},
+          "priority": {"enum": ["P1", "P2"]},
+          "remediation_issue": {"const": "https://github.com/grandchallenge/QUANTUM-TECHNOLOGIES/issues/14"},
+          "scope": {"const": "grandchallenge/QUANTUM-TECHNOLOGIES"}
+        },
+        "required": ["closure_condition", "disposition", "finding", "id", "priority", "remediation_issue", "scope"],
+        "type": "object"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "operation_id": {"const": "GCL-GHOS-SETTINGS-READBACK-MODULUS-CLOSURE-OVERLAY-001"},
+    "organization_wide_conformance": {"const": false},
+    "prior_overlay": {
+      "additionalProperties": false,
+      "properties": {
+        "git_blob_sha1": {"const": "fe0e377a287883c10ce82042a73404acae6a9b2c"},
+        "merge_commit": {"const": "692ff6a1b8ec4113c8917470cb0e4c094ff7d334"},
+        "path": {"const": "deviations/GCL-GHOS-SETTINGS-READBACK-001.owner-export-overlay.json"},
+        "repository": {"const": "grandchallenge/gcl-standards"}
+      },
+      "required": ["git_blob_sha1", "merge_commit", "path", "repository"],
+      "type": "object"
+    },
+    "replacement_evidence": {"const": "evidence/settings-readback/GCL-GHOS-MODULUS-POST-REPAIR-READBACK-001.reference.json"},
+    "status": {"const": "open"}
+  },
+  "required": ["$schema", "base_campaign_record", "campaign_id", "claim_boundaries", "closed_rows", "effective_condition", "next_gate", "open_priority_counts", "open_rows", "operation_id", "organization_wide_conformance", "prior_overlay", "replacement_evidence", "status"],
+  "title": "MODULUS settings-readback closure overlay",
+  "type": "object"
+}
