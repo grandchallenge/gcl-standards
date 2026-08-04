@@ -205,7 +205,16 @@ class StandardsValidationTests(unittest.TestCase):
         )
         self.assertEqual(profile["profile"], "constitutional")
         self.assertNotIn("canonical_policy_source", profile)
-        self.assertEqual(profile["operating_policy_source"]["status"], "candidate")
+        self.assertEqual(profile["constitutional_source"]["effective_version"], "1.1.0")
+        self.assertEqual(profile["constitutional_source"]["amendment_status"], "effective")
+        self.assertEqual(profile["operating_policy_source"]["status"], "admitted")
+        self.assertEqual(profile["operating_policy_source"]["decision_status"], "accepted")
+        self.assertEqual(
+            profile["github_projection"]["custom_properties"][
+                "claim_promotion_role"
+            ],
+            "none",
+        )
 
     def test_action_forks_have_supply_chain_only_profiles(self) -> None:
         for name in ("lean-action.json", "upload-pages-artifact.json"):
