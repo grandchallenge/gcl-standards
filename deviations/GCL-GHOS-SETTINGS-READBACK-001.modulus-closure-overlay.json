@@ -1,0 +1,84 @@
+{
+  "$schema": "../schemas/settings_readback_modulus_closure_overlay.schema.json",
+  "base_campaign_record": {
+    "admission_merge": "3d5e35a8635cb8864a816cf0e589a5831dc2c706",
+    "path": "deviations/GCL-GHOS-SETTINGS-READBACK-001.json",
+    "repository": "grandchallenge/gcl-standards"
+  },
+  "campaign_id": "GCL-GHOS-SETTINGS-READBACK-001",
+  "claim_boundaries": {
+    "certification_claim_authorized": false,
+    "commercial_claim_authorized": false,
+    "deployment_claim_authorized": false,
+    "mathematical_claim_authorized": false,
+    "novelty_claim_authorized": false,
+    "organization_wide_conformance": false
+  },
+  "closed_rows": [
+    {
+      "closure_condition": "Already closed by protected merge 692ff6a1b8ec4113c8917470cb0e4c094ff7d334.",
+      "disposition": "closed_evidence_admitted",
+      "id": "ORG-READBACK-BLOCKED-001",
+      "priority": "P1",
+      "remediation_issue": "https://github.com/grandchallenge/.github/issues/38",
+      "resolution": "Carried forward unchanged from the protected owner-export overlay.",
+      "scope": "grandchallenge"
+    },
+    {
+      "closure_condition": "Effective only after protected merge of this overlay; documentary closure of MODULUS issues #10 and #6 follows protected-main verification.",
+      "disposition": "closed_repair_verified",
+      "id": "MODULUS-P1-001",
+      "priority": "P1",
+      "remediation_issue": "https://github.com/grandchallenge/MODULUS/issues/6",
+      "resolution": "Governed profile and surfaces, pinned workflows, vulnerability alerts, Dependabot security updates, private vulnerability reporting, and CodeQL default setup are protected and verified by the admitted focused readback.",
+      "scope": "grandchallenge/MODULUS"
+    },
+    {
+      "closure_condition": "Effective only after protected merge of this overlay; documentary closure of MODULUS issues #10 and #6 follows protected-main verification.",
+      "disposition": "closed_repair_verified",
+      "id": "MODULUS-P2-001",
+      "priority": "P2",
+      "remediation_issue": "https://github.com/grandchallenge/MODULUS/issues/6",
+      "resolution": "Auto-merge and merged-branch deletion are enabled, rebase merging is disabled, the protected-main ruleset excludes rebase and requires the six admitted contexts, and immutable release tags are protected.",
+      "scope": "grandchallenge/MODULUS"
+    }
+  ],
+  "effective_condition": "protected_merge_of_this_exact_record",
+  "next_gate": "Complete the QUANTUM-TECHNOLOGIES P1/P2 remediation track and admit an exact post-repair readback before campaign closure.",
+  "open_priority_counts": {
+    "P0": 0,
+    "P1": 1,
+    "P2": 1,
+    "P3": 0
+  },
+  "open_rows": [
+    {
+      "closure_condition": "Protected remediation plus exact post-repair settings, ruleset, security, workflow, and surface reread.",
+      "disposition": "repair_required",
+      "finding": "Missing governed profile/surfaces; automated security fixes are disabled; CodeQL default setup is not configured; stale-review dismissal and strict required checks are disabled; required GCL security check is absent.",
+      "id": "QUANTUM-P1-001",
+      "priority": "P1",
+      "remediation_issue": "https://github.com/grandchallenge/QUANTUM-TECHNOLOGIES/issues/14",
+      "scope": "grandchallenge/QUANTUM-TECHNOLOGIES"
+    },
+    {
+      "closure_condition": "Align settings and rulesets or admit a bounded unexpired exception, then perform an exact post-repair reread.",
+      "disposition": "repair_required",
+      "finding": "Auto-merge is disabled, rebase merging is enabled, merged branches are not deleted, the main ruleset allows rebase, and no immutable release-tag ruleset is present.",
+      "id": "QUANTUM-P2-001",
+      "priority": "P2",
+      "remediation_issue": "https://github.com/grandchallenge/QUANTUM-TECHNOLOGIES/issues/14",
+      "scope": "grandchallenge/QUANTUM-TECHNOLOGIES"
+    }
+  ],
+  "operation_id": "GCL-GHOS-SETTINGS-READBACK-MODULUS-CLOSURE-OVERLAY-001",
+  "organization_wide_conformance": false,
+  "prior_overlay": {
+    "git_blob_sha1": "fe0e377a287883c10ce82042a73404acae6a9b2c",
+    "merge_commit": "692ff6a1b8ec4113c8917470cb0e4c094ff7d334",
+    "path": "deviations/GCL-GHOS-SETTINGS-READBACK-001.owner-export-overlay.json",
+    "repository": "grandchallenge/gcl-standards"
+  },
+  "replacement_evidence": "evidence/settings-readback/GCL-GHOS-MODULUS-POST-REPAIR-READBACK-001.reference.json",
+  "status": "open"
+}
