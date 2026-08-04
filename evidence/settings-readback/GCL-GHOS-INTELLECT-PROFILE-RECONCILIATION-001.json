@@ -1,0 +1,324 @@
+{
+  "schema_version": "1.0.0",
+  "operation_id": "GCL-GHOS-INTELLECT-PROFILE-RECONCILIATION-001",
+  "phase": "B",
+  "mode": "apply",
+  "recorded_at": "2026-08-04T05:59:48.591925+00:00",
+  "api_version": "2026-03-10",
+  "authority": {
+    "issue": "https://github.com/grandchallenge/gcl-standards/issues/12",
+    "phase_a_pr": "https://github.com/grandchallenge/gcl-standards/pull/26",
+    "phase_a_head": "6f908c9897d6ec06971c5e961fde68bb0a393fa6",
+    "phase_a_merge": "eaa87bfebab9adbfd39778364aac89aa8c479297",
+    "post_merge_attestation_comment": 5173619262
+  },
+  "organization": "grandchallenge",
+  "repository": "grandchallenge/INTELLECT",
+  "contract_sha256": "61369949093b8ec4dd76558ac64bbc375895177d463665308f7c3af9029400d7",
+  "actor": {
+    "authentication": "github_app_installation",
+    "repository_count": 2,
+    "repositories": [
+      {
+        "id": 1304763338,
+        "full_name": "grandchallenge/INTELLECT"
+      },
+      {
+        "id": 1256560108,
+        "full_name": "grandchallenge/MATH-PROGRAMME"
+      }
+    ]
+  },
+  "main_sha_before": "0096eb21ca62c5ef7f6e458f358edcb1cd963a20",
+  "main_sha_after": "0096eb21ca62c5ef7f6e458f358edcb1cd963a20",
+  "property_schemas_before": {
+    "constitutional_profile": {
+      "property_name": "constitutional_profile",
+      "url": "https://api.github.com/orgs/grandchallenge/properties/schema/constitutional_profile",
+      "source_type": "organization",
+      "value_type": "single_select",
+      "required": false,
+      "description": "GCL constitutional repository profile",
+      "allowed_values": [
+        "Forge",
+        "Solve",
+        "Cert",
+        "Programme",
+        "Provider",
+        "Community",
+        "Standards"
+      ],
+      "values_editable_by": "org_actors",
+      "require_explicit_values": false
+    },
+    "authority_scope": {
+      "property_name": "authority_scope",
+      "url": "https://api.github.com/orgs/grandchallenge/properties/schema/authority_scope",
+      "source_type": "organization",
+      "value_type": "single_select",
+      "required": false,
+      "description": "Repository authority scope",
+      "allowed_values": [
+        "cross-programme",
+        "mathematics-programme",
+        "candidate-discovery",
+        "work-execution",
+        "certification",
+        "provider",
+        "community"
+      ],
+      "values_editable_by": "org_actors",
+      "require_explicit_values": false
+    }
+  },
+  "property_schemas_after": {
+    "constitutional_profile": {
+      "property_name": "constitutional_profile",
+      "url": "https://api.github.com/orgs/grandchallenge/properties/schema/constitutional_profile",
+      "source_type": "organization",
+      "value_type": "single_select",
+      "required": false,
+      "description": "GCL constitutional repository profile",
+      "allowed_values": [
+        "Forge",
+        "Solve",
+        "Cert",
+        "Programme",
+        "Provider",
+        "Community",
+        "Standards",
+        "Constitutional"
+      ],
+      "values_editable_by": "org_actors",
+      "require_explicit_values": false
+    },
+    "authority_scope": {
+      "property_name": "authority_scope",
+      "url": "https://api.github.com/orgs/grandchallenge/properties/schema/authority_scope",
+      "source_type": "organization",
+      "value_type": "single_select",
+      "required": false,
+      "description": "Repository authority scope",
+      "allowed_values": [
+        "cross-programme",
+        "mathematics-programme",
+        "candidate-discovery",
+        "work-execution",
+        "certification",
+        "provider",
+        "community",
+        "constitutional"
+      ],
+      "values_editable_by": "org_actors",
+      "require_explicit_values": false
+    }
+  },
+  "property_values_before": {
+    "authority_scope": "provider",
+    "claim_promotion_role": "none",
+    "constitutional_profile": "Provider",
+    "public_programme": "true",
+    "risk_tier": "high",
+    "workflow_profile": "provider"
+  },
+  "property_values_after": {
+    "authority_scope": "constitutional",
+    "claim_promotion_role": "none",
+    "constitutional_profile": "Constitutional",
+    "public_programme": "true",
+    "risk_tier": "critical",
+    "workflow_profile": "governance"
+  },
+  "ruleset_before": {
+    "id": 19964077,
+    "name": "Constitutional profile - main",
+    "target": "branch",
+    "source_type": "Repository",
+    "source": "grandchallenge/INTELLECT",
+    "enforcement": "active",
+    "conditions": {
+      "ref_name": {
+        "exclude": [],
+        "include": [
+          "~DEFAULT_BRANCH"
+        ]
+      }
+    },
+    "rules": [
+      {
+        "type": "deletion"
+      },
+      {
+        "type": "non_fast_forward"
+      },
+      {
+        "type": "pull_request",
+        "parameters": {
+          "required_approving_review_count": 0,
+          "dismiss_stale_reviews_on_push": true,
+          "required_reviewers": [],
+          "require_code_owner_review": false,
+          "dismissal_restriction": {
+            "enabled": false,
+            "allowed_actors": []
+          },
+          "require_last_push_approval": false,
+          "required_review_thread_resolution": true,
+          "allowed_merge_methods": [
+            "merge",
+            "squash"
+          ]
+        }
+      },
+      {
+        "type": "required_status_checks",
+        "parameters": {
+          "strict_required_status_checks_policy": true,
+          "do_not_enforce_on_create": false,
+          "required_status_checks": [
+            {
+              "context": "test (3.11.14)"
+            },
+            {
+              "context": "test (3.12.13)"
+            },
+            {
+              "context": "policy / policy"
+            },
+            {
+              "context": "security / action-policy"
+            }
+          ]
+        }
+      }
+    ],
+    "node_id": "RRS_lACqUmVwb3NpdG9yec5NxRvKzgEwoK0",
+    "created_at": "2026-07-29T10:19:01.553Z",
+    "updated_at": "2026-08-04T02:23:28.311Z",
+    "bypass_actors": [],
+    "current_user_can_bypass": "never",
+    "_links": {
+      "self": {
+        "href": "https://api.github.com/repos/grandchallenge/INTELLECT/rulesets/19964077"
+      },
+      "html": {
+        "href": "https://github.com/grandchallenge/INTELLECT/rules/19964077"
+      }
+    }
+  },
+  "ruleset_after": {
+    "id": 19964077,
+    "name": "Constitutional profile - main",
+    "target": "branch",
+    "source_type": "Repository",
+    "source": "grandchallenge/INTELLECT",
+    "enforcement": "active",
+    "conditions": {
+      "ref_name": {
+        "exclude": [],
+        "include": [
+          "~DEFAULT_BRANCH"
+        ]
+      }
+    },
+    "rules": [
+      {
+        "type": "deletion"
+      },
+      {
+        "type": "non_fast_forward"
+      },
+      {
+        "type": "pull_request",
+        "parameters": {
+          "required_approving_review_count": 0,
+          "dismiss_stale_reviews_on_push": true,
+          "required_reviewers": [],
+          "require_code_owner_review": false,
+          "dismissal_restriction": {
+            "enabled": false,
+            "allowed_actors": []
+          },
+          "require_last_push_approval": false,
+          "required_review_thread_resolution": true,
+          "allowed_merge_methods": [
+            "merge",
+            "squash"
+          ]
+        }
+      },
+      {
+        "type": "required_status_checks",
+        "parameters": {
+          "strict_required_status_checks_policy": true,
+          "do_not_enforce_on_create": false,
+          "required_status_checks": [
+            {
+              "context": "test (3.11.14)"
+            },
+            {
+              "context": "test (3.12.13)"
+            },
+            {
+              "context": "policy / policy"
+            },
+            {
+              "context": "security / action-policy"
+            }
+          ]
+        }
+      }
+    ],
+    "node_id": "RRS_lACqUmVwb3NpdG9yec5NxRvKzgEwoK0",
+    "created_at": "2026-07-29T10:19:01.553Z",
+    "updated_at": "2026-08-04T02:23:28.311Z",
+    "bypass_actors": [],
+    "current_user_can_bypass": "never",
+    "_links": {
+      "self": {
+        "href": "https://api.github.com/repos/grandchallenge/INTELLECT/rulesets/19964077"
+      },
+      "html": {
+        "href": "https://github.com/grandchallenge/INTELLECT/rules/19964077"
+      }
+    }
+  },
+  "mutations": [
+    {
+      "operation": "extend_property_schemas",
+      "properties": [
+        {
+          "property_name": "constitutional_profile",
+          "required_value": "Constitutional"
+        },
+        {
+          "property_name": "authority_scope",
+          "required_value": "constitutional"
+        }
+      ]
+    },
+    {
+      "operation": "apply_repository_property_values",
+      "repository": "grandchallenge/INTELLECT"
+    },
+    {
+      "operation": "rename_ruleset",
+      "ruleset_id": 19964077,
+      "target_name": "Constitutional profile - main"
+    }
+  ],
+  "verified": true,
+  "claim_boundaries": {
+    "profile_conformance_authorized": false,
+    "organization_wide_conformance": false,
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "novelty_claim_authorized": false,
+    "priority_claim_authorized": false,
+    "deployment_claim_authorized": false,
+    "manufacturing_claim_authorized": false,
+    "product_claim_authorized": false,
+    "commercial_claim_authorized": false
+  },
+  "evidence_sha256": "3fd0de683adc5592e26b037ce41a0f5b88cd6785c11ad3309969202a335c35dd"
+}
