@@ -1,0 +1,94 @@
+{
+  "$id": "https://grandchallenge.ai/schemas/settings-readback-quantum-closure-overlay-1.0.0.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "QUANTUM settings-readback closure overlay",
+  "type": "object",
+  "const": {
+    "$schema": "../schemas/settings_readback_quantum_closure_overlay.schema.json",
+    "base_campaign_record": {
+      "admission_merge": "3d5e35a8635cb8864a816cf0e589a5831dc2c706",
+      "path": "deviations/GCL-GHOS-SETTINGS-READBACK-001.json",
+      "repository": "grandchallenge/gcl-standards"
+    },
+    "campaign_id": "GCL-GHOS-SETTINGS-READBACK-001",
+    "claim_boundaries": {
+      "certification_claim_authorized": false,
+      "commercial_claim_authorized": false,
+      "deployment_claim_authorized": false,
+      "hardware_validation_claim_authorized": false,
+      "manufacturing_claim_authorized": false,
+      "mathematical_claim_authorized": false,
+      "novelty_claim_authorized": false,
+      "organization_wide_conformance": false,
+      "priority_claim_authorized": false,
+      "product_claim_authorized": false,
+      "quantum_advantage_claim_authorized": false
+    },
+    "closed_rows": [
+      {
+        "closure_condition": "Already closed by protected merge 692ff6a1b8ec4113c8917470cb0e4c094ff7d334.",
+        "disposition": "closed_evidence_admitted",
+        "id": "ORG-READBACK-BLOCKED-001",
+        "priority": "P1",
+        "remediation_issue": "https://github.com/grandchallenge/.github/issues/38",
+        "resolution": "Carried forward unchanged through the MODULUS closure overlay.",
+        "scope": "grandchallenge"
+      },
+      {
+        "closure_condition": "Already closed by protected merge 4884001459e1346aebd21e44c49a8ab2c695d09b.",
+        "disposition": "closed_repair_verified",
+        "id": "MODULUS-P1-001",
+        "priority": "P1",
+        "remediation_issue": "https://github.com/grandchallenge/MODULUS/issues/6",
+        "resolution": "Carried forward unchanged from the protected MODULUS closure overlay.",
+        "scope": "grandchallenge/MODULUS"
+      },
+      {
+        "closure_condition": "Already closed by protected merge 4884001459e1346aebd21e44c49a8ab2c695d09b.",
+        "disposition": "closed_repair_verified",
+        "id": "MODULUS-P2-001",
+        "priority": "P2",
+        "remediation_issue": "https://github.com/grandchallenge/MODULUS/issues/6",
+        "resolution": "Carried forward unchanged from the protected MODULUS closure overlay.",
+        "scope": "grandchallenge/MODULUS"
+      },
+      {
+        "closure_condition": "Effective only after protected merge of this exact overlay; documentary closure of QUANTUM issues #21 and #14 follows protected-main verification.",
+        "disposition": "closed_repair_verified",
+        "id": "QUANTUM-P1-001",
+        "priority": "P1",
+        "remediation_issue": "https://github.com/grandchallenge/QUANTUM-TECHNOLOGIES/issues/14",
+        "resolution": "The admitted programme profile, governed surfaces, required workflows and checks, strict protected-main controls, vulnerability alerts, Dependabot security updates, private vulnerability reporting, and CodeQL default setup are bound by the zero-gap owner-authenticated readback.",
+        "scope": "grandchallenge/QUANTUM-TECHNOLOGIES"
+      },
+      {
+        "closure_condition": "Effective only after protected merge of this exact overlay; documentary closure of QUANTUM issues #21 and #14 follows protected-main verification.",
+        "disposition": "closed_repair_verified",
+        "id": "QUANTUM-P2-001",
+        "priority": "P2",
+        "remediation_issue": "https://github.com/grandchallenge/QUANTUM-TECHNOLOGIES/issues/14",
+        "resolution": "Auto-merge and merged-branch deletion are enabled, rebase merging and update-branch are disabled, protected main permits only merge and squash with strict checks, and immutable release tags prohibit deletion and non-fast-forward updates.",
+        "scope": "grandchallenge/QUANTUM-TECHNOLOGIES"
+      }
+    ],
+    "effective_condition": "protected_merge_of_this_exact_record",
+    "next_gate": "Verify this exact overlay on protected main, close the QUANTUM remediation dockets and campaign docket, and retain organization-wide conformance as separately unauthorized.",
+    "open_priority_counts": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 0,
+      "P3": 0
+    },
+    "open_rows": [],
+    "operation_id": "GCL-GHOS-SETTINGS-READBACK-QUANTUM-CLOSURE-OVERLAY-001",
+    "organization_wide_conformance": false,
+    "prior_overlay": {
+      "git_blob_sha1": "7bb7d335e4c5f7da35f6db1335f6431aaef5d1f2",
+      "merge_commit": "4884001459e1346aebd21e44c49a8ab2c695d09b",
+      "path": "deviations/GCL-GHOS-SETTINGS-READBACK-001.modulus-closure-overlay.json",
+      "repository": "grandchallenge/gcl-standards"
+    },
+    "replacement_evidence": "evidence/settings-readback/GCL-GHOS-QUANTUM-POST-REPAIR-READBACK-001.reference.json",
+    "status": "closed"
+  }
+}
