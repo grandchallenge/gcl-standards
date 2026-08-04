@@ -11,14 +11,40 @@
   "constitutional_source": {
     "repository": "grandchallenge/INTELLECT",
     "path": "CONSTITUTION.md",
-    "effective_version": "1.0.0"
+    "effective_version": "1.1.0",
+    "amendment": "GI-AMEND-0001",
+    "amendment_status": "effective",
+    "activation_commit": "8d47ed8930d33253ae476c64dfec7c748185a535"
   },
   "operating_policy_source": {
     "repository": "grandchallenge/gcl-standards",
     "path": "standards/GCL-GHOS-00.md",
     "version": "0.1.0",
-    "status": "candidate"
+    "status": "admitted",
+    "decision": "ADR-0001",
+    "decision_status": "accepted",
+    "admission_commit": "31211b286a9c4a2874da5559118ef2f026f7de52"
   },
-  "public_interfaces": ["issues", "pull_requests", "releases"],
+  "github_projection": {
+    "projection_semantics": {
+      "canonical_claim_promotion_role": "policy_only",
+      "live_claim_promotion_role": "none",
+      "rationale": "The canonical role records subordinate constitutional-policy authority. The GitHub property records direct claim-promotion authority, which remains none."
+    },
+    "custom_properties": {
+      "constitutional_profile": "Constitutional",
+      "authority_scope": "constitutional",
+      "claim_promotion_role": "none",
+      "risk_tier": "critical",
+      "workflow_profile": "governance",
+      "public_programme": "true"
+    },
+    "default_branch_ruleset": "Constitutional profile - main"
+  },
+  "public_interfaces": [
+    "issues",
+    "pull_requests",
+    "releases"
+  ],
   "release_policy": "immutable_admitted"
 }
