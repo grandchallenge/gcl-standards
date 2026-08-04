@@ -1,0 +1,35 @@
+{
+  "$schema": "../../schemas/repository_profile.schema.json",
+  "schema_version": "1.1.0",
+  "repository": "grandchallenge/QUANTUM-TECHNOLOGIES",
+  "profile": "programme",
+  "constitutional_role": "Governed quantum-computing research work packages, executable finite-instance evidence, and bounded public documentation.",
+  "authority_scope": "Work-package state and Referee-governed promotion only; no mathematical certification, quantum-advantage adjudication, hardware validation, deployment, manufacturing, product, or commercial authority.",
+  "claim_promotion_role": "work_package_only",
+  "risk_tier": "high",
+  "required_workflow_profile": "programme-research",
+  "constitutional_source": {
+    "repository": "grandchallenge/INTELLECT",
+    "path": "CONSTITUTION.md",
+    "effective_version": "1.1.0",
+    "amendment": "GI-AMEND-0001",
+    "amendment_status": "effective",
+    "activation_commit": "8d47ed8930d33253ae476c64dfec7c748185a535"
+  },
+  "operating_policy_source": {
+    "repository": "grandchallenge/gcl-standards",
+    "path": "standards/GCL-GHOS-00.md",
+    "version": "0.1.0",
+    "status": "admitted",
+    "decision": "ADR-0001",
+    "decision_status": "accepted",
+    "admission_commit": "31211b286a9c4a2874da5559118ef2f026f7de52"
+  },
+  "public_interfaces": [
+    "issues",
+    "pull_requests",
+    "releases",
+    "packages"
+  ],
+  "release_policy": "immutable_admitted"
+}
