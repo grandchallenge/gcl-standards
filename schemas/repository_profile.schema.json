@@ -237,6 +237,7 @@
     "release_policy": {
       "enum": [
         "none",
+        "controlled_alpha",
         "prerelease",
         "immutable_admitted",
         "immutable_certified"
@@ -335,6 +336,34 @@
           "required": [
             "github_projection"
           ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "release_policy": {
+            "const": "controlled_alpha"
+          }
+        },
+        "required": [
+          "release_policy"
+        ]
+      },
+      "then": {
+        "properties": {
+          "profile": {
+            "const": "provider"
+          },
+          "claim_promotion_role": {
+            "const": "none"
+          },
+          "risk_tier": {
+            "enum": [
+              "high",
+              "critical"
+            ]
+          }
         }
       }
     }

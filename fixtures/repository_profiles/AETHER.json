@@ -1,0 +1,35 @@
+{
+  "$schema": "../../schemas/repository_profile.schema.json",
+  "schema_version": "1.1.0",
+  "repository": "grandchallenge/AETHER",
+  "profile": "provider",
+  "constitutional_role": "Incubating semantic infrastructure provider for governed operational state, deterministic replay, provenance, recursive derivation, and explanations.",
+  "authority_scope": "Controlled-alpha AETHER deployments only; no GCL institutional, constitutional, mathematical-certification, publication, or commercial claim-promotion authority. The live INTELLECT/GCL bridge remains on hold pending a later, separately authorized work package.",
+  "claim_promotion_role": "none",
+  "risk_tier": "high",
+  "required_workflow_profile": "provider-semantic-infrastructure",
+  "constitutional_source": {
+    "repository": "grandchallenge/INTELLECT",
+    "path": "CONSTITUTION.md",
+    "effective_version": "1.1.0",
+    "amendment": "GI-AMEND-0001",
+    "amendment_status": "effective",
+    "activation_commit": "8d47ed8930d33253ae476c64dfec7c748185a535"
+  },
+  "operating_policy_source": {
+    "repository": "grandchallenge/gcl-standards",
+    "path": "standards/GCL-GHOS-00.md",
+    "version": "0.1.0",
+    "status": "admitted",
+    "decision": "ADR-0001",
+    "decision_status": "accepted",
+    "admission_commit": "31211b286a9c4a2874da5559118ef2f026f7de52"
+  },
+  "public_interfaces": [
+    "issues",
+    "pull_requests",
+    "releases",
+    "packages"
+  ],
+  "release_policy": "controlled_alpha"
+}
