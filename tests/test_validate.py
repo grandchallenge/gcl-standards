@@ -236,6 +236,42 @@ class StandardsValidationTests(unittest.TestCase):
                     profile["authority_scope"],
                 )
 
+    def test_aether_is_high_risk_controlled_alpha_provider(self) -> None:
+        profile = json.loads(
+            (ROOT / "fixtures" / "repository_profiles" / "AETHER.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(profile["repository"], "grandchallenge/AETHER")
+        self.assertEqual(profile["profile"], "provider")
+        self.assertEqual(profile["claim_promotion_role"], "none")
+        self.assertEqual(profile["risk_tier"], "high")
+        self.assertEqual(profile["release_policy"], "controlled_alpha")
+        self.assertIn("live INTELLECT/GCL bridge remains on hold", profile["authority_scope"])
+
+    def test_controlled_alpha_cannot_widen_claim_authority(self) -> None:
+        schema = json.loads(
+            (ROOT / "schemas" / "repository_profile.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        profile = json.loads(
+            (ROOT / "fixtures" / "repository_profiles" / "AETHER.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        mutations = (
+            ("profile", "programme"),
+            ("claim_promotion_role", "work_package_only"),
+            ("risk_tier", "moderate"),
+        )
+        for field, value in mutations:
+            with self.subTest(field=field):
+                broken = copy.deepcopy(profile)
+                broken[field] = value
+                with self.assertRaises(jsonschema.ValidationError):
+                    jsonschema.validate(broken, schema)
+
     def regret_schema(self) -> dict[str, object]:
         return json.loads(
             (ROOT / "schemas" / "regret_contract.schema.json").read_text(

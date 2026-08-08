@@ -22,6 +22,7 @@ _RECEIPT_PATH_PATTERN = re.compile(
 _DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 EXPECTED_PROFILES = {
     ".github.json",
+    "AETHER.json",
     "GLOSS.json",
     "INTELLECT.json",
     "MATH-PROGRAMME.json",
