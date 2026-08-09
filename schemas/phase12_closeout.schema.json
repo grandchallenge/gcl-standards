@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/phase12-closeout-1.0.0.json",
+  "title": "GCL Phase 1-2 optimality closeout",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "operation_id",
+    "status",
+    "prepared_at",
+    "authority_boundary",
+    "baseline",
+    "protected_heads",
+    "phase1",
+    "phase2_rows",
+    "weekly_scorecard",
+    "acceptance",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {"const": "../../schemas/phase12_closeout.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "operation_id": {"const": "GCL-OPT-PHASE12-CLOSEOUT-001"},
+    "status": {"const": "complete"},
+    "prepared_at": {"type": "string", "format": "date-time"},
+    "authority_boundary": {"type": "string", "minLength": 1},
+    "baseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation_id", "path", "protected_main_at_closeout_base"],
+      "properties": {
+        "operation_id": {"const": "GCL-OPT-BASELINE-001"},
+        "path": {"const": "implementation/2026-08-08_OPTIMALITY_BASELINE_AND_EXECUTION_LEDGER.md"},
+        "protected_main_at_closeout_base": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "protected_heads": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["grandchallenge/gcl-standards", "grandchallenge/.github", "grandchallenge/AETHER", "grandchallenge/INTELLECT"],
+      "properties": {
+        "grandchallenge/gcl-standards": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "grandchallenge/.github": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "grandchallenge/AETHER": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "grandchallenge/INTELLECT": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "phase1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "coherence_issue", "coherence_receipt", "coherence_projection", "closed_rows"],
+      "properties": {
+        "status": {"const": "closed"},
+        "coherence_issue": {"type": "string", "format": "uri"},
+        "coherence_receipt": {"type": "string", "minLength": 1},
+        "coherence_projection": {"type": "string", "minLength": 1},
+        "closed_rows": {
+          "type": "array",
+          "minItems": 9,
+          "uniqueItems": true,
+          "items": {"enum": ["SC-01", "SC-02", "SC-03", "SC-04", "SC-05", "SC-06", "SC-07", "SC-08", "VAL-01"]}
+        }
+      }
+    },
+    "phase2_rows": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {"$ref": "#/$defs/phase2Row"}
+    },
+    "weekly_scorecard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_id", "json_path", "markdown_path", "proposal_pull_request", "proposal_head_sha", "generator_workflow_run", "proposal_checks", "admission_boundary"],
+      "properties": {
+        "record_id": {"const": "GCL-OPT-SCORECARD-2026-W32"},
+        "json_path": {"const": "scorecards/GCL-OPT-SCORECARD-2026-W32.json"},
+        "markdown_path": {"const": "scorecards/GCL-OPT-SCORECARD-2026-W32.md"},
+        "proposal_pull_request": {"const": 43},
+        "proposal_head_sha": {"const": "933dbbbd8b7a9ac8468db12c9a6fff5b4dd51aba"},
+        "generator_workflow_run": {"const": "31298375582"},
+        "proposal_checks": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["GCL conformance", "Standards policy"],
+          "properties": {
+            "GCL conformance": {"const": "31298442395"},
+            "Standards policy": {"const": "31298442126"}
+          }
+        },
+        "admission_boundary": {"type": "string", "minLength": 1}
+      }
+    },
+    "acceptance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["p0_open", "p1_open", "p2_open", "organization_wide_conformance_authorized", "all_open_p2_have_owner_expiry_compensating_control_review_date"],
+      "properties": {
+        "p0_open": {"type": "array", "maxItems": 0},
+        "p1_open": {"type": "array", "maxItems": 0},
+        "p2_open": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "organization_wide_conformance_authorized": {"const": false},
+        "all_open_p2_have_owner_expiry_compensating_control_review_date": {"const": true}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["constitutional_authority", "organization_wide_conformance", "production_authority", "mathematical_authority", "certification_authority", "novelty_authority", "deployment_authority", "commercial_authority"],
+      "properties": {
+        "constitutional_authority": {"const": false},
+        "organization_wide_conformance": {"const": false},
+        "production_authority": {"const": false},
+        "mathematical_authority": {"const": false},
+        "certification_authority": {"const": false},
+        "novelty_authority": {"const": false},
+        "deployment_authority": {"const": false},
+        "commercial_authority": {"const": false}
+      }
+    }
+  },
+  "$defs": {
+    "phase2Row": {
+      "type": "object",
+      "required": ["id", "priority", "status", "owner", "closure_condition", "compensating_control", "review_date", "evidence"],
+      "properties": {
+        "id": {"enum": ["SEC-01", "SEC-03", "SEC-04", "GOV-01"]},
+        "priority": {"enum": ["P1", "P2"]},
+        "status": {"enum": ["closed", "open_bounded"]},
+        "owner": {"type": "string", "minLength": 1},
+        "closure_condition": {"type": "string", "minLength": 1},
+        "supersession_condition": {"type": "string", "minLength": 1},
+        "expires_at": {"type": "string", "format": "date-time"},
+        "compensating_control": {"type": "string", "minLength": 1},
+        "review_date": {"type": "string", "format": "date-time"},
+        "evidence": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "historical_deviation_disposition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "source_status", "closeout_status", "reason"],
+          "properties": {
+            "id": {"const": "GCL-AETHER-LOCKED-CLASSIC-SEQUENCING-001"},
+            "source_status": {"const": "open_at_capture"},
+            "closeout_status": {"const": "closed_fulfilled"},
+            "reason": {"type": "string", "minLength": 1}
+          }
+        },
+        "open_deviations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "owner", "expires_at", "compensating_control", "review_date"],
+            "properties": {
+              "id": {"type": "string", "minLength": 1},
+              "owner": {"type": "string", "minLength": 1},
+              "expires_at": {"type": "string", "format": "date-time"},
+              "compensating_control": {"type": "string", "minLength": 1},
+              "review_date": {"type": "string", "format": "date-time"}
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"status": {"const": "closed"}}, "required": ["status"]},
+          "then": {"required": ["supersession_condition"], "not": {"required": ["expires_at"]}}
+        },
+        {
+          "if": {"properties": {"status": {"const": "open_bounded"}}, "required": ["status"]},
+          "then": {"required": ["expires_at", "open_deviations"], "not": {"required": ["supersession_condition"]}}
+        }
+      ]
+    }
+  }
+}
