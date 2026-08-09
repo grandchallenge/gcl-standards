@@ -13,53 +13,53 @@
     {
       "compensating_control": "Report unknown; do not coerce missing evidence to zero.",
       "evidence": [
-        "workflow-run:31298375582"
+        "workflow-run:31327287991"
       ],
-      "expires_at": "2026-08-23T06:12:50Z",
+      "expires_at": "2026-08-23T17:46:25Z",
       "id": "GCL-OPT-UNKNOWN-STRATEGIC-LANES-IN-PROGRESS",
-      "next_review": "2026-08-16T06:12:50Z",
+      "next_review": "2026-08-16T17:46:25Z",
       "owner": "fyremael"
     },
     {
       "compensating_control": "Report unknown; do not coerce missing evidence to zero.",
       "evidence": [
-        "workflow-run:31298375582"
+        "workflow-run:31327287991"
       ],
-      "expires_at": "2026-08-23T06:12:50Z",
+      "expires_at": "2026-08-23T17:46:25Z",
       "id": "GCL-OPT-UNKNOWN-ACTIVE-ISSUES-WITHOUT-FINITE-NEXT-OBLIGATION",
-      "next_review": "2026-08-16T06:12:50Z",
+      "next_review": "2026-08-16T17:46:25Z",
       "owner": "fyremael"
     },
     {
       "compensating_control": "Report unknown; do not coerce missing evidence to zero.",
       "evidence": [
-        "workflow-run:31298375582"
+        "workflow-run:31327287991"
       ],
-      "expires_at": "2026-08-23T06:12:50Z",
+      "expires_at": "2026-08-23T17:46:25Z",
       "id": "GCL-OPT-UNKNOWN-HANDOFFS-LACKING-EXACT-IDENTITIES",
-      "next_review": "2026-08-16T06:12:50Z",
+      "next_review": "2026-08-16T17:46:25Z",
       "owner": "fyremael"
     }
   ],
-  "generated_at": "2026-08-09T06:12:50Z",
+  "generated_at": "2026-08-09T17:46:25Z",
   "generator": {
     "app_slug": "gcl-council-clerk",
     "repository": "grandchallenge/.github",
-    "run_id": "31298375582",
+    "run_id": "31327287991",
     "workflow": ".github/workflows/weekly-optimality-scorecard.yml"
   },
   "measurement_window": {
-    "end": "2026-08-09T06:12:50Z",
-    "start": "2026-08-02T06:12:50Z"
+    "end": "2026-08-09T17:46:25Z",
+    "start": "2026-08-02T17:46:25Z"
   },
   "metrics": {
     "active_issues_without_finite_next_obligation": {
       "evidence_references": [
-        "workflow-run:31298375582"
+        "workflow-run:31327287991"
       ],
       "exact_source_heads": [
         {
-          "commit_sha": "343d739099ed5d120b2dd6f714e615e024754f2f",
+          "commit_sha": "010f2f6093ab8c057f397633f23cc79e8a8c621b",
           "repository": "grandchallenge/.github"
         },
         {
@@ -67,7 +67,7 @@
           "repository": "grandchallenge/AETHER"
         },
         {
-          "commit_sha": "9b6588523aad534797ad46202c357d1be25260b5",
+          "commit_sha": "518fcf6f1547577700e9f1b6199ce751a8621c62",
           "repository": "grandchallenge/gcl-standards"
         },
         {
@@ -75,7 +75,7 @@
           "repository": "grandchallenge/GLOSS"
         },
         {
-          "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+          "commit_sha": "5714e81f3f03767f309b069f32a89fed0cfa165e",
           "repository": "grandchallenge/INTELLECT"
         },
         {
@@ -83,7 +83,7 @@
           "repository": "grandchallenge/lean-action"
         },
         {
-          "commit_sha": "4d8cd462f2836349704b4325766bcff679574404",
+          "commit_sha": "baeee7329e12c73b422251edfb88a643108d7667",
           "repository": "grandchallenge/MATH-PROGRAMME"
         },
         {
@@ -113,8 +113,8 @@
       ],
       "exclusions": [],
       "measurement_window": {
-        "end": "2026-08-09T06:12:50Z",
-        "start": "2026-08-02T06:12:50Z"
+        "end": "2026-08-09T17:46:25Z",
+        "start": "2026-08-02T17:46:25Z"
       },
       "status": "unknown",
       "target": {
@@ -129,11 +129,11 @@
     },
     "github_inferred_mathematical_claims": {
       "evidence_references": [
-        "workflow-run:31298375582"
+        "workflow-run:31327287991"
       ],
       "exact_source_heads": [
         {
-          "commit_sha": "343d739099ed5d120b2dd6f714e615e024754f2f",
+          "commit_sha": "010f2f6093ab8c057f397633f23cc79e8a8c621b",
           "repository": "grandchallenge/.github"
         },
         {
@@ -141,7 +141,7 @@
           "repository": "grandchallenge/AETHER"
         },
         {
-          "commit_sha": "9b6588523aad534797ad46202c357d1be25260b5",
+          "commit_sha": "518fcf6f1547577700e9f1b6199ce751a8621c62",
           "repository": "grandchallenge/gcl-standards"
         },
         {
@@ -149,7 +149,7 @@
           "repository": "grandchallenge/GLOSS"
         },
         {
-          "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+          "commit_sha": "5714e81f3f03767f309b069f32a89fed0cfa165e",
           "repository": "grandchallenge/INTELLECT"
         },
         {
@@ -157,7 +157,7 @@
           "repository": "grandchallenge/lean-action"
         },
         {
-          "commit_sha": "4d8cd462f2836349704b4325766bcff679574404",
+          "commit_sha": "baeee7329e12c73b422251edfb88a643108d7667",
           "repository": "grandchallenge/MATH-PROGRAMME"
         },
         {
@@ -189,8 +189,8 @@
         "zero observations do not imply global mathematical correctness"
       ],
       "measurement_window": {
-        "end": "2026-08-09T06:12:50Z",
-        "start": "2026-08-02T06:12:50Z"
+        "end": "2026-08-09T17:46:25Z",
+        "start": "2026-08-02T17:46:25Z"
       },
       "status": "observed",
       "target": {
@@ -202,11 +202,11 @@
     },
     "handoffs_lacking_exact_identities": {
       "evidence_references": [
-        "workflow-run:31298375582"
+        "workflow-run:31327287991"
       ],
       "exact_source_heads": [
         {
-          "commit_sha": "343d739099ed5d120b2dd6f714e615e024754f2f",
+          "commit_sha": "010f2f6093ab8c057f397633f23cc79e8a8c621b",
           "repository": "grandchallenge/.github"
         },
         {
@@ -214,7 +214,7 @@
           "repository": "grandchallenge/AETHER"
         },
         {
-          "commit_sha": "9b6588523aad534797ad46202c357d1be25260b5",
+          "commit_sha": "518fcf6f1547577700e9f1b6199ce751a8621c62",
           "repository": "grandchallenge/gcl-standards"
         },
         {
@@ -222,7 +222,7 @@
           "repository": "grandchallenge/GLOSS"
         },
         {
-          "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+          "commit_sha": "5714e81f3f03767f309b069f32a89fed0cfa165e",
           "repository": "grandchallenge/INTELLECT"
         },
         {
@@ -230,7 +230,7 @@
           "repository": "grandchallenge/lean-action"
         },
         {
-          "commit_sha": "4d8cd462f2836349704b4325766bcff679574404",
+          "commit_sha": "baeee7329e12c73b422251edfb88a643108d7667",
           "repository": "grandchallenge/MATH-PROGRAMME"
         },
         {
@@ -260,8 +260,8 @@
       ],
       "exclusions": [],
       "measurement_window": {
-        "end": "2026-08-09T06:12:50Z",
-        "start": "2026-08-02T06:12:50Z"
+        "end": "2026-08-09T17:46:25Z",
+        "start": "2026-08-02T17:46:25Z"
       },
       "status": "unknown",
       "target": {
@@ -276,11 +276,11 @@
     },
     "human_actions_per_governed_decision": {
       "evidence_references": [
-        "workflow-run:31298375582"
+        "workflow-run:31327287991"
       ],
       "exact_source_heads": [
         {
-          "commit_sha": "343d739099ed5d120b2dd6f714e615e024754f2f",
+          "commit_sha": "010f2f6093ab8c057f397633f23cc79e8a8c621b",
           "repository": "grandchallenge/.github"
         },
         {
@@ -288,7 +288,7 @@
           "repository": "grandchallenge/AETHER"
         },
         {
-          "commit_sha": "9b6588523aad534797ad46202c357d1be25260b5",
+          "commit_sha": "518fcf6f1547577700e9f1b6199ce751a8621c62",
           "repository": "grandchallenge/gcl-standards"
         },
         {
@@ -296,7 +296,7 @@
           "repository": "grandchallenge/GLOSS"
         },
         {
-          "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+          "commit_sha": "5714e81f3f03767f309b069f32a89fed0cfa165e",
           "repository": "grandchallenge/INTELLECT"
         },
         {
@@ -304,7 +304,7 @@
           "repository": "grandchallenge/lean-action"
         },
         {
-          "commit_sha": "4d8cd462f2836349704b4325766bcff679574404",
+          "commit_sha": "baeee7329e12c73b422251edfb88a643108d7667",
           "repository": "grandchallenge/MATH-PROGRAMME"
         },
         {
@@ -338,8 +338,8 @@
         "account recovery"
       ],
       "measurement_window": {
-        "end": "2026-08-09T06:12:50Z",
-        "start": "2026-08-02T06:12:50Z"
+        "end": "2026-08-09T17:46:25Z",
+        "start": "2026-08-02T17:46:25Z"
       },
       "status": "derived",
       "target": {
@@ -351,11 +351,11 @@
     },
     "median_pr_decision_time_hours": {
       "evidence_references": [
-        "workflow-run:31298375582"
+        "workflow-run:31327287991"
       ],
       "exact_source_heads": [
         {
-          "commit_sha": "343d739099ed5d120b2dd6f714e615e024754f2f",
+          "commit_sha": "010f2f6093ab8c057f397633f23cc79e8a8c621b",
           "repository": "grandchallenge/.github"
         },
         {
@@ -363,7 +363,7 @@
           "repository": "grandchallenge/AETHER"
         },
         {
-          "commit_sha": "9b6588523aad534797ad46202c357d1be25260b5",
+          "commit_sha": "518fcf6f1547577700e9f1b6199ce751a8621c62",
           "repository": "grandchallenge/gcl-standards"
         },
         {
@@ -371,7 +371,7 @@
           "repository": "grandchallenge/GLOSS"
         },
         {
-          "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+          "commit_sha": "5714e81f3f03767f309b069f32a89fed0cfa165e",
           "repository": "grandchallenge/INTELLECT"
         },
         {
@@ -379,7 +379,7 @@
           "repository": "grandchallenge/lean-action"
         },
         {
-          "commit_sha": "4d8cd462f2836349704b4325766bcff679574404",
+          "commit_sha": "baeee7329e12c73b422251edfb88a643108d7667",
           "repository": "grandchallenge/MATH-PROGRAMME"
         },
         {
@@ -412,8 +412,8 @@
         "controlled external dependency with linked blocker"
       ],
       "measurement_window": {
-        "end": "2026-08-09T06:12:50Z",
-        "start": "2026-08-02T06:12:50Z"
+        "end": "2026-08-09T17:46:25Z",
+        "start": "2026-08-02T17:46:25Z"
       },
       "status": "derived",
       "target": {
@@ -421,15 +421,15 @@
         "value": 48
       },
       "unit": "hours",
-      "value": 0.29527777777777775
+      "value": 0.3458333333333333
     },
     "reproducible_governed_lifecycle": {
       "evidence_references": [
-        "workflow-run:31298375582"
+        "workflow-run:31327287991"
       ],
       "exact_source_heads": [
         {
-          "commit_sha": "343d739099ed5d120b2dd6f714e615e024754f2f",
+          "commit_sha": "010f2f6093ab8c057f397633f23cc79e8a8c621b",
           "repository": "grandchallenge/.github"
         },
         {
@@ -437,7 +437,7 @@
           "repository": "grandchallenge/AETHER"
         },
         {
-          "commit_sha": "9b6588523aad534797ad46202c357d1be25260b5",
+          "commit_sha": "518fcf6f1547577700e9f1b6199ce751a8621c62",
           "repository": "grandchallenge/gcl-standards"
         },
         {
@@ -445,7 +445,7 @@
           "repository": "grandchallenge/GLOSS"
         },
         {
-          "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+          "commit_sha": "5714e81f3f03767f309b069f32a89fed0cfa165e",
           "repository": "grandchallenge/INTELLECT"
         },
         {
@@ -453,7 +453,7 @@
           "repository": "grandchallenge/lean-action"
         },
         {
-          "commit_sha": "4d8cd462f2836349704b4325766bcff679574404",
+          "commit_sha": "baeee7329e12c73b422251edfb88a643108d7667",
           "repository": "grandchallenge/MATH-PROGRAMME"
         },
         {
@@ -483,8 +483,8 @@
       ],
       "exclusions": [],
       "measurement_window": {
-        "end": "2026-08-09T06:12:50Z",
-        "start": "2026-08-02T06:12:50Z"
+        "end": "2026-08-09T17:46:25Z",
+        "start": "2026-08-02T17:46:25Z"
       },
       "status": "derived",
       "target": {
@@ -496,11 +496,11 @@
     },
     "status_contradictions": {
       "evidence_references": [
-        "https://github.com/grandchallenge/gcl-standards/blob/9b6588523aad534797ad46202c357d1be25260b5/evidence/coherence-reviews/GCL-STATUS-COHERENCE-001-coherence.json"
+        "https://github.com/grandchallenge/gcl-standards/blob/518fcf6f1547577700e9f1b6199ce751a8621c62/evidence/coherence-reviews/GCL-STATUS-COHERENCE-001-coherence.json"
       ],
       "exact_source_heads": [
         {
-          "commit_sha": "343d739099ed5d120b2dd6f714e615e024754f2f",
+          "commit_sha": "010f2f6093ab8c057f397633f23cc79e8a8c621b",
           "repository": "grandchallenge/.github"
         },
         {
@@ -508,7 +508,7 @@
           "repository": "grandchallenge/AETHER"
         },
         {
-          "commit_sha": "9b6588523aad534797ad46202c357d1be25260b5",
+          "commit_sha": "518fcf6f1547577700e9f1b6199ce751a8621c62",
           "repository": "grandchallenge/gcl-standards"
         },
         {
@@ -516,7 +516,7 @@
           "repository": "grandchallenge/GLOSS"
         },
         {
-          "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+          "commit_sha": "5714e81f3f03767f309b069f32a89fed0cfa165e",
           "repository": "grandchallenge/INTELLECT"
         },
         {
@@ -524,7 +524,7 @@
           "repository": "grandchallenge/lean-action"
         },
         {
-          "commit_sha": "4d8cd462f2836349704b4325766bcff679574404",
+          "commit_sha": "baeee7329e12c73b422251edfb88a643108d7667",
           "repository": "grandchallenge/MATH-PROGRAMME"
         },
         {
@@ -554,8 +554,8 @@
       ],
       "exclusions": [],
       "measurement_window": {
-        "end": "2026-08-09T06:12:50Z",
-        "start": "2026-08-02T06:12:50Z"
+        "end": "2026-08-09T17:46:25Z",
+        "start": "2026-08-02T17:46:25Z"
       },
       "status": "derived",
       "target": {
@@ -567,11 +567,11 @@
     },
     "strategic_lanes_in_progress": {
       "evidence_references": [
-        "workflow-run:31298375582"
+        "workflow-run:31327287991"
       ],
       "exact_source_heads": [
         {
-          "commit_sha": "343d739099ed5d120b2dd6f714e615e024754f2f",
+          "commit_sha": "010f2f6093ab8c057f397633f23cc79e8a8c621b",
           "repository": "grandchallenge/.github"
         },
         {
@@ -579,7 +579,7 @@
           "repository": "grandchallenge/AETHER"
         },
         {
-          "commit_sha": "9b6588523aad534797ad46202c357d1be25260b5",
+          "commit_sha": "518fcf6f1547577700e9f1b6199ce751a8621c62",
           "repository": "grandchallenge/gcl-standards"
         },
         {
@@ -587,7 +587,7 @@
           "repository": "grandchallenge/GLOSS"
         },
         {
-          "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+          "commit_sha": "5714e81f3f03767f309b069f32a89fed0cfa165e",
           "repository": "grandchallenge/INTELLECT"
         },
         {
@@ -595,7 +595,7 @@
           "repository": "grandchallenge/lean-action"
         },
         {
-          "commit_sha": "4d8cd462f2836349704b4325766bcff679574404",
+          "commit_sha": "baeee7329e12c73b422251edfb88a643108d7667",
           "repository": "grandchallenge/MATH-PROGRAMME"
         },
         {
@@ -625,8 +625,8 @@
       ],
       "exclusions": [],
       "measurement_window": {
-        "end": "2026-08-09T06:12:50Z",
-        "start": "2026-08-02T06:12:50Z"
+        "end": "2026-08-09T17:46:25Z",
+        "start": "2026-08-02T17:46:25Z"
       },
       "status": "unknown",
       "target": {
@@ -657,7 +657,7 @@
       ],
       "exact_source_heads": [
         {
-          "commit_sha": "343d739099ed5d120b2dd6f714e615e024754f2f",
+          "commit_sha": "010f2f6093ab8c057f397633f23cc79e8a8c621b",
           "repository": "grandchallenge/.github"
         },
         {
@@ -665,7 +665,7 @@
           "repository": "grandchallenge/AETHER"
         },
         {
-          "commit_sha": "9b6588523aad534797ad46202c357d1be25260b5",
+          "commit_sha": "518fcf6f1547577700e9f1b6199ce751a8621c62",
           "repository": "grandchallenge/gcl-standards"
         },
         {
@@ -673,7 +673,7 @@
           "repository": "grandchallenge/GLOSS"
         },
         {
-          "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+          "commit_sha": "5714e81f3f03767f309b069f32a89fed0cfa165e",
           "repository": "grandchallenge/INTELLECT"
         },
         {
@@ -681,7 +681,7 @@
           "repository": "grandchallenge/lean-action"
         },
         {
-          "commit_sha": "4d8cd462f2836349704b4325766bcff679574404",
+          "commit_sha": "baeee7329e12c73b422251edfb88a643108d7667",
           "repository": "grandchallenge/MATH-PROGRAMME"
         },
         {
@@ -711,8 +711,8 @@
       ],
       "exclusions": [],
       "measurement_window": {
-        "end": "2026-08-09T06:12:50Z",
-        "start": "2026-08-02T06:12:50Z"
+        "end": "2026-08-09T17:46:25Z",
+        "start": "2026-08-02T17:46:25Z"
       },
       "status": "observed",
       "target": {
