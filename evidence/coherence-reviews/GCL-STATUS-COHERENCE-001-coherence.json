@@ -1,0 +1,49 @@
+{
+  "$schema": "../schemas/coherence_receipt.schema.json",
+  "schema_version": "1.0.0",
+  "operation_id": "GCL-STATUS-COHERENCE-001",
+  "status": "coherent",
+  "contradictions": {
+    "open_count": 0,
+    "closed_ids": [
+      "SC-01",
+      "SC-02",
+      "SC-03",
+      "SC-04",
+      "SC-05",
+      "SC-06",
+      "SC-07",
+      "SC-08",
+      "VAL-01"
+    ]
+  },
+  "review_packet": {
+    "campaign": "GCL-STATUS-COHERENCE-001",
+    "packet_sha256": "b39b2f3fab12089622ccba5072c89dd758128117b5426075658148b2b495e917",
+    "steward_authorization_url": "https://github.com/grandchallenge/gcl-standards/pull/36#issuecomment-5229806417"
+  },
+  "reviewed_source_heads": {
+    "intellect": "e12716e743fb306e41a80ace0bcfc64f71adf086",
+    "gcl_standards": "3a5ed516bb9ccb43e2d67e9270e1ec2a793e01ac"
+  },
+  "protected_merges": {
+    "gcl_integration": "5c4e73e55d362a5198b9076ead694909a5e0ebf3",
+    "gcl_adoption": "c39aab2bfbb2725accd18d69a0daea7fe96a0eee",
+    "intellect_projection": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+    "github_profile": "a69c5c8b8091809e35b0afffd0456428ca195386"
+  },
+  "current_status_projection": {
+    "path": "status/GCL-GHOS-00-current.json",
+    "git_blob_sha1": "fc3c890a7ecb79b7575386b874fc198ec6e48077"
+  },
+  "claim_boundaries": {
+    "constitutional_claim_authorized": false,
+    "organization_wide_conformance_authorized": false,
+    "production_claim_authorized": false,
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "novelty_claim_authorized": false,
+    "deployment_claim_authorized": false,
+    "commercial_claim_authorized": false
+  }
+}
