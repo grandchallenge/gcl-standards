@@ -1,19 +1,18 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 import jsonschema
 
-from optimality_scorecard import validate_scorecard
-
 
 ROOT = Path(__file__).resolve().parents[1]
-CLOSEOUT_PATH = ROOT / "evidence" / "phase-closeouts" / "GCL-OPT-PHASE12-CLOSEOUT-001.json"
-SCHEMA_PATH = ROOT / "schemas" / "phase12_closeout.schema.json"
-COHERENCE_PATH = ROOT / "evidence" / "coherence-reviews" / "GCL-STATUS-COHERENCE-001-coherence.json"
-AETHER_PATH = ROOT / "evidence" / "settings-readback" / "GCL-AETHER-CONFORMANCE-001.json"
-SCORECARD_PATH = ROOT / "scorecards" / "GCL-OPT-SCORECARD-2026-W32.json"
+CI_DIR = Path(__file__).resolve().parent
+if str(CI_DIR) not in sys.path:
+    sys.path.insert(0, str(CI_DIR))
+
+from optimality_scorecard import validate_scorecard  # noqa: E402
 
 
 class Phase12CloseoutError(ValueError):
