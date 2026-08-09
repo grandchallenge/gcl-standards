@@ -15,26 +15,36 @@ constitutional_source:
     admission_commit: ad4eac22321f87c42d34884eca5405ffea250f75
     packet_sha256: 22dbfa0ea0e652161126dd4647477036b89e6c13ecbd9101cda60ce00e9f95c5
 standard: GCL-GHOS-00
-standard_version: 0.1.0
-standards_commit: 31211b286a9c4a2874da5559118ef2f026f7de52
+standard_version: 0.1.1
+standards_commit: 5c4e73e55d362a5198b9076ead694909a5e0ebf3
 standard_admission:
   repository: grandchallenge/gcl-standards
-  path: admissions/GCL-GHOS-00-0.1.0.json
-  operation_id: GI-AMEND-0001-STANDARDS-ADMISSION-001
-  commit_sha: 31211b286a9c4a2874da5559118ef2f026f7de52
-  reviewed_source_commit: fa90ffc2bd23a6b0c8e184c7da2dd6ef1174a4ee
-  decision_git_blob_sha1: 9fcf918d16b768f9949869abda4fc4a191edc4e9
-  standard_git_blob_sha1: b93c57f1fb27bf2a017a4b90719290342424f6d5
+  path: admissions/GCL-GHOS-00-0.1.1.json
+  operation_id: GCL-GHOS-00-0.1.1-ADMISSION-001
+  commit_sha: 5c4e73e55d362a5198b9076ead694909a5e0ebf3
+  reviewed_source_commit: 3a5ed516bb9ccb43e2d67e9270e1ec2a793e01ac
+  packet_sha256: b39b2f3fab12089622ccba5072c89dd758128117b5426075658148b2b495e917
+  receipt_path: evidence/coherence-reviews/GCL-STATUS-COHERENCE-001-b39b2f3fab12.json
+  decision_git_blob_sha1: e4d61cfcc5e8ed330b350ab34323bb36a29fcd4c
+  standard_git_blob_sha1: fd2651ba5036cf2455bf925dcd85364894d55726
+predecessor_adoption:
+  standard_version: 0.1.0
+  standards_commit: 31211b286a9c4a2874da5559118ef2f026f7de52
+  admission_path: admissions/GCL-GHOS-00-0.1.0.json
+  admission_operation_id: GI-AMEND-0001-STANDARDS-ADMISSION-001
+  status: active
+  activation_date: "2026-08-03"
 status: active
+admission_gate_status: complete
 decision_ref: decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md
 decision_status: accepted
-activation_date: "2026-08-03"
+activation_date: "2026-08-09"
 pilot_scope:
   - Repository-governance operations within grandchallenge/MATH-PROGRAMME.
   - Adoption of the GCL-GHOS authority map without changing MATHCERT certification routes.
   - Evidence and settings-readback work required before any organization-wide conformance claim.
 unresolved_deviations:
-  - Organization-wide activation and conformance claims remain blocked pending repository settings-readback and disposition of cross-repository deviations.
+  - Organization-wide conformance remains false pending the exact cross-record coherence receipt and Phase 1-2 closeout.
   - This pilot adoption does not certify mathematics, alter MATHCERT authority, or promote any programme claim.
 claim_boundaries:
   programme_pilot_adoption_complete: true

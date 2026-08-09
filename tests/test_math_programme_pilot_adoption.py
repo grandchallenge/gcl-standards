@@ -29,6 +29,9 @@ class MathProgrammePilotAdoptionTests(unittest.TestCase):
         pilot.validate_records(adoption, admission, schema)
         self.assertEqual(adoption["status"], "active")
         self.assertEqual(adoption["decision_status"], "accepted")
+        self.assertEqual(adoption["standard_version"], "0.1.1")
+        self.assertEqual(adoption["admission_gate_status"], "complete")
+        self.assertEqual(admission["next_gate"]["status"], "not_started")
         self.assertTrue(adoption["claim_boundaries"]["programme_pilot_adoption_complete"])
 
     def test_activation_commit_substitution_fails_closed(self) -> None:
@@ -59,6 +62,27 @@ class MathProgrammePilotAdoptionTests(unittest.TestCase):
         mutated = copy.deepcopy(adoption)
         mutated["standard_admission"]["standard_git_blob_sha1"] = "d" * 40
         with self.assertRaisesRegex(pilot.PilotAdoptionError, "standard blob identity drift"):
+            pilot.validate_records(mutated, admission, schema)
+
+    def test_successor_packet_substitution_fails_closed(self) -> None:
+        adoption, admission, schema = self.records()
+        mutated = copy.deepcopy(adoption)
+        mutated["standard_admission"]["packet_sha256"] = "e" * 64
+        with self.assertRaisesRegex(pilot.PilotAdoptionError, "successor review packet drift"):
+            pilot.validate_records(mutated, admission, schema)
+
+    def test_admission_gate_cannot_be_rewritten(self) -> None:
+        adoption, admission, schema = self.records()
+        mutated = copy.deepcopy(admission)
+        mutated["next_gate"]["status"] = "complete"
+        with self.assertRaisesRegex(pilot.PilotAdoptionError, "admission gate was rewritten"):
+            pilot.validate_records(adoption, mutated, schema)
+
+    def test_predecessor_adoption_lineage_is_exact(self) -> None:
+        adoption, admission, schema = self.records()
+        mutated = copy.deepcopy(adoption)
+        mutated["predecessor_adoption"]["standards_commit"] = "f" * 40
+        with self.assertRaises(Exception):
             pilot.validate_records(mutated, admission, schema)
 
     def test_claim_inflation_fails_schema(self) -> None:

@@ -79,9 +79,11 @@ class StandardsValidationTests(unittest.TestCase):
         )
         self.assertEqual(
             adoption["standards_commit"],
-            "31211b286a9c4a2874da5559118ef2f026f7de52",
+            "5c4e73e55d362a5198b9076ead694909a5e0ebf3",
         )
-        self.assertEqual(adoption["activation_date"], "2026-08-03")
+        self.assertEqual(adoption["standard_version"], "0.1.1")
+        self.assertEqual(adoption["admission_gate_status"], "complete")
+        self.assertEqual(adoption["activation_date"], "2026-08-09")
         validate_module.validate_math_programme_adoption(adoption)
 
     def test_accepted_adr_can_precede_programme_adoption(self) -> None:

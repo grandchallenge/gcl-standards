@@ -11,7 +11,9 @@
     "standard_version",
     "standards_commit",
     "standard_admission",
+    "predecessor_adoption",
     "status",
+    "admission_gate_status",
     "decision_ref",
     "decision_status",
     "activation_date",
@@ -65,7 +67,7 @@
       }
     },
     "standard": {"const": "GCL-GHOS-00"},
-    "standard_version": {"const": "0.1.0"},
+    "standard_version": {"const": "0.1.1"},
     "standards_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
     "standard_admission": {
       "type": "object",
@@ -77,22 +79,40 @@
         "commit_sha",
         "reviewed_source_commit",
         "decision_git_blob_sha1",
-        "standard_git_blob_sha1"
+        "standard_git_blob_sha1",
+        "packet_sha256",
+        "receipt_path"
       ],
       "properties": {
         "repository": {"const": "grandchallenge/gcl-standards"},
-        "path": {"const": "admissions/GCL-GHOS-00-0.1.0.json"},
-        "operation_id": {"const": "GI-AMEND-0001-STANDARDS-ADMISSION-001"},
+        "path": {"const": "admissions/GCL-GHOS-00-0.1.1.json"},
+        "operation_id": {"const": "GCL-GHOS-00-0.1.1-ADMISSION-001"},
         "commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
         "reviewed_source_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
         "decision_git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
-        "standard_git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+        "standard_git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "packet_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "receipt_path": {"const": "evidence/coherence-reviews/GCL-STATUS-COHERENCE-001-b39b2f3fab12.json"}
+      }
+    },
+    "predecessor_adoption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["standard_version", "standards_commit", "admission_path", "admission_operation_id", "status", "activation_date"],
+      "properties": {
+        "standard_version": {"const": "0.1.0"},
+        "standards_commit": {"const": "31211b286a9c4a2874da5559118ef2f026f7de52"},
+        "admission_path": {"const": "admissions/GCL-GHOS-00-0.1.0.json"},
+        "admission_operation_id": {"const": "GI-AMEND-0001-STANDARDS-ADMISSION-001"},
+        "status": {"const": "active"},
+        "activation_date": {"const": "2026-08-03"}
       }
     },
     "status": {"const": "active"},
+    "admission_gate_status": {"const": "complete"},
     "decision_ref": {"const": "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"},
     "decision_status": {"const": "accepted"},
-    "activation_date": {"const": "2026-08-03"},
+    "activation_date": {"const": "2026-08-09"},
     "pilot_scope": {
       "type": "array",
       "minItems": 3,
