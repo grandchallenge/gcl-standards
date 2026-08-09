@@ -325,17 +325,19 @@ def validate() -> None:
     required_sequence = [
         "**Status:** Accepted",
         "**Documentary successor:** `GCL-GHOS-00` `0.1.1`; selection pending exact-packet admission",
-        "`GI-AMEND-0001` is ratified and effective at an exact INTELLECT commit",
-        "the constitutional review receipt for the successor exact packet",
-        "MATH-PROGRAMME pilot adoption follows ADR acceptance and GCL-GHOS admission",
-        "It is not a prerequisite for this ADR to become accepted",
+        "ADR-0001 was accepted through the protected `0.1.0` admission lineage",
+        "The `0.1.1` documentary successor becomes the selected current standard only",
+        "MATH-PROGRAMME adoption follows the protected `0.1.1` admission",
+        "Admit byte-identical reviewed `0.1.1` source blobs",
     ]
     for boundary in required_sequence:
         if boundary not in decision:
             raise ValueError(f"missing acyclic ADR boundary: {boundary}")
     forbidden_sequence = [
         "the mathematics pilot records its adoption commit",
-        "This ADR becomes accepted only after:\n\n1. `GI-AMEND-0001` is ratified and effective;\n2.",
+        "This ADR becomes accepted only after:",
+        "Activate `GI-AMEND-0001`",
+        "Accept this ADR and admit GCL-GHOS",
     ]
     for stale in forbidden_sequence:
         if stale in decision:

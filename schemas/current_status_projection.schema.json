@@ -4,7 +4,7 @@
   "title": "Selected current GCL authority and adoption status",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "operation_id", "constitutional", "lineage", "selected_admission", "selected_programme_adoption", "descriptive_assertions", "claim_boundaries"],
+  "required": ["schema_version", "operation_id", "constitutional", "lineage", "selected_admission", "selected_programme_adoption", "descriptive_assertions", "descriptive_evidence", "claim_boundaries"],
   "properties": {
     "$schema": {"const": "../schemas/current_status_projection.schema.json"},
     "schema_version": {"const": "1.0.0"},
@@ -40,11 +40,27 @@
         "programme_adoption_status": {"const": "active"}
       }
     },
+    "descriptive_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intellect_readme", "intellect_status_page", "amendment", "gcl_readme", "adr", "standard", "admission", "programme_adoption"],
+      "properties": {
+        "intellect_readme": {"$ref": "#/$defs/sourceEvidence"},
+        "intellect_status_page": {"$ref": "#/$defs/sourceEvidence"},
+        "amendment": {"$ref": "#/$defs/sourceEvidence"},
+        "gcl_readme": {"$ref": "#/$defs/sourceEvidence"},
+        "adr": {"$ref": "#/$defs/sourceEvidence"},
+        "standard": {"$ref": "#/$defs/sourceEvidence"},
+        "admission": {"$ref": "#/$defs/sourceEvidence"},
+        "programme_adoption": {"$ref": "#/$defs/sourceEvidence"}
+      }
+    },
     "claim_boundaries": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["organization_wide_conformance_authorized", "mathematical_claim_authorized", "certification_claim_authorized", "production_claim_authorized", "novelty_claim_authorized", "deployment_claim_authorized", "commercial_claim_authorized"],
+      "required": ["constitutional_claim_authorized", "organization_wide_conformance_authorized", "mathematical_claim_authorized", "certification_claim_authorized", "production_claim_authorized", "novelty_claim_authorized", "deployment_claim_authorized", "commercial_claim_authorized"],
       "properties": {
+        "constitutional_claim_authorized": {"const": false},
         "organization_wide_conformance_authorized": {"const": false},
         "mathematical_claim_authorized": {"const": false},
         "certification_claim_authorized": {"const": false},
@@ -52,6 +68,19 @@
         "novelty_claim_authorized": {"const": false},
         "deployment_claim_authorized": {"const": false},
         "commercial_claim_authorized": {"const": false}
+      }
+    }
+  },
+  "$defs": {
+    "sourceEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "path", "commit_sha", "git_blob_sha1"],
+      "properties": {
+        "repository": {"type": "string", "pattern": "^grandchallenge/[A-Za-z0-9_.-]+$"},
+        "path": {"type": "string", "minLength": 1},
+        "commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
       }
     }
   }

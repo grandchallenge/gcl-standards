@@ -65,6 +65,24 @@ def validate(*, root: Path = ROOT) -> None:
         raise DocumentarySuccessorError("ADR-0001 current status is not accepted")
     if "Human Steward approval is **pending**" in adr_text:
         raise DocumentarySuccessorError("ADR-0001 retains stale pending approval text")
+    for stale_assertion in (
+        "This ADR becomes accepted only after:",
+        "Activate `GI-AMEND-0001`",
+        "Accept this ADR and admit GCL-GHOS",
+    ):
+        if stale_assertion in adr_text:
+            raise DocumentarySuccessorError(
+                f"ADR-0001 retains stale prospective status: {stale_assertion}"
+            )
+    for required in (
+        "ADR-0001 was accepted through the protected `0.1.0` admission lineage",
+        "MATH-PROGRAMME adoption follows the protected `0.1.1` admission",
+        "Admit byte-identical reviewed `0.1.1` source blobs",
+    ):
+        if required not in adr_text:
+            raise DocumentarySuccessorError(
+                f"ADR-0001 successor sequence is incomplete: {required}"
+            )
     if "does not itself admit `0.1.1`" not in adr_text:
         raise DocumentarySuccessorError("0.1.1 admission boundary is missing")
 

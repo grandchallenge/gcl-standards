@@ -66,8 +66,18 @@
     },
     "claim_boundaries": {
       "type": "object",
-      "minProperties": 1,
-      "additionalProperties": {"const": false}
+      "additionalProperties": false,
+      "required": ["constitutional_claim_authorized", "organization_wide_conformance_authorized", "production_claim_authorized", "mathematical_claim_authorized", "certification_claim_authorized", "novelty_claim_authorized", "deployment_claim_authorized", "commercial_claim_authorized"],
+      "properties": {
+        "constitutional_claim_authorized": {"const": false},
+        "organization_wide_conformance_authorized": {"const": false},
+        "production_claim_authorized": {"const": false},
+        "mathematical_claim_authorized": {"const": false},
+        "certification_claim_authorized": {"const": false},
+        "novelty_claim_authorized": {"const": false},
+        "deployment_claim_authorized": {"const": false},
+        "commercial_claim_authorized": {"const": false}
+      }
     }
   }
 }

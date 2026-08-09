@@ -51,6 +51,37 @@ class GhosDocumentarySuccessorTests(unittest.TestCase):
             ):
                 MODULE.validate(root=root)
 
+    def test_stale_prospective_adr_status_is_rejected(self) -> None:
+        historical = MODULE.HISTORICAL_STANDARD.read_text(encoding="utf-8")
+        current = MODULE.CURRENT_STANDARD.read_text(encoding="utf-8")
+        adr = MODULE.ADR.read_text(encoding="utf-8")
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "standards" / "history").mkdir(parents=True)
+            (root / "decisions").mkdir()
+            (root / "standards" / "history" / "GCL-GHOS-00-0.1.0.md").write_text(
+                historical, encoding="utf-8", newline="\n"
+            )
+            (root / "standards" / "GCL-GHOS-00.md").write_text(
+                current, encoding="utf-8", newline="\n"
+            )
+            (root / "decisions" / "ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md").write_text(
+                adr.replace(
+                    "ADR-0001 was accepted through the protected `0.1.0` admission lineage",
+                    "This ADR becomes accepted only after:",
+                ),
+                encoding="utf-8",
+                newline="\n",
+            )
+            subprocess.run(
+                ["git", "init", "--quiet"], cwd=root, check=True, capture_output=True
+            )
+            with self.assertRaisesRegex(
+                MODULE.DocumentarySuccessorError,
+                "stale prospective status",
+            ):
+                MODULE.validate(root=root)
+
 
 if __name__ == "__main__":
     unittest.main()

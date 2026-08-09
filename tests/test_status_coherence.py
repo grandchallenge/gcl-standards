@@ -15,6 +15,19 @@ MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
 
 
+def canonical_evidence() -> dict[str, bytes]:
+    return {
+        "intellect_readme": b"`GI-AMEND-0001` is effective.\n",
+        "intellect_status_page": b"`GI-AMEND-0001` is effective as constitutional version `1.1.0`.\n",
+        "amendment": b"**Status:** Effective\n**GCL-GHOS status at activation:** Candidate; not yet admitted\n",
+        "gcl_readme": b"`GCL-GHOS-00` is the admitted GitHub Constitutional Operating System.\n",
+        "adr": b"**Status:** Accepted\n",
+        "standard": b"**Status:** Admitted documentary successor; effective only when selected by a protected admission record\n",
+        "admission": b'{"status":"admitted","next_gate":{"status":"complete"}}\n',
+        "programme_adoption": b"status: active\n",
+    }
+
+
 def canonical_projection() -> dict[str, object]:
     admission_commit = "a" * 40
     return {
@@ -63,7 +76,21 @@ def canonical_projection() -> dict[str, object]:
             "admission_adoption_gate_status": "complete",
             "programme_adoption_status": "active",
         },
+        "descriptive_evidence": {
+            key: {
+                "repository": (
+                    "grandchallenge/INTELLECT"
+                    if key in {"intellect_readme", "intellect_status_page", "amendment"}
+                    else "grandchallenge/gcl-standards"
+                ),
+                "path": f"evidence/{key}",
+                "commit_sha": "d" * 40,
+                "git_blob_sha1": MODULE.git_blob_sha1(content),
+            }
+            for key, content in canonical_evidence().items()
+        },
         "claim_boundaries": {
+            "constitutional_claim_authorized": False,
             "organization_wide_conformance_authorized": False,
             "mathematical_claim_authorized": False,
             "certification_claim_authorized": False,
@@ -108,10 +135,14 @@ def canonical_receipt() -> dict[str, object]:
             "git_blob_sha1": "2" * 40,
         },
         "claim_boundaries": {
+            "constitutional_claim_authorized": False,
             "organization_wide_conformance_authorized": False,
             "mathematical_claim_authorized": False,
             "certification_claim_authorized": False,
             "production_claim_authorized": False,
+            "novelty_claim_authorized": False,
+            "deployment_claim_authorized": False,
+            "commercial_claim_authorized": False,
         },
     }
 
@@ -119,7 +150,32 @@ def canonical_receipt() -> dict[str, object]:
 class StatusCoherenceTests(unittest.TestCase):
     def test_canonical_projection_and_all_schemas_validate(self) -> None:
         MODULE.validate_schemas()
-        MODULE.validate_projection(canonical_projection())
+        MODULE.validate_projection(
+            canonical_projection(), evidence_contents=canonical_evidence()
+        )
+
+    def test_self_report_cannot_substitute_for_exact_source_content(self) -> None:
+        evidence = canonical_evidence()
+        evidence["intellect_status_page"] = b"`GI-AMEND-0001` is proposed.\n"
+        projection = canonical_projection()
+        projection["descriptive_evidence"]["intellect_status_page"][
+            "git_blob_sha1"
+        ] = MODULE.git_blob_sha1(evidence["intellect_status_page"])
+        with self.assertRaisesRegex(
+            MODULE.StatusCoherenceError,
+            "descriptive assertions do not match exact source blobs",
+        ):
+            MODULE.validate_projection(projection, evidence_contents=evidence)
+
+    def test_descriptive_blob_identity_drift_is_rejected(self) -> None:
+        evidence = canonical_evidence()
+        evidence["adr"] += b"drift\n"
+        with self.assertRaisesRegex(
+            MODULE.StatusCoherenceError, "Git blob drift: adr"
+        ):
+            MODULE.validate_projection(
+                canonical_projection(), evidence_contents=evidence
+            )
 
     def test_exact_coherence_receipt_schema_is_closed_and_zero_conflict(self) -> None:
         schema = MODULE.load_json(ROOT / "schemas" / "coherence_receipt.schema.json")
@@ -175,6 +231,13 @@ class StatusCoherenceTests(unittest.TestCase):
         broken["claim_boundaries"]["mathematical_claim_authorized"] = True
         with self.assertRaises(Exception):
             MODULE.validate_projection(broken)
+
+    def test_receipt_requires_every_fixed_nonclaim_boundary(self) -> None:
+        schema = MODULE.load_json(ROOT / "schemas" / "coherence_receipt.schema.json")
+        broken = canonical_receipt()
+        del broken["claim_boundaries"]["commercial_claim_authorized"]
+        with self.assertRaises(MODULE.jsonschema.ValidationError):
+            MODULE.jsonschema.validate(broken, schema)
 
 
 if __name__ == "__main__":
