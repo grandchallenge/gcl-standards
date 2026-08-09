@@ -137,12 +137,17 @@ class GCLGHOSAdmissionTests(unittest.TestCase):
             self.admission()["claim_boundaries"]["programme_adoption_complete"]
         )
 
-    def test_source_headers_remain_historical_reviewed_state(self) -> None:
-        decision = (
-            ROOT / "decisions" / "ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"
-        ).read_text(encoding="utf-8")
-        standard = (ROOT / "standards" / "GCL-GHOS-00.md").read_text(
-            encoding="utf-8"
+    def test_admitted_0_1_0_headers_are_resolved_at_reviewed_commit(self) -> None:
+        record = self.admission()
+        decision = standard_admission.git_text_at_commit(
+            root=ROOT,
+            commit=record["decision"]["reviewed_commit"],
+            relative_path=record["decision"]["path"],
+        )
+        standard = standard_admission.git_text_at_commit(
+            root=ROOT,
+            commit=record["standard"]["reviewed_commit"],
+            relative_path=record["standard"]["path"],
         )
         self.assertIn("**Status:** Proposed for successor exact-packet review", decision)
         self.assertIn("**Status:** Candidate", standard)

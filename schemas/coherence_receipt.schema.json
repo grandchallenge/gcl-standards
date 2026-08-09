@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/coherence-receipt-1.0.0.json",
+  "title": "Exact GCL status coherence receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "operation_id", "status", "contradictions", "review_packet", "reviewed_source_heads", "protected_merges", "current_status_projection", "claim_boundaries"],
+  "properties": {
+    "$schema": {"const": "../schemas/coherence_receipt.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "operation_id": {"const": "GCL-STATUS-COHERENCE-001"},
+    "status": {"const": "coherent"},
+    "contradictions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["open_count", "closed_ids"],
+      "properties": {
+        "open_count": {"const": 0},
+        "closed_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 9,
+          "contains": {"const": "VAL-01"},
+          "items": {"enum": ["SC-01", "SC-02", "SC-03", "SC-04", "SC-05", "SC-06", "SC-07", "SC-08", "VAL-01"]}
+        }
+      }
+    },
+    "review_packet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["campaign", "packet_sha256", "steward_authorization_url"],
+      "properties": {
+        "campaign": {"const": "GCL-STATUS-COHERENCE-001"},
+        "packet_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "steward_authorization_url": {"type": "string", "format": "uri"}
+      }
+    },
+    "reviewed_source_heads": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intellect", "gcl_standards"],
+      "properties": {
+        "intellect": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "gcl_standards": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "protected_merges": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gcl_integration", "gcl_adoption", "intellect_projection", "github_profile"],
+      "properties": {
+        "gcl_integration": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "gcl_adoption": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "intellect_projection": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "github_profile": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "current_status_projection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "git_blob_sha1"],
+      "properties": {
+        "path": {"const": "status/GCL-GHOS-00-current.json"},
+        "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {"const": false}
+    }
+  }
+}

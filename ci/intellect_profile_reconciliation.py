@@ -3,11 +3,17 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import sys
 from pathlib import Path
 
 import jsonschema
 
 ROOT = Path(__file__).resolve().parents[1]
+CI_DIR = Path(__file__).resolve().parent
+if str(CI_DIR) not in sys.path:
+    sys.path.insert(0, str(CI_DIR))
+
+from git_content import canonical_git_bytes  # noqa: E402
 PROFILE = ROOT / "fixtures/repository_profiles/INTELLECT.json"
 PROFILE_SCHEMA = ROOT / "schemas/repository_profile.schema.json"
 RECONCILIATION = ROOT / "deviations/GCL-GHOS-INTELLECT-PROFILE-RECONCILIATION-001.json"
@@ -218,7 +224,8 @@ def validate() -> None:
     validate_records(
         load(PROFILE), load(RECONCILIATION), load(BASE_CAMPAIGN),
         load(OWNER_OVERLAY), load(OWNER_REFERENCE), load(EVIDENCE),
-        EVIDENCE.read_bytes(), EVIDENCE_DIGEST.read_text(encoding="utf-8"),
+        canonical_git_bytes(EVIDENCE, root=ROOT),
+        EVIDENCE_DIGEST.read_text(encoding="utf-8"),
         load(EVIDENCE_REFERENCE),
     )
 

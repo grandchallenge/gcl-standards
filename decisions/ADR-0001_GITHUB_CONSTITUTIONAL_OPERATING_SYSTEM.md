@@ -1,7 +1,9 @@
 # ADR-0001: Establish the GitHub Constitutional Operating System
 
 **Date:** 2026-07-29  
-**Status:** Proposed for successor exact-packet review  
+**Status:** Accepted
+**Accepted lineage:** `admissions/GCL-GHOS-00-0.1.0.json`
+**Documentary successor:** `GCL-GHOS-00` `0.1.1`; selection pending exact-packet admission
 **Owner:** Amanuensis with Security and Referee review
 
 ## Context
@@ -18,9 +20,8 @@ branch-protection mechanisms, and a human-bound administrative token.
 
 ## Decision
 
-Adopt `GCL-GHOS-00` as the candidate cross-programme contract and validate the
-implementation through a mathematics pilot after constitutional and standards
-admission are complete.
+Adopt `GCL-GHOS-00` as the subordinate cross-programme contract and validate
+the implementation through an exact, separately recorded mathematics pilot.
 
 `gcl-standards` registers and publishes cross-programme standards admitted
 through the Grand Intellect constitutional process. It does not own
@@ -29,7 +30,7 @@ and records the exact admitted cross-programme revision it adopts.
 
 This decision is subordinate to the compact Constitution in
 `grandchallenge/INTELLECT`, its effective amendments, and INTELLECT's
-constitutional schedules. It is coordinated with proposed amendment
+constitutional schedules. It is coordinated with effective amendment
 `GI-AMEND-0001`. AETHER retains production semantic authority under Article IX.
 
 ## Non-negotiable boundaries
@@ -106,8 +107,9 @@ record blocking findings.
 
 ## Approval and effective version
 
-Human Steward approval is **pending**. Fresh non-author agent Adversary and
-distinct agent Referee review are **pending** for the successor packet under
-`GI-STEWARD-0001`. Authoring this correction, passing CI, or merging a
-preparatory branch does not constitute constitutional activation or ADR
-acceptance.
+ADR-0001 is accepted in the exact admitted `0.1.0` lineage. The `0.1.1`
+documentary successor requires its own exact source packet, distinct non-author
+agent Adversary and Referee findings, one authenticated Human Steward
+authorization, and a protected successor admission. Authoring this correction,
+passing CI, merging a preparatory branch, or changing this descriptive status
+does not itself admit `0.1.1`, adopt it for a programme, or widen any authority.

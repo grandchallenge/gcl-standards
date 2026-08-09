@@ -1,13 +1,20 @@
 from __future__ import annotations
 
-import hashlib
 import json
+import sys
 from pathlib import Path
 
 import jsonschema
 
 
 ROOT = Path(__file__).resolve().parents[1]
+CI_DIR = Path(__file__).resolve().parent
+if str(CI_DIR) not in sys.path:
+    sys.path.insert(0, str(CI_DIR))
+
+from git_content import git_blob_sha1_at_commit, git_text_at_commit  # noqa: E402
+
+
 SCHEMA_PATH = ROOT / "schemas" / "standard_admission.schema.json"
 ADMISSION_PATH = ROOT / "admissions" / "GCL-GHOS-00-0.1.0.json"
 EXPECTED_REVIEWED_COMMIT = "fa90ffc2bd23a6b0c8e184c7da2dd6ef1174a4ee"
@@ -31,12 +38,6 @@ def load_json(path: Path) -> dict[str, object]:
     if not isinstance(value, dict):
         raise StandardAdmissionError(f"record must be an object: {path}")
     return value
-
-
-def git_blob_sha1(path: Path) -> str:
-    data = path.read_bytes()
-    header = f"blob {len(data)}\0".encode("ascii")
-    return hashlib.sha1(header + data).hexdigest()
 
 
 def validate_standard_admission(
@@ -81,15 +82,35 @@ def validate_standard_admission(
     if standard["reviewed_commit"] != EXPECTED_REVIEWED_COMMIT:
         raise StandardAdmissionError("standard reviewed commit drift")
 
-    decision_path = root / decision["path"]
-    standard_path = root / standard["path"]
-    if git_blob_sha1(decision_path) != decision["git_blob_sha1"]:
+    if (
+        git_blob_sha1_at_commit(
+            root=root,
+            commit=decision["reviewed_commit"],
+            relative_path=decision["path"],
+        )
+        != decision["git_blob_sha1"]
+    ):
         raise StandardAdmissionError("ADR source blob drift")
-    if git_blob_sha1(standard_path) != standard["git_blob_sha1"]:
+    if (
+        git_blob_sha1_at_commit(
+            root=root,
+            commit=standard["reviewed_commit"],
+            relative_path=standard["path"],
+        )
+        != standard["git_blob_sha1"]
+    ):
         raise StandardAdmissionError("standard source blob drift")
 
-    decision_text = decision_path.read_text(encoding="utf-8")
-    standard_text = standard_path.read_text(encoding="utf-8")
+    decision_text = git_text_at_commit(
+        root=root,
+        commit=decision["reviewed_commit"],
+        relative_path=decision["path"],
+    )
+    standard_text = git_text_at_commit(
+        root=root,
+        commit=standard["reviewed_commit"],
+        relative_path=standard["path"],
+    )
     if "**Status:** Proposed for successor exact-packet review" not in decision_text:
         raise StandardAdmissionError("reviewed ADR source status drift")
     if "**Status:** Candidate" not in standard_text:

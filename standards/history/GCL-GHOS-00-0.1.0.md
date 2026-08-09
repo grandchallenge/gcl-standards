@@ -1,13 +1,9 @@
 # GCL-GHOS-00: GitHub Constitutional Operating System
 
-**Version:** 0.1.1
-**Status:** Admitted documentary successor; effective only when selected by a protected admission record
+**Version:** 0.1.0
+**Status:** Candidate
 **Constitutional source:** `grandchallenge/INTELLECT/CONSTITUTION.md`
-**Constitutional authorization:** effective `GI-AMEND-0001`
-**Predecessor admission:** `admissions/GCL-GHOS-00-0.1.0.json`
-**Historical predecessor:** `standards/history/GCL-GHOS-00-0.1.0.md`
-**Admission authority:** exact protected `gcl-standards` admission record
-**Adoption authority:** exact programme-owned adoption record
+**Proposed authorization:** `GI-AMEND-0001`
 **Registry:** `grandchallenge/gcl-standards`
 **Owner:** Amanuensis with Security and Referee review
 **Scope:** All repositories owned by `grandchallenge`

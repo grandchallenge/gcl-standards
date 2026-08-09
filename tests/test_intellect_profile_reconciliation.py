@@ -23,7 +23,9 @@ class IntellectProfileReconciliationTests(unittest.TestCase):
         self.overlay = MODULE.load(MODULE.OWNER_OVERLAY)
         self.owner = MODULE.load(MODULE.OWNER_REFERENCE)
         self.evidence = MODULE.load(MODULE.EVIDENCE)
-        self.evidence_bytes = MODULE.EVIDENCE.read_bytes()
+        self.evidence_bytes = MODULE.canonical_git_bytes(
+            MODULE.EVIDENCE, root=MODULE.ROOT
+        )
         self.digest = MODULE.EVIDENCE_DIGEST.read_text(encoding="utf-8")
         self.reference = MODULE.load(MODULE.EVIDENCE_REFERENCE)
 

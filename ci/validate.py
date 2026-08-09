@@ -323,7 +323,8 @@ def validate() -> None:
         ROOT / "decisions" / "ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"
     ).read_text(encoding="utf-8")
     required_sequence = [
-        "**Status:** Proposed for successor exact-packet review",
+        "**Status:** Accepted",
+        "**Documentary successor:** `GCL-GHOS-00` `0.1.1`; selection pending exact-packet admission",
         "`GI-AMEND-0001` is ratified and effective at an exact INTELLECT commit",
         "the constitutional review receipt for the successor exact packet",
         "MATH-PROGRAMME pilot adoption follows ADR acceptance and GCL-GHOS admission",
@@ -339,6 +340,12 @@ def validate() -> None:
     for stale in forbidden_sequence:
         if stale in decision:
             raise ValueError(f"circular ADR sequence remains: {stale}")
+
+    from ghos_documentary_successor import validate as validate_ghos_successor
+    from status_coherence import validate_schemas as validate_status_schemas
+
+    validate_ghos_successor()
+    validate_status_schemas()
 
     validate_regret_contract()
 
