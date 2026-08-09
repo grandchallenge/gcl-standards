@@ -1,0 +1,146 @@
+{
+  "$schema": "../../schemas/phase12_closeout.schema.json",
+  "schema_version": "1.0.0",
+  "operation_id": "GCL-OPT-PHASE12-CLOSEOUT-001",
+  "status": "complete",
+  "prepared_at": "2026-08-09T07:15:03Z",
+  "authority_boundary": "This record closes the bounded Phase 1-2 optimality plan only when admitted on protected gcl-standards main. It records evidence and deviations; it does not create constitutional, organization-wide conformance, production, mathematical, certification, novelty, deployment, or commercial authority.",
+  "baseline": {
+    "operation_id": "GCL-OPT-BASELINE-001",
+    "path": "implementation/2026-08-08_OPTIMALITY_BASELINE_AND_EXECUTION_LEDGER.md",
+    "protected_main_at_closeout_base": "9b6588523aad534797ad46202c357d1be25260b5"
+  },
+  "protected_heads": {
+    "grandchallenge/gcl-standards": "9b6588523aad534797ad46202c357d1be25260b5",
+    "grandchallenge/.github": "0b875c5bf2d0c563bfb5ddb2f3beb406017f2523",
+    "grandchallenge/AETHER": "afb367f84454d18a646b13832b112365b7ca56c0",
+    "grandchallenge/INTELLECT": "5714e81f3f03767f309b069f32a89fed0cfa165e"
+  },
+  "phase1": {
+    "status": "closed",
+    "coherence_issue": "https://github.com/grandchallenge/gcl-standards/issues/35",
+    "coherence_receipt": "evidence/coherence-reviews/GCL-STATUS-COHERENCE-001-b39b2f3fab12.json",
+    "coherence_projection": "evidence/coherence-reviews/GCL-STATUS-COHERENCE-001-coherence.json",
+    "closed_rows": ["SC-01", "SC-02", "SC-03", "SC-04", "SC-05", "SC-06", "SC-07", "SC-08", "VAL-01"]
+  },
+  "phase2_rows": [
+    {
+      "id": "SEC-01",
+      "priority": "P1",
+      "status": "closed",
+      "owner": "grandchallenge/.github; fyremael; jimsteeg",
+      "closure_condition": "Organization-wide secure-only 2FA is enabled only after the owner-authenticated disabled-member readback is empty, with no owner eviction.",
+      "supersession_condition": "A later owner-authenticated security readback may supersede this observation without changing its historical truth.",
+      "compensating_control": "Retain owner-authenticated 2FA enforcement and disabled-member evidence in the recurring security evidence cycle.",
+      "review_date": "2026-08-29T00:00:00Z",
+      "evidence": [
+        "https://github.com/grandchallenge/.github/issues/47",
+        "https://github.com/grandchallenge/.github/issues/47#issuecomment-5229847460",
+        "https://github.com/grandchallenge/.github/pull/55",
+        "https://github.com/grandchallenge/INTELLECT/blob/5714e81f3f03767f309b069f32a89fed0cfa165e/governance/evidence/GCL-ORG-2FA-001.json"
+      ]
+    },
+    {
+      "id": "SEC-03",
+      "priority": "P1",
+      "status": "closed",
+      "owner": "grandchallenge/AETHER; grandchallenge/gcl-standards",
+      "closure_condition": "AETHER has active no-bypass default-branch and immutable-release-tag rulesets; the exact post-migration readback is admitted and classic protection was retired only after replacement verification.",
+      "supersession_condition": "Any later AETHER control change requires a fresh exact readback; the admitted migration evidence remains historical.",
+      "compensating_control": "AETHER repository verification fails closed on ruleset, required-context, bypass, security, governed-surface, or readback drift.",
+      "review_date": "2026-08-16T23:59:59Z",
+      "evidence": [
+        "https://github.com/grandchallenge/AETHER/issues/58",
+        "https://github.com/grandchallenge/AETHER/pull/59",
+        "https://github.com/grandchallenge/gcl-standards/pull/37",
+        "evidence/settings-readback/GCL-AETHER-CONFORMANCE-001.json"
+      ],
+      "historical_deviation_disposition": {
+        "id": "GCL-AETHER-LOCKED-CLASSIC-SEQUENCING-001",
+        "source_status": "open_at_capture",
+        "closeout_status": "closed_fulfilled",
+        "reason": "Its required review-at-admission and issue-closure conditions occurred after the immutable readback was captured; this successor disposition does not rewrite that historical evidence."
+      }
+    },
+    {
+      "id": "SEC-04",
+      "priority": "P2",
+      "status": "open_bounded",
+      "owner": "fyremael",
+      "closure_condition": "All administrative credentials remain inventoried without secret values; routine administration remains App-backed; broad human and Council Clerk Contents capabilities are narrowed or explicitly renewed under bounded review.",
+      "expires_at": "2026-08-31T23:59:59Z",
+      "compensating_control": "Routine repository-settings mutations use short-lived gcl-release-trust App tokens; scorecard collection uses an explicitly read-only organization token and a separate gcl-standards-only proposal token; protected main has no App bypass.",
+      "review_date": "2026-08-16T00:00:00Z",
+      "evidence": [
+        "https://github.com/grandchallenge/.github/issues/50",
+        "https://github.com/grandchallenge/.github/pull/51",
+        "https://github.com/grandchallenge/.github/pull/58",
+        "https://github.com/grandchallenge/.github/blob/0b875c5bf2d0c563bfb5ddb2f3beb406017f2523/governance/credentials/GCL-CREDENTIAL-BOUNDARY-001.json"
+      ],
+      "open_deviations": [
+        {
+          "id": "GCL-HUMAN-CLI-ADMIN-SCOPE-001",
+          "owner": "fyremael",
+          "expires_at": "2026-08-31T23:59:59Z",
+          "compensating_control": "Routine administrative settings mutations are App-backed and exact-run audited. Human-bound use is limited to Steward authorization, issue and pull-request work, and break-glass recovery.",
+          "review_date": "2026-08-16T00:00:00Z"
+        },
+        {
+          "id": "GCL-CLERK-CONTENTS-SCOPE-001",
+          "owner": "fyremael",
+          "expires_at": "2026-08-31T23:59:59Z",
+          "compensating_control": "Scorecard collection mints an explicitly read-only all-repository token. Proposal writes use a separate installation token restricted to gcl-standards; protected main has no App bypass and the workflow cannot approve or merge.",
+          "review_date": "2026-08-16T00:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "GOV-01",
+      "priority": "P1",
+      "status": "closed",
+      "owner": "grandchallenge/INTELLECT; grandchallenge/gcl-standards",
+      "closure_condition": "GI-STEWARD-0002 is selected by protected INTELLECT authority schedule schema 1.5.0 after exact Phase 2 review, receipt admission, 2FA prerequisite, protected integration, and readback; gcl-standards issue #14 is closed with the exact chain.",
+      "supersession_condition": "Only a later exact Human Steward directive and protected authority-schedule integration may supersede GI-STEWARD-0002.",
+      "compensating_control": "Ordinary decisions require one exact packet, distinct non-author Adversary and Referee sessions, one authenticated Human Steward authorization, and protected integration/readback; recovery protocols remain separately triggered and fail closed.",
+      "review_date": "2026-08-29T00:00:00Z",
+      "evidence": [
+        "https://github.com/grandchallenge/INTELLECT/pull/54",
+        "https://github.com/grandchallenge/INTELLECT/pull/55",
+        "https://github.com/grandchallenge/INTELLECT/pull/56",
+        "https://github.com/grandchallenge/INTELLECT/issues/53#issuecomment-5230177785",
+        "https://github.com/grandchallenge/gcl-standards/issues/14#issuecomment-5230250340",
+        "https://github.com/grandchallenge/INTELLECT/blob/5714e81f3f03767f309b069f32a89fed0cfa165e/governance/constitutional_authority_schedule.json"
+      ]
+    }
+  ],
+  "weekly_scorecard": {
+    "record_id": "GCL-OPT-SCORECARD-2026-W32",
+    "json_path": "scorecards/GCL-OPT-SCORECARD-2026-W32.json",
+    "markdown_path": "scorecards/GCL-OPT-SCORECARD-2026-W32.md",
+    "proposal_pull_request": 43,
+    "proposal_head_sha": "933dbbbd8b7a9ac8468db12c9a6fff5b4dd51aba",
+    "generator_workflow_run": "31298375582",
+    "proposal_checks": {
+      "GCL conformance": "31298442395",
+      "Standards policy": "31298442126"
+    },
+    "admission_boundary": "The Council Clerk proposal is incorporated byte-for-byte by ancestry into this separately reviewed closeout branch; the scorecard becomes admitted only when this closeout is protected on main."
+  },
+  "acceptance": {
+    "p0_open": [],
+    "p1_open": [],
+    "p2_open": ["SEC-04/GCL-HUMAN-CLI-ADMIN-SCOPE-001", "SEC-04/GCL-CLERK-CONTENTS-SCOPE-001"],
+    "organization_wide_conformance_authorized": false,
+    "all_open_p2_have_owner_expiry_compensating_control_review_date": true
+  },
+  "claim_boundaries": {
+    "constitutional_authority": false,
+    "organization_wide_conformance": false,
+    "production_authority": false,
+    "mathematical_authority": false,
+    "certification_authority": false,
+    "novelty_authority": false,
+    "deployment_authority": false,
+    "commercial_authority": false
+  }
+}
