@@ -404,10 +404,14 @@ def validate() -> None:
             raise ValueError(f"circular ADR sequence remains: {stale}")
 
     from ghos_documentary_successor import validate as validate_ghos_successor
-    from status_coherence import validate_schemas as validate_status_schemas
+    from status_coherence import (
+        validate_current_status,
+        validate_schemas as validate_status_schemas,
+    )
 
     validate_ghos_successor()
     validate_status_schemas()
+    validate_current_status()
 
     validate_regret_contract()
     validate_aether_evidence()

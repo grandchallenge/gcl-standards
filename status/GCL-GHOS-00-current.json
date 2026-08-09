@@ -1,0 +1,126 @@
+{
+  "$schema": "../schemas/current_status_projection.schema.json",
+  "schema_version": "1.0.0",
+  "operation_id": "GCL-STATUS-COHERENCE-001",
+  "constitutional": {
+    "repository": "grandchallenge/INTELLECT",
+    "schedule_path": "governance/constitutional_authority_schedule.json",
+    "schedule_commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+    "effective_version": "1.1.0",
+    "effective_at": "2026-08-03T10:00:00Z",
+    "amendment": "GI-AMEND-0001",
+    "amendment_status": "effective",
+    "current_status_authority": "constitutional_status_only"
+  },
+  "lineage": {
+    "predecessor_version": "0.1.0",
+    "predecessor_admission": "admissions/GCL-GHOS-00-0.1.0.json",
+    "successor_version": "0.1.1",
+    "normative_body_sha256": "c9912acb0aacc186f93655e9e1b7938235954bb9466dcddf923cd601ed7bc2a3",
+    "normative_body_unchanged": true
+  },
+  "selected_admission": {
+    "operation_id": "GCL-GHOS-00-0.1.1-ADMISSION-001",
+    "path": "admissions/GCL-GHOS-00-0.1.1.json",
+    "version": "0.1.1",
+    "status": "admitted",
+    "front_matter_status": "admitted",
+    "admission_commit_sha": "5c4e73e55d362a5198b9076ead694909a5e0ebf3"
+  },
+  "selected_programme_adoption": {
+    "programme": "grandchallenge/MATH-PROGRAMME",
+    "path": "programme-adoption/MATH-PROGRAMME.yaml",
+    "standard_version": "0.1.1",
+    "status": "active",
+    "commit_sha": "c39aab2bfbb2725accd18d69a0daea7fe96a0eee",
+    "admission_commit_sha": "5c4e73e55d362a5198b9076ead694909a5e0ebf3"
+  },
+  "public_profile": {
+    "repository": "grandchallenge/.github",
+    "path": "profile/README.md",
+    "commit_sha": "a69c5c8b8091809e35b0afffd0456428ca195386"
+  },
+  "descriptive_assertions": {
+    "intellect_readme_amendment_status": "effective",
+    "intellect_status_page_amendment_status": "effective",
+    "amendment_gcl_status_scope": "candidate_at_activation",
+    "gcl_readme_standard_status": "admitted",
+    "adr_status": "accepted",
+    "standard_front_matter_status": "admitted",
+    "admission_adoption_gate_status": "complete",
+    "programme_adoption_status": "active",
+    "github_profile_status": "effective_admitted_adopted"
+  },
+  "descriptive_evidence": {
+    "schedule": {
+      "repository": "grandchallenge/INTELLECT",
+      "path": "governance/constitutional_authority_schedule.json",
+      "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+      "git_blob_sha1": "a7ebf04a31fe7a5581a06c8848f59397874332d5"
+    },
+    "intellect_readme": {
+      "repository": "grandchallenge/INTELLECT",
+      "path": "README.md",
+      "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+      "git_blob_sha1": "e9d9b070020b187a3e7d283dd0fc235fc0c9dab7"
+    },
+    "intellect_status_page": {
+      "repository": "grandchallenge/INTELLECT",
+      "path": "docs/STATUS.md",
+      "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+      "git_blob_sha1": "bce5197dc253212ea2b8df28ebbe46edde47ace0"
+    },
+    "amendment": {
+      "repository": "grandchallenge/INTELLECT",
+      "path": "AMENDMENTS/0001-commentary-and-gcl-ghos.md",
+      "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+      "git_blob_sha1": "6406ebb7a54eeab6eb8a848b9fff0858fa794ed7"
+    },
+    "gcl_readme": {
+      "repository": "grandchallenge/gcl-standards",
+      "path": "README.md",
+      "commit_sha": "5c4e73e55d362a5198b9076ead694909a5e0ebf3",
+      "git_blob_sha1": "d7e68ecd929691beb268417fdfcc7de660e84468"
+    },
+    "adr": {
+      "repository": "grandchallenge/gcl-standards",
+      "path": "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md",
+      "commit_sha": "5c4e73e55d362a5198b9076ead694909a5e0ebf3",
+      "git_blob_sha1": "e4d61cfcc5e8ed330b350ab34323bb36a29fcd4c"
+    },
+    "standard": {
+      "repository": "grandchallenge/gcl-standards",
+      "path": "standards/GCL-GHOS-00.md",
+      "commit_sha": "5c4e73e55d362a5198b9076ead694909a5e0ebf3",
+      "git_blob_sha1": "fd2651ba5036cf2455bf925dcd85364894d55726"
+    },
+    "admission": {
+      "repository": "grandchallenge/gcl-standards",
+      "path": "admissions/GCL-GHOS-00-0.1.1.json",
+      "commit_sha": "5c4e73e55d362a5198b9076ead694909a5e0ebf3",
+      "git_blob_sha1": "ed51ff1245bfa89a9f4d995ab52f8a19fe2d37f2"
+    },
+    "programme_adoption": {
+      "repository": "grandchallenge/gcl-standards",
+      "path": "programme-adoption/MATH-PROGRAMME.yaml",
+      "commit_sha": "c39aab2bfbb2725accd18d69a0daea7fe96a0eee",
+      "git_blob_sha1": "11ba41b241e4860e93a024436b716a930305c9df"
+    },
+    "github_profile": {
+      "repository": "grandchallenge/.github",
+      "path": "profile/README.md",
+      "commit_sha": "a69c5c8b8091809e35b0afffd0456428ca195386",
+      "git_blob_sha1": "bebf754a779213c7b2f214dac3152af85f443170"
+    }
+  },
+  "claim_boundaries": {
+    "constitutional_claim_authorized": false,
+    "organization_wide_conformance_authorized": false,
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "production_claim_authorized": false,
+    "novelty_claim_authorized": false,
+    "deployment_claim_authorized": false,
+    "commercial_claim_authorized": false
+  }
+}

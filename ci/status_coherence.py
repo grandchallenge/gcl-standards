@@ -4,7 +4,9 @@ import copy
 import json
 from pathlib import Path
 import re
+import subprocess
 import sys
+import tempfile
 from typing import Any, Mapping
 
 import jsonschema
@@ -15,11 +17,28 @@ CI_DIR = Path(__file__).resolve().parent
 if str(CI_DIR) not in sys.path:
     sys.path.insert(0, str(CI_DIR))
 
-from git_content import git_blob_sha1_at_commit, git_bytes_at_commit  # noqa: E402
+from git_content import (  # noqa: E402
+    git_blob_sha1,
+    git_blob_sha1_at_commit,
+    git_bytes_at_commit,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_DIR = ROOT / "schemas"
+CURRENT_STATUS_PATH = ROOT / "status" / "GCL-GHOS-00-current.json"
+COHERENCE_RECEIPT_PATH = (
+    ROOT
+    / "evidence"
+    / "coherence-reviews"
+    / "GCL-STATUS-COHERENCE-001-coherence.json"
+)
+REVIEW_RECEIPT_PATH = (
+    ROOT
+    / "evidence"
+    / "coherence-reviews"
+    / "GCL-STATUS-COHERENCE-001-b39b2f3fab12.json"
+)
 
 
 class StatusCoherenceError(ValueError):
@@ -192,12 +211,15 @@ def validate_descriptive_evidence(
 
     public_profile = _text(evidence_contents, "github_profile")
     required_profile_assertions = (
-        "`GI-AMEND-0001`: effective",
-        "`GCL-GHOS-00` `0.1.1`: admitted",
-        "`MATH-PROGRAMME` adoption: active",
-        "GitHub remains operational and evidentiary only",
+        r"`GI-AMEND-0001`(?::| is) effective",
+        r"`GCL-GHOS-00` `0\.1\.1`.*(?:: |is (?:the )?)admitted",
+        r"(?:`MATH-PROGRAMME` adoption: active|MATH-PROGRAMME actively adopts)",
+        r"GitHub (?:remains\s+|is our\s+)?operational and evidentiary",
     )
-    if not all(value in public_profile for value in required_profile_assertions):
+    if not all(
+        re.search(pattern, public_profile, flags=re.IGNORECASE)
+        for pattern in required_profile_assertions
+    ):
         raise StatusCoherenceError("public profile does not project exact current status")
     if re.search(
         r"GI-AMEND-0001.*proposed|GCL-GHOS-00.*candidate|adoption.*not_started",
@@ -334,6 +356,131 @@ def validate_projection(
         raise StatusCoherenceError("current-status projection widens prohibited authority")
 
 
+def validate_coherence_receipt(
+    receipt: dict[str, Any], projection: dict[str, Any], *, root: Path = ROOT
+) -> None:
+    schema = load_json(root / "schemas" / "coherence_receipt.schema.json")
+    jsonschema.Draft202012Validator.check_schema(schema)
+    jsonschema.validate(
+        receipt,
+        schema,
+        cls=jsonschema.Draft202012Validator,
+        format_checker=jsonschema.FormatChecker(),
+    )
+
+    projection_path = root / receipt["current_status_projection"]["path"]
+    if git_blob_sha1(projection_path, root=root) != receipt[
+        "current_status_projection"
+    ]["git_blob_sha1"]:
+        raise StatusCoherenceError("coherence receipt projection Git blob drift")
+
+    expected_merges = {
+        "gcl_integration": projection["selected_admission"]["admission_commit_sha"],
+        "gcl_adoption": projection["selected_programme_adoption"]["commit_sha"],
+        "intellect_projection": projection["constitutional"]["schedule_commit_sha"],
+        "github_profile": projection["public_profile"]["commit_sha"],
+    }
+    if receipt["protected_merges"] != expected_merges:
+        raise StatusCoherenceError("coherence receipt protected-merge binding drift")
+    if receipt["claim_boundaries"] != projection["claim_boundaries"]:
+        raise StatusCoherenceError("coherence receipt claim-boundary drift")
+
+    review_receipt = load_json(
+        root
+        / "evidence"
+        / "coherence-reviews"
+        / "GCL-STATUS-COHERENCE-001-b39b2f3fab12.json"
+    )
+    subjects = {
+        item["repository"]: item["head_sha"]
+        for item in review_receipt.get("subjects", [])
+    }
+    expected_subjects = {
+        "grandchallenge/INTELLECT": receipt["reviewed_source_heads"]["intellect"],
+        "grandchallenge/gcl-standards": receipt["reviewed_source_heads"][
+            "gcl_standards"
+        ],
+    }
+    if review_receipt.get("status") != "complete" or subjects != expected_subjects:
+        raise StatusCoherenceError("coherence receipt reviewed-source binding drift")
+    if review_receipt.get("packet_sha256") != receipt["review_packet"][
+        "packet_sha256"
+    ]:
+        raise StatusCoherenceError("coherence receipt packet binding drift")
+    steward_records = [
+        item
+        for item in review_receipt.get("signoffs", [])
+        if item.get("office") == "human_steward"
+    ]
+    if len(steward_records) != 1 or steward_records[0].get(
+        "attestation_record"
+    ) != receipt["review_packet"]["steward_authorization_url"]:
+        raise StatusCoherenceError("coherence receipt Steward authorization drift")
+
+
+def _run_git(*arguments: str, cwd: Path | None = None) -> None:
+    try:
+        subprocess.run(
+            ["git", *arguments],
+            cwd=cwd,
+            check=True,
+            capture_output=True,
+        )
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise StatusCoherenceError(
+            f"cannot fetch exact protected evidence: {' '.join(arguments)}"
+        ) from exc
+
+
+def _fetch_exact_repository(
+    destination: Path, repository: str, commits: set[str]
+) -> None:
+    destination.mkdir(parents=True)
+    _run_git("init", "--bare", "--quiet", cwd=destination)
+    remote = f"https://github.com/{repository}.git"
+    for commit in sorted(commits):
+        _run_git(
+            "fetch",
+            "--quiet",
+            "--no-tags",
+            "--depth=1",
+            remote,
+            commit,
+            cwd=destination,
+        )
+
+
+def validate_current_status(*, root: Path = ROOT) -> None:
+    projection = load_json(root / "status" / "GCL-GHOS-00-current.json")
+    receipt = load_json(
+        root
+        / "evidence"
+        / "coherence-reviews"
+        / "GCL-STATUS-COHERENCE-001-coherence.json"
+    )
+    commits_by_repository: dict[str, set[str]] = {}
+    for source in projection["descriptive_evidence"].values():
+        commits_by_repository.setdefault(source["repository"], set()).add(
+            source["commit_sha"]
+        )
+
+    with tempfile.TemporaryDirectory(prefix="gcl-status-coherence-") as temporary:
+        temporary_root = Path(temporary)
+        repository_roots = {"grandchallenge/gcl-standards": root}
+        for repository, commits in commits_by_repository.items():
+            if repository == "grandchallenge/gcl-standards":
+                continue
+            destination = temporary_root / repository.split("/", maxsplit=1)[1]
+            _fetch_exact_repository(destination, repository, commits)
+            repository_roots[repository] = destination
+        validate_projection(
+            projection,
+            root=root,
+            repository_roots=repository_roots,
+        )
+    validate_coherence_receipt(receipt, projection, root=root)
+
+
 def validate_schemas(*, root: Path = ROOT) -> None:
     for name in (
         "standard_successor_lineage.schema.json",
@@ -347,4 +494,5 @@ def validate_schemas(*, root: Path = ROOT) -> None:
 
 if __name__ == "__main__":
     validate_schemas()
-    print("status coherence schemas validated")
+    validate_current_status()
+    print("status coherence schemas and exact protected records validated")
