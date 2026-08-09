@@ -1,0 +1,728 @@
+{
+  "$schema": "../schemas/optimality_scorecard.schema.json",
+  "claim_boundaries": {
+    "certification_claim_authorized": false,
+    "commercial_claim_authorized": false,
+    "deployment_claim_authorized": false,
+    "mathematical_claim_authorized": false,
+    "novelty_claim_authorized": false,
+    "organization_wide_conformance_authorized": false,
+    "production_claim_authorized": false
+  },
+  "deviations": [
+    {
+      "compensating_control": "Report unknown; do not coerce missing evidence to zero.",
+      "evidence": [
+        "workflow-run:31298375582"
+      ],
+      "expires_at": "2026-08-23T06:12:50Z",
+      "id": "GCL-OPT-UNKNOWN-STRATEGIC-LANES-IN-PROGRESS",
+      "next_review": "2026-08-16T06:12:50Z",
+      "owner": "fyremael"
+    },
+    {
+      "compensating_control": "Report unknown; do not coerce missing evidence to zero.",
+      "evidence": [
+        "workflow-run:31298375582"
+      ],
+      "expires_at": "2026-08-23T06:12:50Z",
+      "id": "GCL-OPT-UNKNOWN-ACTIVE-ISSUES-WITHOUT-FINITE-NEXT-OBLIGATION",
+      "next_review": "2026-08-16T06:12:50Z",
+      "owner": "fyremael"
+    },
+    {
+      "compensating_control": "Report unknown; do not coerce missing evidence to zero.",
+      "evidence": [
+        "workflow-run:31298375582"
+      ],
+      "expires_at": "2026-08-23T06:12:50Z",
+      "id": "GCL-OPT-UNKNOWN-HANDOFFS-LACKING-EXACT-IDENTITIES",
+      "next_review": "2026-08-16T06:12:50Z",
+      "owner": "fyremael"
+    }
+  ],
+  "generated_at": "2026-08-09T06:12:50Z",
+  "generator": {
+    "app_slug": "gcl-council-clerk",
+    "repository": "grandchallenge/.github",
+    "run_id": "31298375582",
+    "workflow": ".github/workflows/weekly-optimality-scorecard.yml"
+  },
+  "measurement_window": {
+    "end": "2026-08-09T06:12:50Z",
+    "start": "2026-08-02T06:12:50Z"
+  },
+  "metrics": {
+    "active_issues_without_finite_next_obligation": {
+      "evidence_references": [
+        "workflow-run:31298375582"
+      ],
+      "exact_source_heads": [
+        {
+          "commit_sha": "343d739099ed5d120b2dd6f714e615e024754f2f",
+          "repository": "grandchallenge/.github"
+        },
+        {
+          "commit_sha": "afb367f84454d18a646b13832b112365b7ca56c0",
+          "repository": "grandchallenge/AETHER"
+        },
+        {
+          "commit_sha": "9b6588523aad534797ad46202c357d1be25260b5",
+          "repository": "grandchallenge/gcl-standards"
+        },
+        {
+          "commit_sha": "cf0b6c0e282d8ce15c5f88484ed4fb65626f684d",
+          "repository": "grandchallenge/GLOSS"
+        },
+        {
+          "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+          "repository": "grandchallenge/INTELLECT"
+        },
+        {
+          "commit_sha": "138a564e38a62ce545e8d47d86a97628463aced4",
+          "repository": "grandchallenge/lean-action"
+        },
+        {
+          "commit_sha": "4d8cd462f2836349704b4325766bcff679574404",
+          "repository": "grandchallenge/MATH-PROGRAMME"
+        },
+        {
+          "commit_sha": "cd69013cf55d4ee96539d28ee27eadef64cca06f",
+          "repository": "grandchallenge/MATHCERT"
+        },
+        {
+          "commit_sha": "5978b5f707b33fee662fbff5464da50b0db5d36e",
+          "repository": "grandchallenge/MATHFORGE"
+        },
+        {
+          "commit_sha": "66d54d375ae4dfc148888325b6093818669e7c02",
+          "repository": "grandchallenge/MATHSOLVE"
+        },
+        {
+          "commit_sha": "2a6fb6f190e52d23a9c65b710d82f9d4527bbe71",
+          "repository": "grandchallenge/MODULUS"
+        },
+        {
+          "commit_sha": "db0783a61604a0931479770dfb0c3941cc51e5ff",
+          "repository": "grandchallenge/QUANTUM-TECHNOLOGIES"
+        },
+        {
+          "commit_sha": "1976f492c26a307fdc9c381f8e86cd26932ed1ca",
+          "repository": "grandchallenge/upload-pages-artifact"
+        }
+      ],
+      "exclusions": [],
+      "measurement_window": {
+        "end": "2026-08-09T06:12:50Z",
+        "start": "2026-08-02T06:12:50Z"
+      },
+      "status": "unknown",
+      "target": {
+        "operator": "eq",
+        "value": 0
+      },
+      "unit": "issues",
+      "unknown": {
+        "deviation_id": "GCL-OPT-UNKNOWN-ACTIVE-ISSUES-WITHOUT-FINITE-NEXT-OBLIGATION",
+        "reason": "authoritative registry is deferred to revised phases 3-6"
+      }
+    },
+    "github_inferred_mathematical_claims": {
+      "evidence_references": [
+        "workflow-run:31298375582"
+      ],
+      "exact_source_heads": [
+        {
+          "commit_sha": "343d739099ed5d120b2dd6f714e615e024754f2f",
+          "repository": "grandchallenge/.github"
+        },
+        {
+          "commit_sha": "afb367f84454d18a646b13832b112365b7ca56c0",
+          "repository": "grandchallenge/AETHER"
+        },
+        {
+          "commit_sha": "9b6588523aad534797ad46202c357d1be25260b5",
+          "repository": "grandchallenge/gcl-standards"
+        },
+        {
+          "commit_sha": "cf0b6c0e282d8ce15c5f88484ed4fb65626f684d",
+          "repository": "grandchallenge/GLOSS"
+        },
+        {
+          "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+          "repository": "grandchallenge/INTELLECT"
+        },
+        {
+          "commit_sha": "138a564e38a62ce545e8d47d86a97628463aced4",
+          "repository": "grandchallenge/lean-action"
+        },
+        {
+          "commit_sha": "4d8cd462f2836349704b4325766bcff679574404",
+          "repository": "grandchallenge/MATH-PROGRAMME"
+        },
+        {
+          "commit_sha": "cd69013cf55d4ee96539d28ee27eadef64cca06f",
+          "repository": "grandchallenge/MATHCERT"
+        },
+        {
+          "commit_sha": "5978b5f707b33fee662fbff5464da50b0db5d36e",
+          "repository": "grandchallenge/MATHFORGE"
+        },
+        {
+          "commit_sha": "66d54d375ae4dfc148888325b6093818669e7c02",
+          "repository": "grandchallenge/MATHSOLVE"
+        },
+        {
+          "commit_sha": "2a6fb6f190e52d23a9c65b710d82f9d4527bbe71",
+          "repository": "grandchallenge/MODULUS"
+        },
+        {
+          "commit_sha": "db0783a61604a0931479770dfb0c3941cc51e5ff",
+          "repository": "grandchallenge/QUANTUM-TECHNOLOGIES"
+        },
+        {
+          "commit_sha": "1976f492c26a307fdc9c381f8e86cd26932ed1ca",
+          "repository": "grandchallenge/upload-pages-artifact"
+        }
+      ],
+      "exclusions": [
+        "zero observations do not imply global mathematical correctness"
+      ],
+      "measurement_window": {
+        "end": "2026-08-09T06:12:50Z",
+        "start": "2026-08-02T06:12:50Z"
+      },
+      "status": "observed",
+      "target": {
+        "operator": "eq",
+        "value": 0
+      },
+      "unit": "validated_violations",
+      "value": 0.0
+    },
+    "handoffs_lacking_exact_identities": {
+      "evidence_references": [
+        "workflow-run:31298375582"
+      ],
+      "exact_source_heads": [
+        {
+          "commit_sha": "343d739099ed5d120b2dd6f714e615e024754f2f",
+          "repository": "grandchallenge/.github"
+        },
+        {
+          "commit_sha": "afb367f84454d18a646b13832b112365b7ca56c0",
+          "repository": "grandchallenge/AETHER"
+        },
+        {
+          "commit_sha": "9b6588523aad534797ad46202c357d1be25260b5",
+          "repository": "grandchallenge/gcl-standards"
+        },
+        {
+          "commit_sha": "cf0b6c0e282d8ce15c5f88484ed4fb65626f684d",
+          "repository": "grandchallenge/GLOSS"
+        },
+        {
+          "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+          "repository": "grandchallenge/INTELLECT"
+        },
+        {
+          "commit_sha": "138a564e38a62ce545e8d47d86a97628463aced4",
+          "repository": "grandchallenge/lean-action"
+        },
+        {
+          "commit_sha": "4d8cd462f2836349704b4325766bcff679574404",
+          "repository": "grandchallenge/MATH-PROGRAMME"
+        },
+        {
+          "commit_sha": "cd69013cf55d4ee96539d28ee27eadef64cca06f",
+          "repository": "grandchallenge/MATHCERT"
+        },
+        {
+          "commit_sha": "5978b5f707b33fee662fbff5464da50b0db5d36e",
+          "repository": "grandchallenge/MATHFORGE"
+        },
+        {
+          "commit_sha": "66d54d375ae4dfc148888325b6093818669e7c02",
+          "repository": "grandchallenge/MATHSOLVE"
+        },
+        {
+          "commit_sha": "2a6fb6f190e52d23a9c65b710d82f9d4527bbe71",
+          "repository": "grandchallenge/MODULUS"
+        },
+        {
+          "commit_sha": "db0783a61604a0931479770dfb0c3941cc51e5ff",
+          "repository": "grandchallenge/QUANTUM-TECHNOLOGIES"
+        },
+        {
+          "commit_sha": "1976f492c26a307fdc9c381f8e86cd26932ed1ca",
+          "repository": "grandchallenge/upload-pages-artifact"
+        }
+      ],
+      "exclusions": [],
+      "measurement_window": {
+        "end": "2026-08-09T06:12:50Z",
+        "start": "2026-08-02T06:12:50Z"
+      },
+      "status": "unknown",
+      "target": {
+        "operator": "eq",
+        "value": 0
+      },
+      "unit": "handoffs",
+      "unknown": {
+        "deviation_id": "GCL-OPT-UNKNOWN-HANDOFFS-LACKING-EXACT-IDENTITIES",
+        "reason": "authoritative registry is deferred to revised phases 3-6"
+      }
+    },
+    "human_actions_per_governed_decision": {
+      "evidence_references": [
+        "workflow-run:31298375582"
+      ],
+      "exact_source_heads": [
+        {
+          "commit_sha": "343d739099ed5d120b2dd6f714e615e024754f2f",
+          "repository": "grandchallenge/.github"
+        },
+        {
+          "commit_sha": "afb367f84454d18a646b13832b112365b7ca56c0",
+          "repository": "grandchallenge/AETHER"
+        },
+        {
+          "commit_sha": "9b6588523aad534797ad46202c357d1be25260b5",
+          "repository": "grandchallenge/gcl-standards"
+        },
+        {
+          "commit_sha": "cf0b6c0e282d8ce15c5f88484ed4fb65626f684d",
+          "repository": "grandchallenge/GLOSS"
+        },
+        {
+          "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+          "repository": "grandchallenge/INTELLECT"
+        },
+        {
+          "commit_sha": "138a564e38a62ce545e8d47d86a97628463aced4",
+          "repository": "grandchallenge/lean-action"
+        },
+        {
+          "commit_sha": "4d8cd462f2836349704b4325766bcff679574404",
+          "repository": "grandchallenge/MATH-PROGRAMME"
+        },
+        {
+          "commit_sha": "cd69013cf55d4ee96539d28ee27eadef64cca06f",
+          "repository": "grandchallenge/MATHCERT"
+        },
+        {
+          "commit_sha": "5978b5f707b33fee662fbff5464da50b0db5d36e",
+          "repository": "grandchallenge/MATHFORGE"
+        },
+        {
+          "commit_sha": "66d54d375ae4dfc148888325b6093818669e7c02",
+          "repository": "grandchallenge/MATHSOLVE"
+        },
+        {
+          "commit_sha": "2a6fb6f190e52d23a9c65b710d82f9d4527bbe71",
+          "repository": "grandchallenge/MODULUS"
+        },
+        {
+          "commit_sha": "db0783a61604a0931479770dfb0c3941cc51e5ff",
+          "repository": "grandchallenge/QUANTUM-TECHNOLOGIES"
+        },
+        {
+          "commit_sha": "1976f492c26a307fdc9c381f8e86cd26932ed1ca",
+          "repository": "grandchallenge/upload-pages-artifact"
+        }
+      ],
+      "exclusions": [
+        "merge clicks",
+        "2FA setup",
+        "account recovery"
+      ],
+      "measurement_window": {
+        "end": "2026-08-09T06:12:50Z",
+        "start": "2026-08-02T06:12:50Z"
+      },
+      "status": "derived",
+      "target": {
+        "operator": "eq",
+        "value": 1
+      },
+      "unit": "actions_per_decision",
+      "value": 1
+    },
+    "median_pr_decision_time_hours": {
+      "evidence_references": [
+        "workflow-run:31298375582"
+      ],
+      "exact_source_heads": [
+        {
+          "commit_sha": "343d739099ed5d120b2dd6f714e615e024754f2f",
+          "repository": "grandchallenge/.github"
+        },
+        {
+          "commit_sha": "afb367f84454d18a646b13832b112365b7ca56c0",
+          "repository": "grandchallenge/AETHER"
+        },
+        {
+          "commit_sha": "9b6588523aad534797ad46202c357d1be25260b5",
+          "repository": "grandchallenge/gcl-standards"
+        },
+        {
+          "commit_sha": "cf0b6c0e282d8ce15c5f88484ed4fb65626f684d",
+          "repository": "grandchallenge/GLOSS"
+        },
+        {
+          "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+          "repository": "grandchallenge/INTELLECT"
+        },
+        {
+          "commit_sha": "138a564e38a62ce545e8d47d86a97628463aced4",
+          "repository": "grandchallenge/lean-action"
+        },
+        {
+          "commit_sha": "4d8cd462f2836349704b4325766bcff679574404",
+          "repository": "grandchallenge/MATH-PROGRAMME"
+        },
+        {
+          "commit_sha": "cd69013cf55d4ee96539d28ee27eadef64cca06f",
+          "repository": "grandchallenge/MATHCERT"
+        },
+        {
+          "commit_sha": "5978b5f707b33fee662fbff5464da50b0db5d36e",
+          "repository": "grandchallenge/MATHFORGE"
+        },
+        {
+          "commit_sha": "66d54d375ae4dfc148888325b6093818669e7c02",
+          "repository": "grandchallenge/MATHSOLVE"
+        },
+        {
+          "commit_sha": "2a6fb6f190e52d23a9c65b710d82f9d4527bbe71",
+          "repository": "grandchallenge/MODULUS"
+        },
+        {
+          "commit_sha": "db0783a61604a0931479770dfb0c3941cc51e5ff",
+          "repository": "grandchallenge/QUANTUM-TECHNOLOGIES"
+        },
+        {
+          "commit_sha": "1976f492c26a307fdc9c381f8e86cd26932ed1ca",
+          "repository": "grandchallenge/upload-pages-artifact"
+        }
+      ],
+      "exclusions": [
+        "bots",
+        "controlled external dependency with linked blocker"
+      ],
+      "measurement_window": {
+        "end": "2026-08-09T06:12:50Z",
+        "start": "2026-08-02T06:12:50Z"
+      },
+      "status": "derived",
+      "target": {
+        "operator": "lt",
+        "value": 48
+      },
+      "unit": "hours",
+      "value": 0.29527777777777775
+    },
+    "reproducible_governed_lifecycle": {
+      "evidence_references": [
+        "workflow-run:31298375582"
+      ],
+      "exact_source_heads": [
+        {
+          "commit_sha": "343d739099ed5d120b2dd6f714e615e024754f2f",
+          "repository": "grandchallenge/.github"
+        },
+        {
+          "commit_sha": "afb367f84454d18a646b13832b112365b7ca56c0",
+          "repository": "grandchallenge/AETHER"
+        },
+        {
+          "commit_sha": "9b6588523aad534797ad46202c357d1be25260b5",
+          "repository": "grandchallenge/gcl-standards"
+        },
+        {
+          "commit_sha": "cf0b6c0e282d8ce15c5f88484ed4fb65626f684d",
+          "repository": "grandchallenge/GLOSS"
+        },
+        {
+          "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+          "repository": "grandchallenge/INTELLECT"
+        },
+        {
+          "commit_sha": "138a564e38a62ce545e8d47d86a97628463aced4",
+          "repository": "grandchallenge/lean-action"
+        },
+        {
+          "commit_sha": "4d8cd462f2836349704b4325766bcff679574404",
+          "repository": "grandchallenge/MATH-PROGRAMME"
+        },
+        {
+          "commit_sha": "cd69013cf55d4ee96539d28ee27eadef64cca06f",
+          "repository": "grandchallenge/MATHCERT"
+        },
+        {
+          "commit_sha": "5978b5f707b33fee662fbff5464da50b0db5d36e",
+          "repository": "grandchallenge/MATHFORGE"
+        },
+        {
+          "commit_sha": "66d54d375ae4dfc148888325b6093818669e7c02",
+          "repository": "grandchallenge/MATHSOLVE"
+        },
+        {
+          "commit_sha": "2a6fb6f190e52d23a9c65b710d82f9d4527bbe71",
+          "repository": "grandchallenge/MODULUS"
+        },
+        {
+          "commit_sha": "db0783a61604a0931479770dfb0c3941cc51e5ff",
+          "repository": "grandchallenge/QUANTUM-TECHNOLOGIES"
+        },
+        {
+          "commit_sha": "1976f492c26a307fdc9c381f8e86cd26932ed1ca",
+          "repository": "grandchallenge/upload-pages-artifact"
+        }
+      ],
+      "exclusions": [],
+      "measurement_window": {
+        "end": "2026-08-09T06:12:50Z",
+        "start": "2026-08-02T06:12:50Z"
+      },
+      "status": "derived",
+      "target": {
+        "operator": "gte",
+        "value": 1
+      },
+      "unit": "admitted_demonstrations",
+      "value": 0.0
+    },
+    "status_contradictions": {
+      "evidence_references": [
+        "https://github.com/grandchallenge/gcl-standards/blob/9b6588523aad534797ad46202c357d1be25260b5/evidence/coherence-reviews/GCL-STATUS-COHERENCE-001-coherence.json"
+      ],
+      "exact_source_heads": [
+        {
+          "commit_sha": "343d739099ed5d120b2dd6f714e615e024754f2f",
+          "repository": "grandchallenge/.github"
+        },
+        {
+          "commit_sha": "afb367f84454d18a646b13832b112365b7ca56c0",
+          "repository": "grandchallenge/AETHER"
+        },
+        {
+          "commit_sha": "9b6588523aad534797ad46202c357d1be25260b5",
+          "repository": "grandchallenge/gcl-standards"
+        },
+        {
+          "commit_sha": "cf0b6c0e282d8ce15c5f88484ed4fb65626f684d",
+          "repository": "grandchallenge/GLOSS"
+        },
+        {
+          "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+          "repository": "grandchallenge/INTELLECT"
+        },
+        {
+          "commit_sha": "138a564e38a62ce545e8d47d86a97628463aced4",
+          "repository": "grandchallenge/lean-action"
+        },
+        {
+          "commit_sha": "4d8cd462f2836349704b4325766bcff679574404",
+          "repository": "grandchallenge/MATH-PROGRAMME"
+        },
+        {
+          "commit_sha": "cd69013cf55d4ee96539d28ee27eadef64cca06f",
+          "repository": "grandchallenge/MATHCERT"
+        },
+        {
+          "commit_sha": "5978b5f707b33fee662fbff5464da50b0db5d36e",
+          "repository": "grandchallenge/MATHFORGE"
+        },
+        {
+          "commit_sha": "66d54d375ae4dfc148888325b6093818669e7c02",
+          "repository": "grandchallenge/MATHSOLVE"
+        },
+        {
+          "commit_sha": "2a6fb6f190e52d23a9c65b710d82f9d4527bbe71",
+          "repository": "grandchallenge/MODULUS"
+        },
+        {
+          "commit_sha": "db0783a61604a0931479770dfb0c3941cc51e5ff",
+          "repository": "grandchallenge/QUANTUM-TECHNOLOGIES"
+        },
+        {
+          "commit_sha": "1976f492c26a307fdc9c381f8e86cd26932ed1ca",
+          "repository": "grandchallenge/upload-pages-artifact"
+        }
+      ],
+      "exclusions": [],
+      "measurement_window": {
+        "end": "2026-08-09T06:12:50Z",
+        "start": "2026-08-02T06:12:50Z"
+      },
+      "status": "derived",
+      "target": {
+        "operator": "eq",
+        "value": 0
+      },
+      "unit": "contradictions",
+      "value": 0.0
+    },
+    "strategic_lanes_in_progress": {
+      "evidence_references": [
+        "workflow-run:31298375582"
+      ],
+      "exact_source_heads": [
+        {
+          "commit_sha": "343d739099ed5d120b2dd6f714e615e024754f2f",
+          "repository": "grandchallenge/.github"
+        },
+        {
+          "commit_sha": "afb367f84454d18a646b13832b112365b7ca56c0",
+          "repository": "grandchallenge/AETHER"
+        },
+        {
+          "commit_sha": "9b6588523aad534797ad46202c357d1be25260b5",
+          "repository": "grandchallenge/gcl-standards"
+        },
+        {
+          "commit_sha": "cf0b6c0e282d8ce15c5f88484ed4fb65626f684d",
+          "repository": "grandchallenge/GLOSS"
+        },
+        {
+          "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+          "repository": "grandchallenge/INTELLECT"
+        },
+        {
+          "commit_sha": "138a564e38a62ce545e8d47d86a97628463aced4",
+          "repository": "grandchallenge/lean-action"
+        },
+        {
+          "commit_sha": "4d8cd462f2836349704b4325766bcff679574404",
+          "repository": "grandchallenge/MATH-PROGRAMME"
+        },
+        {
+          "commit_sha": "cd69013cf55d4ee96539d28ee27eadef64cca06f",
+          "repository": "grandchallenge/MATHCERT"
+        },
+        {
+          "commit_sha": "5978b5f707b33fee662fbff5464da50b0db5d36e",
+          "repository": "grandchallenge/MATHFORGE"
+        },
+        {
+          "commit_sha": "66d54d375ae4dfc148888325b6093818669e7c02",
+          "repository": "grandchallenge/MATHSOLVE"
+        },
+        {
+          "commit_sha": "2a6fb6f190e52d23a9c65b710d82f9d4527bbe71",
+          "repository": "grandchallenge/MODULUS"
+        },
+        {
+          "commit_sha": "db0783a61604a0931479770dfb0c3941cc51e5ff",
+          "repository": "grandchallenge/QUANTUM-TECHNOLOGIES"
+        },
+        {
+          "commit_sha": "1976f492c26a307fdc9c381f8e86cd26932ed1ca",
+          "repository": "grandchallenge/upload-pages-artifact"
+        }
+      ],
+      "exclusions": [],
+      "measurement_window": {
+        "end": "2026-08-09T06:12:50Z",
+        "start": "2026-08-02T06:12:50Z"
+      },
+      "status": "unknown",
+      "target": {
+        "operator": "lte",
+        "value": 3
+      },
+      "unit": "lanes",
+      "unknown": {
+        "deviation_id": "GCL-OPT-UNKNOWN-STRATEGIC-LANES-IN-PROGRESS",
+        "reason": "authoritative registry is deferred to revised phases 3-6"
+      }
+    },
+    "unprotected_default_branches": {
+      "evidence_references": [
+        "https://github.com/grandchallenge/.github/settings/rules/17137624",
+        "https://github.com/grandchallenge/AETHER/settings/rules/20600649",
+        "https://github.com/grandchallenge/gcl-standards/settings/rules/19962512",
+        "https://github.com/grandchallenge/GLOSS/settings/rules/19964070",
+        "https://github.com/grandchallenge/INTELLECT/settings/rules/19964077",
+        "https://github.com/grandchallenge/lean-action/settings/rules/19965519",
+        "https://github.com/grandchallenge/MATH-PROGRAMME/settings/rules/17137629",
+        "https://github.com/grandchallenge/MATHCERT/settings/rules/17137628",
+        "https://github.com/grandchallenge/MATHFORGE/settings/rules/17137626",
+        "https://github.com/grandchallenge/MATHSOLVE/settings/rules/17137627",
+        "https://github.com/grandchallenge/MODULUS/settings/rules/20266757",
+        "https://github.com/grandchallenge/QUANTUM-TECHNOLOGIES/settings/rules/20106953",
+        "https://github.com/grandchallenge/upload-pages-artifact/settings/rules/19965833"
+      ],
+      "exact_source_heads": [
+        {
+          "commit_sha": "343d739099ed5d120b2dd6f714e615e024754f2f",
+          "repository": "grandchallenge/.github"
+        },
+        {
+          "commit_sha": "afb367f84454d18a646b13832b112365b7ca56c0",
+          "repository": "grandchallenge/AETHER"
+        },
+        {
+          "commit_sha": "9b6588523aad534797ad46202c357d1be25260b5",
+          "repository": "grandchallenge/gcl-standards"
+        },
+        {
+          "commit_sha": "cf0b6c0e282d8ce15c5f88484ed4fb65626f684d",
+          "repository": "grandchallenge/GLOSS"
+        },
+        {
+          "commit_sha": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
+          "repository": "grandchallenge/INTELLECT"
+        },
+        {
+          "commit_sha": "138a564e38a62ce545e8d47d86a97628463aced4",
+          "repository": "grandchallenge/lean-action"
+        },
+        {
+          "commit_sha": "4d8cd462f2836349704b4325766bcff679574404",
+          "repository": "grandchallenge/MATH-PROGRAMME"
+        },
+        {
+          "commit_sha": "cd69013cf55d4ee96539d28ee27eadef64cca06f",
+          "repository": "grandchallenge/MATHCERT"
+        },
+        {
+          "commit_sha": "5978b5f707b33fee662fbff5464da50b0db5d36e",
+          "repository": "grandchallenge/MATHFORGE"
+        },
+        {
+          "commit_sha": "66d54d375ae4dfc148888325b6093818669e7c02",
+          "repository": "grandchallenge/MATHSOLVE"
+        },
+        {
+          "commit_sha": "2a6fb6f190e52d23a9c65b710d82f9d4527bbe71",
+          "repository": "grandchallenge/MODULUS"
+        },
+        {
+          "commit_sha": "db0783a61604a0931479770dfb0c3941cc51e5ff",
+          "repository": "grandchallenge/QUANTUM-TECHNOLOGIES"
+        },
+        {
+          "commit_sha": "1976f492c26a307fdc9c381f8e86cd26932ed1ca",
+          "repository": "grandchallenge/upload-pages-artifact"
+        }
+      ],
+      "exclusions": [],
+      "measurement_window": {
+        "end": "2026-08-09T06:12:50Z",
+        "start": "2026-08-02T06:12:50Z"
+      },
+      "status": "observed",
+      "target": {
+        "operator": "eq",
+        "value": 0
+      },
+      "unit": "repositories",
+      "value": 0
+    }
+  },
+  "record_id": "GCL-OPT-SCORECARD-2026-W32",
+  "schema_version": "1.0.0"
+}
