@@ -4,22 +4,13 @@
   "title": "Selected current GCL-GHOS admission",
   "type": "object",
   "additionalProperties": false,
-  "required": ["operation_id", "path", "version", "status", "front_matter_status", "commit_sha", "next_gate"],
+  "required": ["operation_id", "path", "version", "status", "front_matter_status", "admission_commit_sha"],
   "properties": {
     "operation_id": {"type": "string", "minLength": 1},
     "path": {"const": "admissions/GCL-GHOS-00-0.1.1.json"},
     "version": {"const": "0.1.1"},
     "status": {"const": "admitted"},
     "front_matter_status": {"const": "admitted"},
-    "commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
-    "next_gate": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["operation", "status"],
-      "properties": {
-        "operation": {"const": "MATH-PROGRAMME adoption"},
-        "status": {"const": "complete"}
-      }
-    }
+    "admission_commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
   }
 }

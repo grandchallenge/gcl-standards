@@ -324,9 +324,9 @@ def validate() -> None:
     ).read_text(encoding="utf-8")
     required_sequence = [
         "**Status:** Accepted",
-        "**Documentary successor:** `GCL-GHOS-00` `0.1.1`; selection pending exact-packet admission",
+        "**Documentary successor:** `GCL-GHOS-00` `0.1.1`; current selection resolved by exact admission record",
         "ADR-0001 was accepted through the protected `0.1.0` admission lineage",
-        "The `0.1.1` documentary successor becomes the selected current standard only",
+        "Selection of the `0.1.1` documentary successor as the current standard is",
         "MATH-PROGRAMME adoption follows the protected `0.1.1` admission",
         "Admit byte-identical reviewed `0.1.1` source blobs",
     ]
@@ -338,6 +338,7 @@ def validate() -> None:
         "This ADR becomes accepted only after:",
         "Activate `GI-AMEND-0001`",
         "Accept this ADR and admit GCL-GHOS",
+        "selection pending exact-packet admission",
     ]
     for stale in forbidden_sequence:
         if stale in decision:

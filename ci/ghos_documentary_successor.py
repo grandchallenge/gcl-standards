@@ -16,6 +16,7 @@ from git_content import git_blob_sha1  # noqa: E402
 HISTORICAL_STANDARD = ROOT / "standards" / "history" / "GCL-GHOS-00-0.1.0.md"
 CURRENT_STANDARD = ROOT / "standards" / "GCL-GHOS-00.md"
 ADR = ROOT / "decisions" / "ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"
+README = ROOT / "README.md"
 EXPECTED_HISTORICAL_BLOB = "b93c57f1fb27bf2a017a4b90719290342424f6d5"
 EXPECTED_NORMATIVE_SHA256 = (
     "c9912acb0aacc186f93655e9e1b7938235954bb9466dcddf923cd601ed7bc2a3"
@@ -38,6 +39,7 @@ def validate(*, root: Path = ROOT) -> None:
     historical = root / "standards" / "history" / "GCL-GHOS-00-0.1.0.md"
     current = root / "standards" / "GCL-GHOS-00.md"
     adr = root / "decisions" / "ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"
+    readme = root / "README.md"
 
     if git_blob_sha1(historical, root=root) != EXPECTED_HISTORICAL_BLOB:
         raise DocumentarySuccessorError("historical 0.1.0 Git blob identity drift")
@@ -61,6 +63,7 @@ def validate(*, root: Path = ROOT) -> None:
             raise DocumentarySuccessorError(f"missing 0.1.1 documentary field: {required}")
 
     adr_text = adr.read_text(encoding="utf-8")
+    readme_text = readme.read_text(encoding="utf-8")
     if "**Status:** Accepted" not in adr_text:
         raise DocumentarySuccessorError("ADR-0001 current status is not accepted")
     if "Human Steward approval is **pending**" in adr_text:
@@ -69,6 +72,7 @@ def validate(*, root: Path = ROOT) -> None:
         "This ADR becomes accepted only after:",
         "Activate `GI-AMEND-0001`",
         "Accept this ADR and admit GCL-GHOS",
+        "selection pending exact-packet admission",
     ):
         if stale_assertion in adr_text:
             raise DocumentarySuccessorError(
@@ -76,6 +80,7 @@ def validate(*, root: Path = ROOT) -> None:
             )
     for required in (
         "ADR-0001 was accepted through the protected `0.1.0` admission lineage",
+        "Selection of the `0.1.1` documentary successor as the current standard is",
         "MATH-PROGRAMME adoption follows the protected `0.1.1` admission",
         "Admit byte-identical reviewed `0.1.1` source blobs",
     ):
@@ -85,6 +90,21 @@ def validate(*, root: Path = ROOT) -> None:
             )
     if "does not itself admit `0.1.1`" not in adr_text:
         raise DocumentarySuccessorError("0.1.1 admission boundary is missing")
+
+    required_readme = (
+        "selected status is\nresolved from its protected admission record. "
+        "Programme adoption is recorded\nseparately against that immutable admission identity."
+    )
+    if required_readme not in readme_text:
+        raise DocumentarySuccessorError("README current-status projection is not time-stable")
+    for stale_assertion in (
+        "prepared for exact-packet",
+        "becomes selected only through",
+    ):
+        if stale_assertion in readme_text:
+            raise DocumentarySuccessorError(
+                f"README retains stale prospective status: {stale_assertion}"
+            )
 
 
 if __name__ == "__main__":

@@ -3,7 +3,7 @@
 **Date:** 2026-07-29  
 **Status:** Accepted
 **Accepted lineage:** `admissions/GCL-GHOS-00-0.1.0.json`
-**Documentary successor:** `GCL-GHOS-00` `0.1.1`; selection pending exact-packet admission
+**Documentary successor:** `GCL-GHOS-00` `0.1.1`; current selection resolved by exact admission record
 **Owner:** Amanuensis with Security and Referee review
 
 ## Context
@@ -52,8 +52,8 @@ ADR-0001 was accepted through the protected `0.1.0` admission lineage after
 `GI-AMEND-0001` became effective. Those completed events are historical
 predecessors, not gates to repeat for this documentary successor.
 
-The `0.1.1` documentary successor becomes the selected current standard only
-after:
+Selection of the `0.1.1` documentary successor as the current standard is
+valid only when its protected admission proves that:
 
 1. one exact source packet binds the corrective INTELLECT and
    `gcl-standards` revisions;

@@ -36,7 +36,7 @@ def canonical_evidence(admission_commit: str = "0" * 40) -> dict[str, bytes]:
             b'{"operation_id":"GCL-GHOS-00-0.1.1-ADMISSION-001",'
             b'"status":"admitted","standard":{"identifier":"GCL-GHOS-00",'
             b'"version":"0.1.1"},"next_gate":{"operation":"MATH-PROGRAMME adoption",'
-            b'"status":"complete"}}\n'
+            b'"status":"not_started"}}\n'
         ),
         "programme_adoption": (
             "programme: grandchallenge/MATH-PROGRAMME\n"
@@ -197,8 +197,7 @@ def canonical_projection(
             "version": "0.1.1",
             "status": "admitted",
             "front_matter_status": "admitted",
-            "commit_sha": admission_commit,
-            "next_gate": {"operation": "MATH-PROGRAMME adoption", "status": "complete"},
+            "admission_commit_sha": admission_commit,
         },
         "selected_programme_adoption": {
             "programme": "grandchallenge/MATH-PROGRAMME",
@@ -340,7 +339,7 @@ class StatusCoherenceTests(unittest.TestCase):
         else:
             for evidence_key in ("gcl_readme", "adr", "standard", "admission"):
                 bind(evidence_key, commit)
-            projection["selected_admission"]["commit_sha"] = commit
+            projection["selected_admission"]["admission_commit_sha"] = commit
             projection["selected_programme_adoption"]["admission_commit_sha"] = commit
             adoption_path = EVIDENCE_COORDINATES["programme_adoption"][1]
             (repository_root / adoption_path).write_bytes(
@@ -364,6 +363,24 @@ class StatusCoherenceTests(unittest.TestCase):
 
     def test_canonical_projection_and_all_schemas_validate(self) -> None:
         MODULE.validate_schemas()
+        self.validate()
+
+    def test_pending_admission_a_then_active_adoption_b_is_coherent(self) -> None:
+        admission_commit = self.projection["selected_admission"]["admission_commit_sha"]
+        adoption_commit = self.projection["selected_programme_adoption"]["commit_sha"]
+        self.assertNotEqual(admission_commit, adoption_commit)
+        evidence_contents = MODULE._resolve_evidence(
+            self.projection["descriptive_evidence"], self.repository_roots
+        )
+        self.assertIn(b'"status":"not_started"', evidence_contents["admission"])
+        self.assertEqual(
+            self.projection["selected_programme_adoption"]["admission_commit_sha"],
+            admission_commit,
+        )
+        self.assertEqual(
+            self.projection["descriptive_assertions"]["admission_adoption_gate_status"],
+            "complete",
+        )
         self.validate()
 
     def test_self_report_cannot_substitute_for_exact_source_content(self) -> None:
@@ -417,7 +434,7 @@ class StatusCoherenceTests(unittest.TestCase):
                 b'{"operation_id":"WRONG","status":"proposed",'
                 b'"standard":{"identifier":"GCL-GHOS-00","version":"9.9.9"},'
                 b'"next_gate":{"operation":"MATH-PROGRAMME adoption",'
-                b'"status":"complete"}}\n'
+                b'"status":"not_started"}}\n'
             ),
         )
         with self.assertRaisesRegex(
@@ -478,7 +495,7 @@ class StatusCoherenceTests(unittest.TestCase):
         invented = "e" * 40
         for key in ("gcl_readme", "adr", "standard", "admission"):
             broken["descriptive_evidence"][key]["commit_sha"] = invented
-        broken["selected_admission"]["commit_sha"] = invented
+        broken["selected_admission"]["admission_commit_sha"] = invented
         broken["selected_programme_adoption"]["admission_commit_sha"] = invented
         with self.assertRaisesRegex(
             MODULE.StatusCoherenceError, "cannot resolve exact Git evidence"
@@ -512,7 +529,7 @@ class StatusCoherenceTests(unittest.TestCase):
 
     def test_active_adoption_with_not_started_gate_is_rejected(self) -> None:
         broken = copy.deepcopy(self.projection)
-        broken["selected_admission"]["next_gate"]["status"] = "not_started"
+        broken["descriptive_assertions"]["admission_adoption_gate_status"] = "not_started"
         with self.assertRaisesRegex(MODULE.StatusCoherenceError, "not_started admission gate"):
             MODULE.validate_projection(broken)
 

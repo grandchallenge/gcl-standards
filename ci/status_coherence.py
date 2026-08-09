@@ -163,8 +163,8 @@ def validate_descriptive_evidence(
         "status": selected_admission["status"],
         "identifier": "GCL-GHOS-00",
         "version": selected_admission["version"],
-        "next_gate_operation": selected_admission["next_gate"]["operation"],
-        "next_gate_status": selected_admission["next_gate"]["status"],
+        "next_gate_operation": "MATH-PROGRAMME adoption",
+        "next_gate_status": "not_started",
     }
     if actual_admission != expected_admission:
         raise StatusCoherenceError(
@@ -249,7 +249,12 @@ def validate_descriptive_evidence(
             status="admitted",
             key="standard",
         ),
-        "admission_adoption_gate_status": admission.get("next_gate", {}).get("status"),
+        "admission_adoption_gate_status": (
+            "complete"
+            if adoption.get("status") == "active"
+            and admission_commit == selected_admission["admission_commit_sha"]
+            else "not_started"
+        ),
         "programme_adoption_status": adoption.get("status"),
         "github_profile_status": "effective_admitted_adopted",
     }
@@ -284,8 +289,7 @@ def validate_projection(
             "admitted selected standard cannot have candidate current front matter"
         )
     if adoption.get("status") == "active" and (
-        admission.get("next_gate", {}).get("status") == "not_started"
-        or assertions.get("admission_adoption_gate_status") == "not_started"
+        assertions.get("admission_adoption_gate_status") == "not_started"
     ):
         raise StatusCoherenceError(
             "active programme adoption cannot have a not_started admission gate"
@@ -304,11 +308,11 @@ def validate_projection(
         format_checker=jsonschema.FormatChecker(),
     )
 
-    if adoption["admission_commit_sha"] != admission["commit_sha"]:
+    if adoption["admission_commit_sha"] != admission["admission_commit_sha"]:
         raise StatusCoherenceError("programme adoption does not bind selected admission")
     evidence = projection["descriptive_evidence"]
     intellect_commit = projection["constitutional"]["schedule_commit_sha"]
-    admission_commit = admission["commit_sha"]
+    admission_commit = admission["admission_commit_sha"]
     adoption_commit = adoption["commit_sha"]
     if any(evidence[key]["commit_sha"] != intellect_commit for key in (
         "schedule", "intellect_readme", "intellect_status_page", "amendment"
