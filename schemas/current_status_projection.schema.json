@@ -45,14 +45,14 @@
       "additionalProperties": false,
       "required": ["intellect_readme", "intellect_status_page", "amendment", "gcl_readme", "adr", "standard", "admission", "programme_adoption"],
       "properties": {
-        "intellect_readme": {"$ref": "#/$defs/sourceEvidence"},
-        "intellect_status_page": {"$ref": "#/$defs/sourceEvidence"},
-        "amendment": {"$ref": "#/$defs/sourceEvidence"},
-        "gcl_readme": {"$ref": "#/$defs/sourceEvidence"},
-        "adr": {"$ref": "#/$defs/sourceEvidence"},
-        "standard": {"$ref": "#/$defs/sourceEvidence"},
-        "admission": {"$ref": "#/$defs/sourceEvidence"},
-        "programme_adoption": {"$ref": "#/$defs/sourceEvidence"}
+        "intellect_readme": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/INTELLECT"}, "path": {"const": "README.md"}}}]},
+        "intellect_status_page": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/INTELLECT"}, "path": {"const": "docs/STATUS.md"}}}]},
+        "amendment": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/INTELLECT"}, "path": {"const": "AMENDMENTS/0001-commentary-and-gcl-ghos.md"}}}]},
+        "gcl_readme": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/gcl-standards"}, "path": {"const": "README.md"}}}]},
+        "adr": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/gcl-standards"}, "path": {"const": "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"}}}]},
+        "standard": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/gcl-standards"}, "path": {"const": "standards/GCL-GHOS-00.md"}}}]},
+        "admission": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/gcl-standards"}, "path": {"const": "admissions/GCL-GHOS-00-0.1.1.json"}}}]},
+        "programme_adoption": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/gcl-standards"}, "path": {"const": "programme-adoption/MATH-PROGRAMME.yaml"}}}]}
       }
     },
     "claim_boundaries": {

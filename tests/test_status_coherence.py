@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import copy
 import importlib.util
+import subprocess
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -28,8 +30,96 @@ def canonical_evidence() -> dict[str, bytes]:
     }
 
 
-def canonical_projection() -> dict[str, object]:
-    admission_commit = "a" * 40
+EVIDENCE_COORDINATES = {
+    "intellect_readme": ("grandchallenge/INTELLECT", "README.md"),
+    "intellect_status_page": ("grandchallenge/INTELLECT", "docs/STATUS.md"),
+    "amendment": (
+        "grandchallenge/INTELLECT",
+        "AMENDMENTS/0001-commentary-and-gcl-ghos.md",
+    ),
+    "gcl_readme": ("grandchallenge/gcl-standards", "README.md"),
+    "adr": (
+        "grandchallenge/gcl-standards",
+        "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md",
+    ),
+    "standard": ("grandchallenge/gcl-standards", "standards/GCL-GHOS-00.md"),
+    "admission": (
+        "grandchallenge/gcl-standards",
+        "admissions/GCL-GHOS-00-0.1.1.json",
+    ),
+    "programme_adoption": (
+        "grandchallenge/gcl-standards",
+        "programme-adoption/MATH-PROGRAMME.yaml",
+    ),
+}
+
+
+def build_evidence_repositories(
+    root: Path,
+) -> tuple[dict[str, Path], dict[str, dict[str, str]]]:
+    contents = canonical_evidence()
+    repository_roots = {
+        "grandchallenge/INTELLECT": root / "INTELLECT",
+        "grandchallenge/gcl-standards": root / "gcl-standards",
+    }
+    for repository, repository_root in repository_roots.items():
+        repository_root.mkdir(parents=True)
+        subprocess.run(["git", "init", "--quiet"], cwd=repository_root, check=True)
+        subprocess.run(
+            ["git", "config", "user.email", "coherence@example.invalid"],
+            cwd=repository_root,
+            check=True,
+        )
+        subprocess.run(
+            ["git", "config", "user.name", "Coherence Test"],
+            cwd=repository_root,
+            check=True,
+        )
+        for key, (item_repository, path) in EVIDENCE_COORDINATES.items():
+            if item_repository != repository:
+                continue
+            target = repository_root / path
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(contents[key])
+        subprocess.run(["git", "add", "."], cwd=repository_root, check=True)
+        subprocess.run(
+            ["git", "commit", "--quiet", "-m", "exact evidence"],
+            cwd=repository_root,
+            check=True,
+        )
+
+    evidence_refs: dict[str, dict[str, str]] = {}
+    for key, (repository, path) in EVIDENCE_COORDINATES.items():
+        repository_root = repository_roots[repository]
+        commit = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=repository_root,
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout.strip()
+        blob = subprocess.run(
+            ["git", "rev-parse", f"HEAD:{path}"],
+            cwd=repository_root,
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout.strip()
+        evidence_refs[key] = {
+            "repository": repository,
+            "path": path,
+            "commit_sha": commit,
+            "git_blob_sha1": blob,
+        }
+    return repository_roots, evidence_refs
+
+
+def canonical_projection(
+    evidence_refs: dict[str, dict[str, str]],
+) -> dict[str, object]:
+    intellect_commit = evidence_refs["amendment"]["commit_sha"]
+    admission_commit = evidence_refs["admission"]["commit_sha"]
+    adoption_commit = evidence_refs["programme_adoption"]["commit_sha"]
     return {
         "$schema": "../schemas/current_status_projection.schema.json",
         "schema_version": "1.0.0",
@@ -37,7 +127,7 @@ def canonical_projection() -> dict[str, object]:
         "constitutional": {
             "repository": "grandchallenge/INTELLECT",
             "schedule_path": "governance/constitutional_authority_schedule.json",
-            "schedule_commit_sha": "b" * 40,
+            "schedule_commit_sha": intellect_commit,
             "amendment": "GI-AMEND-0001",
             "amendment_status": "effective",
             "current_status_authority": "constitutional_status_only",
@@ -63,7 +153,7 @@ def canonical_projection() -> dict[str, object]:
             "path": "programme-adoption/MATH-PROGRAMME.yaml",
             "standard_version": "0.1.1",
             "status": "active",
-            "commit_sha": "c" * 40,
+            "commit_sha": adoption_commit,
             "admission_commit_sha": admission_commit,
         },
         "descriptive_assertions": {
@@ -76,19 +166,7 @@ def canonical_projection() -> dict[str, object]:
             "admission_adoption_gate_status": "complete",
             "programme_adoption_status": "active",
         },
-        "descriptive_evidence": {
-            key: {
-                "repository": (
-                    "grandchallenge/INTELLECT"
-                    if key in {"intellect_readme", "intellect_status_page", "amendment"}
-                    else "grandchallenge/gcl-standards"
-                ),
-                "path": f"evidence/{key}",
-                "commit_sha": "d" * 40,
-                "git_blob_sha1": MODULE.git_blob_sha1(content),
-            }
-            for key, content in canonical_evidence().items()
-        },
+        "descriptive_evidence": copy.deepcopy(evidence_refs),
         "claim_boundaries": {
             "constitutional_claim_authorized": False,
             "organization_wide_conformance_authorized": False,
@@ -148,34 +226,110 @@ def canonical_receipt() -> dict[str, object]:
 
 
 class StatusCoherenceTests(unittest.TestCase):
-    def test_canonical_projection_and_all_schemas_validate(self) -> None:
-        MODULE.validate_schemas()
+    def setUp(self) -> None:
+        self.temporary = tempfile.TemporaryDirectory()
+        self.repository_roots, self.evidence_refs = build_evidence_repositories(
+            Path(self.temporary.name)
+        )
+        self.projection = canonical_projection(self.evidence_refs)
+
+    def tearDown(self) -> None:
+        self.temporary.cleanup()
+
+    def validate(self, projection: dict[str, object] | None = None) -> None:
         MODULE.validate_projection(
-            canonical_projection(), evidence_contents=canonical_evidence()
+            projection or copy.deepcopy(self.projection),
+            repository_roots=self.repository_roots,
         )
 
+    def replace_and_commit(self, key: str, content: bytes) -> dict[str, object]:
+        repository, path = EVIDENCE_COORDINATES[key]
+        repository_root = self.repository_roots[repository]
+        (repository_root / path).write_bytes(content)
+        subprocess.run(["git", "add", path], cwd=repository_root, check=True)
+        subprocess.run(
+            ["git", "commit", "--quiet", "-m", f"mutate {key}"],
+            cwd=repository_root,
+            check=True,
+        )
+        projection = copy.deepcopy(self.projection)
+        commit = subprocess.run(
+            ["git", "rev-parse", "HEAD"], cwd=repository_root, check=True,
+            capture_output=True, text=True,
+        ).stdout.strip()
+        for evidence_key, (item_repository, item_path) in EVIDENCE_COORDINATES.items():
+            if item_repository != repository:
+                continue
+            blob = subprocess.run(
+                ["git", "rev-parse", f"HEAD:{item_path}"], cwd=repository_root,
+                check=True, capture_output=True, text=True,
+            ).stdout.strip()
+            projection["descriptive_evidence"][evidence_key]["commit_sha"] = commit
+            projection["descriptive_evidence"][evidence_key]["git_blob_sha1"] = blob
+        if repository == "grandchallenge/INTELLECT":
+            projection["constitutional"]["schedule_commit_sha"] = commit
+        else:
+            projection["selected_admission"]["commit_sha"] = commit
+            projection["selected_programme_adoption"]["admission_commit_sha"] = commit
+        return projection
+
+    def test_canonical_projection_and_all_schemas_validate(self) -> None:
+        MODULE.validate_schemas()
+        self.validate()
+
     def test_self_report_cannot_substitute_for_exact_source_content(self) -> None:
-        evidence = canonical_evidence()
-        evidence["intellect_status_page"] = b"`GI-AMEND-0001` is proposed.\n"
-        projection = canonical_projection()
-        projection["descriptive_evidence"]["intellect_status_page"][
-            "git_blob_sha1"
-        ] = MODULE.git_blob_sha1(evidence["intellect_status_page"])
+        projection = self.replace_and_commit(
+            "intellect_status_page", b"`GI-AMEND-0001` is proposed.\n"
+        )
         with self.assertRaisesRegex(
             MODULE.StatusCoherenceError,
-            "descriptive assertions do not match exact source blobs",
+            "missing governed status assertion: intellect_status_page",
         ):
-            MODULE.validate_projection(projection, evidence_contents=evidence)
+            self.validate(projection)
+
+    def test_effective_and_proposed_in_same_blob_is_rejected(self) -> None:
+        projection = self.replace_and_commit(
+            "intellect_status_page",
+            b"`GI-AMEND-0001` is effective.\n`GI-AMEND-0001` is proposed.\n",
+        )
+        with self.assertRaisesRegex(
+            MODULE.StatusCoherenceError,
+            "contradictory governed status assertions: intellect_status_page",
+        ):
+            self.validate(projection)
 
     def test_descriptive_blob_identity_drift_is_rejected(self) -> None:
-        evidence = canonical_evidence()
-        evidence["adr"] += b"drift\n"
+        broken = copy.deepcopy(self.projection)
+        broken["descriptive_evidence"]["adr"]["git_blob_sha1"] = (
+            broken["descriptive_evidence"]["standard"]["git_blob_sha1"]
+        )
         with self.assertRaisesRegex(
             MODULE.StatusCoherenceError, "Git blob drift: adr"
         ):
-            MODULE.validate_projection(
-                canonical_projection(), evidence_contents=evidence
-            )
+            self.validate(broken)
+
+    def test_invented_repository_or_path_is_rejected(self) -> None:
+        for field, value in (
+            ("repository", "grandchallenge/UNRELATED"),
+            ("path", "invented/not-at-commit.md"),
+        ):
+            with self.subTest(field=field):
+                broken = copy.deepcopy(self.projection)
+                broken["descriptive_evidence"]["adr"][field] = value
+                with self.assertRaises(MODULE.jsonschema.ValidationError):
+                    self.validate(broken)
+
+    def test_unresolvable_declared_commit_is_rejected(self) -> None:
+        broken = copy.deepcopy(self.projection)
+        invented = "e" * 40
+        for key in ("gcl_readme", "adr", "standard", "admission"):
+            broken["descriptive_evidence"][key]["commit_sha"] = invented
+        broken["selected_admission"]["commit_sha"] = invented
+        broken["selected_programme_adoption"]["admission_commit_sha"] = invented
+        with self.assertRaisesRegex(
+            MODULE.StatusCoherenceError, "cannot resolve exact Git evidence"
+        ):
+            self.validate(broken)
 
     def test_exact_coherence_receipt_schema_is_closed_and_zero_conflict(self) -> None:
         schema = MODULE.load_json(ROOT / "schemas" / "coherence_receipt.schema.json")
@@ -191,43 +345,43 @@ class StatusCoherenceTests(unittest.TestCase):
             MODULE.jsonschema.validate(broken, schema)
 
     def test_effective_amendment_with_proposed_page_is_rejected(self) -> None:
-        broken = copy.deepcopy(canonical_projection())
+        broken = copy.deepcopy(self.projection)
         broken["descriptive_assertions"]["intellect_status_page_amendment_status"] = "proposed"
         with self.assertRaisesRegex(MODULE.StatusCoherenceError, "effective amendment"):
             MODULE.validate_projection(broken)
 
     def test_admitted_standard_with_candidate_front_matter_is_rejected(self) -> None:
-        broken = copy.deepcopy(canonical_projection())
+        broken = copy.deepcopy(self.projection)
         broken["descriptive_assertions"]["standard_front_matter_status"] = "candidate"
         with self.assertRaisesRegex(MODULE.StatusCoherenceError, "candidate current front matter"):
             MODULE.validate_projection(broken)
 
     def test_active_adoption_with_not_started_gate_is_rejected(self) -> None:
-        broken = copy.deepcopy(canonical_projection())
+        broken = copy.deepcopy(self.projection)
         broken["selected_admission"]["next_gate"]["status"] = "not_started"
         with self.assertRaisesRegex(MODULE.StatusCoherenceError, "not_started admission gate"):
             MODULE.validate_projection(broken)
 
     def test_historical_admission_cannot_be_selected_as_current(self) -> None:
-        broken = copy.deepcopy(canonical_projection())
+        broken = copy.deepcopy(self.projection)
         broken["selected_admission"]["version"] = "0.1.0"
         with self.assertRaisesRegex(MODULE.StatusCoherenceError, "historical admission"):
             MODULE.validate_projection(broken)
 
     def test_successor_lineage_is_required(self) -> None:
-        broken = copy.deepcopy(canonical_projection())
+        broken = copy.deepcopy(self.projection)
         broken.pop("lineage")
         with self.assertRaises(MODULE.jsonschema.ValidationError):
             MODULE.validate_projection(broken)
 
     def test_adoption_must_bind_selected_admission(self) -> None:
-        broken = copy.deepcopy(canonical_projection())
+        broken = copy.deepcopy(self.projection)
         broken["selected_programme_adoption"]["admission_commit_sha"] = "d" * 40
         with self.assertRaisesRegex(MODULE.StatusCoherenceError, "does not bind"):
             MODULE.validate_projection(broken)
 
     def test_claim_authority_inflation_is_rejected(self) -> None:
-        broken = copy.deepcopy(canonical_projection())
+        broken = copy.deepcopy(self.projection)
         broken["claim_boundaries"]["mathematical_claim_authorized"] = True
         with self.assertRaises(Exception):
             MODULE.validate_projection(broken)

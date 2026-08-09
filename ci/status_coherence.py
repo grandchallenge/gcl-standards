@@ -1,13 +1,21 @@
 from __future__ import annotations
 
 import copy
-import hashlib
 import json
 from pathlib import Path
+import re
+import sys
 from typing import Any, Mapping
 
 import jsonschema
 import yaml
+
+
+CI_DIR = Path(__file__).resolve().parent
+if str(CI_DIR) not in sys.path:
+    sys.path.insert(0, str(CI_DIR))
+
+from git_content import git_blob_sha1_at_commit, git_bytes_at_commit  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -40,11 +48,6 @@ def projection_schema(*, root: Path = ROOT) -> dict[str, Any]:
     return schema
 
 
-def git_blob_sha1(content: bytes) -> str:
-    header = f"blob {len(content)}\0".encode("ascii")
-    return hashlib.sha1(header + content).hexdigest()
-
-
 def _text(contents: Mapping[str, bytes], key: str) -> str:
     try:
         return contents[key].decode("utf-8")
@@ -52,17 +55,58 @@ def _text(contents: Mapping[str, bytes], key: str) -> str:
         raise StatusCoherenceError(f"missing or invalid evidence content: {key}") from exc
 
 
-def validate_descriptive_evidence(
-    projection: dict[str, Any], evidence_contents: Mapping[str, bytes] | None
-) -> None:
-    if evidence_contents is None:
-        raise StatusCoherenceError("exact descriptive evidence content is required")
-    evidence = projection["descriptive_evidence"]
-    if set(evidence_contents) != set(evidence):
-        raise StatusCoherenceError("descriptive evidence content set does not match projection")
+def _resolve_evidence(
+    evidence: Mapping[str, Any], repository_roots: Mapping[str, Path] | None
+) -> dict[str, bytes]:
+    if repository_roots is None:
+        raise StatusCoherenceError("exact Git repository roots are required")
+    contents: dict[str, bytes] = {}
     for key, source in evidence.items():
-        if git_blob_sha1(evidence_contents[key]) != source["git_blob_sha1"]:
+        repository = source["repository"]
+        if repository not in repository_roots:
+            raise StatusCoherenceError(f"unavailable evidence repository: {repository}")
+        root = repository_roots[repository]
+        try:
+            identity = git_blob_sha1_at_commit(
+                root=root,
+                commit=source["commit_sha"],
+                relative_path=source["path"],
+            )
+            content = git_bytes_at_commit(
+                root=root,
+                commit=source["commit_sha"],
+                relative_path=source["path"],
+            )
+        except Exception as exc:
+            raise StatusCoherenceError(
+                f"cannot resolve exact Git evidence: {key}"
+            ) from exc
+        if identity != source["git_blob_sha1"]:
             raise StatusCoherenceError(f"descriptive evidence Git blob drift: {key}")
+        contents[key] = content
+    return contents
+
+
+def _status_from_text(
+    text: str,
+    *,
+    positive: str,
+    negative_patterns: tuple[str, ...],
+    status: str,
+    key: str,
+) -> str:
+    if positive not in text:
+        raise StatusCoherenceError(f"missing governed status assertion: {key}")
+    if any(re.search(pattern, text, flags=re.IGNORECASE) for pattern in negative_patterns):
+        raise StatusCoherenceError(f"contradictory governed status assertions: {key}")
+    return status
+
+
+def validate_descriptive_evidence(
+    projection: dict[str, Any], repository_roots: Mapping[str, Path] | None
+) -> None:
+    evidence = projection["descriptive_evidence"]
+    evidence_contents = _resolve_evidence(evidence, repository_roots)
 
     amendment = _text(evidence_contents, "amendment")
     admission = json.loads(_text(evidence_contents, "admission"))
@@ -71,25 +115,47 @@ def validate_descriptive_evidence(
         raise StatusCoherenceError("admission and adoption evidence must be objects")
 
     derived = {
-        "intellect_readme_amendment_status": (
-            "effective" if "`GI-AMEND-0001` is effective" in _text(evidence_contents, "intellect_readme") else "proposed"
+        "intellect_readme_amendment_status": _status_from_text(
+            _text(evidence_contents, "intellect_readme"),
+            positive="`GI-AMEND-0001` is effective",
+            negative_patterns=(r"`GI-AMEND-0001` is proposed", r"GI-AMEND-0001.*proposed; not in force"),
+            status="effective",
+            key="intellect_readme",
         ),
-        "intellect_status_page_amendment_status": (
-            "effective" if "`GI-AMEND-0001` is effective" in _text(evidence_contents, "intellect_status_page") else "proposed"
+        "intellect_status_page_amendment_status": _status_from_text(
+            _text(evidence_contents, "intellect_status_page"),
+            positive="`GI-AMEND-0001` is effective",
+            negative_patterns=(r"`GI-AMEND-0001` is proposed", r"GI-AMEND-0001.*proposed; not in force"),
+            status="effective",
+            key="intellect_status_page",
         ),
-        "amendment_gcl_status_scope": (
-            "candidate_at_activation"
-            if "**GCL-GHOS status at activation:** Candidate; not yet admitted" in amendment
-            else "current_candidate"
+        "amendment_gcl_status_scope": _status_from_text(
+            amendment,
+            positive="**GCL-GHOS status at activation:** Candidate; not yet admitted",
+            negative_patterns=(r"\*\*GCL-GHOS status at activation:\*\* Admitted",),
+            status="candidate_at_activation",
+            key="amendment",
         ),
-        "gcl_readme_standard_status": (
-            "admitted" if "is the admitted GitHub Constitutional" in _text(evidence_contents, "gcl_readme") else "candidate"
+        "gcl_readme_standard_status": _status_from_text(
+            _text(evidence_contents, "gcl_readme"),
+            positive="is the admitted GitHub Constitutional",
+            negative_patterns=(r"GCL-GHOS-00.* is (?:a |the )?candidate",),
+            status="admitted",
+            key="gcl_readme",
         ),
-        "adr_status": (
-            "accepted" if "**Status:** Accepted" in _text(evidence_contents, "adr") else "proposed"
+        "adr_status": _status_from_text(
+            _text(evidence_contents, "adr"),
+            positive="**Status:** Accepted",
+            negative_patterns=(r"\*\*Status:\*\* (?:Proposed|Candidate)",),
+            status="accepted",
+            key="adr",
         ),
-        "standard_front_matter_status": (
-            "admitted" if "**Status:** Admitted documentary successor" in _text(evidence_contents, "standard") else "candidate"
+        "standard_front_matter_status": _status_from_text(
+            _text(evidence_contents, "standard"),
+            positive="**Status:** Admitted documentary successor",
+            negative_patterns=(r"\*\*Status:\*\* Candidate",),
+            status="admitted",
+            key="standard",
         ),
         "admission_adoption_gate_status": admission.get("next_gate", {}).get("status"),
         "programme_adoption_status": adoption.get("status"),
@@ -102,7 +168,7 @@ def validate_projection(
     projection: dict[str, Any],
     *,
     root: Path = ROOT,
-    evidence_contents: Mapping[str, bytes] | None = None,
+    repository_roots: Mapping[str, Path] | None = None,
 ) -> None:
     constitutional = projection.get("constitutional", {})
     assertions = projection.get("descriptive_assertions", {})
@@ -147,7 +213,21 @@ def validate_projection(
 
     if adoption["admission_commit_sha"] != admission["commit_sha"]:
         raise StatusCoherenceError("programme adoption does not bind selected admission")
-    validate_descriptive_evidence(projection, evidence_contents)
+    evidence = projection["descriptive_evidence"]
+    intellect_commit = projection["constitutional"]["schedule_commit_sha"]
+    admission_commit = admission["commit_sha"]
+    adoption_commit = adoption["commit_sha"]
+    if any(evidence[key]["commit_sha"] != intellect_commit for key in (
+        "intellect_readme", "intellect_status_page", "amendment"
+    )):
+        raise StatusCoherenceError("INTELLECT evidence does not bind schedule commit")
+    if any(evidence[key]["commit_sha"] != admission_commit for key in (
+        "gcl_readme", "adr", "standard", "admission"
+    )):
+        raise StatusCoherenceError("standards evidence does not bind admission commit")
+    if evidence["programme_adoption"]["commit_sha"] != adoption_commit:
+        raise StatusCoherenceError("adoption evidence does not bind adoption commit")
+    validate_descriptive_evidence(projection, repository_roots)
     if any(value is not False for value in projection["claim_boundaries"].values()):
         raise StatusCoherenceError("current-status projection widens prohibited authority")
 

@@ -53,3 +53,12 @@ def git_blob_sha1_at_commit(
 
 def git_text_at_commit(*, root: Path, commit: str, relative_path: str) -> str:
     return _git(root, "show", f"{commit}:{relative_path}").decode("utf-8")
+
+
+def git_bytes_at_commit(*, root: Path, commit: str, relative_path: str) -> bytes:
+    """Return exact blob bytes resolved from a commit and repository path."""
+
+    identity = git_blob_sha1_at_commit(
+        root=root, commit=commit, relative_path=relative_path
+    )
+    return _git(root, "cat-file", "blob", identity)
