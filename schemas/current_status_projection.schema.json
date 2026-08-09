@@ -4,7 +4,7 @@
   "title": "Selected current GCL authority and adoption status",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "operation_id", "constitutional", "lineage", "selected_admission", "selected_programme_adoption", "descriptive_assertions", "descriptive_evidence", "claim_boundaries"],
+  "required": ["schema_version", "operation_id", "constitutional", "lineage", "selected_admission", "selected_programme_adoption", "public_profile", "descriptive_assertions", "descriptive_evidence", "claim_boundaries"],
   "properties": {
     "$schema": {"const": "../schemas/current_status_projection.schema.json"},
     "schema_version": {"const": "1.0.0"},
@@ -12,11 +12,13 @@
     "constitutional": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["repository", "schedule_path", "schedule_commit_sha", "amendment", "amendment_status", "current_status_authority"],
+      "required": ["repository", "schedule_path", "schedule_commit_sha", "effective_version", "effective_at", "amendment", "amendment_status", "current_status_authority"],
       "properties": {
         "repository": {"const": "grandchallenge/INTELLECT"},
         "schedule_path": {"const": "governance/constitutional_authority_schedule.json"},
         "schedule_commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "effective_version": {"const": "1.1.0"},
+        "effective_at": {"type": "string", "format": "date-time"},
         "amendment": {"const": "GI-AMEND-0001"},
         "amendment_status": {"const": "effective"},
         "current_status_authority": {"const": "constitutional_status_only"}
@@ -25,10 +27,20 @@
     "lineage": {"$ref": "standard_successor_lineage.schema.json"},
     "selected_admission": {"$ref": "current_admission_selection.schema.json"},
     "selected_programme_adoption": {"$ref": "current_programme_adoption_selection.schema.json"},
+    "public_profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "path", "commit_sha"],
+      "properties": {
+        "repository": {"const": "grandchallenge/.github"},
+        "path": {"const": "profile/README.md"},
+        "commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
     "descriptive_assertions": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["intellect_readme_amendment_status", "intellect_status_page_amendment_status", "amendment_gcl_status_scope", "gcl_readme_standard_status", "adr_status", "standard_front_matter_status", "admission_adoption_gate_status", "programme_adoption_status"],
+      "required": ["intellect_readme_amendment_status", "intellect_status_page_amendment_status", "amendment_gcl_status_scope", "gcl_readme_standard_status", "adr_status", "standard_front_matter_status", "admission_adoption_gate_status", "programme_adoption_status", "github_profile_status"],
       "properties": {
         "intellect_readme_amendment_status": {"const": "effective"},
         "intellect_status_page_amendment_status": {"const": "effective"},
@@ -37,14 +49,16 @@
         "adr_status": {"const": "accepted"},
         "standard_front_matter_status": {"const": "admitted"},
         "admission_adoption_gate_status": {"const": "complete"},
-        "programme_adoption_status": {"const": "active"}
+        "programme_adoption_status": {"const": "active"},
+        "github_profile_status": {"const": "effective_admitted_adopted"}
       }
     },
     "descriptive_evidence": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["intellect_readme", "intellect_status_page", "amendment", "gcl_readme", "adr", "standard", "admission", "programme_adoption"],
+      "required": ["schedule", "intellect_readme", "intellect_status_page", "amendment", "gcl_readme", "adr", "standard", "admission", "programme_adoption", "github_profile"],
       "properties": {
+        "schedule": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/INTELLECT"}, "path": {"const": "governance/constitutional_authority_schedule.json"}}}]},
         "intellect_readme": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/INTELLECT"}, "path": {"const": "README.md"}}}]},
         "intellect_status_page": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/INTELLECT"}, "path": {"const": "docs/STATUS.md"}}}]},
         "amendment": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/INTELLECT"}, "path": {"const": "AMENDMENTS/0001-commentary-and-gcl-ghos.md"}}}]},
@@ -52,7 +66,8 @@
         "adr": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/gcl-standards"}, "path": {"const": "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"}}}]},
         "standard": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/gcl-standards"}, "path": {"const": "standards/GCL-GHOS-00.md"}}}]},
         "admission": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/gcl-standards"}, "path": {"const": "admissions/GCL-GHOS-00-0.1.1.json"}}}]},
-        "programme_adoption": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/gcl-standards"}, "path": {"const": "programme-adoption/MATH-PROGRAMME.yaml"}}}]}
+        "programme_adoption": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/gcl-standards"}, "path": {"const": "programme-adoption/MATH-PROGRAMME.yaml"}}}]},
+        "github_profile": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/.github"}, "path": {"const": "profile/README.md"}}}]}
       }
     },
     "claim_boundaries": {

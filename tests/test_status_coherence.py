@@ -17,20 +17,48 @@ MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
 
 
-def canonical_evidence() -> dict[str, bytes]:
+def canonical_evidence(admission_commit: str = "0" * 40) -> dict[str, bytes]:
     return {
+        "schedule": (
+            b'{"status":"active","constitution":{"effective_version":"1.1.0"},'
+            b'"amendment":{"identifier":"GI-AMEND-0001","status":"effective"},'
+            b'"operating_standard":{"current_status_source":{"repository":"grandchallenge/gcl-standards",'
+            b'"path":"status/GCL-GHOS-00-current.json","authority":"subordinate_admission_and_adoption_projection"}},'
+            b'"activation":{"effective_at":"2026-08-03T10:00:00Z"}}\n'
+        ),
         "intellect_readme": b"`GI-AMEND-0001` is effective.\n",
         "intellect_status_page": b"`GI-AMEND-0001` is effective as constitutional version `1.1.0`.\n",
         "amendment": b"**Status:** Effective\n**GCL-GHOS status at activation:** Candidate; not yet admitted\n",
         "gcl_readme": b"`GCL-GHOS-00` is the admitted GitHub Constitutional Operating System.\n",
         "adr": b"**Status:** Accepted\n",
         "standard": b"**Status:** Admitted documentary successor; effective only when selected by a protected admission record\n",
-        "admission": b'{"status":"admitted","next_gate":{"status":"complete"}}\n',
-        "programme_adoption": b"status: active\n",
+        "admission": (
+            b'{"operation_id":"GCL-GHOS-00-0.1.1-ADMISSION-001",'
+            b'"status":"admitted","standard":{"identifier":"GCL-GHOS-00",'
+            b'"version":"0.1.1"},"next_gate":{"operation":"MATH-PROGRAMME adoption",'
+            b'"status":"complete"}}\n'
+        ),
+        "programme_adoption": (
+            "programme: grandchallenge/MATH-PROGRAMME\n"
+            "status: active\n"
+            "standard_version: 0.1.1\n"
+            "standard_admission:\n"
+            f"  commit_sha: {admission_commit}\n"
+        ).encode("utf-8"),
+        "github_profile": (
+            b"`GI-AMEND-0001`: effective\n"
+            b"`GCL-GHOS-00` `0.1.1`: admitted\n"
+            b"`MATH-PROGRAMME` adoption: active\n"
+            b"GitHub remains operational and evidentiary only.\n"
+        ),
     }
 
 
 EVIDENCE_COORDINATES = {
+    "schedule": (
+        "grandchallenge/INTELLECT",
+        "governance/constitutional_authority_schedule.json",
+    ),
     "intellect_readme": ("grandchallenge/INTELLECT", "README.md"),
     "intellect_status_page": ("grandchallenge/INTELLECT", "docs/STATUS.md"),
     "amendment": (
@@ -51,6 +79,7 @@ EVIDENCE_COORDINATES = {
         "grandchallenge/gcl-standards",
         "programme-adoption/MATH-PROGRAMME.yaml",
     ),
+    "github_profile": ("grandchallenge/.github", "profile/README.md"),
 }
 
 
@@ -61,7 +90,9 @@ def build_evidence_repositories(
     repository_roots = {
         "grandchallenge/INTELLECT": root / "INTELLECT",
         "grandchallenge/gcl-standards": root / "gcl-standards",
+        "grandchallenge/.github": root / ".github",
     }
+    key_commits: dict[str, str] = {}
     for repository, repository_root in repository_roots.items():
         repository_root.mkdir(parents=True)
         subprocess.run(["git", "init", "--quiet"], cwd=repository_root, check=True)
@@ -76,7 +107,7 @@ def build_evidence_repositories(
             check=True,
         )
         for key, (item_repository, path) in EVIDENCE_COORDINATES.items():
-            if item_repository != repository:
+            if item_repository != repository or key == "programme_adoption":
                 continue
             target = repository_root / path
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -87,19 +118,38 @@ def build_evidence_repositories(
             cwd=repository_root,
             check=True,
         )
+        commit = subprocess.run(
+            ["git", "rev-parse", "HEAD"], cwd=repository_root, check=True,
+            capture_output=True, text=True,
+        ).stdout.strip()
+        for key, (item_repository, _) in EVIDENCE_COORDINATES.items():
+            if item_repository == repository and key != "programme_adoption":
+                key_commits[key] = commit
+
+        if repository == "grandchallenge/gcl-standards":
+            adoption_path = EVIDENCE_COORDINATES["programme_adoption"][1]
+            target = repository_root / adoption_path
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(canonical_evidence(commit)["programme_adoption"])
+            subprocess.run(
+                ["git", "add", adoption_path], cwd=repository_root, check=True
+            )
+            subprocess.run(
+                ["git", "commit", "--quiet", "-m", "exact adoption"],
+                cwd=repository_root,
+                check=True,
+            )
+            key_commits["programme_adoption"] = subprocess.run(
+                ["git", "rev-parse", "HEAD"], cwd=repository_root, check=True,
+                capture_output=True, text=True,
+            ).stdout.strip()
 
     evidence_refs: dict[str, dict[str, str]] = {}
     for key, (repository, path) in EVIDENCE_COORDINATES.items():
         repository_root = repository_roots[repository]
-        commit = subprocess.run(
-            ["git", "rev-parse", "HEAD"],
-            cwd=repository_root,
-            check=True,
-            capture_output=True,
-            text=True,
-        ).stdout.strip()
+        commit = key_commits[key]
         blob = subprocess.run(
-            ["git", "rev-parse", f"HEAD:{path}"],
+            ["git", "rev-parse", f"{commit}:{path}"],
             cwd=repository_root,
             check=True,
             capture_output=True,
@@ -128,6 +178,8 @@ def canonical_projection(
             "repository": "grandchallenge/INTELLECT",
             "schedule_path": "governance/constitutional_authority_schedule.json",
             "schedule_commit_sha": intellect_commit,
+            "effective_version": "1.1.0",
+            "effective_at": "2026-08-03T10:00:00Z",
             "amendment": "GI-AMEND-0001",
             "amendment_status": "effective",
             "current_status_authority": "constitutional_status_only",
@@ -156,6 +208,11 @@ def canonical_projection(
             "commit_sha": adoption_commit,
             "admission_commit_sha": admission_commit,
         },
+        "public_profile": {
+            "repository": "grandchallenge/.github",
+            "path": "profile/README.md",
+            "commit_sha": evidence_refs["github_profile"]["commit_sha"],
+        },
         "descriptive_assertions": {
             "intellect_readme_amendment_status": "effective",
             "intellect_status_page_amendment_status": "effective",
@@ -165,6 +222,7 @@ def canonical_projection(
             "standard_front_matter_status": "admitted",
             "admission_adoption_gate_status": "complete",
             "programme_adoption_status": "active",
+            "github_profile_status": "effective_admitted_adopted",
         },
         "descriptive_evidence": copy.deepcopy(evidence_refs),
         "claim_boundaries": {
@@ -257,20 +315,51 @@ class StatusCoherenceTests(unittest.TestCase):
             ["git", "rev-parse", "HEAD"], cwd=repository_root, check=True,
             capture_output=True, text=True,
         ).stdout.strip()
-        for evidence_key, (item_repository, item_path) in EVIDENCE_COORDINATES.items():
-            if item_repository != repository:
-                continue
+
+        def bind(evidence_key: str, revision: str) -> None:
+            item_path = EVIDENCE_COORDINATES[evidence_key][1]
             blob = subprocess.run(
-                ["git", "rev-parse", f"HEAD:{item_path}"], cwd=repository_root,
-                check=True, capture_output=True, text=True,
+                ["git", "rev-parse", f"{revision}:{item_path}"],
+                cwd=repository_root, check=True, capture_output=True, text=True,
             ).stdout.strip()
-            projection["descriptive_evidence"][evidence_key]["commit_sha"] = commit
+            projection["descriptive_evidence"][evidence_key]["commit_sha"] = revision
             projection["descriptive_evidence"][evidence_key]["git_blob_sha1"] = blob
+
         if repository == "grandchallenge/INTELLECT":
+            for evidence_key in (
+                "schedule", "intellect_readme", "intellect_status_page", "amendment"
+            ):
+                bind(evidence_key, commit)
             projection["constitutional"]["schedule_commit_sha"] = commit
+        elif repository == "grandchallenge/.github":
+            bind("github_profile", commit)
+            projection["public_profile"]["commit_sha"] = commit
+        elif key == "programme_adoption":
+            bind("programme_adoption", commit)
+            projection["selected_programme_adoption"]["commit_sha"] = commit
         else:
+            for evidence_key in ("gcl_readme", "adr", "standard", "admission"):
+                bind(evidence_key, commit)
             projection["selected_admission"]["commit_sha"] = commit
             projection["selected_programme_adoption"]["admission_commit_sha"] = commit
+            adoption_path = EVIDENCE_COORDINATES["programme_adoption"][1]
+            (repository_root / adoption_path).write_bytes(
+                canonical_evidence(commit)["programme_adoption"]
+            )
+            subprocess.run(
+                ["git", "add", adoption_path], cwd=repository_root, check=True
+            )
+            subprocess.run(
+                ["git", "commit", "--quiet", "-m", "rebind adoption"],
+                cwd=repository_root,
+                check=True,
+            )
+            adoption_commit = subprocess.run(
+                ["git", "rev-parse", "HEAD"], cwd=repository_root, check=True,
+                capture_output=True, text=True,
+            ).stdout.strip()
+            bind("programme_adoption", adoption_commit)
+            projection["selected_programme_adoption"]["commit_sha"] = adoption_commit
         return projection
 
     def test_canonical_projection_and_all_schemas_validate(self) -> None:
@@ -295,6 +384,71 @@ class StatusCoherenceTests(unittest.TestCase):
         with self.assertRaisesRegex(
             MODULE.StatusCoherenceError,
             "contradictory governed status assertions: intellect_status_page",
+        ):
+            self.validate(projection)
+
+    def test_admitted_and_candidate_standard_blob_is_rejected(self) -> None:
+        projection = self.replace_and_commit(
+            "standard",
+            b"**Status:** Admitted documentary successor\n**Status:** Candidate\n",
+        )
+        with self.assertRaisesRegex(
+            MODULE.StatusCoherenceError,
+            "contradictory governed status assertions: standard",
+        ):
+            self.validate(projection)
+
+    def test_exact_schedule_must_match_constitutional_projection(self) -> None:
+        projection = self.replace_and_commit(
+            "schedule",
+            canonical_evidence()["schedule"].replace(
+                b'"status":"active"', b'"status":"proposed"'
+            ),
+        )
+        with self.assertRaisesRegex(
+            MODULE.StatusCoherenceError, "does not match exact activation schedule"
+        ):
+            self.validate(projection)
+
+    def test_exact_admission_identity_must_match_selection(self) -> None:
+        projection = self.replace_and_commit(
+            "admission",
+            (
+                b'{"operation_id":"WRONG","status":"proposed",'
+                b'"standard":{"identifier":"GCL-GHOS-00","version":"9.9.9"},'
+                b'"next_gate":{"operation":"MATH-PROGRAMME adoption",'
+                b'"status":"complete"}}\n'
+            ),
+        )
+        with self.assertRaisesRegex(
+            MODULE.StatusCoherenceError, "does not match exact admission record"
+        ):
+            self.validate(projection)
+
+    def test_exact_adoption_target_must_match_selection(self) -> None:
+        projection = self.replace_and_commit(
+            "programme_adoption",
+            (
+                "programme: grandchallenge/MATH-PROGRAMME\n"
+                "status: active\n"
+                "standard_version: 9.9.9\n"
+                "standard_admission:\n"
+                f"  commit_sha: {'0' * 40}\n"
+            ).encode("utf-8"),
+        )
+        with self.assertRaisesRegex(
+            MODULE.StatusCoherenceError,
+            "does not match exact programme adoption record",
+        ):
+            self.validate(projection)
+
+    def test_stale_public_profile_is_rejected(self) -> None:
+        projection = self.replace_and_commit(
+            "github_profile",
+            b"`GI-AMEND-0001`: proposed\n`GCL-GHOS-00`: candidate\n",
+        )
+        with self.assertRaisesRegex(
+            MODULE.StatusCoherenceError, "public profile does not project"
         ):
             self.validate(projection)
 
