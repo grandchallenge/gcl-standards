@@ -3,7 +3,7 @@
   "schema_version": "1.0.0",
   "operation_id": "GCL-OPT-PHASE12-CLOSEOUT-001",
   "status": "complete",
-  "prepared_at": "2026-08-09T07:15:03Z",
+  "prepared_at": "2026-08-09T08:40:27Z",
   "authority_boundary": "This record closes the bounded Phase 1-2 optimality plan only when admitted on protected gcl-standards main. It records evidence and deviations; it does not create constitutional, organization-wide conformance, production, mathematical, certification, novelty, deployment, or commercial authority.",
   "baseline": {
     "operation_id": "GCL-OPT-BASELINE-001",
@@ -12,7 +12,7 @@
   },
   "protected_heads": {
     "grandchallenge/gcl-standards": "9b6588523aad534797ad46202c357d1be25260b5",
-    "grandchallenge/.github": "0b875c5bf2d0c563bfb5ddb2f3beb406017f2523",
+    "grandchallenge/.github": "010f2f6093ab8c057f397633f23cc79e8a8c621b",
     "grandchallenge/AETHER": "afb367f84454d18a646b13832b112365b7ca56c0",
     "grandchallenge/INTELLECT": "5714e81f3f03767f309b069f32a89fed0cfa165e"
   },
@@ -75,7 +75,7 @@
         "https://github.com/grandchallenge/.github/issues/50",
         "https://github.com/grandchallenge/.github/pull/51",
         "https://github.com/grandchallenge/.github/pull/58",
-        "https://github.com/grandchallenge/.github/blob/0b875c5bf2d0c563bfb5ddb2f3beb406017f2523/governance/credentials/GCL-CREDENTIAL-BOUNDARY-001.json"
+        "https://github.com/grandchallenge/.github/blob/010f2f6093ab8c057f397633f23cc79e8a8c621b/governance/credentials/GCL-CREDENTIAL-BOUNDARY-001.json"
       ],
       "open_deviations": [
         {
@@ -109,7 +109,12 @@
         "https://github.com/grandchallenge/INTELLECT/pull/56",
         "https://github.com/grandchallenge/INTELLECT/issues/53#issuecomment-5230177785",
         "https://github.com/grandchallenge/gcl-standards/issues/14#issuecomment-5230250340",
-        "https://github.com/grandchallenge/INTELLECT/blob/5714e81f3f03767f309b069f32a89fed0cfa165e/governance/constitutional_authority_schedule.json"
+        "https://github.com/grandchallenge/INTELLECT/blob/5714e81f3f03767f309b069f32a89fed0cfa165e/governance/constitutional_authority_schedule.json",
+        "https://github.com/grandchallenge/.github/issues/60",
+        "https://github.com/grandchallenge/.github/pull/61",
+        "https://github.com/grandchallenge/.github/commit/010f2f6093ab8c057f397633f23cc79e8a8c621b",
+        "https://github.com/grandchallenge/.github/actions/runs/31304056210",
+        "https://github.com/grandchallenge/.github/actions/runs/31304056311"
       ]
     }
   ],
