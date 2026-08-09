@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/grandchallenge/gcl-standards/schemas/repository_controls_evidence.schema.json",
+  "title": "Exact repository-controls readback evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "evidence_id",
+    "repository",
+    "captured_at",
+    "protected_main_sha",
+    "source_pull_request",
+    "control_plane",
+    "governed_surfaces",
+    "default_branch_protection",
+    "rulesets",
+    "actions",
+    "repository_settings",
+    "custom_properties",
+    "security",
+    "verifier",
+    "deviation",
+    "authority_boundaries"
+  ],
+  "properties": {
+    "schema_version": { "const": "gcl.repository-controls-evidence.v1" },
+    "evidence_id": { "type": "string", "pattern": "^[A-Z0-9][A-Z0-9._-]+$" },
+    "repository": { "type": "string", "pattern": "^grandchallenge/[A-Za-z0-9._-]+$" },
+    "captured_at": { "type": "string", "format": "date-time" },
+    "protected_main_sha": { "$ref": "#/$defs/commit" },
+    "source_pull_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["number", "reviewed_head_sha", "merge_sha", "url"],
+      "properties": {
+        "number": { "type": "integer", "minimum": 1 },
+        "reviewed_head_sha": { "$ref": "#/$defs/commit" },
+        "merge_sha": { "$ref": "#/$defs/commit" },
+        "url": { "type": "string", "format": "uri" }
+      }
+    },
+    "control_plane": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "protected_merge_sha", "stage", "retire"],
+      "properties": {
+        "repository": { "const": "grandchallenge/MATH-PROGRAMME" },
+        "protected_merge_sha": { "$ref": "#/$defs/commit" },
+        "stage": { "$ref": "#/$defs/runEvidence" },
+        "retire": { "$ref": "#/$defs/runEvidence" }
+      }
+    },
+    "governed_surfaces": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "git_blob_sha1"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "git_blob_sha1": { "$ref": "#/$defs/commit" }
+        }
+      }
+    },
+    "default_branch_protection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selected_model", "classic_readback_status", "classic_absent"],
+      "properties": {
+        "selected_model": { "const": "repository_ruleset" },
+        "classic_readback_status": { "const": 404 },
+        "classic_absent": { "const": true }
+      }
+    },
+    "rulesets": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": { "$ref": "#/$defs/ruleset" }
+    },
+    "actions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowed_actions", "sha_pinning_required", "github_owned_allowed", "verified_allowed", "patterns_allowed"],
+      "properties": {
+        "allowed_actions": { "const": "selected" },
+        "sha_pinning_required": { "const": true },
+        "github_owned_allowed": { "type": "boolean" },
+        "verified_allowed": { "type": "boolean" },
+        "patterns_allowed": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      }
+    },
+    "repository_settings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["default_branch", "has_wiki", "delete_branch_on_merge", "allow_auto_merge", "allow_merge_commit", "allow_squash_merge", "allow_rebase_merge"],
+      "properties": {
+        "default_branch": { "const": "main" },
+        "has_wiki": { "type": "boolean" },
+        "delete_branch_on_merge": { "type": "boolean" },
+        "allow_auto_merge": { "type": "boolean" },
+        "allow_merge_commit": { "type": "boolean" },
+        "allow_squash_merge": { "type": "boolean" },
+        "allow_rebase_merge": { "type": "boolean" }
+      }
+    },
+    "custom_properties": { "type": "object", "additionalProperties": { "type": "string" } },
+    "security": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dependabot_security_updates", "secret_scanning", "secret_scanning_push_protection", "private_vulnerability_reporting"],
+      "properties": {
+        "dependabot_security_updates": { "const": "enabled" },
+        "secret_scanning": { "const": "enabled" },
+        "secret_scanning_push_protection": { "const": "enabled" },
+        "private_vulnerability_reporting": { "const": "enabled" }
+      }
+    },
+    "verifier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "blockers", "raw_evidence_sha256"],
+      "properties": {
+        "status": { "const": "passed" },
+        "blockers": { "type": "array", "maxItems": 0 },
+        "raw_evidence_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "deviation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "owner", "expires_at", "compensating_control", "next_review", "status"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "owner": { "type": "string", "minLength": 1 },
+        "expires_at": { "type": "string", "format": "date-time" },
+        "compensating_control": { "type": "string", "minLength": 1 },
+        "next_review": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["open", "closed"] }
+      }
+    },
+    "authority_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["organization_wide_conformance", "constitutional_authority", "production_authority", "mathematical_authority", "certification_authority", "novelty_authority", "deployment_authority", "commercial_authority"],
+      "properties": {
+        "organization_wide_conformance": { "const": false },
+        "constitutional_authority": { "const": false },
+        "production_authority": { "const": false },
+        "mathematical_authority": { "const": false },
+        "certification_authority": { "const": false },
+        "novelty_authority": { "const": false },
+        "deployment_authority": { "const": false },
+        "commercial_authority": { "const": false }
+      }
+    }
+  },
+  "$defs": {
+    "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "runEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["run_id", "url", "canonical_evidence_sha256", "artifact_file_sha256"],
+      "properties": {
+        "run_id": { "type": "integer", "minimum": 1 },
+        "url": { "type": "string", "format": "uri" },
+        "canonical_evidence_sha256": { "$ref": "#/$defs/sha256" },
+        "artifact_file_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "ruleset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "target", "enforcement", "include", "exclude", "bypass_actors", "current_user_can_bypass", "rule_types"],
+      "properties": {
+        "id": { "type": "integer", "minimum": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "target": { "enum": ["branch", "tag"] },
+        "enforcement": { "const": "active" },
+        "include": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "exclude": { "type": "array", "items": { "type": "string" } },
+        "bypass_actors": { "type": "array", "maxItems": 0 },
+        "current_user_can_bypass": { "const": "never" },
+        "rule_types": { "type": "array", "minItems": 2, "items": { "type": "string" }, "uniqueItems": true },
+        "required_status_checks": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "strict_required_status_checks_policy": { "type": "boolean" },
+        "do_not_enforce_on_create": { "type": "boolean" },
+        "pull_request": { "type": "object" }
+      }
+    }
+  }
+}
