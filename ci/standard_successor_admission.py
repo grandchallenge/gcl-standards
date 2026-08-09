@@ -13,10 +13,11 @@ CI_DIR = Path(__file__).resolve().parent
 if str(CI_DIR) not in sys.path:
     sys.path.insert(0, str(CI_DIR))
 
-from git_content import git_blob_sha1, git_blob_sha1_at_commit  # noqa: E402
+from git_content import git_blob_sha1_at_commit  # noqa: E402
 
 
 REVIEWED_SOURCE_COMMIT = "3a5ed516bb9ccb43e2d67e9270e1ec2a793e01ac"
+ADMISSION_INTEGRATION_COMMIT = "5c4e73e55d362a5198b9076ead694909a5e0ebf3"
 EXPECTED_RECEIPT_SHA256 = (
     "b78cf6ee86053c79996c89c72aceb77686b746637f98beafd5f75d0d8af3abe2"
 )
@@ -142,10 +143,14 @@ def validate_successor_admission(
             commit=REVIEWED_SOURCE_COMMIT,
             relative_path=relative_path,
         )
-        current_blob = git_blob_sha1(root / relative_path, root=root)
-        if current_blob != reviewed_blob:
+        integrated_blob = git_blob_sha1_at_commit(
+            root=root,
+            commit=ADMISSION_INTEGRATION_COMMIT,
+            relative_path=relative_path,
+        )
+        if integrated_blob != reviewed_blob:
             raise SuccessorAdmissionError(
-                f"reviewed source blob changed during integration: {relative_path}"
+                f"reviewed source blob changed in admission integration: {relative_path}"
             )
 
     staffing = record["review_staffing"]

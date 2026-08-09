@@ -112,7 +112,7 @@ class GCLGHOSAdmissionTests(unittest.TestCase):
         with self.assertRaises(jsonschema.ValidationError):
             standard_admission.validate_standard_admission(broken)
 
-    def test_programme_adoption_is_separate_and_now_active(self) -> None:
+    def test_programme_adoption_preserves_0_1_0_lineage(self) -> None:
         adoption = yaml.safe_load(
             (ROOT / "programme-adoption" / "MATH-PROGRAMME.yaml").read_text(
                 encoding="utf-8"
@@ -122,9 +122,14 @@ class GCLGHOSAdmissionTests(unittest.TestCase):
         self.assertEqual(adoption["decision_status"], "accepted")
         self.assertEqual(
             adoption["standards_commit"],
+            "5c4e73e55d362a5198b9076ead694909a5e0ebf3",
+        )
+        self.assertEqual(adoption["standard_version"], "0.1.1")
+        self.assertEqual(adoption["activation_date"], "2026-08-09")
+        self.assertEqual(
+            adoption["predecessor_adoption"]["standards_commit"],
             "31211b286a9c4a2874da5559118ef2f026f7de52",
         )
-        self.assertEqual(adoption["activation_date"], "2026-08-03")
         self.assertTrue(
             adoption["claim_boundaries"]["programme_pilot_adoption_complete"]
         )

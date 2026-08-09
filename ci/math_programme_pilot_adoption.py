@@ -18,16 +18,21 @@ from git_content import git_blob_sha1_at_commit  # noqa: E402
 
 ADOPTION_PATH = ROOT / "programme-adoption" / "MATH-PROGRAMME.yaml"
 SCHEMA_PATH = ROOT / "schemas" / "math_programme_pilot_adoption.schema.json"
-ADMISSION_PATH = ROOT / "admissions" / "GCL-GHOS-00-0.1.0.json"
+ADMISSION_PATH = ROOT / "admissions" / "GCL-GHOS-00-0.1.1.json"
 
 EXPECTED_ACTIVATION_COMMIT = "8d47ed8930d33253ae476c64dfec7c748185a535"
 EXPECTED_DOCUMENTARY_CLOSURE_COMMIT = "d9c659f70490c328b9b4c068224136c02edc534c"
 EXPECTED_RECEIPT_ADMISSION_COMMIT = "ad4eac22321f87c42d34884eca5405ffea250f75"
-EXPECTED_STANDARDS_ADMISSION_COMMIT = "31211b286a9c4a2874da5559118ef2f026f7de52"
-EXPECTED_REVIEWED_SOURCE_COMMIT = "fa90ffc2bd23a6b0c8e184c7da2dd6ef1174a4ee"
-EXPECTED_PACKET = "22dbfa0ea0e652161126dd4647477036b89e6c13ecbd9101cda60ce00e9f95c5"
-EXPECTED_DECISION_BLOB = "9fcf918d16b768f9949869abda4fc4a191edc4e9"
-EXPECTED_STANDARD_BLOB = "b93c57f1fb27bf2a017a4b90719290342424f6d5"
+EXPECTED_STANDARDS_ADMISSION_COMMIT = "5c4e73e55d362a5198b9076ead694909a5e0ebf3"
+EXPECTED_REVIEWED_SOURCE_COMMIT = "3a5ed516bb9ccb43e2d67e9270e1ec2a793e01ac"
+EXPECTED_CONSTITUTIONAL_PACKET = (
+    "22dbfa0ea0e652161126dd4647477036b89e6c13ecbd9101cda60ce00e9f95c5"
+)
+EXPECTED_SUCCESSOR_PACKET = (
+    "b39b2f3fab12089622ccba5072c89dd758128117b5426075658148b2b495e917"
+)
+EXPECTED_DECISION_BLOB = "e4d61cfcc5e8ed330b350ab34323bb36a29fcd4c"
+EXPECTED_STANDARD_BLOB = "fd2651ba5036cf2455bf925dcd85364894d55726"
 
 
 class PilotAdoptionError(ValueError):
@@ -69,9 +74,11 @@ def validate_records(
         raise PilotAdoptionError("documentary closure commit drift")
     if receipt["admission_commit"] != EXPECTED_RECEIPT_ADMISSION_COMMIT:
         raise PilotAdoptionError("receipt admission commit drift")
-    if receipt["packet_sha256"] != EXPECTED_PACKET:
+    if receipt["packet_sha256"] != EXPECTED_CONSTITUTIONAL_PACKET:
         raise PilotAdoptionError("constitutional packet drift")
-    if not receipt["path"].endswith(f"-{EXPECTED_PACKET[:12]}.json"):
+    if not receipt["path"].endswith(
+        f"-{EXPECTED_CONSTITUTIONAL_PACKET[:12]}.json"
+    ):
         raise PilotAdoptionError("receipt path does not match packet prefix")
 
     if adoption["standards_commit"] != EXPECTED_STANDARDS_ADMISSION_COMMIT:
@@ -84,37 +91,36 @@ def validate_records(
         raise PilotAdoptionError("ADR blob identity drift")
     if standard_admission["standard_git_blob_sha1"] != EXPECTED_STANDARD_BLOB:
         raise PilotAdoptionError("standard blob identity drift")
+    if standard_admission["packet_sha256"] != EXPECTED_SUCCESSOR_PACKET:
+        raise PilotAdoptionError("successor review packet drift")
 
     if admission["operation_id"] != standard_admission["operation_id"]:
         raise PilotAdoptionError("standard admission operation mismatch")
     if admission["status"] != "admitted":
         raise PilotAdoptionError("standard admission is not admitted")
-    if admission["constitutional_authority"]["activation_commit"] != EXPECTED_ACTIVATION_COMMIT:
-        raise PilotAdoptionError("admission activation identity drift")
-    if (
-        admission["constitutional_authority"]["documentary_closure_commit"]
-        != EXPECTED_DOCUMENTARY_CLOSURE_COMMIT
-    ):
-        raise PilotAdoptionError("admission documentary identity drift")
-    if (
-        admission["constitutional_authority"]["review_receipt"]["packet_sha256"]
-        != EXPECTED_PACKET
-    ):
+    if admission["review_packet"]["packet_sha256"] != EXPECTED_SUCCESSOR_PACKET:
         raise PilotAdoptionError("admission packet identity drift")
-    if admission["decision"]["reviewed_commit"] != EXPECTED_REVIEWED_SOURCE_COMMIT:
+    if (
+        admission["reviewed_source"]["reviewed_commit"]
+        != EXPECTED_REVIEWED_SOURCE_COMMIT
+    ):
         raise PilotAdoptionError("admitted ADR source drift")
-    if admission["decision"]["git_blob_sha1"] != EXPECTED_DECISION_BLOB:
+    admitted_artifacts = {
+        row["path"]: row["git_blob_sha1"]
+        for row in admission["reviewed_source"]["artifacts"]
+    }
+    decision_path = "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"
+    standard_path = "standards/GCL-GHOS-00.md"
+    if admitted_artifacts[decision_path] != EXPECTED_DECISION_BLOB:
         raise PilotAdoptionError("admitted ADR blob drift")
-    if admission["standard"]["reviewed_commit"] != EXPECTED_REVIEWED_SOURCE_COMMIT:
-        raise PilotAdoptionError("admitted standard source drift")
-    if admission["standard"]["git_blob_sha1"] != EXPECTED_STANDARD_BLOB:
+    if admitted_artifacts[standard_path] != EXPECTED_STANDARD_BLOB:
         raise PilotAdoptionError("admitted standard blob drift")
 
     if (
         git_blob_sha1_at_commit(
             root=ROOT,
-            commit=admission["decision"]["reviewed_commit"],
-            relative_path=admission["decision"]["path"],
+            commit=admission["reviewed_source"]["reviewed_commit"],
+            relative_path=decision_path,
         )
         != EXPECTED_DECISION_BLOB
     ):
@@ -122,12 +128,26 @@ def validate_records(
     if (
         git_blob_sha1_at_commit(
             root=ROOT,
-            commit=admission["standard"]["reviewed_commit"],
-            relative_path=admission["standard"]["path"],
+            commit=admission["reviewed_source"]["reviewed_commit"],
+            relative_path=standard_path,
         )
         != EXPECTED_STANDARD_BLOB
     ):
         raise PilotAdoptionError("admitted standard Git identity drift")
+
+    if adoption["admission_gate_status"] != "complete":
+        raise PilotAdoptionError("selected admission adoption gate is not complete")
+    if admission["next_gate"]["status"] != "not_started":
+        raise PilotAdoptionError("immutable admission gate was rewritten")
+    if adoption["predecessor_adoption"] != {
+        "standard_version": "0.1.0",
+        "standards_commit": "31211b286a9c4a2874da5559118ef2f026f7de52",
+        "admission_path": "admissions/GCL-GHOS-00-0.1.0.json",
+        "admission_operation_id": "GI-AMEND-0001-STANDARDS-ADMISSION-001",
+        "status": "active",
+        "activation_date": "2026-08-03",
+    }:
+        raise PilotAdoptionError("0.1.0 adoption lineage drift")
 
     false_boundaries = {
         key: value
