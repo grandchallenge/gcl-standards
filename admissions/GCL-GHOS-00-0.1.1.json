@@ -1,0 +1,94 @@
+{
+  "$schema": "../schemas/standard_successor_admission.schema.json",
+  "schema_version": "1.0.0",
+  "operation_id": "GCL-GHOS-00-0.1.1-ADMISSION-001",
+  "status": "admitted",
+  "effective_condition": "protected_merge_of_this_exact_record",
+  "council_issue": {
+    "repository": "grandchallenge/gcl-standards",
+    "number": 35
+  },
+  "review_packet": {
+    "campaign_id": "GCL-STATUS-COHERENCE-001",
+    "subject_sha256": "77e353f18513c58182030bd678bd14f214f237d9d44b1fac4955c93c03f0976b",
+    "packet_sha256": "b39b2f3fab12089622ccba5072c89dd758128117b5426075658148b2b495e917",
+    "campaign_contract_sha256": "3614301da3b6cf55286c32e9012e701ec8b28577eaff0b6dd841ad0ee282ff5e",
+    "receipt_issue": "https://github.com/grandchallenge/gcl-standards/issues/38",
+    "receipt_path": "evidence/coherence-reviews/GCL-STATUS-COHERENCE-001-b39b2f3fab12.json",
+    "steward_authorization_url": "https://github.com/grandchallenge/gcl-standards/pull/36#issuecomment-5229806417"
+  },
+  "reviewed_source": {
+    "repository": "grandchallenge/gcl-standards",
+    "pull_request": 36,
+    "base_commit": "251d04bc7fba8bb4a6fb74a8374e408379ddc25f",
+    "reviewed_commit": "3a5ed516bb9ccb43e2d67e9270e1ec2a793e01ac",
+    "artifacts": [
+      {
+        "path": "README.md",
+        "git_blob_sha1": "d7e68ecd929691beb268417fdfcc7de660e84468"
+      },
+      {
+        "path": "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md",
+        "git_blob_sha1": "e4d61cfcc5e8ed330b350ab34323bb36a29fcd4c"
+      },
+      {
+        "path": "standards/GCL-GHOS-00.md",
+        "git_blob_sha1": "fd2651ba5036cf2455bf925dcd85364894d55726"
+      },
+      {
+        "path": "standards/history/GCL-GHOS-00-0.1.0.md",
+        "git_blob_sha1": "b93c57f1fb27bf2a017a4b90719290342424f6d5"
+      },
+      {
+        "path": "ci/status_coherence.py",
+        "git_blob_sha1": "b3c299bd8d75feec38e1d9a88fee1638ad38d264"
+      },
+      {
+        "path": "schemas/current_status_projection.schema.json",
+        "git_blob_sha1": "6f29f42cf9c298bd25d73956bdefc0e5cca484e6"
+      }
+    ]
+  },
+  "predecessor": {
+    "version": "0.1.0",
+    "admission_path": "admissions/GCL-GHOS-00-0.1.0.json",
+    "historical_standard_path": "standards/history/GCL-GHOS-00-0.1.0.md",
+    "historical_standard_git_blob_sha1": "b93c57f1fb27bf2a017a4b90719290342424f6d5"
+  },
+  "standard": {
+    "identifier": "GCL-GHOS-00",
+    "version": "0.1.1",
+    "status": "admitted",
+    "normative_body_sha256": "c9912acb0aacc186f93655e9e1b7938235954bb9466dcddf923cd601ed7bc2a3",
+    "normative_body_unchanged": true
+  },
+  "review_staffing": {
+    "acting_human_steward": "fyremael",
+    "adversary": {
+      "reviewer_id": "openai-gpt-5.6-sol-gcl-status-coherence-adversary-r7",
+      "session_id": "f986381c-eb5c-44ae-b7c9-965f47b409a6",
+      "record_ref": "https://github.com/grandchallenge/gcl-standards/issues/35#issuecomment-5229784645"
+    },
+    "referee": {
+      "reviewer_id": "codex-gpt5-gcl-status-coherence-referee-r7",
+      "session_id": "81596058-8c2c-4f06-b8ee-029939b4cdaf",
+      "record_ref": "https://github.com/grandchallenge/gcl-standards/issues/35#issuecomment-5229791794"
+    }
+  },
+  "next_gate": {
+    "operation": "MATH-PROGRAMME adoption",
+    "status": "not_started",
+    "programme": "grandchallenge/MATH-PROGRAMME"
+  },
+  "claim_boundaries": {
+    "programme_adoption_complete": false,
+    "organization_wide_conformance_authorized": false,
+    "constitutional_claim_authorized": false,
+    "production_claim_authorized": false,
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "novelty_claim_authorized": false,
+    "deployment_claim_authorized": false,
+    "commercial_claim_authorized": false
+  }
+}

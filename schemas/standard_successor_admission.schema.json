@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/standard-successor-admission-1.0.0.json",
+  "title": "GCL-GHOS documentary successor admission",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "operation_id",
+    "status",
+    "effective_condition",
+    "council_issue",
+    "review_packet",
+    "reviewed_source",
+    "predecessor",
+    "standard",
+    "review_staffing",
+    "next_gate",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {"const": "../schemas/standard_successor_admission.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "operation_id": {"const": "GCL-GHOS-00-0.1.1-ADMISSION-001"},
+    "status": {"const": "admitted"},
+    "effective_condition": {"const": "protected_merge_of_this_exact_record"},
+    "council_issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "number"],
+      "properties": {
+        "repository": {"const": "grandchallenge/gcl-standards"},
+        "number": {"const": 35}
+      }
+    },
+    "review_packet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "campaign_id",
+        "subject_sha256",
+        "packet_sha256",
+        "campaign_contract_sha256",
+        "receipt_issue",
+        "receipt_path",
+        "steward_authorization_url"
+      ],
+      "properties": {
+        "campaign_id": {"const": "GCL-STATUS-COHERENCE-001"},
+        "subject_sha256": {"const": "77e353f18513c58182030bd678bd14f214f237d9d44b1fac4955c93c03f0976b"},
+        "packet_sha256": {"const": "b39b2f3fab12089622ccba5072c89dd758128117b5426075658148b2b495e917"},
+        "campaign_contract_sha256": {"const": "3614301da3b6cf55286c32e9012e701ec8b28577eaff0b6dd841ad0ee282ff5e"},
+        "receipt_issue": {"const": "https://github.com/grandchallenge/gcl-standards/issues/38"},
+        "receipt_path": {"const": "evidence/coherence-reviews/GCL-STATUS-COHERENCE-001-b39b2f3fab12.json"},
+        "steward_authorization_url": {"const": "https://github.com/grandchallenge/gcl-standards/pull/36#issuecomment-5229806417"}
+      }
+    },
+    "reviewed_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "pull_request", "base_commit", "reviewed_commit", "artifacts"],
+      "properties": {
+        "repository": {"const": "grandchallenge/gcl-standards"},
+        "pull_request": {"const": 36},
+        "base_commit": {"const": "251d04bc7fba8bb4a6fb74a8374e408379ddc25f"},
+        "reviewed_commit": {"const": "3a5ed516bb9ccb43e2d67e9270e1ec2a793e01ac"},
+        "artifacts": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/sourceArtifact"}
+        }
+      }
+    },
+    "predecessor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "admission_path", "historical_standard_path", "historical_standard_git_blob_sha1"],
+      "properties": {
+        "version": {"const": "0.1.0"},
+        "admission_path": {"const": "admissions/GCL-GHOS-00-0.1.0.json"},
+        "historical_standard_path": {"const": "standards/history/GCL-GHOS-00-0.1.0.md"},
+        "historical_standard_git_blob_sha1": {"const": "b93c57f1fb27bf2a017a4b90719290342424f6d5"}
+      }
+    },
+    "standard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identifier", "version", "status", "normative_body_sha256", "normative_body_unchanged"],
+      "properties": {
+        "identifier": {"const": "GCL-GHOS-00"},
+        "version": {"const": "0.1.1"},
+        "status": {"const": "admitted"},
+        "normative_body_sha256": {"const": "c9912acb0aacc186f93655e9e1b7938235954bb9466dcddf923cd601ed7bc2a3"},
+        "normative_body_unchanged": {"const": true}
+      }
+    },
+    "review_staffing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["acting_human_steward", "adversary", "referee"],
+      "properties": {
+        "acting_human_steward": {"const": "fyremael"},
+        "adversary": {"$ref": "#/$defs/agentReview"},
+        "referee": {"$ref": "#/$defs/agentReview"}
+      }
+    },
+    "next_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation", "status", "programme"],
+      "properties": {
+        "operation": {"const": "MATH-PROGRAMME adoption"},
+        "status": {"const": "not_started"},
+        "programme": {"const": "grandchallenge/MATH-PROGRAMME"}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "programme_adoption_complete",
+        "organization_wide_conformance_authorized",
+        "constitutional_claim_authorized",
+        "production_claim_authorized",
+        "mathematical_claim_authorized",
+        "certification_claim_authorized",
+        "novelty_claim_authorized",
+        "deployment_claim_authorized",
+        "commercial_claim_authorized"
+      ],
+      "properties": {
+        "programme_adoption_complete": {"const": false},
+        "organization_wide_conformance_authorized": {"const": false},
+        "constitutional_claim_authorized": {"const": false},
+        "production_claim_authorized": {"const": false},
+        "mathematical_claim_authorized": {"const": false},
+        "certification_claim_authorized": {"const": false},
+        "novelty_claim_authorized": {"const": false},
+        "deployment_claim_authorized": {"const": false},
+        "commercial_claim_authorized": {"const": false}
+      }
+    }
+  },
+  "$defs": {
+    "sourceArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "git_blob_sha1"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "agentReview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewer_id", "session_id", "record_ref"],
+      "properties": {
+        "reviewer_id": {"type": "string", "minLength": 1},
+        "session_id": {"type": "string", "minLength": 1},
+        "record_ref": {"type": "string", "format": "uri"}
+      }
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "authority_boundary": "This receipt records separated agent findings and Human Steward authorization. It does not merge or activate the proposal; admission remains a separate reviewed pull request.",
+  "campaign_id": "GCL-STATUS-COHERENCE-001",
+  "human_steward": "fyremael",
+  "packet_sha256": "b39b2f3fab12089622ccba5072c89dd758128117b5426075658148b2b495e917",
+  "proposal_authors": [
+    "fyremael"
+  ],
+  "recorded_at": "2026-08-09T04:57:12Z",
+  "schema_version": "1.1.0",
+  "signoffs": [
+    {
+      "attestation_record": "https://github.com/grandchallenge/gcl-standards/issues/35#issuecomment-5229784645",
+      "attestation_sha256": "4c79333ba1ba4f7a3ae5ef5b302941bb8eaf5dc93630774c365deb57f8a9c321",
+      "authenticated_at": "2026-08-09T04:34:58Z",
+      "authentication_id": "f986381c-eb5c-44ae-b7c9-965f47b409a6",
+      "office": "adversary",
+      "reviewer": "openai-gpt-5.6-sol-gcl-status-coherence-adversary-r7",
+      "reviewer_kind": "agent",
+      "session_id": "f986381c-eb5c-44ae-b7c9-965f47b409a6"
+    },
+    {
+      "attestation_record": "https://github.com/grandchallenge/gcl-standards/issues/35#issuecomment-5229791794",
+      "attestation_sha256": "a2ef753917d2738eb7187855cfebf0fb796cdf5c93d4513de17934a491cf111a",
+      "authenticated_at": "2026-08-09T04:36:58Z",
+      "authentication_id": "81596058-8c2c-4f06-b8ee-029939b4cdaf",
+      "office": "referee",
+      "reviewer": "codex-gpt5-gcl-status-coherence-referee-r7",
+      "reviewer_kind": "agent",
+      "session_id": "81596058-8c2c-4f06-b8ee-029939b4cdaf"
+    },
+    {
+      "attestation_record": "https://github.com/grandchallenge/gcl-standards/pull/36#issuecomment-5229806417",
+      "attestation_sha256": "74af60b251635797cd70f5f2d5c063c997b80c174dcda6e7bd10fd5d31d7ae83",
+      "authenticated_at": "2026-08-09T04:46:46Z",
+      "authentication_id": "394977852",
+      "office": "human_steward",
+      "reviewer": "fyremael",
+      "reviewer_kind": "human",
+      "session_id": null
+    }
+  ],
+  "staffing_mode": "steward_supervised_agents",
+  "status": "complete",
+  "subjects": [
+    {
+      "head_sha": "e12716e743fb306e41a80ace0bcfc64f71adf086",
+      "pull_request": 52,
+      "repository": "grandchallenge/INTELLECT"
+    },
+    {
+      "head_sha": "3a5ed516bb9ccb43e2d67e9270e1ec2a793e01ac",
+      "pull_request": 36,
+      "repository": "grandchallenge/gcl-standards"
+    }
+  ]
+}
