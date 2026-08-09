@@ -11,6 +11,10 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 PROFILE_SCHEMA_PATH = ROOT / "schemas" / "repository_profile.schema.json"
+AETHER_EVIDENCE_PATH = (
+    ROOT / "evidence" / "settings-readback" / "GCL-AETHER-CONFORMANCE-001.json"
+)
+AETHER_EVIDENCE_SCHEMA_PATH = ROOT / "schemas" / "repository_controls_evidence.schema.json"
 REGRET_SCHEMA_PATH = ROOT / "schemas" / "regret_contract.schema.json"
 REGRET_TEMPLATE_PATH = ROOT / "templates" / "regret_contract.yaml"
 REGRET_ADOPTION_PATH = ROOT / "programme-adoption" / "REGRET-CONTRACT-1.0.0.yaml"
@@ -70,6 +74,61 @@ EXPECTED_REGRET_PROGRAMMES = {
 
 def load_json(path: Path) -> object:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def validate_aether_evidence() -> None:
+    schema = load_json(AETHER_EVIDENCE_SCHEMA_PATH)
+    evidence = load_json(AETHER_EVIDENCE_PATH)
+    jsonschema.Draft202012Validator.check_schema(schema)
+    jsonschema.validate(evidence, schema, format_checker=jsonschema.FormatChecker())
+
+    if evidence["repository"] != "grandchallenge/AETHER":
+        raise ValueError("AETHER evidence repository identity drift")
+    if evidence["protected_main_sha"] != evidence["source_pull_request"]["merge_sha"]:
+        raise ValueError("AETHER evidence is not bound to its protected merge")
+    if evidence["verifier"]["status"] != "passed" or evidence["verifier"]["blockers"]:
+        raise ValueError("AETHER readback failure cannot be admitted as conformance")
+
+    rulesets = {item["name"]: item for item in evidence["rulesets"]}
+    if set(rulesets) != {"Provider profile - main", "Immutable release tags"}:
+        raise ValueError("AETHER required ruleset identities drift")
+    branch = rulesets["Provider profile - main"]
+    if branch["target"] != "branch" or branch["include"] != ["~DEFAULT_BRANCH"]:
+        raise ValueError("AETHER default-branch ruleset scope drift")
+    expected_checks = {
+        "Required CI gate",
+        "Required Supply Chain gate",
+        "policy / policy",
+        "security / action-policy",
+    }
+    if set(branch["required_status_checks"]) != expected_checks:
+        raise ValueError("AETHER required status-check set drift")
+    if set(branch["rule_types"]) != {
+        "deletion",
+        "non_fast_forward",
+        "pull_request",
+        "required_status_checks",
+    }:
+        raise ValueError("AETHER default-branch rule set drift")
+    tag = rulesets["Immutable release tags"]
+    if (
+        tag["target"] != "tag"
+        or tag["include"] != ["refs/tags/*"]
+        or set(tag["rule_types"]) != {"deletion", "non_fast_forward"}
+    ):
+        raise ValueError("AETHER immutable-tag ruleset drift")
+    if any(item["bypass_actors"] for item in evidence["rulesets"]):
+        raise ValueError("AETHER ruleset bypass actors are forbidden")
+    if any(item["current_user_can_bypass"] != "never" for item in evidence["rulesets"]):
+        raise ValueError("AETHER rulesets must deny current-user bypass")
+
+    paths = [item["path"] for item in evidence["governed_surfaces"]]
+    if len(paths) != len(set(paths)):
+        raise ValueError("AETHER governed surface identity is duplicated")
+    if evidence["custom_properties"].get("claim_promotion_role") != "none":
+        raise ValueError("AETHER evidence may not promote claims")
+    if any(evidence["authority_boundaries"].values()):
+        raise ValueError("AETHER repository evidence may not widen authority")
 
 
 def load_yaml(path: Path) -> object:
@@ -341,6 +400,7 @@ def validate() -> None:
             raise ValueError(f"circular ADR sequence remains: {stale}")
 
     validate_regret_contract()
+    validate_aether_evidence()
 
 
 if __name__ == "__main__":

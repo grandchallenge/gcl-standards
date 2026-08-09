@@ -345,6 +345,40 @@ class StandardsValidationTests(unittest.TestCase):
         self.assertIsNone(adoption["standards_commit"])
         self.assertTrue(all(value is False for value in adoption["claim_boundaries"].values()))
 
+    def test_aether_exact_readback_is_admissible(self) -> None:
+        validate_module.validate_aether_evidence()
+
+    def test_aether_readback_failure_cannot_be_conformance(self) -> None:
+        evidence = json.loads(
+            validate_module.AETHER_EVIDENCE_PATH.read_text(encoding="utf-8")
+        )
+        broken = copy.deepcopy(evidence)
+        broken["verifier"]["status"] = "blocked"
+        broken["verifier"]["blockers"] = ["readback unavailable"]
+        schema = json.loads(
+            validate_module.AETHER_EVIDENCE_SCHEMA_PATH.read_text(encoding="utf-8")
+        )
+        with self.assertRaises(jsonschema.ValidationError):
+            jsonschema.validate(broken, schema)
+
+    def test_aether_ruleset_bypass_is_rejected(self) -> None:
+        evidence = json.loads(
+            validate_module.AETHER_EVIDENCE_PATH.read_text(encoding="utf-8")
+        )
+        broken = copy.deepcopy(evidence)
+        broken["rulesets"][0]["bypass_actors"] = [{"actor": "owner"}]
+        schema = json.loads(
+            validate_module.AETHER_EVIDENCE_SCHEMA_PATH.read_text(encoding="utf-8")
+        )
+        with self.assertRaises(jsonschema.ValidationError):
+            jsonschema.validate(broken, schema)
+
+    def test_aether_evidence_widens_no_authority(self) -> None:
+        evidence = json.loads(
+            validate_module.AETHER_EVIDENCE_PATH.read_text(encoding="utf-8")
+        )
+        self.assertFalse(any(evidence["authority_boundaries"].values()))
+
 
 if __name__ == "__main__":
     unittest.main()

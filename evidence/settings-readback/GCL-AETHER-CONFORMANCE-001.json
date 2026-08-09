@@ -1,0 +1,130 @@
+{
+  "schema_version": "gcl.repository-controls-evidence.v1",
+  "evidence_id": "GCL-AETHER-CONFORMANCE-001",
+  "repository": "grandchallenge/AETHER",
+  "captured_at": "2026-08-09T04:15:44.392204Z",
+  "protected_main_sha": "afb367f84454d18a646b13832b112365b7ca56c0",
+  "source_pull_request": {
+    "number": 59,
+    "reviewed_head_sha": "a48b5521c2c66206a638318c09207bb9d17e04f0",
+    "merge_sha": "afb367f84454d18a646b13832b112365b7ca56c0",
+    "url": "https://github.com/grandchallenge/AETHER/pull/59"
+  },
+  "control_plane": {
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "protected_merge_sha": "141c3ba0fc4b1f8341b0d1cbc6cea5a4f94b2271",
+    "stage": {
+      "run_id": 31294098397,
+      "url": "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/31294098397",
+      "canonical_evidence_sha256": "b4c96577110048ba6a1f8c87ea009c15f6055f8f0a93a3d4df7cf9d518d21e23",
+      "artifact_file_sha256": "ea42ab73f374cc1afa190bfc9ba4d7cfbfd39da9957982dda0a16fb61ba3bb95"
+    },
+    "retire": {
+      "run_id": 31294134563,
+      "url": "https://github.com/grandchallenge/MATH-PROGRAMME/actions/runs/31294134563",
+      "canonical_evidence_sha256": "059baa407bbb35f353bc04796791aa5de9ea6f26d39a77a02f3a8b6137bd43a0",
+      "artifact_file_sha256": "88d295c7d854c7cc3fd8ebac19f9e52193050151a90d085b60398ebb0c540502"
+    }
+  },
+  "governed_surfaces": [
+    { "path": ".github/CODEOWNERS", "git_blob_sha1": "89cedb64fcf96343c0e341e539f66207a2a076fa" },
+    { "path": ".github/repository-controls.json", "git_blob_sha1": "d3e14a455c72780957f6a576b521c30d46d476c8" },
+    { "path": ".github/workflows/gcl-conformance.yml", "git_blob_sha1": "87e3079e7cad80af8495ac046f5231129714a902" },
+    { "path": "scripts/verify_repository_controls.py", "git_blob_sha1": "8f4fd014cff0043e80e2152a6dcc507217c2d590" },
+    { "path": "SECURITY.md", "git_blob_sha1": "ecd40afaa73fc8252fbde177d64149e6e004cbd3" },
+    { "path": "SUPPORT.md", "git_blob_sha1": "5bc16fcc20b14a4c237be9033b80e8bee59014ed" }
+  ],
+  "default_branch_protection": {
+    "selected_model": "repository_ruleset",
+    "classic_readback_status": 404,
+    "classic_absent": true
+  },
+  "rulesets": [
+    {
+      "id": 20600649,
+      "name": "Provider profile - main",
+      "target": "branch",
+      "enforcement": "active",
+      "include": ["~DEFAULT_BRANCH"],
+      "exclude": [],
+      "bypass_actors": [],
+      "current_user_can_bypass": "never",
+      "rule_types": ["deletion", "non_fast_forward", "pull_request", "required_status_checks"],
+      "required_status_checks": ["Required CI gate", "Required Supply Chain gate", "policy / policy", "security / action-policy"],
+      "strict_required_status_checks_policy": true,
+      "do_not_enforce_on_create": false,
+      "pull_request": {
+        "allowed_merge_methods": ["merge", "squash"],
+        "dismiss_stale_reviews_on_push": true,
+        "require_code_owner_review": false,
+        "require_last_push_approval": false,
+        "required_approving_review_count": 0,
+        "required_review_thread_resolution": true
+      }
+    },
+    {
+      "id": 20600650,
+      "name": "Immutable release tags",
+      "target": "tag",
+      "enforcement": "active",
+      "include": ["refs/tags/*"],
+      "exclude": [],
+      "bypass_actors": [],
+      "current_user_can_bypass": "never",
+      "rule_types": ["deletion", "non_fast_forward"]
+    }
+  ],
+  "actions": {
+    "allowed_actions": "selected",
+    "sha_pinning_required": true,
+    "github_owned_allowed": true,
+    "verified_allowed": false,
+    "patterns_allowed": ["leanprover/*", "ossf/*", "raven-actions/actionlint@*", "azohra/shell-linter@*", "release-drafter/release-drafter@*", "zulip/github-actions-zulip@*"]
+  },
+  "repository_settings": {
+    "default_branch": "main",
+    "has_wiki": false,
+    "delete_branch_on_merge": true,
+    "allow_auto_merge": true,
+    "allow_merge_commit": true,
+    "allow_squash_merge": true,
+    "allow_rebase_merge": false
+  },
+  "custom_properties": {
+    "authority_scope": "provider",
+    "claim_promotion_role": "none",
+    "constitutional_profile": "Provider",
+    "public_programme": "true",
+    "risk_tier": "high",
+    "workflow_profile": "provider"
+  },
+  "security": {
+    "dependabot_security_updates": "enabled",
+    "secret_scanning": "enabled",
+    "secret_scanning_push_protection": "enabled",
+    "private_vulnerability_reporting": "enabled"
+  },
+  "verifier": {
+    "status": "passed",
+    "blockers": [],
+    "raw_evidence_sha256": "7249732d716edc8a862aa556ef48d3125bd2204858dd3696bc7be7a1838c574d"
+  },
+  "deviation": {
+    "id": "GCL-AETHER-LOCKED-CLASSIC-SEQUENCING-001",
+    "owner": "fyremael",
+    "expires_at": "2026-08-16T23:59:59Z",
+    "compensating_control": "The App staged and fully reread both active no-bypass rulesets while classic protection remained active, then cleared only the classic lock. PR 59 auto-merged after the four required contexts were green. Classic protection was retired in a separate exact-main run after both rulesets were reread.",
+    "next_review": "Review this record at gcl-standards admission and close AETHER issue 58 only after the protected admission merge.",
+    "status": "open"
+  },
+  "authority_boundaries": {
+    "organization_wide_conformance": false,
+    "constitutional_authority": false,
+    "production_authority": false,
+    "mathematical_authority": false,
+    "certification_authority": false,
+    "novelty_authority": false,
+    "deployment_authority": false,
+    "commercial_authority": false
+  }
+}
