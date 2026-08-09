@@ -25,15 +25,17 @@ adjudicate a claim through an accepted certification route.
 - `deprecations/` records compatibility and retirement boundaries.
 - `decisions/` contains one canonical file per cross-programme ADR.
 
-## Candidate standards
+## Shared standards
 
 ### GCL-GHOS-00
 
-[`GCL-GHOS-00`](standards/GCL-GHOS-00.md) is the candidate GitHub
-Constitutional Operating System. No programme is bound until its adoption
-record identifies an accepted revision and immutable commit. Its constitutional
-reconciliation depends on the applicable INTELLECT authority; merge and CI do
-not constitute ratification.
+[`GCL-GHOS-00`](standards/GCL-GHOS-00.md) is the admitted GitHub Constitutional
+Operating System. The exact admitted `0.1.0` source remains preserved at
+[`standards/history/GCL-GHOS-00-0.1.0.md`](standards/history/GCL-GHOS-00-0.1.0.md).
+Version `0.1.1` is a documentary-only successor whose selected status is
+resolved from its protected admission record. Programme adoption is recorded
+separately against that immutable admission identity. Merge, CI, registry
+custody, or front matter alone does not admit or adopt it.
 
 ### GCL-RC-00
 

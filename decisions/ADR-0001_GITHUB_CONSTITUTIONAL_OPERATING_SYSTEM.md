@@ -1,7 +1,9 @@
 # ADR-0001: Establish the GitHub Constitutional Operating System
 
 **Date:** 2026-07-29  
-**Status:** Proposed for successor exact-packet review  
+**Status:** Accepted
+**Accepted lineage:** `admissions/GCL-GHOS-00-0.1.0.json`
+**Documentary successor:** `GCL-GHOS-00` `0.1.1`; current selection resolved by exact admission record
 **Owner:** Amanuensis with Security and Referee review
 
 ## Context
@@ -18,9 +20,8 @@ branch-protection mechanisms, and a human-bound administrative token.
 
 ## Decision
 
-Adopt `GCL-GHOS-00` as the candidate cross-programme contract and validate the
-implementation through a mathematics pilot after constitutional and standards
-admission are complete.
+Adopt `GCL-GHOS-00` as the subordinate cross-programme contract and validate
+the implementation through an exact, separately recorded mathematics pilot.
 
 `gcl-standards` registers and publishes cross-programme standards admitted
 through the Grand Intellect constitutional process. It does not own
@@ -29,7 +30,7 @@ and records the exact admitted cross-programme revision it adopts.
 
 This decision is subordinate to the compact Constitution in
 `grandchallenge/INTELLECT`, its effective amendments, and INTELLECT's
-constitutional schedules. It is coordinated with proposed amendment
+constitutional schedules. It is coordinated with effective amendment
 `GI-AMEND-0001`. AETHER retains production semantic authority under Article IX.
 
 ## Non-negotiable boundaries
@@ -45,27 +46,27 @@ constitutional schedules. It is coordinated with proposed amendment
 - Programme adoption cannot precede constitutional activation or ADR
   acceptance.
 
-## Activation conditions
+## Historical acceptance and successor conditions
 
-This ADR becomes accepted only after:
+ADR-0001 was accepted through the protected `0.1.0` admission lineage after
+`GI-AMEND-0001` became effective. Those completed events are historical
+predecessors, not gates to repeat for this documentary successor.
 
-1. `GI-AMEND-0001` is ratified and effective at an exact INTELLECT commit;
-2. the constitutional review receipt for the successor exact packet is
-   admitted and binds the reviewed candidate `gcl-standards` revision;
-3. a non-author agent Adversary and a different non-author agent Referee have
-   approved that exact successor packet under `GI-STEWARD-0001`;
-4. the Human Steward has authorized the exact packet and the amendment
-   activation record is effective;
-5. validation and settings-readback evidence pass for the exact candidate
-   standard revision;
-6. exact INTELLECT and candidate `gcl-standards` identities are cross-recorded;
-   and
-7. no critical exception remains.
+Selection of the `0.1.1` documentary successor as the current standard is
+valid only when its protected admission proves that:
 
-MATH-PROGRAMME pilot adoption follows ADR acceptance and GCL-GHOS admission.
-It is not a prerequisite for this ADR to become accepted. Organization-wide
-activation or conformance claims remain blocked until the pilot adoption is
-recorded and its unresolved deviations are dispositioned.
+1. one exact source packet binds the corrective INTELLECT and
+   `gcl-standards` revisions;
+2. a non-author agent Adversary and a different non-author agent Referee approve
+   that exact packet;
+3. the named Human Steward authorizes that exact packet; and
+4. a protected `gcl-standards` admission record selects byte-identical reviewed
+   source blobs and records their predecessor lineage.
+
+MATH-PROGRAMME adoption follows the protected `0.1.1` admission. It does not
+retroactively accept this ADR or make `GI-AMEND-0001` effective. Organization-
+wide activation or conformance claims remain blocked until separately
+authorized evidence resolves their outstanding boundaries.
 
 The Adversary and Referee publish separate structured agent findings for one
 shared exact-revision packet. The Human Steward then supplies the sole human
@@ -89,25 +90,25 @@ record blocking findings.
 - Requiring programme adoption before ADR acceptance inverts programme and
   standards authority and creates a second cycle.
 
-## Transition sequence
+## Documentary successor sequence
 
 1. Prepare coordinated INTELLECT and `gcl-standards` corrective revisions.
 2. Bind their exact heads into a successor constitutional-review packet.
 3. Obtain fresh Adversary and distinct-session Referee approval.
-4. Obtain Human Steward authorization and admit the constitutional review
-   receipt.
-5. Activate `GI-AMEND-0001` at the reviewed INTELLECT and candidate standards
-   identities.
-6. Accept this ADR and admit GCL-GHOS through protected `gcl-standards`
-   integration.
-7. Record the exact MATH-PROGRAMME pilot adoption.
-8. Permit organization-wide activation or conformance claims only after the
-   pilot gate is complete.
+4. Obtain one exact-packet Human Steward authorization.
+5. Admit byte-identical reviewed `0.1.1` source blobs through protected
+   `gcl-standards` integration.
+6. Record the exact MATH-PROGRAMME adoption against that protected admission.
+7. Publish downstream descriptive projections from the effective amendment,
+   selected admission, and selected adoption records.
+8. Admit the exact coherence receipt only after cross-record validation reports
+   zero contradictions.
 
 ## Approval and effective version
 
-Human Steward approval is **pending**. Fresh non-author agent Adversary and
-distinct agent Referee review are **pending** for the successor packet under
-`GI-STEWARD-0001`. Authoring this correction, passing CI, or merging a
-preparatory branch does not constitute constitutional activation or ADR
-acceptance.
+ADR-0001 is accepted in the exact admitted `0.1.0` lineage. The `0.1.1`
+documentary successor requires its own exact source packet, distinct non-author
+agent Adversary and Referee findings, one authenticated Human Steward
+authorization, and a protected successor admission. Authoring this correction,
+passing CI, merging a preparatory branch, or changing this descriptive status
+does not itself admit `0.1.1`, adopt it for a programme, or widen any authority.

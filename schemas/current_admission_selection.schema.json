@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/current-admission-selection-1.0.0.json",
+  "title": "Selected current GCL-GHOS admission",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["operation_id", "path", "version", "status", "front_matter_status", "admission_commit_sha"],
+  "properties": {
+    "operation_id": {"type": "string", "minLength": 1},
+    "path": {"const": "admissions/GCL-GHOS-00-0.1.1.json"},
+    "version": {"const": "0.1.1"},
+    "status": {"const": "admitted"},
+    "front_matter_status": {"const": "admitted"},
+    "admission_commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+  }
+}

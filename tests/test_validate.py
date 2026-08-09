@@ -170,16 +170,20 @@ class StandardsValidationTests(unittest.TestCase):
         decision = (
             ROOT / "decisions" / "ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"
         ).read_text(encoding="utf-8")
-        self.assertIn("1. `GI-AMEND-0001` is ratified and effective", decision)
-        for ordinal in range(2, 8):
+        self.assertIn(
+            "ADR-0001 was accepted through the protected `0.1.0` admission lineage",
+            decision,
+        )
+        for ordinal in range(1, 9):
             self.assertIn(f"{ordinal}.", decision)
         self.assertIn(
-            "MATH-PROGRAMME pilot adoption follows ADR acceptance", decision
-        )
-        self.assertIn(
-            "It is not a prerequisite for this ADR to become accepted", decision
+            "MATH-PROGRAMME adoption follows the protected `0.1.1` admission",
+            decision,
         )
         self.assertNotIn("the mathematics pilot records its adoption commit", decision)
+        self.assertNotIn("This ADR becomes accepted only after:", decision)
+        self.assertNotIn("Activate `GI-AMEND-0001`", decision)
+        self.assertNotIn("Accept this ADR and admit GCL-GHOS", decision)
 
     def test_profile_cannot_name_standards_as_constitutional_source(self) -> None:
         schema = json.loads(

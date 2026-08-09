@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/standard-successor-lineage-1.0.0.json",
+  "title": "GCL standard successor lineage",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["predecessor_version", "predecessor_admission", "successor_version", "normative_body_sha256", "normative_body_unchanged"],
+  "properties": {
+    "predecessor_version": {"const": "0.1.0"},
+    "predecessor_admission": {"const": "admissions/GCL-GHOS-00-0.1.0.json"},
+    "successor_version": {"const": "0.1.1"},
+    "normative_body_sha256": {"const": "c9912acb0aacc186f93655e9e1b7938235954bb9466dcddf923cd601ed7bc2a3"},
+    "normative_body_unchanged": {"const": true}
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/current-programme-adoption-selection-1.0.0.json",
+  "title": "Selected current MATH-PROGRAMME adoption",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["programme", "path", "standard_version", "status", "commit_sha", "admission_commit_sha"],
+  "properties": {
+    "programme": {"const": "grandchallenge/MATH-PROGRAMME"},
+    "path": {"const": "programme-adoption/MATH-PROGRAMME.yaml"},
+    "standard_version": {"const": "0.1.1"},
+    "status": {"const": "active"},
+    "commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "admission_commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+  }
+}

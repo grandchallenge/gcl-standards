@@ -382,22 +382,32 @@ def validate() -> None:
         ROOT / "decisions" / "ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"
     ).read_text(encoding="utf-8")
     required_sequence = [
-        "**Status:** Proposed for successor exact-packet review",
-        "`GI-AMEND-0001` is ratified and effective at an exact INTELLECT commit",
-        "the constitutional review receipt for the successor exact packet",
-        "MATH-PROGRAMME pilot adoption follows ADR acceptance and GCL-GHOS admission",
-        "It is not a prerequisite for this ADR to become accepted",
+        "**Status:** Accepted",
+        "**Documentary successor:** `GCL-GHOS-00` `0.1.1`; current selection resolved by exact admission record",
+        "ADR-0001 was accepted through the protected `0.1.0` admission lineage",
+        "Selection of the `0.1.1` documentary successor as the current standard is",
+        "MATH-PROGRAMME adoption follows the protected `0.1.1` admission",
+        "Admit byte-identical reviewed `0.1.1` source blobs",
     ]
     for boundary in required_sequence:
         if boundary not in decision:
             raise ValueError(f"missing acyclic ADR boundary: {boundary}")
     forbidden_sequence = [
         "the mathematics pilot records its adoption commit",
-        "This ADR becomes accepted only after:\n\n1. `GI-AMEND-0001` is ratified and effective;\n2.",
+        "This ADR becomes accepted only after:",
+        "Activate `GI-AMEND-0001`",
+        "Accept this ADR and admit GCL-GHOS",
+        "selection pending exact-packet admission",
     ]
     for stale in forbidden_sequence:
         if stale in decision:
             raise ValueError(f"circular ADR sequence remains: {stale}")
+
+    from ghos_documentary_successor import validate as validate_ghos_successor
+    from status_coherence import validate_schemas as validate_status_schemas
+
+    validate_ghos_successor()
+    validate_status_schemas()
 
     validate_regret_contract()
     validate_aether_evidence()

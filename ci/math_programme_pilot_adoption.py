@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import hashlib
 import json
 import sys
 from pathlib import Path
@@ -10,6 +9,13 @@ import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
+CI_DIR = Path(__file__).resolve().parent
+if str(CI_DIR) not in sys.path:
+    sys.path.insert(0, str(CI_DIR))
+
+from git_content import git_blob_sha1_at_commit  # noqa: E402
+
+
 ADOPTION_PATH = ROOT / "programme-adoption" / "MATH-PROGRAMME.yaml"
 SCHEMA_PATH = ROOT / "schemas" / "math_programme_pilot_adoption.schema.json"
 ADMISSION_PATH = ROOT / "admissions" / "GCL-GHOS-00-0.1.0.json"
@@ -40,12 +46,6 @@ def load_json(path: Path) -> dict[str, object]:
     if not isinstance(value, dict):
         raise PilotAdoptionError(f"record must be an object: {path}")
     return value
-
-
-def git_blob_sha1(path: Path) -> str:
-    data = path.read_bytes()
-    header = f"blob {len(data)}\0".encode("ascii")
-    return hashlib.sha1(header + data).hexdigest()
 
 
 def validate_records(
@@ -110,10 +110,24 @@ def validate_records(
     if admission["standard"]["git_blob_sha1"] != EXPECTED_STANDARD_BLOB:
         raise PilotAdoptionError("admitted standard blob drift")
 
-    if git_blob_sha1(ROOT / admission["decision"]["path"]) != EXPECTED_DECISION_BLOB:
-        raise PilotAdoptionError("current ADR bytes differ from admitted blob")
-    if git_blob_sha1(ROOT / admission["standard"]["path"]) != EXPECTED_STANDARD_BLOB:
-        raise PilotAdoptionError("current standard bytes differ from admitted blob")
+    if (
+        git_blob_sha1_at_commit(
+            root=ROOT,
+            commit=admission["decision"]["reviewed_commit"],
+            relative_path=admission["decision"]["path"],
+        )
+        != EXPECTED_DECISION_BLOB
+    ):
+        raise PilotAdoptionError("admitted ADR Git identity drift")
+    if (
+        git_blob_sha1_at_commit(
+            root=ROOT,
+            commit=admission["standard"]["reviewed_commit"],
+            relative_path=admission["standard"]["path"],
+        )
+        != EXPECTED_STANDARD_BLOB
+    ):
+        raise PilotAdoptionError("admitted standard Git identity drift")
 
     false_boundaries = {
         key: value
