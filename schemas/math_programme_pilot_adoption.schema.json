@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://grandchallenge.ai/schemas/math-programme-gcl-ghos-pilot-adoption-1.0.0.json",
+  "$id": "https://grandchallenge.ai/schemas/math-programme-gcl-ghos-pilot-adoption-1.1.0.json",
   "title": "MATH-PROGRAMME GCL-GHOS pilot adoption",
   "type": "object",
   "additionalProperties": false,
@@ -42,8 +42,8 @@
         "effective_version": {"const": "1.1.0"},
         "amendment": {"const": "GI-AMEND-0001"},
         "amendment_status": {"const": "effective"},
-        "amendment_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
-        "documentary_closure_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "amendment_commit": {"const": "8d47ed8930d33253ae476c64dfec7c748185a535"},
+        "documentary_closure_commit": {"const": "d9c659f70490c328b9b4c068224136c02edc534c"},
         "review_receipt": {
           "type": "object",
           "additionalProperties": false,
@@ -58,17 +58,17 @@
           "properties": {
             "campaign_id": {"const": "GI-AMEND-0001"},
             "repository": {"const": "grandchallenge/INTELLECT"},
-            "path": {"type": "string", "pattern": "^governance/reviews/GI-AMEND-0001-[0-9a-f]{12}\\.json$"},
-            "commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
-            "admission_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
-            "packet_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+            "path": {"const": "governance/reviews/GI-AMEND-0001-22dbfa0ea0e6.json"},
+            "commit_sha": {"const": "8d47ed8930d33253ae476c64dfec7c748185a535"},
+            "admission_commit": {"const": "ad4eac22321f87c42d34884eca5405ffea250f75"},
+            "packet_sha256": {"const": "22dbfa0ea0e652161126dd4647477036b89e6c13ecbd9101cda60ce00e9f95c5"}
           }
         }
       }
     },
     "standard": {"const": "GCL-GHOS-00"},
-    "standard_version": {"const": "0.1.1"},
-    "standards_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "standard_version": {"const": "0.2.0"},
+    "standards_commit": {"const": "87307a0c1fe5ff19b34bb08451e7d6281a7d5dea"},
     "standard_admission": {
       "type": "object",
       "additionalProperties": false,
@@ -78,41 +78,52 @@
         "operation_id",
         "commit_sha",
         "reviewed_source_commit",
-        "decision_git_blob_sha1",
+        "admission_record_git_blob_sha1",
         "standard_git_blob_sha1",
-        "packet_sha256",
-        "receipt_path"
+        "adversary_record",
+        "referee_record",
+        "steward_authorization_url"
       ],
       "properties": {
         "repository": {"const": "grandchallenge/gcl-standards"},
-        "path": {"const": "admissions/GCL-GHOS-00-0.1.1.json"},
-        "operation_id": {"const": "GCL-GHOS-00-0.1.1-ADMISSION-001"},
-        "commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
-        "reviewed_source_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
-        "decision_git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
-        "standard_git_blob_sha1": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
-        "packet_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-        "receipt_path": {"const": "evidence/coherence-reviews/GCL-STATUS-COHERENCE-001-b39b2f3fab12.json"}
+        "path": {"const": "admissions/GCL-GHOS-00-0.2.0.json"},
+        "operation_id": {"const": "GCL-GHOS-00-0.2.0-ADMISSION-001"},
+        "commit_sha": {"const": "87307a0c1fe5ff19b34bb08451e7d6281a7d5dea"},
+        "reviewed_source_commit": {"const": "f416092f67c91ea4843fea12abe54c34b12242e5"},
+        "admission_record_git_blob_sha1": {"const": "1d1723f829f9d7fc5d92f3a44e518e849aaeda4a"},
+        "standard_git_blob_sha1": {"const": "fdb8c9575725281f73649f160cab6b7b01cd09e0"},
+        "adversary_record": {"const": "https://github.com/grandchallenge/gcl-standards/issues/51#issuecomment-5407279077"},
+        "referee_record": {"const": "https://github.com/grandchallenge/gcl-standards/issues/51#issuecomment-5407282717"},
+        "steward_authorization_url": {"const": "https://github.com/grandchallenge/gcl-standards/pull/52#issuecomment-5407284744"}
       }
     },
     "predecessor_adoption": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["standard_version", "standards_commit", "admission_path", "admission_operation_id", "status", "activation_date"],
+      "required": [
+        "standard_version",
+        "standards_commit",
+        "admission_path",
+        "admission_operation_id",
+        "adoption_commit",
+        "status",
+        "activation_date"
+      ],
       "properties": {
-        "standard_version": {"const": "0.1.0"},
-        "standards_commit": {"const": "31211b286a9c4a2874da5559118ef2f026f7de52"},
-        "admission_path": {"const": "admissions/GCL-GHOS-00-0.1.0.json"},
-        "admission_operation_id": {"const": "GI-AMEND-0001-STANDARDS-ADMISSION-001"},
+        "standard_version": {"const": "0.1.1"},
+        "standards_commit": {"const": "5c4e73e55d362a5198b9076ead694909a5e0ebf3"},
+        "admission_path": {"const": "admissions/GCL-GHOS-00-0.1.1.json"},
+        "admission_operation_id": {"const": "GCL-GHOS-00-0.1.1-ADMISSION-001"},
+        "adoption_commit": {"const": "c39aab2bfbb2725accd18d69a0daea7fe96a0eee"},
         "status": {"const": "active"},
-        "activation_date": {"const": "2026-08-03"}
+        "activation_date": {"const": "2026-08-09"}
       }
     },
     "status": {"const": "active"},
     "admission_gate_status": {"const": "complete"},
     "decision_ref": {"const": "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"},
     "decision_status": {"const": "accepted"},
-    "activation_date": {"const": "2026-08-09"},
+    "activation_date": {"const": "2026-08-25"},
     "pilot_scope": {
       "type": "array",
       "minItems": 3,
