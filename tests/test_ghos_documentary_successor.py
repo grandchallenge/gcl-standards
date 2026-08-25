@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import subprocess
 import tempfile
 import unittest
@@ -23,17 +24,22 @@ class GhosDocumentarySuccessorTests(unittest.TestCase):
         historical_011: str | None = None,
         current: str | None = None,
         readme: str | None = None,
+        admission: dict[str, object] | None = None,
     ):
         historical_010 = MODULE.HISTORICAL_STANDARD_010.read_text(encoding="utf-8")
         base_historical_011 = MODULE.HISTORICAL_STANDARD_011.read_text(encoding="utf-8")
         base_current = MODULE.CURRENT_STANDARD.read_text(encoding="utf-8")
         adr = MODULE.ADR.read_text(encoding="utf-8")
         base_readme = MODULE.README.read_text(encoding="utf-8")
+        base_admission = json.loads(MODULE.ADMISSION_020.read_text(encoding="utf-8"))
+        schema = MODULE.ADMISSION_SCHEMA.read_text(encoding="utf-8")
 
         temporary = tempfile.TemporaryDirectory()
         root = Path(temporary.name)
         (root / "standards" / "history").mkdir(parents=True)
         (root / "decisions").mkdir()
+        (root / "admissions").mkdir()
+        (root / "schemas").mkdir()
         (root / "standards" / "history" / "GCL-GHOS-00-0.1.0.md").write_text(
             historical_010, encoding="utf-8", newline="\n"
         )
@@ -55,12 +61,20 @@ class GhosDocumentarySuccessorTests(unittest.TestCase):
             encoding="utf-8",
             newline="\n",
         )
+        (root / "admissions" / "GCL-GHOS-00-0.2.0.json").write_text(
+            json.dumps(base_admission if admission is None else admission, indent=2) + "\n",
+            encoding="utf-8",
+            newline="\n",
+        )
+        (root / "schemas" / "standard_normative_successor_admission.schema.json").write_text(
+            schema, encoding="utf-8", newline="\n"
+        )
         subprocess.run(
             ["git", "init", "--quiet"], cwd=root, check=True, capture_output=True
         )
         return temporary, root
 
-    def test_exact_normative_successor_candidate_validates(self) -> None:
+    def test_exact_reviewed_source_admission_validates(self) -> None:
         MODULE.validate()
 
     def test_missing_execution_continuity_boundary_is_rejected(self) -> None:
@@ -88,14 +102,39 @@ class GhosDocumentarySuccessorTests(unittest.TestCase):
             ):
                 MODULE.validate(root=root)
 
-    def test_premature_020_activation_is_rejected(self) -> None:
-        readme = MODULE.README.read_text(encoding="utf-8").replace(
-            "A `0.2.0` normative successor is currently candidate-only.",
-            "Version `0.2.0` is admitted.",
+    def test_reviewed_020_source_blob_drift_is_rejected(self) -> None:
+        current = MODULE.CURRENT_STANDARD.read_text(encoding="utf-8") + "\n"
+        temporary, root = self._fixture(current=current)
+        with temporary:
+            with self.assertRaisesRegex(
+                MODULE.DocumentarySuccessorError,
+                "reviewed 0.2.0 standard source blob drift",
+            ):
+                MODULE.validate(root=root)
+
+    def test_referee_and_adversary_sessions_must_be_distinct(self) -> None:
+        admission = json.loads(MODULE.ADMISSION_020.read_text(encoding="utf-8"))
+        admission["review_staffing"]["referee"]["session_id"] = admission[
+            "review_staffing"
+        ]["adversary"]["session_id"]
+        temporary, root = self._fixture(admission=admission)
+        with temporary:
+            with self.assertRaisesRegex(
+                MODULE.DocumentarySuccessorError,
+                "sessions must be distinct",
+            ):
+                MODULE.validate(root=root)
+
+    def test_programme_adoption_cannot_be_prematurely_promoted(self) -> None:
+        readme = MODULE.README.read_text(encoding="utf-8") + (
+            "\nMATH-PROGRAMME actively adopts `0.2.0`.\n"
         )
         temporary, root = self._fixture(readme=readme)
         with temporary:
-            with self.assertRaises(MODULE.DocumentarySuccessorError):
+            with self.assertRaisesRegex(
+                MODULE.DocumentarySuccessorError,
+                "prematurely promotes 0.2.0",
+            ):
                 MODULE.validate(root=root)
 
 
