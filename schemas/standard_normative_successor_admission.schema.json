@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/standard-normative-successor-admission-1.0.0.json",
+  "title": "GCL-GHOS normative successor admission",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "operation_id",
+    "status",
+    "effective_condition",
+    "council_issue",
+    "review_packet",
+    "reviewed_source",
+    "predecessor",
+    "standard",
+    "review_staffing",
+    "next_gate",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {"const": "../schemas/standard_normative_successor_admission.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "operation_id": {"const": "GCL-GHOS-00-0.2.0-ADMISSION-001"},
+    "status": {"const": "admitted"},
+    "effective_condition": {"const": "protected_merge_of_this_exact_record"},
+    "council_issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "number"],
+      "properties": {
+        "repository": {"const": "grandchallenge/gcl-standards"},
+        "number": {"const": 51}
+      }
+    },
+    "review_packet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_pull_request",
+        "reviewed_commit",
+        "protected_base",
+        "standards_policy_run",
+        "gcl_conformance_run",
+        "adversary_record",
+        "referee_record",
+        "steward_authorization_url"
+      ],
+      "properties": {
+        "source_pull_request": {"const": 52},
+        "reviewed_commit": {"const": "f416092f67c91ea4843fea12abe54c34b12242e5"},
+        "protected_base": {"const": "e5e04e8a6675c3fd2457fbe950f5bcfa5a1d02ed"},
+        "standards_policy_run": {"const": 32813258757},
+        "gcl_conformance_run": {"const": 32813259070},
+        "adversary_record": {"const": "https://github.com/grandchallenge/gcl-standards/issues/51#issuecomment-5407279077"},
+        "referee_record": {"const": "https://github.com/grandchallenge/gcl-standards/issues/51#issuecomment-5407282717"},
+        "steward_authorization_url": {"const": "https://github.com/grandchallenge/gcl-standards/pull/52#issuecomment-5407284744"}
+      }
+    },
+    "reviewed_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "path", "reviewed_commit", "git_blob_sha1"],
+      "properties": {
+        "repository": {"const": "grandchallenge/gcl-standards"},
+        "path": {"const": "standards/GCL-GHOS-00.md"},
+        "reviewed_commit": {"const": "f416092f67c91ea4843fea12abe54c34b12242e5"},
+        "git_blob_sha1": {"const": "fdb8c9575725281f73649f160cab6b7b01cd09e0"}
+      }
+    },
+    "predecessor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "admission_path", "historical_standard_path", "historical_standard_git_blob_sha1"],
+      "properties": {
+        "version": {"const": "0.1.1"},
+        "admission_path": {"const": "admissions/GCL-GHOS-00-0.1.1.json"},
+        "historical_standard_path": {"const": "standards/history/GCL-GHOS-00-0.1.1.md"},
+        "historical_standard_git_blob_sha1": {"const": "fd2651ba5036cf2455bf925dcd85364894d55726"}
+      }
+    },
+    "standard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identifier", "version", "status", "normative_change"],
+      "properties": {
+        "identifier": {"const": "GCL-GHOS-00"},
+        "version": {"const": "0.2.0"},
+        "status": {"const": "admitted"},
+        "normative_change": {"const": "bounded_execution_continuity"}
+      }
+    },
+    "review_staffing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["acting_human_steward", "adversary", "referee"],
+      "properties": {
+        "acting_human_steward": {"const": "fyremael"},
+        "adversary": {"$ref": "#/$defs/agentReview"},
+        "referee": {"$ref": "#/$defs/agentReview"}
+      }
+    },
+    "next_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation", "status", "programme"],
+      "properties": {
+        "operation": {"const": "MATH-PROGRAMME adoption"},
+        "status": {"const": "not_started"},
+        "programme": {"const": "grandchallenge/MATH-PROGRAMME"}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "programme_adoption_complete",
+        "organization_wide_conformance_authorized",
+        "constitutional_claim_authorized",
+        "production_claim_authorized",
+        "mathematical_claim_authorized",
+        "certification_claim_authorized",
+        "novelty_claim_authorized",
+        "deployment_claim_authorized",
+        "commercial_claim_authorized"
+      ],
+      "properties": {
+        "programme_adoption_complete": {"const": false},
+        "organization_wide_conformance_authorized": {"const": false},
+        "constitutional_claim_authorized": {"const": false},
+        "production_claim_authorized": {"const": false},
+        "mathematical_claim_authorized": {"const": false},
+        "certification_claim_authorized": {"const": false},
+        "novelty_claim_authorized": {"const": false},
+        "deployment_claim_authorized": {"const": false},
+        "commercial_claim_authorized": {"const": false}
+      }
+    }
+  },
+  "$defs": {
+    "agentReview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewer_id", "session_id", "record_ref"],
+      "properties": {
+        "reviewer_id": {"type": "string", "minLength": 1},
+        "session_id": {"type": "string", "minLength": 1},
+        "record_ref": {"type": "string", "format": "uri"}
+      }
+    }
+  }
+}
