@@ -30,12 +30,17 @@ adjudicate a claim through an accepted certification route.
 ### GCL-GHOS-00
 
 [`GCL-GHOS-00`](standards/GCL-GHOS-00.md) is the admitted GitHub Constitutional
-Operating System. The exact admitted `0.1.0` source remains preserved at
-[`standards/history/GCL-GHOS-00-0.1.0.md`](standards/history/GCL-GHOS-00-0.1.0.md).
-Version `0.1.1` is a documentary-only successor whose selected status is
-resolved from its protected admission record. Programme adoption is recorded
-separately against that immutable admission identity. Merge, CI, registry
-custody, or front matter alone does not admit or adopt it.
+Operating System. Version `0.1.1` remains the currently admitted and selected
+revision through its protected admission record and active programme-adoption
+records. Its exact admitted source is preserved at
+[`standards/history/GCL-GHOS-00-0.1.1.md`](standards/history/GCL-GHOS-00-0.1.1.md),
+with the admitted `0.1.0` source retained as the earlier historical predecessor.
+
+A `0.2.0` normative successor is currently candidate-only. It adds a bounded
+execution continuity invariant for recoverable operational failures. Candidate
+source preparation, CI, review requests, registry custody, or front matter do
+not admit or adopt that successor. Protected successor admission and each
+programme's exact adoption remain separate later gates.
 
 ### GCL-RC-00
 
