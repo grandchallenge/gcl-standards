@@ -13,12 +13,14 @@ if str(CI_DIR) not in sys.path:
 from git_content import git_blob_sha1  # noqa: E402
 
 
-HISTORICAL_STANDARD = ROOT / "standards" / "history" / "GCL-GHOS-00-0.1.0.md"
+HISTORICAL_STANDARD_010 = ROOT / "standards" / "history" / "GCL-GHOS-00-0.1.0.md"
+HISTORICAL_STANDARD_011 = ROOT / "standards" / "history" / "GCL-GHOS-00-0.1.1.md"
 CURRENT_STANDARD = ROOT / "standards" / "GCL-GHOS-00.md"
 ADR = ROOT / "decisions" / "ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"
 README = ROOT / "README.md"
-EXPECTED_HISTORICAL_BLOB = "b93c57f1fb27bf2a017a4b90719290342424f6d5"
-EXPECTED_NORMATIVE_SHA256 = (
+EXPECTED_HISTORICAL_010_BLOB = "b93c57f1fb27bf2a017a4b90719290342424f6d5"
+EXPECTED_HISTORICAL_011_BLOB = "fd2651ba5036cf2455bf925dcd85364894d55726"
+EXPECTED_011_NORMATIVE_SHA256 = (
     "c9912acb0aacc186f93655e9e1b7938235954bb9466dcddf923cd601ed7bc2a3"
 )
 
@@ -36,34 +38,55 @@ def normative_body(text: str) -> bytes:
 
 
 def validate(*, root: Path = ROOT) -> None:
-    historical = root / "standards" / "history" / "GCL-GHOS-00-0.1.0.md"
+    historical_010 = root / "standards" / "history" / "GCL-GHOS-00-0.1.0.md"
+    historical_011 = root / "standards" / "history" / "GCL-GHOS-00-0.1.1.md"
     current = root / "standards" / "GCL-GHOS-00.md"
     adr = root / "decisions" / "ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"
     readme = root / "README.md"
 
-    if git_blob_sha1(historical, root=root) != EXPECTED_HISTORICAL_BLOB:
+    if git_blob_sha1(historical_010, root=root) != EXPECTED_HISTORICAL_010_BLOB:
         raise DocumentarySuccessorError("historical 0.1.0 Git blob identity drift")
+    if git_blob_sha1(historical_011, root=root) != EXPECTED_HISTORICAL_011_BLOB:
+        raise DocumentarySuccessorError("historical 0.1.1 Git blob identity drift")
 
-    historical_body = normative_body(historical.read_text(encoding="utf-8"))
+    body_010 = normative_body(historical_010.read_text(encoding="utf-8"))
+    text_011 = historical_011.read_text(encoding="utf-8")
+    body_011 = normative_body(text_011)
+    if body_010 != body_011:
+        raise DocumentarySuccessorError("admitted 0.1.1 normative body differs from 0.1.0")
+    if hashlib.sha256(body_011).hexdigest() != EXPECTED_011_NORMATIVE_SHA256:
+        raise DocumentarySuccessorError("admitted 0.1.1 normative body digest drift")
+    if "### Bounded execution continuity" in text_011:
+        raise DocumentarySuccessorError("historical 0.1.1 was silently rewritten")
+
     current_text = current.read_text(encoding="utf-8")
     current_body = normative_body(current_text)
-    if historical_body != current_body:
-        raise DocumentarySuccessorError("0.1.1 normative body differs from 0.1.0")
-    if hashlib.sha256(current_body).hexdigest() != EXPECTED_NORMATIVE_SHA256:
-        raise DocumentarySuccessorError("GCL-GHOS normative body digest drift")
+    if current_body == body_011:
+        raise DocumentarySuccessorError("0.2.0 candidate does not contain a normative change")
 
     for required in (
-        "**Version:** 0.1.1",
-        "**Status:** Admitted documentary successor; effective only when selected by a protected admission record",
-        "**Predecessor admission:** `admissions/GCL-GHOS-00-0.1.0.json`",
+        "**Version:** 0.2.0",
+        "**Status:** Candidate normative successor; no effect until protected successor admission and programme adoption",
+        "**Predecessor admission:** `admissions/GCL-GHOS-00-0.1.1.json`",
+        "**Historical predecessor:** `standards/history/GCL-GHOS-00-0.1.1.md`",
         "**Admission authority:** exact protected `gcl-standards` admission record",
         "**Adoption authority:** exact programme-owned adoption record",
+        "### Bounded execution continuity",
+        "A recoverable platform, connector,",
+        "tooling failure does not by\nitself constitute an authority boundary.",
+        "Fail-closed behavior applies to authority, admission, certification, promotion,",
+        "It SHALL NOT be\ninterpreted as requiring premature abandonment of authorized evidence gathering,",
+        "Evidence from a\nsuperseded artifact, revision, run, job, or other identity SHALL NOT be reused as\ncurrent evidence.",
+        "Programme-owned policy MAY define concrete recovery ladders",
+        "Version `0.2.0` is a normative successor candidate to the protected `0.1.1`",
+        "Programme adoption of `0.2.0`\nis a later, separate, exact, programme-owned decision.",
     ):
         if required not in current_text:
-            raise DocumentarySuccessorError(f"missing 0.1.1 documentary field: {required}")
+            raise DocumentarySuccessorError(
+                f"missing 0.2.0 bounded-execution-continuity field: {required}"
+            )
 
     adr_text = adr.read_text(encoding="utf-8")
-    readme_text = readme.read_text(encoding="utf-8")
     if "**Status:** Accepted" not in adr_text:
         raise DocumentarySuccessorError("ADR-0001 current status is not accepted")
     if "Human Steward approval is **pending**" in adr_text:
@@ -78,32 +101,25 @@ def validate(*, root: Path = ROOT) -> None:
             raise DocumentarySuccessorError(
                 f"ADR-0001 retains stale prospective status: {stale_assertion}"
             )
-    for required in (
-        "ADR-0001 was accepted through the protected `0.1.0` admission lineage",
-        "Selection of the `0.1.1` documentary successor as the current standard is",
-        "MATH-PROGRAMME adoption follows the protected `0.1.1` admission",
-        "Admit byte-identical reviewed `0.1.1` source blobs",
-    ):
-        if required not in adr_text:
-            raise DocumentarySuccessorError(
-                f"ADR-0001 successor sequence is incomplete: {required}"
-            )
-    if "does not itself admit `0.1.1`" not in adr_text:
-        raise DocumentarySuccessorError("0.1.1 admission boundary is missing")
 
-    required_readme = (
-        "selected status is\nresolved from its protected admission record. "
-        "Programme adoption is recorded\nseparately against that immutable admission identity."
-    )
-    if required_readme not in readme_text:
-        raise DocumentarySuccessorError("README current-status projection is not time-stable")
-    for stale_assertion in (
-        "prepared for exact-packet",
-        "becomes selected only through",
+    readme_text = readme.read_text(encoding="utf-8")
+    for required in (
+        "Version `0.1.1` remains the currently admitted and selected",
+        "A `0.2.0` normative successor is currently candidate-only.",
+        "do not admit or adopt that successor.",
     ):
-        if stale_assertion in readme_text:
+        if required not in readme_text:
             raise DocumentarySuccessorError(
-                f"README retains stale prospective status: {stale_assertion}"
+                f"README successor projection is incomplete: {required}"
+            )
+    for forbidden in (
+        "Version `0.2.0` is admitted",
+        "Version `0.2.0` is the currently admitted",
+        "0.2.0 adoption is active",
+    ):
+        if forbidden in readme_text:
+            raise DocumentarySuccessorError(
+                f"README prematurely activates 0.2.0: {forbidden}"
             )
 
 
@@ -111,6 +127,6 @@ if __name__ == "__main__":
     try:
         validate()
     except Exception as exc:
-        print(f"documentary successor validation failed: {exc}", file=sys.stderr)
+        print(f"GCL-GHOS successor validation failed: {exc}", file=sys.stderr)
         raise SystemExit(1) from exc
-    print("GCL-GHOS 0.1.1 documentary successor validation passed")
+    print("GCL-GHOS 0.2.0 bounded execution continuity candidate validation passed")
