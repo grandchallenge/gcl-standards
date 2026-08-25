@@ -1,0 +1,68 @@
+{
+  "$schema": "../schemas/standard_normative_successor_admission.schema.json",
+  "schema_version": "1.0.0",
+  "operation_id": "GCL-GHOS-00-0.2.0-ADMISSION-001",
+  "status": "admitted",
+  "effective_condition": "protected_merge_of_this_exact_record",
+  "council_issue": {
+    "repository": "grandchallenge/gcl-standards",
+    "number": 51
+  },
+  "review_packet": {
+    "source_pull_request": 52,
+    "reviewed_commit": "f416092f67c91ea4843fea12abe54c34b12242e5",
+    "protected_base": "e5e04e8a6675c3fd2457fbe950f5bcfa5a1d02ed",
+    "standards_policy_run": 32813258757,
+    "gcl_conformance_run": 32813259070,
+    "adversary_record": "https://github.com/grandchallenge/gcl-standards/issues/51#issuecomment-5407279077",
+    "referee_record": "https://github.com/grandchallenge/gcl-standards/issues/51#issuecomment-5407282717",
+    "steward_authorization_url": "https://github.com/grandchallenge/gcl-standards/pull/52#issuecomment-5407284744"
+  },
+  "reviewed_source": {
+    "repository": "grandchallenge/gcl-standards",
+    "path": "standards/GCL-GHOS-00.md",
+    "reviewed_commit": "f416092f67c91ea4843fea12abe54c34b12242e5",
+    "git_blob_sha1": "fdb8c9575725281f73649f160cab6b7b01cd09e0"
+  },
+  "predecessor": {
+    "version": "0.1.1",
+    "admission_path": "admissions/GCL-GHOS-00-0.1.1.json",
+    "historical_standard_path": "standards/history/GCL-GHOS-00-0.1.1.md",
+    "historical_standard_git_blob_sha1": "fd2651ba5036cf2455bf925dcd85364894d55726"
+  },
+  "standard": {
+    "identifier": "GCL-GHOS-00",
+    "version": "0.2.0",
+    "status": "admitted",
+    "normative_change": "bounded_execution_continuity"
+  },
+  "review_staffing": {
+    "acting_human_steward": "fyremael",
+    "adversary": {
+      "reviewer_id": "openai-gpt-5.6-sol-gcl-ghos-020-adversary-r1",
+      "session_id": "f690cbf3-ea51-4cb1-97e7-2665cdca2eb6",
+      "record_ref": "https://github.com/grandchallenge/gcl-standards/issues/51#issuecomment-5407279077"
+    },
+    "referee": {
+      "reviewer_id": "openai-gpt-5.6-sol-gcl-ghos-020-referee-r1",
+      "session_id": "212558b4-c096-400f-adf0-d1021665f637",
+      "record_ref": "https://github.com/grandchallenge/gcl-standards/issues/51#issuecomment-5407282717"
+    }
+  },
+  "next_gate": {
+    "operation": "MATH-PROGRAMME adoption",
+    "status": "not_started",
+    "programme": "grandchallenge/MATH-PROGRAMME"
+  },
+  "claim_boundaries": {
+    "programme_adoption_complete": false,
+    "organization_wide_conformance_authorized": false,
+    "constitutional_claim_authorized": false,
+    "production_claim_authorized": false,
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "novelty_claim_authorized": false,
+    "deployment_claim_authorized": false,
+    "commercial_claim_authorized": false
+  }
+}
