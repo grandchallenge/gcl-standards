@@ -17,108 +17,85 @@ SPEC.loader.exec_module(MODULE)
 
 
 class GhosDocumentarySuccessorTests(unittest.TestCase):
-    def test_exact_documentary_successor_validates(self) -> None:
+    def _fixture(
+        self,
+        *,
+        historical_011: str | None = None,
+        current: str | None = None,
+        readme: str | None = None,
+    ):
+        historical_010 = MODULE.HISTORICAL_STANDARD_010.read_text(encoding="utf-8")
+        base_historical_011 = MODULE.HISTORICAL_STANDARD_011.read_text(encoding="utf-8")
+        base_current = MODULE.CURRENT_STANDARD.read_text(encoding="utf-8")
+        adr = MODULE.ADR.read_text(encoding="utf-8")
+        base_readme = MODULE.README.read_text(encoding="utf-8")
+
+        temporary = tempfile.TemporaryDirectory()
+        root = Path(temporary.name)
+        (root / "standards" / "history").mkdir(parents=True)
+        (root / "decisions").mkdir()
+        (root / "standards" / "history" / "GCL-GHOS-00-0.1.0.md").write_text(
+            historical_010, encoding="utf-8", newline="\n"
+        )
+        (root / "standards" / "history" / "GCL-GHOS-00-0.1.1.md").write_text(
+            base_historical_011 if historical_011 is None else historical_011,
+            encoding="utf-8",
+            newline="\n",
+        )
+        (root / "standards" / "GCL-GHOS-00.md").write_text(
+            base_current if current is None else current,
+            encoding="utf-8",
+            newline="\n",
+        )
+        (root / "decisions" / "ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md").write_text(
+            adr, encoding="utf-8", newline="\n"
+        )
+        (root / "README.md").write_text(
+            base_readme if readme is None else readme,
+            encoding="utf-8",
+            newline="\n",
+        )
+        subprocess.run(
+            ["git", "init", "--quiet"], cwd=root, check=True, capture_output=True
+        )
+        return temporary, root
+
+    def test_exact_normative_successor_candidate_validates(self) -> None:
         MODULE.validate()
 
-    def test_normative_body_change_is_rejected(self) -> None:
-        historical = MODULE.HISTORICAL_STANDARD.read_text(encoding="utf-8")
-        current = MODULE.CURRENT_STANDARD.read_text(encoding="utf-8")
-        adr = MODULE.ADR.read_text(encoding="utf-8")
-        readme = MODULE.README.read_text(encoding="utf-8")
-        with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
-            (root / "standards" / "history").mkdir(parents=True)
-            (root / "decisions").mkdir()
-            (root / "README.md").write_text(readme, encoding="utf-8", newline="\n")
-            (root / "standards" / "history" / "GCL-GHOS-00-0.1.0.md").write_text(
-                historical, encoding="utf-8", newline="\n"
-            )
-            (root / "standards" / "GCL-GHOS-00.md").write_text(
-                current.replace(
-                    "It is a subordinate operating standard, not a constitution.",
-                    "It is the constitution.",
-                ),
-                encoding="utf-8",
-                newline="\n",
-            )
-            (root / "decisions" / "ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md").write_text(
-                adr, encoding="utf-8", newline="\n"
-            )
-            subprocess.run(
-                ["git", "init", "--quiet"], cwd=root, check=True, capture_output=True
-            )
+    def test_missing_execution_continuity_boundary_is_rejected(self) -> None:
+        current = MODULE.CURRENT_STANDARD.read_text(encoding="utf-8").replace(
+            "tooling failure does not by\nitself constitute an authority boundary.",
+            "tooling failure may terminate execution.",
+        )
+        temporary, root = self._fixture(current=current)
+        with temporary:
             with self.assertRaisesRegex(
                 MODULE.DocumentarySuccessorError,
-                "normative body differs",
+                "bounded-execution-continuity",
             ):
                 MODULE.validate(root=root)
 
-    def test_stale_prospective_adr_status_is_rejected(self) -> None:
-        historical = MODULE.HISTORICAL_STANDARD.read_text(encoding="utf-8")
-        current = MODULE.CURRENT_STANDARD.read_text(encoding="utf-8")
-        adr = MODULE.ADR.read_text(encoding="utf-8")
-        readme = MODULE.README.read_text(encoding="utf-8")
-        with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
-            (root / "standards" / "history").mkdir(parents=True)
-            (root / "decisions").mkdir()
-            (root / "README.md").write_text(readme, encoding="utf-8", newline="\n")
-            (root / "standards" / "history" / "GCL-GHOS-00-0.1.0.md").write_text(
-                historical, encoding="utf-8", newline="\n"
-            )
-            (root / "standards" / "GCL-GHOS-00.md").write_text(
-                current, encoding="utf-8", newline="\n"
-            )
-            (root / "decisions" / "ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md").write_text(
-                adr.replace(
-                    "ADR-0001 was accepted through the protected `0.1.0` admission lineage",
-                    "This ADR becomes accepted only after:",
-                ),
-                encoding="utf-8",
-                newline="\n",
-            )
-            subprocess.run(
-                ["git", "init", "--quiet"], cwd=root, check=True, capture_output=True
-            )
+    def test_historical_011_identity_drift_is_rejected(self) -> None:
+        historical_011 = MODULE.HISTORICAL_STANDARD_011.read_text(
+            encoding="utf-8"
+        ) + "\n"
+        temporary, root = self._fixture(historical_011=historical_011)
+        with temporary:
             with self.assertRaisesRegex(
                 MODULE.DocumentarySuccessorError,
-                "stale prospective status",
+                "historical 0.1.1 Git blob identity drift",
             ):
                 MODULE.validate(root=root)
 
-    def test_stale_prospective_readme_status_is_rejected(self) -> None:
-        historical = MODULE.HISTORICAL_STANDARD.read_text(encoding="utf-8")
-        current = MODULE.CURRENT_STANDARD.read_text(encoding="utf-8")
-        adr = MODULE.ADR.read_text(encoding="utf-8")
-        readme = MODULE.README.read_text(encoding="utf-8")
-        with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
-            (root / "standards" / "history").mkdir(parents=True)
-            (root / "decisions").mkdir()
-            (root / "standards" / "history" / "GCL-GHOS-00-0.1.0.md").write_text(
-                historical, encoding="utf-8", newline="\n"
-            )
-            (root / "standards" / "GCL-GHOS-00.md").write_text(
-                current, encoding="utf-8", newline="\n"
-            )
-            (root / "decisions" / "ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md").write_text(
-                adr, encoding="utf-8", newline="\n"
-            )
-            (root / "README.md").write_text(
-                readme.replace(
-                    "selected status is\nresolved from its protected admission record",
-                    "prepared for exact-packet review; it becomes selected only through admission",
-                ),
-                encoding="utf-8",
-                newline="\n",
-            )
-            subprocess.run(
-                ["git", "init", "--quiet"], cwd=root, check=True, capture_output=True
-            )
-            with self.assertRaisesRegex(
-                MODULE.DocumentarySuccessorError,
-                "README current-status projection is not time-stable",
-            ):
+    def test_premature_020_activation_is_rejected(self) -> None:
+        readme = MODULE.README.read_text(encoding="utf-8").replace(
+            "A `0.2.0` normative successor is currently candidate-only.",
+            "Version `0.2.0` is admitted.",
+        )
+        temporary, root = self._fixture(readme=readme)
+        with temporary:
+            with self.assertRaises(MODULE.DocumentarySuccessorError):
                 MODULE.validate(root=root)
 
 
