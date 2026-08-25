@@ -38,9 +38,9 @@ with the admitted `0.1.0` source retained as the earlier historical predecessor.
 
 A `0.2.0` normative successor is currently candidate-only. It adds a bounded
 execution continuity invariant for recoverable operational failures. Candidate
-source preparation, CI, review requests, registry custody, or front matter do
-not admit or adopt that successor. Protected successor admission and each
-programme's exact adoption remain separate later gates.
+source preparation, CI, review requests, registry custody, or front matter do not admit or adopt that successor.
+Protected successor admission and each programme's exact adoption remain
+separate later gates.
 
 ### GCL-RC-00
 
