@@ -1,11 +1,11 @@
 # GCL-GHOS-00: GitHub Constitutional Operating System
 
-**Version:** 0.1.1
-**Status:** Admitted documentary successor; effective only when selected by a protected admission record
+**Version:** 0.2.0
+**Status:** Candidate normative successor; no effect until protected successor admission and programme adoption
 **Constitutional source:** `grandchallenge/INTELLECT/CONSTITUTION.md`
 **Constitutional authorization:** effective `GI-AMEND-0001`
-**Predecessor admission:** `admissions/GCL-GHOS-00-0.1.0.json`
-**Historical predecessor:** `standards/history/GCL-GHOS-00-0.1.0.md`
+**Predecessor admission:** `admissions/GCL-GHOS-00-0.1.1.json`
+**Historical predecessor:** `standards/history/GCL-GHOS-00-0.1.1.md`
 **Admission authority:** exact protected `gcl-standards` admission record
 **Adoption authority:** exact programme-owned adoption record
 **Registry:** `grandchallenge/gcl-standards`
@@ -22,8 +22,9 @@ It is a subordinate operating standard, not a constitution. The compact
 INTELLECT Constitution and effective amendments prevail. INTELLECT owns
 constitutional policy and gates. AETHER owns production append order, semantic
 cuts, replay, policy visibility, provenance-bearing facts, recursive
-derivation, and proof traces. This repository registers and publishes an
-admitted standard but does not originate constitutional authority.
+derivation, and proof traces. This repository registers and publishes standards
+admitted through constitutional process; custody of this candidate successor
+does not originate constitutional authority.
 
 ## Authority map
 
@@ -116,6 +117,36 @@ Workflows use:
 - exact-head validation for promotion;
 - immutable evidence manifests and SHA-256 digests.
 
+### Bounded execution continuity
+
+Within an already authorized bounded operation, automation SHALL continue
+through reasonably available non-destructive diagnostic, retry, recovery,
+replay, and evidence-acquisition routes. A recoverable platform, connector,
+logging, CI, environment, compiler-diagnostic, or tooling failure does not by
+itself constitute an authority boundary.
+
+Automation SHALL stop or escalate when continuation would require new
+authority, enlarge the authorized scope, mutate protected state without
+applicable authority, rely on stale identity or evidence, defeat a declared
+safety or governance control, encounter a materially changed state that
+invalidates the governing plan, or exhaust the reasonably available authorized
+recovery routes.
+
+Fail-closed behavior applies to authority, admission, certification, promotion,
+publication, protected-state mutation, and unsupported claims. It SHALL NOT be
+interpreted as requiring premature abandonment of authorized evidence gathering,
+diagnostic recovery, bounded repair, or replay.
+
+Where exact identity governs, every recovery, repair, replay, and evidentiary
+claim SHALL bind to the current exact artifact or revision. Evidence from a
+superseded artifact, revision, run, job, or other identity SHALL NOT be reused as
+current evidence.
+
+This section defines a cross-programme invariant, not a universal recovery
+script. Programme-owned policy MAY define concrete recovery ladders, commands,
+and evidence surfaces within its delegated authority, provided those procedures
+do not enlarge authority or weaken superior controls.
+
 Organization-owned GitHub Apps are preferred for long-lived cross-repository
 automation. Personal access tokens are temporary bootstrap or break-glass
 credentials only.
@@ -172,6 +203,13 @@ activation; it does not accept ADR-0001 or create programme adoption.
 After `GI-AMEND-0001` is effective and the constitutional review receipt is
 admitted, the Council may accept ADR-0001 and admit GCL-GHOS by protected,
 commit-addressed integration. MATH-PROGRAMME pilot adoption follows that standards admission. It is not a prerequisite for ADR acceptance.
+
+Version `0.2.0` is a normative successor candidate to the protected `0.1.1`
+admission. It acquires no binding effect from authoring, CI, review-request
+state, registry custody, or this front matter. It may become admitted only
+through a protected, commit-addressed successor-admission record that binds the
+exact reviewed source and predecessor lineage. Programme adoption of `0.2.0`
+is a later, separate, exact, programme-owned decision.
 
 Programme adoption is explicit and commit-addressed. A programme records:
 
