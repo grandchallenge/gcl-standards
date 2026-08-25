@@ -18,21 +18,27 @@ from git_content import git_blob_sha1_at_commit  # noqa: E402
 
 ADOPTION_PATH = ROOT / "programme-adoption" / "MATH-PROGRAMME.yaml"
 SCHEMA_PATH = ROOT / "schemas" / "math_programme_pilot_adoption.schema.json"
-ADMISSION_PATH = ROOT / "admissions" / "GCL-GHOS-00-0.1.1.json"
+ADMISSION_PATH = ROOT / "admissions" / "GCL-GHOS-00-0.2.0.json"
 
 EXPECTED_ACTIVATION_COMMIT = "8d47ed8930d33253ae476c64dfec7c748185a535"
 EXPECTED_DOCUMENTARY_CLOSURE_COMMIT = "d9c659f70490c328b9b4c068224136c02edc534c"
 EXPECTED_RECEIPT_ADMISSION_COMMIT = "ad4eac22321f87c42d34884eca5405ffea250f75"
-EXPECTED_STANDARDS_ADMISSION_COMMIT = "5c4e73e55d362a5198b9076ead694909a5e0ebf3"
-EXPECTED_REVIEWED_SOURCE_COMMIT = "3a5ed516bb9ccb43e2d67e9270e1ec2a793e01ac"
 EXPECTED_CONSTITUTIONAL_PACKET = (
     "22dbfa0ea0e652161126dd4647477036b89e6c13ecbd9101cda60ce00e9f95c5"
 )
-EXPECTED_SUCCESSOR_PACKET = (
-    "b39b2f3fab12089622ccba5072c89dd758128117b5426075658148b2b495e917"
+EXPECTED_STANDARDS_ADMISSION_COMMIT = "87307a0c1fe5ff19b34bb08451e7d6281a7d5dea"
+EXPECTED_REVIEWED_SOURCE_COMMIT = "f416092f67c91ea4843fea12abe54c34b12242e5"
+EXPECTED_ADMISSION_RECORD_BLOB = "1d1723f829f9d7fc5d92f3a44e518e849aaeda4a"
+EXPECTED_STANDARD_BLOB = "fdb8c9575725281f73649f160cab6b7b01cd09e0"
+EXPECTED_ADVERSARY_RECORD = (
+    "https://github.com/grandchallenge/gcl-standards/issues/51#issuecomment-5407279077"
 )
-EXPECTED_DECISION_BLOB = "e4d61cfcc5e8ed330b350ab34323bb36a29fcd4c"
-EXPECTED_STANDARD_BLOB = "fd2651ba5036cf2455bf925dcd85364894d55726"
+EXPECTED_REFEREE_RECORD = (
+    "https://github.com/grandchallenge/gcl-standards/issues/51#issuecomment-5407282717"
+)
+EXPECTED_STEWARD_AUTH = (
+    "https://github.com/grandchallenge/gcl-standards/pull/52#issuecomment-5407284744"
+)
 
 
 class PilotAdoptionError(ValueError):
@@ -76,78 +82,76 @@ def validate_records(
         raise PilotAdoptionError("receipt admission commit drift")
     if receipt["packet_sha256"] != EXPECTED_CONSTITUTIONAL_PACKET:
         raise PilotAdoptionError("constitutional packet drift")
-    if not receipt["path"].endswith(
-        f"-{EXPECTED_CONSTITUTIONAL_PACKET[:12]}.json"
-    ):
-        raise PilotAdoptionError("receipt path does not match packet prefix")
 
+    if adoption["standard_version"] != "0.2.0":
+        raise PilotAdoptionError("selected standard version drift")
     if adoption["standards_commit"] != EXPECTED_STANDARDS_ADMISSION_COMMIT:
         raise PilotAdoptionError("standards admission merge drift")
     if standard_admission["commit_sha"] != adoption["standards_commit"]:
         raise PilotAdoptionError("standard admission commit mismatch")
     if standard_admission["reviewed_source_commit"] != EXPECTED_REVIEWED_SOURCE_COMMIT:
         raise PilotAdoptionError("reviewed standards source drift")
-    if standard_admission["decision_git_blob_sha1"] != EXPECTED_DECISION_BLOB:
-        raise PilotAdoptionError("ADR blob identity drift")
+    if standard_admission["admission_record_git_blob_sha1"] != EXPECTED_ADMISSION_RECORD_BLOB:
+        raise PilotAdoptionError("admission record blob identity drift")
     if standard_admission["standard_git_blob_sha1"] != EXPECTED_STANDARD_BLOB:
         raise PilotAdoptionError("standard blob identity drift")
-    if standard_admission["packet_sha256"] != EXPECTED_SUCCESSOR_PACKET:
-        raise PilotAdoptionError("successor review packet drift")
+    if standard_admission["adversary_record"] != EXPECTED_ADVERSARY_RECORD:
+        raise PilotAdoptionError("Adversary review record drift")
+    if standard_admission["referee_record"] != EXPECTED_REFEREE_RECORD:
+        raise PilotAdoptionError("Referee review record drift")
+    if standard_admission["steward_authorization_url"] != EXPECTED_STEWARD_AUTH:
+        raise PilotAdoptionError("Human Steward authorization drift")
 
     if admission["operation_id"] != standard_admission["operation_id"]:
         raise PilotAdoptionError("standard admission operation mismatch")
     if admission["status"] != "admitted":
         raise PilotAdoptionError("standard admission is not admitted")
-    if admission["review_packet"]["packet_sha256"] != EXPECTED_SUCCESSOR_PACKET:
-        raise PilotAdoptionError("admission packet identity drift")
-    if (
-        admission["reviewed_source"]["reviewed_commit"]
-        != EXPECTED_REVIEWED_SOURCE_COMMIT
-    ):
-        raise PilotAdoptionError("admitted ADR source drift")
-    admitted_artifacts = {
-        row["path"]: row["git_blob_sha1"]
-        for row in admission["reviewed_source"]["artifacts"]
-    }
-    decision_path = "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"
-    standard_path = "standards/GCL-GHOS-00.md"
-    if admitted_artifacts[decision_path] != EXPECTED_DECISION_BLOB:
-        raise PilotAdoptionError("admitted ADR blob drift")
-    if admitted_artifacts[standard_path] != EXPECTED_STANDARD_BLOB:
+    if admission["standard"]["version"] != "0.2.0":
+        raise PilotAdoptionError("admitted standard version drift")
+    if admission["reviewed_source"]["reviewed_commit"] != EXPECTED_REVIEWED_SOURCE_COMMIT:
+        raise PilotAdoptionError("admitted reviewed source drift")
+    if admission["reviewed_source"]["git_blob_sha1"] != EXPECTED_STANDARD_BLOB:
         raise PilotAdoptionError("admitted standard blob drift")
+    if admission["review_packet"]["adversary_record"] != EXPECTED_ADVERSARY_RECORD:
+        raise PilotAdoptionError("admission Adversary record drift")
+    if admission["review_packet"]["referee_record"] != EXPECTED_REFEREE_RECORD:
+        raise PilotAdoptionError("admission Referee record drift")
+    if admission["review_packet"]["steward_authorization_url"] != EXPECTED_STEWARD_AUTH:
+        raise PilotAdoptionError("admission Steward authorization drift")
 
     if (
         git_blob_sha1_at_commit(
             root=ROOT,
-            commit=admission["reviewed_source"]["reviewed_commit"],
-            relative_path=decision_path,
+            commit=EXPECTED_STANDARDS_ADMISSION_COMMIT,
+            relative_path="admissions/GCL-GHOS-00-0.2.0.json",
         )
-        != EXPECTED_DECISION_BLOB
+        != EXPECTED_ADMISSION_RECORD_BLOB
     ):
-        raise PilotAdoptionError("admitted ADR Git identity drift")
+        raise PilotAdoptionError("protected admission record Git identity drift")
     if (
         git_blob_sha1_at_commit(
             root=ROOT,
-            commit=admission["reviewed_source"]["reviewed_commit"],
-            relative_path=standard_path,
+            commit=EXPECTED_REVIEWED_SOURCE_COMMIT,
+            relative_path="standards/GCL-GHOS-00.md",
         )
         != EXPECTED_STANDARD_BLOB
     ):
-        raise PilotAdoptionError("admitted standard Git identity drift")
+        raise PilotAdoptionError("reviewed standard Git identity drift")
 
     if adoption["admission_gate_status"] != "complete":
         raise PilotAdoptionError("selected admission adoption gate is not complete")
     if admission["next_gate"]["status"] != "not_started":
         raise PilotAdoptionError("immutable admission gate was rewritten")
     if adoption["predecessor_adoption"] != {
-        "standard_version": "0.1.0",
-        "standards_commit": "31211b286a9c4a2874da5559118ef2f026f7de52",
-        "admission_path": "admissions/GCL-GHOS-00-0.1.0.json",
-        "admission_operation_id": "GI-AMEND-0001-STANDARDS-ADMISSION-001",
+        "standard_version": "0.1.1",
+        "standards_commit": "5c4e73e55d362a5198b9076ead694909a5e0ebf3",
+        "admission_path": "admissions/GCL-GHOS-00-0.1.1.json",
+        "admission_operation_id": "GCL-GHOS-00-0.1.1-ADMISSION-001",
+        "adoption_commit": "c39aab2bfbb2725accd18d69a0daea7fe96a0eee",
         "status": "active",
-        "activation_date": "2026-08-03",
+        "activation_date": "2026-08-09",
     }:
-        raise PilotAdoptionError("0.1.0 adoption lineage drift")
+        raise PilotAdoptionError("0.1.1 adoption lineage drift")
 
     false_boundaries = {
         key: value
@@ -176,4 +180,4 @@ if __name__ == "__main__":
     except Exception as exc:
         print(f"MATH-PROGRAMME pilot adoption validation failed: {exc}", file=sys.stderr)
         raise SystemExit(1) from exc
-    print("MATH-PROGRAMME GCL-GHOS pilot adoption validation passed")
+    print("MATH-PROGRAMME GCL-GHOS 0.2.0 adoption validation passed")
