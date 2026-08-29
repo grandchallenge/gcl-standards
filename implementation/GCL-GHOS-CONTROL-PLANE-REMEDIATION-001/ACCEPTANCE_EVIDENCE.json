@@ -1,8 +1,8 @@
 {
   "record_type": "GHOS_CONTROL_PLANE_ACCEPTANCE_EVIDENCE",
   "schema_version": "1.0.0",
-  "implementation_head": "7dfc0589d2af9ab646c297d99547def0d77bba0b",
-  "implementation_tree": "6a8dec392bd83fa664e1b770be6cf2c81c9b9f94",
+  "implementation_head": "ef3c1bb7e54c4d548106134b47c786eb4c702ff8",
+  "implementation_tree": "3044a4479355754ab42df1f202ee2e1e22a00694",
   "catalog_digest": "2cb71132cc72e88fad6e530d2634c67b27640776c2dda6d19589b4295de3e341",
   "validation": {
     "command": "python ci/validate.py",
@@ -15,18 +15,18 @@
     "full_suite_result": "PASS"
   },
   "artifact_sha256": {
-    "ci/ghos_control_plane.py": "bbcade8cdccdbee6a09c48a11aba25c573a9fe78d365eee3ea787e9f594fb00a",
+    "ci/ghos_control_plane.py": "906db52f9fd37d0bb14b719f08349feb645980ee3a09868b942bbc031b23dd05",
     "schemas/ghos_control_plane.schema.json": "92d30438859ae8abe213e3e822bfd571da3ccea7796b602d2e7ff5494d8e3ed1",
     "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/transition-catalog.json": "fea957844e068e93eb53d3a7d38253d520e1510adf643750de39ab7c9a24394f",
     "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/candidate-work-package-admission.json": "3cdc352a8a45bfd2258917dbf6a6013a6fa83bed5a7f5aff3ae70d80ae3fc410",
     "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/candidate-harness-ledger.json": "d2a8f397be4d1df04ebcd446252be9e02a04bac4da8422936feb8c09633f0fc3",
     "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/candidate-harness-state.json": "744bd2522538be68cce109dd761035575148209f76ddddc6e60935cf073b34e7",
     "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/active-version-propagation-manifest.json": "4bdf97cefb0ade0856e755a408f186f15399cbf22d0beac05a7c683b80b186e6",
-    "tests/test_ghos_control_plane.py": "26852f374fdd927dc521f3fc8c1dba8106f9844c88076541bb14a5f97e4b93c8"
+    "tests/test_ghos_control_plane.py": "0beb008942d4da8f365dc1410c7f2fde7e6bdc89e5062fc3ce72d92813d5d4ab"
   },
   "execution_results": {
     "path": "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/ACCEPTANCE_RESULTS.json",
-    "sha256": "ccd34e902fefcc37382551f0528d9b006b0529bf6176a2b5418d8a68ab1c0467"
+    "sha256": "2408afb7c6c9e736dd8268896a18d7edf605cd03b7002ce722626ae7357bce77"
   },
   "scenarios": {
     "T01_COLD_RESUME": "test_t01_cold_resume_is_byte_deterministic",
