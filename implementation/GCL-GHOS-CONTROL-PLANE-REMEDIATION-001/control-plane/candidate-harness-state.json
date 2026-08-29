@@ -51,6 +51,13 @@
         "stale_source": "status/GCL-GHOS-00-current.json",
         "authoritative_value": "0.2.0",
         "observed_value": "0.1.1"
+      },
+      {
+        "code": "ACTIVE_VERSION_PROPAGATION_INCOMPLETE",
+        "authoritative_source": "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/active-version-propagation-manifest.json",
+        "stale_source": "GCL_CURRENT_STATUS,GCL_README,GCL_STANDARD_FRONT_MATTER,MATH_PROGRAMME_RECOVERY_GUIDE,ORGANIZATION_PUBLIC_PROFILE",
+        "authoritative_value": "0.2.0",
+        "observed_value": "UNSETTLED"
       }
     ]
   },
@@ -124,16 +131,17 @@
   "external_waits": [],
   "open_transaction": null,
   "permitted_transitions": [
-    "RECONCILE_CURRENT_VERSION_PROJECTION"
+    "RECONCILE_CURRENT_VERSION_PROJECTION",
+    "RECONCILE_ACTIVE_VERSION_PROPAGATION"
   ],
   "selected_transition": "RECONCILE_CURRENT_VERSION_PROJECTION",
   "selection_rule": "LOWEST_PRIORITY_THEN_LEXICAL",
   "stopping_boundary": null,
   "blocking_conditions": [],
   "invalidated_gate_ids": [],
-  "catalog_digest": "e4928850c6b8ba069ec6c36a140118d8ff46ad1a7bf0e11b1123408a0e2f6310",
+  "catalog_digest": "2cb71132cc72e88fad6e530d2634c67b27640776c2dda6d19589b4295de3e341",
   "ledger_head_digest": "2618b2d7c8084b1b48db78eb5c31697fd2015cdd835ba35697db6e1b1ec12976",
-  "state_digest": "e58b28552f1df9a37ed1fed6a568456d4e47fb47c8b2259cd4bb07837c843d0e",
+  "state_digest": "7d4ef4882b0a8dadccee38d76f7c6d639626c7a43e1cc74d1a3ea4d36427fe8c",
   "claim_boundaries": {
     "constitutional": false,
     "merge": false,

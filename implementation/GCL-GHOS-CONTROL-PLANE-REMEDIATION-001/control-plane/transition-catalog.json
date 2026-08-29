@@ -43,6 +43,24 @@
       "successor_phase": "VALIDATION"
     },
     {
+      "transition_id": "RECONCILE_ACTIVE_VERSION_PROPAGATION",
+      "priority": 1,
+      "input_phases": ["IMPLEMENTATION", "VALIDATION", "REVIEW", "AUTHORIZATION", "INTEGRATION"],
+      "lifecycle_states": ["READY", "BLOCKED"],
+      "mode": "MUTATING",
+      "authority_effect": "NONE",
+      "required_gate_kinds": [],
+      "required_roles": ["IMPLEMENTER"],
+      "required_capabilities": ["durable_compare_and_swap", "git_write", "exact_git_readback"],
+      "requires_no_contradictions": false,
+      "requires_open_transaction": false,
+      "requires_external_wait": false,
+      "replay_class": "REPLAY_AFTER_ABSENCE_PROBE",
+      "effect_probes": ["all_blocking_derived_current_consumers_are_coherent"],
+      "invalidation_triggers": ["ACTIVE_VERSION_CONSUMER_CHANGED"],
+      "successor_phase": "VALIDATION"
+    },
+    {
       "transition_id": "RECONCILE_INTERRUPTED_MUTATION",
       "priority": 0,
       "input_phases": ["IMPLEMENTATION", "VALIDATION", "REVIEW", "AUTHORIZATION", "INTEGRATION", "READBACK"],

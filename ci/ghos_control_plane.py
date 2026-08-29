@@ -255,6 +255,26 @@ def classify_topology(work_graph: Mapping[str, Any]) -> str:
     return "BOUNDED_ATOMIC"
 
 
+def apply_propagation_barrier(
+    authority: Mapping[str, Any], manifest: Mapping[str, Any]
+) -> dict[str, Any]:
+    result = copy.deepcopy(dict(authority))
+    blocking = sorted(
+        item["consumer_id"] for item in manifest["consumers"]
+        if item["blocking_for_authority_use"]
+        and item["status"] in {"STALE", "UNRESOLVED_EXTERNAL"}
+    )
+    if blocking:
+        result["contradictions"].append({
+            "code": "ACTIVE_VERSION_PROPAGATION_INCOMPLETE",
+            "authoritative_source": "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/active-version-propagation-manifest.json",
+            "stale_source": ",".join(blocking),
+            "authoritative_value": result["version"],
+            "observed_value": "UNSETTLED",
+        })
+    return result
+
+
 def admit_work_package(candidate: Mapping[str, Any]) -> dict[str, Any]:
     result = copy.deepcopy(dict(candidate))
     topology = classify_topology(result["work_graph"])
@@ -770,7 +790,12 @@ def derive_permitted_transitions(
     for transition in catalog["transitions"]:
         if (
             transition["transition_id"] == "RECONCILE_CURRENT_VERSION_PROJECTION"
-            and not contradictions
+            and "STALE_CURRENT_PROJECTION" not in {item["code"] for item in contradictions}
+        ):
+            continue
+        if (
+            transition["transition_id"] == "RECONCILE_ACTIVE_VERSION_PROPAGATION"
+            and "ACTIVE_VERSION_PROPAGATION_INCOMPLETE" not in {item["code"] for item in contradictions}
         ):
             continue
         if state["domain_phase"] not in transition["input_phases"]:
@@ -1024,6 +1049,7 @@ def validate_candidate_artifacts(*, root: Path = ROOT) -> None:
             "baseline coherence defect disappeared without a governed transition"
         )
     validate_propagation_manifest(manifest, authority)
+    authority = apply_propagation_barrier(authority, manifest)
     reduced = reduce_ledger(ledger, catalog, authority, admission)
     assert_stored_state(stored_state, reduced)
 

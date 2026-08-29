@@ -26,7 +26,10 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
         cls.admission = MODULE.load_json(MODULE.ADMISSION_PATH)
         cls.ledger = MODULE.load_json(MODULE.LEDGER_PATH)
         cls.projection = MODULE.load_json(ROOT / "status" / "GCL-GHOS-00-current.json")
-        cls.authority = MODULE.resolve_effective_authority(projection=cls.projection)
+        base_authority = MODULE.resolve_effective_authority(projection=cls.projection)
+        cls.authority = MODULE.apply_propagation_barrier(
+            base_authority, MODULE.load_json(MODULE.PROPAGATION_PATH)
+        )
 
     def reduced(self):
         return MODULE.reduce_ledger(
@@ -135,6 +138,20 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
         MODULE.validate_propagation_manifest(manifest, self.authority)
         self.assertFalse(manifest["all_derived_current_coherent"])
         self.assertTrue(any(x["status"] == "STALE" for x in manifest["consumers"]))
+        codes = {x["code"] for x in self.authority["contradictions"]}
+        self.assertIn("ACTIVE_VERSION_PROPAGATION_INCOMPLETE", codes)
+        after_local_repair = copy.deepcopy(self.authority)
+        after_local_repair["contradictions"] = [
+            item for item in after_local_repair["contradictions"]
+            if item["code"] != "STALE_CURRENT_PROJECTION"
+        ]
+        state = self.reduced()
+        state["authority"] = after_local_repair
+        state["domain_phase"] = "INTEGRATION"
+        state["lifecycle_state"] = "READY"
+        permitted, selected, _ = MODULE.derive_permitted_transitions(state, self.catalog)
+        self.assertNotIn("EXECUTE_AUTHORIZED_INTEGRATION", permitted)
+        self.assertEqual(selected, "RECONCILE_ACTIVE_VERSION_PROPAGATION")
 
     def test_t14_capability_topology_mismatch_requires_decomposition(self):
         candidate = copy.deepcopy(self.admission)
