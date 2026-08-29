@@ -170,7 +170,7 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
             "subject": {**state["subjects"][0], "head_sha": "d" * 40}, "evidence_id": "claim",
             "observed_status": "APPROVED", "observation_id": "claim", "observed_at": "2026-08-28T12:00:00Z",
             "validity_rule": "EXACT_HEAD", "invalidation_triggers": [], "disposition": "SETTLED"}
-        with self.assertRaisesRegex(MODULE.LedgerError, "digest-addressed"):
+        with self.assertRaisesRegex(MODULE.LedgerError, "local digest-addressed"):
             MODULE._upsert_gate(state, gate)
 
     def test_direct_subject_mutation_event_is_rejected(self):
@@ -212,6 +212,28 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
         MODULE._apply_event(state, {"event_type": "TRANSACTION_RECONCILING", "occurred_at": "2026-08-28T12:00:03Z",
             "payload": {"transaction_id": "TX-CUTOFF", "observed_side_effects": ["partial"]}}, self.admission, self.catalog)
         self.assertEqual(state["open_transaction"]["state"], "RECONCILING")
+
+    def test_missing_reviewers_do_not_settle_role_separation(self):
+        state = self.reduced()
+        self.assertNotIn("ROLE_SEPARATION", MODULE._gate_kinds_settled(state))
+
+    def test_stale_external_result_cannot_complete_another_wait(self):
+        state = self.reduced()
+        subject = state["subjects"][0]
+        wait = {"wait_id": "WAIT-B", "provider": "github", "repository": subject["repository"],
+            "object_kind": "WORKFLOW_RUN", "object_id": "RUN-B", "subject_head": subject["head_sha"],
+            "expected_terminal_observations": ["SUCCESS"], "wake_condition": "terminal",
+            "latest_observation_id": None, "latest_status": "PENDING", "observed_at": None,
+            "poll_policy": "EXTERNAL_WAKE", "next_eligible_observation_at": "2026-08-28T12:00:00Z",
+            "backoff_attempt": 0, "deadline": None, "controller_class": "ANY_REPLACEMENT_EXECUTOR",
+            "wake_mechanism": "provider event", "outcome_transitions": {"SUCCESS": "REQUEST_EXACT_HEAD_REVIEW"}}
+        MODULE._apply_event(state, {"event_type": "EXTERNAL_WAIT_OPENED", "payload": {"wait": wait}},
+            self.admission, self.catalog)
+        stale = {"event_type": "EXTERNAL_WAIT_OBSERVED", "payload": {"wait_id": "WAIT-B",
+            "object_id": "RUN-A", "subject_head": subject["head_sha"], "observation_id": "OLD-RUN-A",
+            "status": "SUCCESS", "observed_at": "2026-08-28T12:01:00Z"}}
+        with self.assertRaisesRegex(MODULE.LedgerError, "another object"):
+            MODULE._apply_event(state, stale, self.admission, self.catalog)
 
     def test_candidate_artifacts_and_closed_schemas_validate(self):
         MODULE.validate()

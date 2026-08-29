@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Mapping
@@ -41,7 +42,7 @@ EVENT_PAYLOAD_KEYS = {
     "ROLE_RESULT_RECORDED": {"role", "actor_id", "session_id", "result_digest"},
     "GATE_OBSERVED": {"gate"},
     "EXTERNAL_WAIT_OPENED": {"wait"},
-    "EXTERNAL_WAIT_OBSERVED": {"wait_id", "observation_id", "status", "observed_at"},
+    "EXTERNAL_WAIT_OBSERVED": {"wait_id", "object_id", "subject_head", "observation_id", "status", "observed_at"},
     "TRANSACTION_PREPARED": {"transaction"},
     "TRANSACTION_APPLYING": {"transaction_id", "attempt_id"},
     "TRANSACTION_RECONCILING": {"transaction_id", "observed_side_effects"},
@@ -395,8 +396,26 @@ def _upsert_gate(state: dict[str, Any], gate: Mapping[str, Any]) -> None:
         }.get(gate["kind"])
         if gate["observed_status"] != expected_status:
             raise LedgerError("gate kind and settled status are incompatible")
-        if not gate["evidence_id"].startswith("sha256:") or len(gate["evidence_id"]) != 71:
-            raise LedgerError("settled gate evidence must be digest-addressed")
+        match = re.fullmatch(r"file:([^#]+)#sha256:([0-9a-f]{64})", gate["evidence_id"])
+        if not match:
+            raise LedgerError("settled gate evidence must be a local digest-addressed record")
+        evidence_path = (ROOT / match.group(1)).resolve()
+        if ROOT.resolve() not in evidence_path.parents or not evidence_path.is_file():
+            raise LedgerError("settled gate evidence record is unavailable")
+        evidence_bytes = evidence_path.read_bytes()
+        if hashlib.sha256(evidence_bytes).hexdigest() != match.group(2):
+            raise LedgerError("settled gate evidence digest mismatch")
+        try:
+            evidence = json.loads(evidence_bytes)
+        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise LedgerError("settled gate evidence is not JSON") from exc
+        expected_evidence = {
+            "kind": gate["kind"], "subject": gate["subject"],
+            "observed_status": gate["observed_status"],
+            "observation_id": gate["observation_id"],
+        }
+        if not isinstance(evidence, dict) or any(evidence.get(key) != value for key, value in expected_evidence.items()):
+            raise LedgerError("settled gate evidence does not bind the asserted observation")
         if not any(
             gate["subject"].get("repository") == subject.get("repository")
             and gate["subject"].get("head_sha") is not None
@@ -497,6 +516,10 @@ def _apply_event(
         )
         if wait is None:
             raise LedgerError("observation references unknown wait")
+        if payload["object_id"] != wait["object_id"] or payload["subject_head"] != wait["subject_head"]:
+            raise LedgerError("external observation is stale or bound to another object")
+        if wait["observed_at"] is not None and payload["observed_at"] <= wait["observed_at"]:
+            raise LedgerError("external observation time is not monotonic")
         wait["latest_observation_id"] = payload["observation_id"]
         wait["latest_status"] = payload["status"]
         wait["observed_at"] = payload["observed_at"]
@@ -601,10 +624,19 @@ def _gate_kinds_settled(state: Mapping[str, Any]) -> set[str]:
         and gate["disposition"] == "SETTLED"
         and gate["observed_status"] in SETTLED_GATE_STATUSES
     }
-    validate_role_separation(state["roles"], [
+    review_roles = [
+        next((item for item in state["roles"] if item["role"] == name), None)
+        for name in ("IMPLEMENTER", "ADVERSARY", "REFEREE")
+    ]
+    if all(
+        role is not None and role.get("actor_id") and role.get("session_id")
+        and role.get("status") == "COMPLETE" and role.get("result_digest")
+        for role in review_roles
+    ):
+        validate_role_separation(state["roles"], [
         "IMPLEMENTER!=ADVERSARY", "IMPLEMENTER!=REFEREE", "ADVERSARY!=REFEREE"
-    ])
-    settled.add("ROLE_SEPARATION")
+        ])
+        settled.add("ROLE_SEPARATION")
     if not state["authority"]["contradictions"]:
         settled.add("AUTHORITY_COHERENCE")
     return settled
