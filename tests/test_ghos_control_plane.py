@@ -318,10 +318,30 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
             "role": "HARNESS_COORDINATOR", "executor_class": "MULTI_SESSION_WORKER",
             "capabilities": ["durable_compare_and_swap", "authoritative_effect_probe"],
             "acquired_at": "2026-08-28T12:02:00Z", "expires_at": "2026-08-28T13:02:00Z", "status": "ACTIVE"}
+        with self.assertRaisesRegex(MODULE.LedgerError, "exact expired prior claim"):
+            MODULE._apply_event(state, {"event_type": "TRANSACTION_CLAIM_REPLACED", "occurred_at": "2026-08-28T12:02:01Z",
+                "payload": {"transaction_id": "TX-TAKEOVER", "prior_claim_digest": "0" * 64,
+                    "executor_claim": replacement}}, self.admission, self.catalog)
         MODULE._apply_event(state, {"event_type": "TRANSACTION_CLAIM_REPLACED", "occurred_at": "2026-08-28T12:02:01Z",
-            "payload": {"transaction_id": "TX-TAKEOVER", "prior_executor_id": implementer["actor_id"],
+            "payload": {"transaction_id": "TX-TAKEOVER", "prior_claim_digest": MODULE.digest(transaction["executor_claim"]),
                 "executor_claim": replacement}}, self.admission, self.catalog)
         self.assertEqual(state["open_transaction"]["state"], "RECONCILING")
+        commit_effects = [{"kind": "PHASE_CHANGED", "phase": "VALIDATION"}]
+        commit_evidence = {"record_type": "TRANSACTION_OUTCOME_EVIDENCE", "transaction_id": "TX-TAKEOVER",
+            "transition_id": transaction["transition_id"], "subjects": transaction["subjects"],
+            "effect_probes": transaction["effect_probes"], "observed_outcome": "COMMITTED", "effects": commit_effects}
+        with tempfile.NamedTemporaryFile("w", encoding="utf-8", suffix=".json", dir=ROOT, delete=False) as handle:
+            json.dump(commit_evidence, handle, sort_keys=True, separators=(",", ":"))
+            commit_path = Path(handle.name)
+        try:
+            import hashlib
+            commit_ref = f"file:{commit_path.relative_to(ROOT).as_posix()}#sha256:{hashlib.sha256(commit_path.read_bytes()).hexdigest()}"
+            with self.assertRaisesRegex(MODULE.LedgerError, "cannot commit the original transition"):
+                MODULE._apply_event(state, {"event_type": "TRANSACTION_COMMITTED", "occurred_at": "2026-08-28T12:02:02Z",
+                    "payload": {"transaction_id": "TX-TAKEOVER", "evidence": [commit_ref], "effects": commit_effects}},
+                    self.admission, self.catalog)
+        finally:
+            commit_path.unlink(missing_ok=True)
         evidence = {"record_type": "TRANSACTION_OUTCOME_EVIDENCE", "transaction_id": "TX-TAKEOVER",
             "transition_id": transaction["transition_id"], "subjects": transaction["subjects"],
             "effect_probes": transaction["effect_probes"], "observed_outcome": "ABORTED", "effects": []}
@@ -331,7 +351,7 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
         try:
             import hashlib
             ref = f"file:{evidence_path.relative_to(ROOT).as_posix()}#sha256:{hashlib.sha256(evidence_path.read_bytes()).hexdigest()}"
-            MODULE._apply_event(state, {"event_type": "TRANSACTION_ABORTED", "occurred_at": "2026-08-28T12:02:02Z",
+            MODULE._apply_event(state, {"event_type": "TRANSACTION_ABORTED", "occurred_at": "2026-08-28T12:02:03Z",
                 "payload": {"transaction_id": "TX-TAKEOVER", "evidence": [ref]}}, self.admission, self.catalog)
         finally:
             evidence_path.unlink(missing_ok=True)

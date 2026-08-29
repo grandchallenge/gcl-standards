@@ -45,7 +45,7 @@ EVENT_PAYLOAD_KEYS = {
     "EXTERNAL_WAIT_OPENED": {"wait"},
     "EXTERNAL_WAIT_OBSERVED": {"wait_id", "object_id", "subject_head", "observation_id", "status", "observed_at"},
     "TRANSACTION_PREPARED": {"transaction"},
-    "TRANSACTION_CLAIM_REPLACED": {"transaction_id", "prior_executor_id", "executor_claim"},
+    "TRANSACTION_CLAIM_REPLACED": {"transaction_id", "prior_claim_digest", "executor_claim"},
     "TRANSACTION_APPLYING": {"transaction_id", "attempt_id"},
     "TRANSACTION_RECONCILING": {"transaction_id", "observed_side_effects"},
     "TRANSACTION_COMMITTED": {"transaction_id", "evidence", "effects"},
@@ -645,7 +645,7 @@ def _apply_event(
             raise LedgerError("claim replacement references no open transaction")
         prior = transaction["executor_claim"]
         occurred_at = instant(event["occurred_at"])
-        if payload["prior_executor_id"] != prior["executor_id"] or occurred_at < instant(prior["expires_at"]):
+        if payload["prior_claim_digest"] != digest(prior) or occurred_at < instant(prior["expires_at"]):
             raise LedgerError("claim replacement requires the exact expired prior claim")
         replacement = payload["executor_claim"]
         assignment = next((item for item in state["roles"] if item["role"] == replacement["role"]), None)
@@ -685,6 +685,9 @@ def _apply_event(
         if catalog is None:
             raise LedgerError("transaction commit requires transition catalog")
         transition = transition_by_id(catalog, transaction["transition_id"])
+        claim = transaction["executor_claim"]
+        if claim["role"] not in transition["required_roles"] or not set(transition["required_capabilities"]).issubset(claim["capabilities"]):
+            raise LedgerError("current transaction claim cannot commit the original transition")
         phase_effects = [effect for effect in payload["effects"] if effect["kind"] == "PHASE_CHANGED"]
         if len(phase_effects) != 1 or phase_effects[0]["phase"] != transition["successor_phase"]:
             raise LedgerError("committed phase does not match catalog successor")
