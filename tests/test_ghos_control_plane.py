@@ -180,6 +180,39 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
             "0.2.0",
         )
         self.assertEqual((observed, status), (None, "STALE"))
+        for text in (
+            "Version `0.2.0` is current authority. Version `0.3.0` is current authority.\n",
+            "Version `0.3.0` is current authority. Version `0.2.0` is current authority.\n",
+        ):
+            self.assertEqual(
+                MODULE.derive_text_consumer_status("GCL_README", text, "0.2.0"),
+                (None, "STALE"),
+            )
+        for text in (
+            "`GCL-GHOS-00` 0.2.0 is current authority. `GCL-GHOS-00` 0.3.0 is current authority.\n",
+            "`GCL-GHOS-00` 0.3.0 is current authority. `GCL-GHOS-00` 0.2.0 is current authority.\n",
+        ):
+            self.assertEqual(
+                MODULE.derive_text_consumer_status("MATH_PROGRAMME_RECOVERY_GUIDE", text, "0.2.0"),
+                (None, "STALE"),
+            )
+        self.assertEqual(
+            MODULE.derive_text_consumer_status(
+                "GCL_STANDARD_FRONT_MATTER",
+                "**Version:** 0.2.0\n**Version:** 0.3.0\n**Status:** Admitted\n",
+                "0.2.0",
+            ),
+            (None, "STALE"),
+        )
+        self.assertEqual(
+            MODULE.derive_text_consumer_status(
+                "ORGANIZATION_PUBLIC_PROFILE",
+                "`GCL-GHOS-00` `0.2.0` is the admitted version selected\n"
+                "`GCL-GHOS-00` `0.3.0` is the admitted version selected\n",
+                "0.2.0",
+            ),
+            (None, "STALE"),
+        )
 
     def test_t14_capability_topology_mismatch_requires_decomposition(self):
         candidate = copy.deepcopy(self.admission)

@@ -5,6 +5,7 @@ import hashlib
 import json
 import re
 import subprocess
+import sys
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -1077,38 +1078,40 @@ def derive_text_consumer_status(
 ) -> tuple[str | None, str]:
     lowered = text_value.lower()
     if consumer_id == "GCL_README":
-        match = re.search(
+        matches = re.findall(
             r"Version `(?P<version>0\.[0-9]+\.[0-9]+)` (?:remains the version selected|is the current selected version|is current authority)",
             text_value,
         )
-        observed = match.group("version") if match else None
+        observed = matches[0] if len(matches) == 1 else None
     elif consumer_id == "GCL_STANDARD_FRONT_MATTER":
-        version_match = re.search(r"^\*\*Version:\*\* (?P<version>0\.[0-9]+\.[0-9]+)$", text_value, re.MULTILINE)
-        status_match = re.search(r"^\*\*Status:\*\* (?P<status>.+)$", text_value, re.MULTILINE)
-        observed = version_match.group("version") if version_match else None
-        status = status_match.group("status").lower() if status_match else ""
+        version_matches = re.findall(r"^\*\*Version:\*\* (0\.[0-9]+\.[0-9]+)$", text_value, re.MULTILINE)
+        status_matches = re.findall(r"^\*\*Status:\*\* (.+)$", text_value, re.MULTILINE)
+        observed = version_matches[0] if len(version_matches) == 1 else None
+        status = status_matches[0].lower() if len(status_matches) == 1 else ""
         return observed, (
             "COHERENT" if observed == expected_version and "admitted" in status and "candidate" not in status
             else "STALE"
         )
     elif consumer_id == "MATH_PROGRAMME_RECOVERY_GUIDE":
-        current = re.search(
+        current = re.findall(
             r"`GCL-GHOS-00` `?(?P<version>0\.[0-9]+\.[0-9]+)`? is current authority",
             text_value,
         )
-        if current:
-            observed = current.group("version")
+        if len(current) == 1:
+            observed = current[0]
+        elif len(current) > 1:
+            observed = None
         elif "coordinated candidate, not current authority" in lowered:
             observed = "0.1.1"
         else:
             observed = None
     elif consumer_id == "ORGANIZATION_PUBLIC_PROFILE":
-        current = re.search(
-            r"`GCL-GHOS-00` `(?P<version>0\.[0-9]+\.[0-9]+)` is the admitted .* selected",
+        current = re.findall(
+            r"`GCL-GHOS-00` `(0\.[0-9]+\.[0-9]+)` is the admitted [^\r\n]* selected",
             text_value,
-            re.IGNORECASE | re.DOTALL,
+            re.IGNORECASE,
         )
-        observed = current.group("version") if current else None
+        observed = current[0] if len(current) == 1 else None
     else:
         raise AuthorityContradiction(f"no typed propagation extractor: {consumer_id}")
     return observed, "COHERENT" if observed == expected_version else "STALE"
@@ -1193,6 +1196,23 @@ def validate_candidate_artifacts(*, root: Path = ROOT) -> None:
         for item in scenarios
     ):
         raise ControlPlaneError("acceptance scenario result is incomplete or non-passing")
+    expected_tests = {
+        identifier.split("_", 1)[0]: test_name
+        for identifier, test_name in acceptance["scenarios"].items()
+    }
+    recorded_tests = {item["id"]: item["test"] for item in scenarios}
+    if recorded_tests != expected_tests:
+        raise ControlPlaneError("acceptance scenario-to-test mapping drift")
+    test_targets = [
+        f"tests.test_ghos_control_plane.GhosControlPlaneAdversarialTests.{recorded_tests[f'T{index:02d}']}"
+        for index in range(1, 15)
+    ]
+    scenario_run = subprocess.run(
+        [sys.executable, "-m", "unittest", *test_targets],
+        cwd=root, capture_output=True, text=True,
+    )
+    if scenario_run.returncode != 0 or "OK" not in scenario_run.stderr:
+        raise ControlPlaneError("mapped T1-T14 execution did not pass")
     baseline = results["baseline"]
     for key in ("state_digest", "selected_transition", "permitted_transitions", "invalidated_gate_ids", "open_transaction"):
         state_key = "open_transaction" if key == "open_transaction" else key
