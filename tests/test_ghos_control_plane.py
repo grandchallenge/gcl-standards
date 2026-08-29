@@ -235,6 +235,37 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
         with self.assertRaisesRegex(MODULE.LedgerError, "another object"):
             MODULE._apply_event(state, stale, self.admission, self.catalog)
 
+    def test_role_cannot_complete_without_matching_dispatch_and_record(self):
+        state = self.reduced()
+        event = {"event_type": "ROLE_RESULT_RECORDED", "payload": {"role": "ADVERSARY",
+            "actor_id": "invented", "session_id": "invented", "result_path": "missing.json",
+            "result_digest": "0" * 64}}
+        with self.assertRaisesRegex(MODULE.LedgerError, "dispatched assignment"):
+            MODULE._apply_event(state, event, self.admission, self.catalog)
+
+    def test_transaction_state_cannot_regress_or_commit_from_prepared(self):
+        state = self.reduced()
+        assignment = next(x for x in state["roles"] if x["role"] == "IMPLEMENTER")
+        executor = MODULE.Executor(assignment["actor_id"], assignment["session_id"], "IMPLEMENTER",
+            "MULTI_SESSION_WORKER", ("durable_compare_and_swap", "git_write", "exact_git_readback"))
+        transaction = MODULE.TransactionController(self.catalog).prepare(state,
+            "RECONCILE_CURRENT_VERSION_PROJECTION", executor, transaction_id="TX-ORDER",
+            idempotency_key="KEY-ORDER", expires_at="2026-08-28T13:00:00Z", now="2026-08-28T12:00:00Z")
+        MODULE._apply_event(state, {"event_type": "TRANSACTION_PREPARED", "occurred_at": "2026-08-28T12:00:01Z",
+            "payload": {"transaction": transaction}}, self.admission, self.catalog)
+        with self.assertRaisesRegex(MODULE.LedgerError, "cannot commit before"):
+            MODULE._apply_event(state, {"event_type": "TRANSACTION_COMMITTED", "payload": {
+                "transaction_id": "TX-ORDER", "evidence": ["self"],
+                "effects": [{"kind": "PHASE_CHANGED", "phase": "VALIDATION"}]}}, self.admission, self.catalog)
+        MODULE._apply_event(state, {"event_type": "TRANSACTION_RECONCILING", "payload": {
+            "transaction_id": "TX-ORDER", "observed_side_effects": []}}, self.admission, self.catalog)
+        with self.assertRaisesRegex(MODULE.LedgerError, "only from PREPARED"):
+            MODULE._apply_event(state, {"event_type": "TRANSACTION_APPLYING", "payload": {
+                "transaction_id": "TX-ORDER", "attempt_id": "LATE"}}, self.admission, self.catalog)
+
+    def test_observation_time_is_compared_as_an_instant(self):
+        self.assertEqual(MODULE.instant("2026-08-28T12:00:00Z"), MODULE.instant("2026-08-28T05:00:00-07:00"))
+
     def test_candidate_artifacts_and_closed_schemas_validate(self):
         MODULE.validate()
 

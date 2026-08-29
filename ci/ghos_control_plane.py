@@ -5,6 +5,7 @@ import hashlib
 import json
 import re
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
@@ -39,7 +40,7 @@ SETTLED_GATE_STATUSES = {"PASSED", "APPROVED", "AUTHORIZED"}
 EVENT_PAYLOAD_KEYS = {
     "WORK_PACKAGE_ADMITTED": {"admission_path", "admission_digest"},
     "ROLE_DISPATCHED": {"role", "actor_id", "session_id"},
-    "ROLE_RESULT_RECORDED": {"role", "actor_id", "session_id", "result_digest"},
+    "ROLE_RESULT_RECORDED": {"role", "actor_id", "session_id", "result_path", "result_digest"},
     "GATE_OBSERVED": {"gate"},
     "EXTERNAL_WAIT_OPENED": {"wait"},
     "EXTERNAL_WAIT_OBSERVED": {"wait_id", "object_id", "subject_head", "observation_id", "status", "observed_at"},
@@ -78,6 +79,23 @@ def canonical_bytes(value: object) -> bytes:
 
 def digest(value: object) -> str:
     return hashlib.sha256(canonical_bytes(value)).hexdigest()
+
+
+def instant(value: str) -> datetime:
+    parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    if parsed.tzinfo is None:
+        raise ControlPlaneError("timestamp must include an offset")
+    return parsed.astimezone(timezone.utc)
+
+
+def verified_local_file(relative_path: str, expected_sha256: str) -> bytes:
+    candidate = (ROOT / relative_path).resolve()
+    if ROOT.resolve() not in candidate.parents or not candidate.is_file():
+        raise LedgerError("digest-addressed record is unavailable")
+    contents = candidate.read_bytes()
+    if hashlib.sha256(contents).hexdigest() != expected_sha256:
+        raise LedgerError("digest-addressed record content mismatch")
+    return contents
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -490,8 +508,21 @@ def _apply_event(
             state["blocking_conditions"] = ["WORK_PACKAGE_ADMISSION_REJECTED"]
             state["stopping_boundary"] = "ADMISSION_REJECTED"
     elif kind == "ROLE_DISPATCHED":
+        role = next((item for item in state["roles"] if item["role"] == payload["role"]), None)
+        if role is None or role["status"] != "PENDING" or role.get("actor_id") or role.get("session_id"):
+            raise LedgerError("role dispatch requires one unassigned pending role")
         _replace_role(state, payload, "DISPATCHED")
     elif kind == "ROLE_RESULT_RECORDED":
+        role = next((item for item in state["roles"] if item["role"] == payload["role"]), None)
+        if role is None or role["status"] != "DISPATCHED" or role.get("actor_id") != payload["actor_id"] or role.get("session_id") != payload["session_id"]:
+            raise LedgerError("role result does not match a dispatched assignment")
+        result_bytes = verified_local_file(payload["result_path"], payload["result_digest"])
+        try:
+            result = json.loads(result_bytes)
+        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise LedgerError("role result record is not JSON") from exc
+        if not isinstance(result, dict) or any(result.get(key) != payload[key] for key in ("role", "actor_id", "session_id")):
+            raise LedgerError("role result record identity mismatch")
         _replace_role(state, payload, "COMPLETE")
     elif kind == "GATE_OBSERVED":
         _upsert_gate(state, payload["gate"])
@@ -518,7 +549,10 @@ def _apply_event(
             raise LedgerError("observation references unknown wait")
         if payload["object_id"] != wait["object_id"] or payload["subject_head"] != wait["subject_head"]:
             raise LedgerError("external observation is stale or bound to another object")
-        if wait["observed_at"] is not None and payload["observed_at"] <= wait["observed_at"]:
+        observed_at = instant(payload["observed_at"])
+        if observed_at < instant(wait["next_eligible_observation_at"]):
+            raise LedgerError("external observation occurred before it was eligible")
+        if wait["observed_at"] is not None and observed_at <= instant(wait["observed_at"]):
             raise LedgerError("external observation time is not monotonic")
         wait["latest_observation_id"] = payload["observation_id"]
         wait["latest_status"] = payload["status"]
@@ -559,20 +593,33 @@ def _apply_event(
         transaction = state["open_transaction"]
         if transaction is None or transaction["transaction_id"] != payload["transaction_id"]:
             raise LedgerError("APPLYING references no open transaction")
+        if transaction["state"] != "PREPARED":
+            raise LedgerError("transaction can enter APPLYING only from PREPARED")
         transaction["state"] = "APPLYING"
         transaction["attempt_ids"].append(payload["attempt_id"])
     elif kind == "TRANSACTION_RECONCILING":
         transaction = state["open_transaction"]
         if transaction is None or transaction["transaction_id"] != payload["transaction_id"]:
             raise LedgerError("RECONCILING references no open transaction")
+        if transaction["state"] not in {"PREPARED", "APPLYING"}:
+            raise LedgerError("transaction can enter RECONCILING only from PREPARED or APPLYING")
         transaction["state"] = "RECONCILING"
         transaction["observed_side_effects"] = payload["observed_side_effects"]
     elif kind == "TRANSACTION_COMMITTED":
         transaction = state["open_transaction"]
         if transaction is None or transaction["transaction_id"] != payload["transaction_id"]:
             raise LedgerError("COMMITTED references no open transaction")
+        if transaction["state"] not in {"APPLYING", "RECONCILING"}:
+            raise LedgerError("transaction cannot commit before APPLYING or RECONCILING")
+        if transaction["replay_class"] == "NON_REPLAYABLE_REQUIRES_RECONCILIATION" and transaction["state"] != "RECONCILING":
+            raise LedgerError("non-replayable transaction requires reconciliation before commit")
         if not payload["evidence"]:
             raise LedgerError("transaction cannot commit without authoritative evidence")
+        for evidence_ref in payload["evidence"]:
+            match = re.fullmatch(r"file:([^#]+)#sha256:([0-9a-f]{64})", evidence_ref)
+            if not match:
+                raise LedgerError("transaction evidence must be a local digest-addressed record")
+            verified_local_file(match.group(1), match.group(2))
         if catalog is None:
             raise LedgerError("transaction commit requires transition catalog")
         transition = transition_by_id(catalog, transaction["transition_id"])
