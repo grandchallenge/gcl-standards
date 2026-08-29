@@ -154,7 +154,7 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
         with patch.dict("os.environ", {
             "GHOS_MATH_PROGRAMME_REPO": math_root,
             "GHOS_ORG_PROFILE_REPO": profile_root,
-        }, clear=True):
+        }, clear=False):
             MODULE.validate_propagation_manifest(manifest, self.authority)
         self.assertFalse(manifest["all_derived_current_coherent"])
         self.assertTrue(any(x["status"] == "STALE" for x in manifest["consumers"]))
