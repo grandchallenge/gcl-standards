@@ -1,0 +1,147 @@
+{
+  "$schema": "../../../schemas/ghos_control_plane.schema.json",
+  "record_type": "DERIVED_STATE",
+  "schema_version": "1.0.0",
+  "work_package": "GCL-GHOS-CONTROL-PLANE-REMEDIATION-001",
+  "generation": 1,
+  "lifecycle_state": "READY",
+  "domain_phase": "IMPLEMENTATION",
+  "authority": {
+    "programme": "grandchallenge/MATH-PROGRAMME",
+    "standard": "GCL-GHOS-00",
+    "version": "0.2.0",
+    "adoption": {
+      "repository": "grandchallenge/gcl-standards",
+      "path": "programme-adoption/MATH-PROGRAMME.yaml",
+      "commit_sha": "1a5e9cb24257be578b091ecd2c99d4119ff73b2c",
+      "authority_class": "PROGRAMME_ADOPTION"
+    },
+    "admission": {
+      "repository": "grandchallenge/gcl-standards",
+      "path": "admissions/GCL-GHOS-00-0.2.0.json",
+      "commit_sha": "87307a0c1fe5ff19b34bb08451e7d6281a7d5dea",
+      "authority_class": "ADMITTED_STANDARD",
+      "git_blob_sha1": "1d1723f829f9d7fc5d92f3a44e518e849aaeda4a"
+    },
+    "precedence_trace": [
+      {
+        "repository": "grandchallenge/INTELLECT",
+        "path": "CONSTITUTION.md",
+        "commit_sha": "8d47ed8930d33253ae476c64dfec7c748185a535",
+        "authority_class": "CONSTITUTIONAL"
+      },
+      {
+        "repository": "grandchallenge/gcl-standards",
+        "path": "admissions/GCL-GHOS-00-0.2.0.json",
+        "commit_sha": "87307a0c1fe5ff19b34bb08451e7d6281a7d5dea",
+        "authority_class": "ADMITTED_STANDARD",
+        "git_blob_sha1": "1d1723f829f9d7fc5d92f3a44e518e849aaeda4a"
+      },
+      {
+        "repository": "grandchallenge/gcl-standards",
+        "path": "programme-adoption/MATH-PROGRAMME.yaml",
+        "commit_sha": "1a5e9cb24257be578b091ecd2c99d4119ff73b2c",
+        "authority_class": "PROGRAMME_ADOPTION"
+      }
+    ],
+    "contradictions": [
+      {
+        "code": "STALE_CURRENT_PROJECTION",
+        "authoritative_source": "programme-adoption/MATH-PROGRAMME.yaml",
+        "stale_source": "status/GCL-GHOS-00-current.json",
+        "authoritative_value": "0.2.0",
+        "observed_value": "0.1.1"
+      }
+    ]
+  },
+  "subjects": [
+    {
+      "repository": "grandchallenge/gcl-standards",
+      "kind": "BRANCH",
+      "identifier": "remediation/ghos-control-plane-implementation-001",
+      "head_sha": "2b4551432fda2d45560d4d71c99b3458bb277530",
+      "base_sha": "2b4551432fda2d45560d4d71c99b3458bb277530",
+      "artifact_digest": null
+    }
+  ],
+  "roles": [
+    {
+      "role": "CONTROL_PLANE_DESIGNER",
+      "actor_id": "immutable-design-commit-2b455143",
+      "session_id": "fixed-before-implementation",
+      "status": "COMPLETE",
+      "input_digest": "f5ff99acde25de6261d1b84fbb7e5ff4a9ef76e4731fec9944b6d10dc7043a2d",
+      "result_digest": "f5ff99acde25de6261d1b84fbb7e5ff4a9ef76e4731fec9944b6d10dc7043a2d",
+      "may_authorize": false
+    },
+    {
+      "role": "IMPLEMENTER",
+      "actor_id": "codex-implementer-ghos-control-plane-001",
+      "session_id": "candidate-implementation-session",
+      "status": "DISPATCHED",
+      "input_digest": "f5ff99acde25de6261d1b84fbb7e5ff4a9ef76e4731fec9944b6d10dc7043a2d",
+      "result_digest": null,
+      "may_authorize": false
+    },
+    {
+      "role": "ADVERSARY",
+      "actor_id": null,
+      "session_id": null,
+      "status": "PENDING",
+      "input_digest": "f5ff99acde25de6261d1b84fbb7e5ff4a9ef76e4731fec9944b6d10dc7043a2d",
+      "result_digest": null,
+      "may_authorize": false
+    },
+    {
+      "role": "REFEREE",
+      "actor_id": null,
+      "session_id": null,
+      "status": "PENDING",
+      "input_digest": "f5ff99acde25de6261d1b84fbb7e5ff4a9ef76e4731fec9944b6d10dc7043a2d",
+      "result_digest": null,
+      "may_authorize": false
+    },
+    {
+      "role": "HARNESS_COORDINATOR",
+      "actor_id": null,
+      "session_id": null,
+      "status": "PENDING",
+      "input_digest": "f5ff99acde25de6261d1b84fbb7e5ff4a9ef76e4731fec9944b6d10dc7043a2d",
+      "result_digest": null,
+      "may_authorize": false
+    },
+    {
+      "role": "HUMAN_STEWARD",
+      "actor_id": "fyremael",
+      "session_id": null,
+      "status": "RESERVED",
+      "input_digest": "f5ff99acde25de6261d1b84fbb7e5ff4a9ef76e4731fec9944b6d10dc7043a2d",
+      "result_digest": null,
+      "may_authorize": true
+    }
+  ],
+  "gates": [],
+  "external_waits": [],
+  "open_transaction": null,
+  "permitted_transitions": [
+    "RECONCILE_CURRENT_VERSION_PROJECTION"
+  ],
+  "selected_transition": "RECONCILE_CURRENT_VERSION_PROJECTION",
+  "selection_rule": "LOWEST_PRIORITY_THEN_LEXICAL",
+  "stopping_boundary": null,
+  "blocking_conditions": [],
+  "invalidated_gate_ids": [],
+  "catalog_digest": "f10d5fd2571da1ff64328cd0d77e6724765bbe026ff9ad7c75eb609f7af682a8",
+  "ledger_head_digest": "4f87e6cd4bfaf3f9649b1559f22a7f40c0c78fdbd844f1d15ad2d3e431f7cbb6",
+  "state_digest": "bdc0610bd0596f9cfd1960c18d9392842b4457d13f89e0c6c2d195a7f930bde0",
+  "claim_boundaries": {
+    "constitutional": false,
+    "merge": false,
+    "certification": false,
+    "production": false,
+    "publication": false,
+    "mathematical_claim": false,
+    "claim_promotion": false,
+    "commercial": false
+  }
+}

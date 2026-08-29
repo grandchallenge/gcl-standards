@@ -1,0 +1,173 @@
+{
+  "$schema": "../../../schemas/ghos_control_plane.schema.json",
+  "record_type": "ACTIVE_VERSION_PROPAGATION_MANIFEST",
+  "schema_version": "1.0.0",
+  "manifest_id": "GCL-GHOS-0.2.0-PROPAGATION-001",
+  "programme": "grandchallenge/MATH-PROGRAMME",
+  "standard": "GCL-GHOS-00",
+  "authoritative_version": "0.2.0",
+  "adoption_source": {
+    "repository": "grandchallenge/gcl-standards",
+    "path": "programme-adoption/MATH-PROGRAMME.yaml",
+    "commit_sha": "1a5e9cb24257be578b091ecd2c99d4119ff73b2c",
+    "authority_class": "PROGRAMME_ADOPTION"
+  },
+  "admission_source": {
+    "repository": "grandchallenge/gcl-standards",
+    "path": "admissions/GCL-GHOS-00-0.2.0.json",
+    "commit_sha": "87307a0c1fe5ff19b34bb08451e7d6281a7d5dea",
+    "git_blob_sha1": "1d1723f829f9d7fc5d92f3a44e518e849aaeda4a",
+    "authority_class": "ADMITTED_STANDARD"
+  },
+  "consumers": [
+    {
+      "consumer_id": "AUTHORITATIVE_ADMISSION",
+      "repository": "grandchallenge/gcl-standards",
+      "path": "admissions/GCL-GHOS-00-0.2.0.json",
+      "authority_class": "AUTHORITATIVE",
+      "expected_version": "0.2.0",
+      "observed_version": "0.2.0",
+      "status": "COHERENT",
+      "exact_source": {
+        "repository": "grandchallenge/gcl-standards",
+        "path": "admissions/GCL-GHOS-00-0.2.0.json",
+        "commit_sha": "87307a0c1fe5ff19b34bb08451e7d6281a7d5dea",
+        "git_blob_sha1": "1d1723f829f9d7fc5d92f3a44e518e849aaeda4a",
+        "authority_class": "ADMITTED_STANDARD"
+      },
+      "blocking_for_authority_use": false,
+      "note": "Exact admitted 0.2.0 record; immutable history is unchanged."
+    },
+    {
+      "consumer_id": "AUTHORITATIVE_ADOPTION",
+      "repository": "grandchallenge/gcl-standards",
+      "path": "programme-adoption/MATH-PROGRAMME.yaml",
+      "authority_class": "AUTHORITATIVE",
+      "expected_version": "0.2.0",
+      "observed_version": "0.2.0",
+      "status": "COHERENT",
+      "exact_source": {
+        "repository": "grandchallenge/gcl-standards",
+        "path": "programme-adoption/MATH-PROGRAMME.yaml",
+        "commit_sha": "1a5e9cb24257be578b091ecd2c99d4119ff73b2c",
+        "authority_class": "PROGRAMME_ADOPTION"
+      },
+      "blocking_for_authority_use": false,
+      "note": "Exact active MATH-PROGRAMME pilot adoption."
+    },
+    {
+      "consumer_id": "GCL_CURRENT_STATUS",
+      "repository": "grandchallenge/gcl-standards",
+      "path": "status/GCL-GHOS-00-current.json",
+      "authority_class": "DERIVED_CURRENT",
+      "expected_version": "0.2.0",
+      "observed_version": "0.1.1",
+      "status": "STALE",
+      "exact_source": {
+        "repository": "grandchallenge/gcl-standards",
+        "path": "status/GCL-GHOS-00-current.json",
+        "commit_sha": "2b4551432fda2d45560d4d71c99b3458bb277530",
+        "authority_class": "DERIVED_CURRENT"
+      },
+      "blocking_for_authority_use": true,
+      "note": "The protected baseline and this candidate still project 0.1.1; authority resolves to the active 0.2.0 adoption and the contradiction is blocking."
+    },
+    {
+      "consumer_id": "GCL_README",
+      "repository": "grandchallenge/gcl-standards",
+      "path": "README.md",
+      "authority_class": "DERIVED_CURRENT",
+      "expected_version": "0.2.0",
+      "observed_version": "0.1.1",
+      "status": "STALE",
+      "exact_source": {
+        "repository": "grandchallenge/gcl-standards",
+        "path": "README.md",
+        "commit_sha": "2b4551432fda2d45560d4d71c99b3458bb277530",
+        "authority_class": "DERIVED_CURRENT"
+      },
+      "blocking_for_authority_use": true,
+      "note": "The current README still states that 0.1.1 is selected and that 0.2.0 adoption is a later gate."
+    },
+    {
+      "consumer_id": "GCL_STANDARD_FRONT_MATTER",
+      "repository": "grandchallenge/gcl-standards",
+      "path": "standards/GCL-GHOS-00.md",
+      "authority_class": "DERIVED_CURRENT",
+      "expected_version": "0.2.0",
+      "observed_version": "0.2.0",
+      "status": "STALE",
+      "exact_source": {
+        "repository": "grandchallenge/gcl-standards",
+        "path": "standards/GCL-GHOS-00.md",
+        "commit_sha": "2b4551432fda2d45560d4d71c99b3458bb277530",
+        "authority_class": "DERIVED_CURRENT"
+      },
+      "blocking_for_authority_use": true,
+      "note": "The exact admitted source is preserved, but its candidate-era front matter is stale as a current-status surface and must not be rewritten in place."
+    },
+    {
+      "consumer_id": "GCL_ADR_0001_HISTORY",
+      "repository": "grandchallenge/gcl-standards",
+      "path": "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md",
+      "authority_class": "HISTORICAL",
+      "expected_version": "0.2.0",
+      "observed_version": "0.1.1",
+      "status": "HISTORICAL_NOT_CURRENT",
+      "exact_source": {
+        "repository": "grandchallenge/gcl-standards",
+        "path": "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md",
+        "commit_sha": "2b4551432fda2d45560d4d71c99b3458bb277530",
+        "authority_class": "HISTORICAL"
+      },
+      "blocking_for_authority_use": false,
+      "note": "The 0.1.1 successor sequence is preserved with explicit historical time scope."
+    },
+    {
+      "consumer_id": "MATH_PROGRAMME_RECOVERY_GUIDE",
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "path": "docs/governance/EXECUTION_RECOVERY_OPERATING_GUIDE.md",
+      "authority_class": "DERIVED_CURRENT",
+      "expected_version": "0.2.0",
+      "observed_version": "0.1.1",
+      "status": "STALE",
+      "exact_source": {
+        "repository": "grandchallenge/MATH-PROGRAMME",
+        "path": "docs/governance/EXECUTION_RECOVERY_OPERATING_GUIDE.md",
+        "commit_sha": "f0953f4591b40df4d6775a8582658c0b94d760d8",
+        "authority_class": "DERIVED_CURRENT"
+      },
+      "blocking_for_authority_use": true,
+      "note": "External guide still describes 0.2.0 as candidate; reconciliation is not claimed complete."
+    },
+    {
+      "consumer_id": "ORGANIZATION_PUBLIC_PROFILE",
+      "repository": "grandchallenge/.github",
+      "path": "profile/README.md",
+      "authority_class": "DERIVED_CURRENT",
+      "expected_version": "0.2.0",
+      "observed_version": "0.1.1",
+      "status": "UNRESOLVED_EXTERNAL",
+      "exact_source": {
+        "repository": "grandchallenge/.github",
+        "path": "profile/README.md",
+        "commit_sha": "a69c5c8b8091809e35b0afffd0456428ca195386",
+        "authority_class": "DERIVED_CURRENT"
+      },
+      "blocking_for_authority_use": true,
+      "note": "Audit evidence showed a 0.1.1 projection; current external reconciliation is unresolved."
+    }
+  ],
+  "all_derived_current_coherent": false,
+  "external_reconciliation_complete": false,
+  "claim_boundaries": {
+    "constitutional": false,
+    "merge": false,
+    "certification": false,
+    "production": false,
+    "publication": false,
+    "mathematical_claim": false,
+    "claim_promotion": false,
+    "commercial": false
+  }
+}

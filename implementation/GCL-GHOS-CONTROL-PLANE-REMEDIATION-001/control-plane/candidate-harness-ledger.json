@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../schemas/ghos_control_plane.schema.json",
+  "record_type": "EVENT_LEDGER",
+  "schema_version": "1.0.0",
+  "ledger_id": "GCL-GHOS-CONTROL-PLANE-REMEDIATION-001-LEDGER",
+  "work_package": "GCL-GHOS-CONTROL-PLANE-REMEDIATION-001",
+  "storage_status": "CANDIDATE_BRANCH_NON_AUTHORITATIVE",
+  "candidate_branch_notice": "Candidate continuity state only. It grants no authority and must migrate to a protected append-only control ref before guarded pilot use.",
+  "catalog_digest": "f10d5fd2571da1ff64328cd0d77e6724765bbe026ff9ad7c75eb609f7af682a8",
+  "events": [
+    {
+      "sequence": 1,
+      "event_id": "GCL-GHOS-CP-EVENT-0001",
+      "event_type": "WORK_PACKAGE_ADMITTED",
+      "occurred_at": "2026-08-28T12:00:00Z",
+      "previous_event_digest": null,
+      "payload": {
+        "admission_path": "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/candidate-work-package-admission.json",
+        "admission_digest": "357086cec225d8518b529f28ac97ceec92b7272580407ea9a8520d372c7957a5"
+      },
+      "event_digest": "4f87e6cd4bfaf3f9649b1559f22a7f40c0c78fdbd844f1d15ad2d3e431f7cbb6"
+    }
+  ],
+  "ledger_head_digest": "4f87e6cd4bfaf3f9649b1559f22a7f40c0c78fdbd844f1d15ad2d3e431f7cbb6",
+  "claim_boundaries": {
+    "constitutional": false,
+    "merge": false,
+    "certification": false,
+    "production": false,
+    "publication": false,
+    "mathematical_claim": false,
+    "claim_promotion": false,
+    "commercial": false
+  }
+}
