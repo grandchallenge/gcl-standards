@@ -25,7 +25,7 @@
     "exact_git_readback",
     "git_write"
   ],
-  "available_executor_classes": ["BOUNDED_CONVERSATIONAL", "HUMAN"],
+  "available_executor_classes": ["BOUNDED_CONVERSATIONAL", "MULTI_SESSION_WORKER", "HUMAN"],
   "disposition": "ADMITTED",
   "required_decomposition": null,
   "roles": [

@@ -16,12 +16,12 @@
       "previous_event_digest": null,
       "payload": {
         "admission_path": "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/candidate-work-package-admission.json",
-        "admission_digest": "357086cec225d8518b529f28ac97ceec92b7272580407ea9a8520d372c7957a5"
+        "admission_digest": "6ca56127a8e0f2a8e89dcd939c9d2afa7f435bf0fd915c895f9c20c1372fd0a6"
       },
-      "event_digest": "4f87e6cd4bfaf3f9649b1559f22a7f40c0c78fdbd844f1d15ad2d3e431f7cbb6"
+      "event_digest": "2618b2d7c8084b1b48db78eb5c31697fd2015cdd835ba35697db6e1b1ec12976"
     }
   ],
-  "ledger_head_digest": "4f87e6cd4bfaf3f9649b1559f22a7f40c0c78fdbd844f1d15ad2d3e431f7cbb6",
+  "ledger_head_digest": "2618b2d7c8084b1b48db78eb5c31697fd2015cdd835ba35697db6e1b1ec12976",
   "claim_boundaries": {
     "constitutional": false,
     "merge": false,

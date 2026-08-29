@@ -240,9 +240,12 @@ def admit_work_package(candidate: Mapping[str, Any]) -> dict[str, Any]:
     topology = classify_topology(result["work_graph"])
     result["topology"] = topology
     executor_classes = set(result["available_executor_classes"])
-    if topology == "PERSISTENT_CONTROLLER_REQUIRED" and (
-        "PERSISTENT_CONTROLLER" not in executor_classes
-    ):
+    compatible = {
+        "BOUNDED_ATOMIC": {"BOUNDED_CONVERSATIONAL", "MULTI_SESSION_WORKER", "PERSISTENT_CONTROLLER", "HUMAN"},
+        "MULTI_SESSION_RESUMABLE": {"MULTI_SESSION_WORKER", "PERSISTENT_CONTROLLER"},
+        "PERSISTENT_CONTROLLER_REQUIRED": {"PERSISTENT_CONTROLLER"},
+    }[topology]
+    if not executor_classes.intersection(compatible):
         result["disposition"] = "DECOMPOSITION_REQUIRED"
         result["required_decomposition"] = (
             "Decompose into durable bounded transitions or assign a persistent controller."
@@ -377,6 +380,22 @@ def _replace_role(state: dict[str, Any], payload: Mapping[str, Any], status: str
 
 
 def _upsert_gate(state: dict[str, Any], gate: Mapping[str, Any]) -> None:
+    if gate["disposition"] == "SETTLED":
+        if not gate["evidence_id"] or not gate["observation_id"] or not gate["observed_at"]:
+            raise LedgerError("settled gate requires exact evidence and observation identity")
+        if gate["observed_status"] not in SETTLED_GATE_STATUSES:
+            raise LedgerError("settled gate has non-settled observation")
+        if not any(
+            gate["subject"].get("repository") == subject.get("repository")
+            and gate["subject"].get("head_sha") is not None
+            and gate["subject"].get("head_sha") == subject.get("head_sha")
+            and (
+                gate["subject"].get("base_sha") is None
+                or gate["subject"].get("base_sha") == subject.get("base_sha")
+            )
+            for subject in state["subjects"]
+        ):
+            raise LedgerError("gate subject is not an exact current subject")
     state["gates"] = [item for item in state["gates"] if item["gate_id"] != gate["gate_id"]]
     state["gates"].append(copy.deepcopy(dict(gate)))
     state["gates"].sort(key=lambda item: item["gate_id"])
@@ -409,6 +428,7 @@ def _apply_event(
     state: dict[str, Any],
     event: Mapping[str, Any],
     admission_record: Mapping[str, Any],
+    catalog: Mapping[str, Any] | None = None,
 ) -> None:
     kind = event["event_type"]
     payload = event["payload"]
@@ -468,6 +488,22 @@ def _apply_event(
             raise LedgerError("at most one PREPARED mutating transaction is allowed")
         if transaction["started_state_digest"] != state["state_digest"]:
             raise LedgerError("transaction starts from stale state digest")
+        if catalog is None:
+            raise LedgerError("transaction preparation requires transition catalog")
+        transition = transition_by_id(catalog, transaction["transition_id"])
+        permitted, _, _ = derive_permitted_transitions(state, catalog)
+        if transaction["transition_id"] not in permitted or transition["mode"] != "MUTATING":
+            raise LedgerError("transaction transition is not reducer-permitted")
+        claim = transaction["executor_claim"]
+        role = next((item for item in state["roles"] if item["role"] == claim["role"]), None)
+        if role is None or role.get("actor_id") != claim["executor_id"] or role.get("session_id") != claim["session_id"]:
+            raise LedgerError("transaction executor is not the durable role assignment")
+        if claim["status"] != "ACTIVE" or claim["expires_at"] <= claim["acquired_at"]:
+            raise LedgerError("transaction executor claim is inactive or expired")
+        if claim["role"] not in transition["required_roles"] or not set(transition["required_capabilities"]).issubset(claim["capabilities"]):
+            raise LedgerError("transaction executor lacks transition authority")
+        if transaction["replay_class"] != transition["replay_class"] or transaction["effect_probes"] != transition["effect_probes"]:
+            raise LedgerError("transaction semantics drift from catalog")
         state["open_transaction"] = transaction
         state["lifecycle_state"] = "TRANSACTION_OPEN"
     elif kind == "TRANSACTION_APPLYING":
@@ -488,6 +524,12 @@ def _apply_event(
             raise LedgerError("COMMITTED references no open transaction")
         if not payload["evidence"]:
             raise LedgerError("transaction cannot commit without authoritative evidence")
+        if catalog is None:
+            raise LedgerError("transaction commit requires transition catalog")
+        transition = transition_by_id(catalog, transaction["transition_id"])
+        phase_effects = [effect for effect in payload["effects"] if effect["kind"] == "PHASE_CHANGED"]
+        if len(phase_effects) != 1 or phase_effects[0]["phase"] != transition["successor_phase"]:
+            raise LedgerError("committed phase does not match catalog successor")
         for effect in payload["effects"]:
             if effect["kind"] == "SUBJECT_MUTATED":
                 _mutate_subject(state, effect)
@@ -512,6 +554,13 @@ def _apply_event(
     elif kind == "WORK_PACKAGE_CLOSED":
         if state["open_transaction"] or state["external_waits"]:
             raise LedgerError("terminal state cannot retain transaction or wait")
+        if catalog is None:
+            raise LedgerError("closure requires transition catalog")
+        permitted, _, _ = derive_permitted_transitions(state, catalog)
+        if payload["terminal_transition"] != "CLOSE_WORK_PACKAGE" or "CLOSE_WORK_PACKAGE" not in permitted:
+            raise LedgerError("work package closure is not reducer-permitted")
+        if not payload["terminal_evidence"]:
+            raise LedgerError("work package closure requires exact terminal evidence")
         state["lifecycle_state"] = "TERMINAL"
         state["domain_phase"] = "CLOSED"
     else:  # pragma: no cover - schema and payload guard enumerate all kinds
@@ -596,7 +645,7 @@ def reduce_ledger(
     state = _initial_state(ledger["work_package"], authority, expected_catalog_digest)
     for event in ledger["events"]:
         state["state_digest"] = state_digest(state)
-        _apply_event(state, event, admission)
+        _apply_event(state, event, admission, catalog)
         state["generation"] = event["sequence"]
         state["ledger_head_digest"] = event["event_digest"]
     permitted, selected, boundary = derive_permitted_transitions(state, catalog)
@@ -657,6 +706,11 @@ class TransactionController:
             raise TransitionRejected("transition is not reducer-permitted")
         if executor.role not in transition["required_roles"]:
             raise TransitionRejected("executor role is not authorized")
+        assignment = next((item for item in state["roles"] if item["role"] == executor.role), None)
+        if assignment is None or assignment.get("actor_id") != executor.executor_id or assignment.get("session_id") != executor.session_id:
+            raise TransitionRejected("executor is not the durable role assignment")
+        if assignment.get("status") not in {"DISPATCHED", "COMPLETE", "RESERVED"}:
+            raise TransitionRejected("durable role assignment is not active")
         missing = set(transition["required_capabilities"]) - set(executor.capabilities)
         if missing:
             raise TransitionRejected(f"executor capability mismatch: {sorted(missing)}")

@@ -97,13 +97,25 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
             MODULE._apply_event(state, event, self.admission)
 
     def test_t09_superseded_diagnostic_is_invalidated_with_subject(self):
-        self.test_t06_stale_review_is_invalidated_on_head_change()
+        state = self.reduced()
+        old = state["subjects"][0]["head_sha"]
+        state["gates"] = [{
+            "gate_id": "DIAGNOSTIC-A", "kind": "CHECK", "required": True,
+            "disposition": "SETTLED", "observed_status": "PASSED",
+            "subject": {**state["subjects"][0]}, "evidence_id": "run-A",
+            "observation_id": "job-A", "observed_at": "2026-08-28T12:00:00Z",
+            "validity_rule": "EXACT_HEAD", "invalidation_triggers": ["CANDIDATE_HEAD_CHANGED"],
+        }]
+        MODULE._mutate_subject(state, {"repository": state["subjects"][0]["repository"],
+            "identifier": state["subjects"][0]["identifier"], "old_head": old, "new_head": "e" * 40})
+        self.assertEqual(state["gates"][0]["observed_status"], "STALE")
 
     def test_t10_unauthorized_transition_fails_closed(self):
-        executor = MODULE.Executor("x", "s", "IMPLEMENTER", "BOUNDED_CONVERSATIONAL", ("durable_read",))
-        with self.assertRaisesRegex(MODULE.TransitionRejected, "not reducer-permitted"):
+        executor = MODULE.Executor("impostor", "other-session", "IMPLEMENTER", "BOUNDED_CONVERSATIONAL",
+            ("durable_compare_and_swap", "git_write", "exact_git_readback"))
+        with self.assertRaisesRegex(MODULE.TransitionRejected, "durable role assignment"):
             MODULE.TransactionController(self.catalog).authorize(
-                self.reduced(), "EXECUTE_AUTHORIZED_INTEGRATION", executor
+                self.reduced(), "RECONCILE_CURRENT_VERSION_PROJECTION", executor
             )
 
     def test_t11_loss_of_summaries_changes_no_input_or_digest(self):
@@ -125,11 +137,41 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
 
     def test_t14_capability_topology_mismatch_requires_decomposition(self):
         candidate = copy.deepcopy(self.admission)
-        candidate["work_graph"]["requires_autonomous_wake"] = True
+        candidate["work_graph"]["bounded_transition_count"] = 999
+        candidate["work_graph"]["has_external_wait"] = True
         candidate["available_executor_classes"] = ["BOUNDED_CONVERSATIONAL"]
         result = MODULE.admit_work_package(candidate)
-        self.assertEqual(result["topology"], "PERSISTENT_CONTROLLER_REQUIRED")
+        self.assertEqual(result["topology"], "MULTI_SESSION_RESUMABLE")
         self.assertEqual(result["disposition"], "DECOMPOSITION_REQUIRED")
+
+    def test_ledger_cannot_close_without_catalog_permitted_terminal_transition(self):
+        state = self.reduced()
+        event = {"event_type": "WORK_PACKAGE_CLOSED", "payload": {
+            "terminal_transition": "CLOSE_WORK_PACKAGE", "terminal_evidence": ["forged"]}}
+        with self.assertRaisesRegex(MODULE.LedgerError, "closure is not reducer-permitted"):
+            MODULE._apply_event(state, event, self.admission, self.catalog)
+
+    def test_ledger_cannot_prepare_unknown_transition(self):
+        state = self.reduced()
+        assignment = next(x for x in state["roles"] if x["role"] == "IMPLEMENTER")
+        executor = MODULE.Executor(assignment["actor_id"], assignment["session_id"], "IMPLEMENTER",
+            "MULTI_SESSION_WORKER", ("durable_compare_and_swap", "git_write", "exact_git_readback"))
+        transaction = MODULE.TransactionController(self.catalog).prepare(state,
+            "RECONCILE_CURRENT_VERSION_PROJECTION", executor, transaction_id="TX-1",
+            idempotency_key="KEY-1", expires_at="2026-08-28T13:00:00Z", now="2026-08-28T12:00:00Z")
+        transaction["transition_id"] = "MADE_UP"
+        event = {"event_type": "TRANSACTION_PREPARED", "payload": {"transaction": transaction}}
+        with self.assertRaisesRegex(MODULE.TransitionRejected, "unknown or duplicate"):
+            MODULE._apply_event(state, event, self.admission, self.catalog)
+
+    def test_forged_settled_gate_cannot_enter_state(self):
+        state = self.reduced()
+        gate = {"gate_id": "FORGED", "kind": "REVIEW", "required": True,
+            "subject": {**state["subjects"][0], "head_sha": "d" * 40}, "evidence_id": "claim",
+            "observed_status": "APPROVED", "observation_id": "claim", "observed_at": "2026-08-28T12:00:00Z",
+            "validity_rule": "EXACT_HEAD", "invalidation_triggers": [], "disposition": "SETTLED"}
+        with self.assertRaisesRegex(MODULE.LedgerError, "exact current subject"):
+            MODULE._upsert_gate(state, gate)
 
     def test_candidate_artifacts_and_closed_schemas_validate(self):
         MODULE.validate()
