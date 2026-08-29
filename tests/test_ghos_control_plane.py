@@ -152,6 +152,15 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
         permitted, selected, _ = MODULE.derive_permitted_transitions(state, self.catalog)
         self.assertNotIn("EXECUTE_AUTHORIZED_INTEGRATION", permitted)
         self.assertEqual(selected, "RECONCILE_ACTIVE_VERSION_PROPAGATION")
+        false_coherent = copy.deepcopy(manifest)
+        for consumer in false_coherent["consumers"]:
+            if consumer["authority_class"] == "DERIVED_CURRENT":
+                consumer["observed_version"] = "0.2.0"
+                consumer["status"] = "COHERENT"
+        false_coherent["all_derived_current_coherent"] = True
+        false_coherent["external_reconciliation_complete"] = True
+        with self.assertRaisesRegex(MODULE.AuthorityContradiction, "not derived from exact content"):
+            MODULE.validate_propagation_manifest(false_coherent, self.authority)
 
     def test_t14_capability_topology_mismatch_requires_decomposition(self):
         candidate = copy.deepcopy(self.admission)

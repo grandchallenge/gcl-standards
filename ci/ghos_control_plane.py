@@ -1012,6 +1012,71 @@ def validate_propagation_manifest(
         raise AuthorityContradiction("external reconciliation summary mismatch")
     if manifest["claim_boundaries"] != CLAIM_BOUNDARIES:
         raise AuthorityContradiction("propagation manifest widens authority")
+    workspace = next(
+        (candidate for candidate in (ROOT, *ROOT.parents)
+         if (candidate / "MATH-PROGRAMME").is_dir() and (candidate / ".github").is_dir()),
+        None,
+    )
+    if workspace is None:
+        raise AuthorityContradiction("cannot locate exact propagation consumer repositories")
+    repository_roots = {
+        "grandchallenge/gcl-standards": ROOT,
+        "grandchallenge/MATH-PROGRAMME": workspace / "MATH-PROGRAMME",
+        "grandchallenge/.github": workspace / ".github",
+    }
+    for consumer in derived:
+        source_record = consumer["exact_source"]
+        repository_root = repository_roots.get(source_record["repository"])
+        if repository_root is None:
+            raise AuthorityContradiction(f"unknown propagation repository: {source_record['repository']}")
+        try:
+            contents = subprocess.check_output(
+                ["git", "show", f"{source_record['commit_sha']}:{source_record['path']}"],
+                cwd=repository_root,
+            )
+        except subprocess.CalledProcessError as exc:
+            raise AuthorityContradiction(
+                f"cannot resolve propagation consumer: {consumer['consumer_id']}"
+            ) from exc
+        if source_record.get("git_blob_sha1"):
+            actual_blob = subprocess.check_output(
+                ["git", "rev-parse", f"{source_record['commit_sha']}:{source_record['path']}"],
+                cwd=repository_root, text=True,
+            ).strip()
+            if actual_blob != source_record["git_blob_sha1"]:
+                raise AuthorityContradiction(f"propagation consumer blob drift: {consumer['consumer_id']}")
+        text_value = contents.decode("utf-8")
+        if source_record["path"].endswith(".json"):
+            parsed = json.loads(text_value)
+            observed_version = parsed.get("selected_admission", {}).get("version")
+        else:
+            versions = re.findall(r"\b0\.[0-9]+\.[0-9]+\b", text_value)
+            lowered = text_value.lower()
+            if any(marker in lowered for marker in (
+                "remains the version selected", "0.1.1 has completed that sequence",
+                "coordinated candidate, not current authority",
+            )):
+                observed_version = "0.1.1"
+            else:
+                observed_version = consumer["expected_version"] if consumer["expected_version"] in versions else (versions[-1] if versions else None)
+        stale_markers = (
+            "remains the version selected",
+            "candidate normative successor",
+            "coordinated candidate, not current authority",
+            "0.1.1 has completed that sequence",
+        )
+        derived_status = "STALE" if (
+            observed_version != consumer["expected_version"]
+            or any(marker in text_value.lower() for marker in stale_markers)
+        ) else "COHERENT"
+        status_matches = (
+            consumer["status"] == derived_status
+            or (derived_status == "STALE" and consumer["status"] == "UNRESOLVED_EXTERNAL")
+        )
+        if consumer["observed_version"] != observed_version or not status_matches:
+            raise AuthorityContradiction(
+                f"propagation consumer status is not derived from exact content: {consumer['consumer_id']}"
+            )
 
 
 def validate_candidate_artifacts(*, root: Path = ROOT) -> None:
