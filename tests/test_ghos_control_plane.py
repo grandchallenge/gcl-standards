@@ -4,6 +4,7 @@ import copy
 import importlib.util
 import json
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -299,6 +300,43 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
             MODULE._apply_event(state, {"event_type": "TRANSACTION_COMMITTED", "occurred_at": "2026-08-28T12:00:03Z",
                 "payload": {"transaction_id": "TX-EVIDENCE", "evidence": [ref],
                 "effects": [{"kind": "PHASE_CHANGED", "phase": "VALIDATION"}]}}, self.admission, self.catalog)
+
+    def test_cold_replacement_can_take_over_expired_transaction_and_abort(self):
+        state = self.reduced()
+        implementer = next(x for x in state["roles"] if x["role"] == "IMPLEMENTER")
+        executor = MODULE.Executor(implementer["actor_id"], implementer["session_id"], "IMPLEMENTER",
+            "MULTI_SESSION_WORKER", ("durable_compare_and_swap", "git_write", "exact_git_readback"))
+        transaction = MODULE.TransactionController(self.catalog).prepare(state,
+            "RECONCILE_CURRENT_VERSION_PROJECTION", executor, transaction_id="TX-TAKEOVER",
+            idempotency_key="KEY-TAKEOVER", expires_at="2026-08-28T12:01:00Z", now="2026-08-28T12:00:00Z")
+        MODULE._apply_event(state, {"event_type": "TRANSACTION_PREPARED", "occurred_at": "2026-08-28T12:00:01Z",
+            "payload": {"transaction": transaction}}, self.admission, self.catalog)
+        MODULE._apply_event(state, {"event_type": "ROLE_DISPATCHED", "occurred_at": "2026-08-28T12:02:00Z",
+            "payload": {"role": "HARNESS_COORDINATOR", "actor_id": "replacement", "session_id": "fresh-session"}},
+            self.admission, self.catalog)
+        replacement = {"executor_id": "replacement", "session_id": "fresh-session",
+            "role": "HARNESS_COORDINATOR", "executor_class": "MULTI_SESSION_WORKER",
+            "capabilities": ["durable_compare_and_swap", "authoritative_effect_probe"],
+            "acquired_at": "2026-08-28T12:02:00Z", "expires_at": "2026-08-28T13:02:00Z", "status": "ACTIVE"}
+        MODULE._apply_event(state, {"event_type": "TRANSACTION_CLAIM_REPLACED", "occurred_at": "2026-08-28T12:02:01Z",
+            "payload": {"transaction_id": "TX-TAKEOVER", "prior_executor_id": implementer["actor_id"],
+                "executor_claim": replacement}}, self.admission, self.catalog)
+        self.assertEqual(state["open_transaction"]["state"], "RECONCILING")
+        evidence = {"record_type": "TRANSACTION_OUTCOME_EVIDENCE", "transaction_id": "TX-TAKEOVER",
+            "transition_id": transaction["transition_id"], "subjects": transaction["subjects"],
+            "effect_probes": transaction["effect_probes"], "observed_outcome": "ABORTED", "effects": []}
+        with tempfile.NamedTemporaryFile("w", encoding="utf-8", suffix=".json", dir=ROOT, delete=False) as handle:
+            json.dump(evidence, handle, sort_keys=True, separators=(",", ":"))
+            evidence_path = Path(handle.name)
+        try:
+            import hashlib
+            ref = f"file:{evidence_path.relative_to(ROOT).as_posix()}#sha256:{hashlib.sha256(evidence_path.read_bytes()).hexdigest()}"
+            MODULE._apply_event(state, {"event_type": "TRANSACTION_ABORTED", "occurred_at": "2026-08-28T12:02:02Z",
+                "payload": {"transaction_id": "TX-TAKEOVER", "evidence": [ref]}}, self.admission, self.catalog)
+        finally:
+            evidence_path.unlink(missing_ok=True)
+        self.assertIsNone(state["open_transaction"])
+        self.assertEqual(state["lifecycle_state"], "READY")
 
     def test_candidate_artifacts_and_closed_schemas_validate(self):
         MODULE.validate()

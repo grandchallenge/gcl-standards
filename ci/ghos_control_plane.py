@@ -45,6 +45,7 @@ EVENT_PAYLOAD_KEYS = {
     "EXTERNAL_WAIT_OPENED": {"wait"},
     "EXTERNAL_WAIT_OBSERVED": {"wait_id", "object_id", "subject_head", "observation_id", "status", "observed_at"},
     "TRANSACTION_PREPARED": {"transaction"},
+    "TRANSACTION_CLAIM_REPLACED": {"transaction_id", "prior_executor_id", "executor_claim"},
     "TRANSACTION_APPLYING": {"transaction_id", "attempt_id"},
     "TRANSACTION_RECONCILING": {"transaction_id", "observed_side_effects"},
     "TRANSACTION_COMMITTED": {"transaction_id", "evidence", "effects"},
@@ -484,6 +485,35 @@ def _assert_active_transaction_lease(transaction: Mapping[str, Any], event: Mapp
         raise LedgerError("transaction event is outside the active executor lease")
 
 
+def _verify_transaction_outcome_evidence(
+    transaction: Mapping[str, Any], evidence_refs: Iterable[str], outcome: str,
+    effects: Iterable[Mapping[str, Any]] | None = None,
+) -> None:
+    refs = list(evidence_refs)
+    if not refs:
+        raise LedgerError("transaction outcome requires authoritative evidence")
+    for evidence_ref in refs:
+        match = re.fullmatch(r"file:([^#]+)#sha256:([0-9a-f]{64})", evidence_ref)
+        if not match:
+            raise LedgerError("transaction evidence must be a local digest-addressed record")
+        evidence_bytes = verified_local_file(match.group(1), match.group(2))
+        try:
+            evidence = json.loads(evidence_bytes)
+        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise LedgerError("transaction outcome evidence is not JSON") from exc
+        expected = {
+            "record_type": "TRANSACTION_OUTCOME_EVIDENCE",
+            "transaction_id": transaction["transaction_id"],
+            "transition_id": transaction["transition_id"],
+            "subjects": transaction["subjects"],
+            "effect_probes": transaction["effect_probes"],
+            "observed_outcome": outcome,
+            "effects": list(effects or []),
+        }
+        if not isinstance(evidence, dict) or any(evidence.get(key) != value for key, value in expected.items()):
+            raise LedgerError("transaction outcome evidence does not bind the exact outcome")
+
+
 def _apply_event(
     state: dict[str, Any],
     event: Mapping[str, Any],
@@ -609,6 +639,30 @@ def _apply_event(
         _assert_active_transaction_lease(transaction, event)
         transaction["state"] = "APPLYING"
         transaction["attempt_ids"].append(payload["attempt_id"])
+    elif kind == "TRANSACTION_CLAIM_REPLACED":
+        transaction = state["open_transaction"]
+        if transaction is None or transaction["transaction_id"] != payload["transaction_id"]:
+            raise LedgerError("claim replacement references no open transaction")
+        prior = transaction["executor_claim"]
+        occurred_at = instant(event["occurred_at"])
+        if payload["prior_executor_id"] != prior["executor_id"] or occurred_at < instant(prior["expires_at"]):
+            raise LedgerError("claim replacement requires the exact expired prior claim")
+        replacement = payload["executor_claim"]
+        assignment = next((item for item in state["roles"] if item["role"] == replacement["role"]), None)
+        if (
+            assignment is None or assignment.get("actor_id") != replacement["executor_id"]
+            or assignment.get("session_id") != replacement["session_id"]
+            or assignment.get("status") != "DISPATCHED"
+            or replacement["role"] != "HARNESS_COORDINATOR"
+            or replacement["executor_class"] not in {"MULTI_SESSION_WORKER", "PERSISTENT_CONTROLLER"}
+            or not {"durable_compare_and_swap", "authoritative_effect_probe"}.issubset(replacement["capabilities"])
+            or replacement["status"] != "ACTIVE"
+            or occurred_at < instant(replacement["acquired_at"])
+            or occurred_at >= instant(replacement["expires_at"])
+        ):
+            raise LedgerError("replacement claim is not an active durable recovery assignment")
+        transaction["executor_claim"] = copy.deepcopy(replacement)
+        transaction["state"] = "RECONCILING"
     elif kind == "TRANSACTION_RECONCILING":
         transaction = state["open_transaction"]
         if transaction is None or transaction["transaction_id"] != payload["transaction_id"]:
@@ -627,28 +681,7 @@ def _apply_event(
         if transaction["replay_class"] == "NON_REPLAYABLE_REQUIRES_RECONCILIATION" and transaction["state"] != "RECONCILING":
             raise LedgerError("non-replayable transaction requires reconciliation before commit")
         _assert_active_transaction_lease(transaction, event)
-        if not payload["evidence"]:
-            raise LedgerError("transaction cannot commit without authoritative evidence")
-        for evidence_ref in payload["evidence"]:
-            match = re.fullmatch(r"file:([^#]+)#sha256:([0-9a-f]{64})", evidence_ref)
-            if not match:
-                raise LedgerError("transaction evidence must be a local digest-addressed record")
-            evidence_bytes = verified_local_file(match.group(1), match.group(2))
-            try:
-                evidence = json.loads(evidence_bytes)
-            except (UnicodeDecodeError, json.JSONDecodeError) as exc:
-                raise LedgerError("transaction commit evidence is not JSON") from exc
-            expected = {
-                "record_type": "TRANSACTION_COMMIT_EVIDENCE",
-                "transaction_id": transaction["transaction_id"],
-                "transition_id": transaction["transition_id"],
-                "subjects": transaction["subjects"],
-                "effect_probes": transaction["effect_probes"],
-                "observed_outcome": "COMMITTED",
-                "effects": payload["effects"],
-            }
-            if not isinstance(evidence, dict) or any(evidence.get(key) != value for key, value in expected.items()):
-                raise LedgerError("transaction commit evidence does not bind the exact outcome")
+        _verify_transaction_outcome_evidence(transaction, payload["evidence"], "COMMITTED", payload["effects"])
         if catalog is None:
             raise LedgerError("transaction commit requires transition catalog")
         transition = transition_by_id(catalog, transaction["transition_id"])
@@ -669,6 +702,7 @@ def _apply_event(
         if transaction is None or transaction["transaction_id"] != payload["transaction_id"]:
             raise LedgerError("ABORTED references no open transaction")
         _assert_active_transaction_lease(transaction, event)
+        _verify_transaction_outcome_evidence(transaction, payload["evidence"], "ABORTED")
         state["open_transaction"] = None
         state["lifecycle_state"] = "READY"
     elif kind == "SUBJECT_MUTATED":

@@ -195,7 +195,7 @@
       "properties": {
         "sequence": {"type": "integer", "minimum": 1},
         "event_id": {"$ref": "#/$defs/identifier"},
-        "event_type": {"enum": ["WORK_PACKAGE_ADMITTED", "ROLE_DISPATCHED", "ROLE_RESULT_RECORDED", "GATE_OBSERVED", "EXTERNAL_WAIT_OPENED", "EXTERNAL_WAIT_OBSERVED", "TRANSACTION_PREPARED", "TRANSACTION_APPLYING", "TRANSACTION_RECONCILING", "TRANSACTION_COMMITTED", "TRANSACTION_ABORTED", "SUBJECT_MUTATED", "BOUNDARY_DECLARED", "WORK_PACKAGE_CLOSED"]},
+        "event_type": {"enum": ["WORK_PACKAGE_ADMITTED", "ROLE_DISPATCHED", "ROLE_RESULT_RECORDED", "GATE_OBSERVED", "EXTERNAL_WAIT_OPENED", "EXTERNAL_WAIT_OBSERVED", "TRANSACTION_PREPARED", "TRANSACTION_CLAIM_REPLACED", "TRANSACTION_APPLYING", "TRANSACTION_RECONCILING", "TRANSACTION_COMMITTED", "TRANSACTION_ABORTED", "SUBJECT_MUTATED", "BOUNDARY_DECLARED", "WORK_PACKAGE_CLOSED"]},
         "occurred_at": {"$ref": "#/$defs/timestamp"},
         "previous_event_digest": {"oneOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]},
         "payload": {"type": "object"},

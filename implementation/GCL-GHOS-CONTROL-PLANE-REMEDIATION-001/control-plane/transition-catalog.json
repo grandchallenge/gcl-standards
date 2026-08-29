@@ -50,7 +50,7 @@
       "mode": "READ_ONLY",
       "authority_effect": "NONE",
       "required_gate_kinds": [],
-      "required_roles": ["IMPLEMENTER"],
+      "required_roles": ["HARNESS_COORDINATOR"],
       "required_capabilities": ["durable_compare_and_swap", "authoritative_effect_probe"],
       "requires_no_contradictions": false,
       "requires_open_transaction": true,

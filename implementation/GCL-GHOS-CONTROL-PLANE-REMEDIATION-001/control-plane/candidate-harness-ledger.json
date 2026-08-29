@@ -6,7 +6,7 @@
   "work_package": "GCL-GHOS-CONTROL-PLANE-REMEDIATION-001",
   "storage_status": "CANDIDATE_BRANCH_NON_AUTHORITATIVE",
   "candidate_branch_notice": "Candidate continuity state only. It grants no authority and must migrate to a protected append-only control ref before guarded pilot use.",
-  "catalog_digest": "f10d5fd2571da1ff64328cd0d77e6724765bbe026ff9ad7c75eb609f7af682a8",
+  "catalog_digest": "e4928850c6b8ba069ec6c36a140118d8ff46ad1a7bf0e11b1123408a0e2f6310",
   "events": [
     {
       "sequence": 1,

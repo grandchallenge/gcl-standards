@@ -131,9 +131,9 @@
   "stopping_boundary": null,
   "blocking_conditions": [],
   "invalidated_gate_ids": [],
-  "catalog_digest": "f10d5fd2571da1ff64328cd0d77e6724765bbe026ff9ad7c75eb609f7af682a8",
+  "catalog_digest": "e4928850c6b8ba069ec6c36a140118d8ff46ad1a7bf0e11b1123408a0e2f6310",
   "ledger_head_digest": "2618b2d7c8084b1b48db78eb5c31697fd2015cdd835ba35697db6e1b1ec12976",
-  "state_digest": "cb573d4ffb96fc6a60f12e1bde9daf455c136205e9cf1e4393b33fc5e8c08bb0",
+  "state_digest": "e58b28552f1df9a37ed1fed6a568456d4e47fb47c8b2259cd4bb07837c843d0e",
   "claim_boundaries": {
     "constitutional": false,
     "merge": false,
