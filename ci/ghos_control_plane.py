@@ -1170,6 +1170,35 @@ def validate_candidate_artifacts(*, root: Path = ROOT) -> None:
         )
         if hashlib.sha256(contents).hexdigest() != expected:
             raise ControlPlaneError(f"acceptance evidence artifact drift: {relative}")
+    results_ref = acceptance["execution_results"]
+    results_bytes = (root / results_ref["path"]).read_bytes()
+    if hashlib.sha256(results_bytes).hexdigest() != results_ref["sha256"]:
+        raise ControlPlaneError("acceptance execution-results digest drift")
+    results = json.loads(results_bytes)
+    if results["implementation_head"] != head or results["implementation_tree"] != tree:
+        raise ControlPlaneError("acceptance results implementation identity drift")
+    if any(item["exit_code"] != 0 or item["result"] not in {"OK", "gcl-standards validation passed"} for item in results["commands"]):
+        raise ControlPlaneError("acceptance command result is not passing")
+    scenarios = results["scenarios"]
+    if {item["id"] for item in scenarios} != {f"T{index:02d}" for index in range(1, 15)}:
+        raise ControlPlaneError("acceptance scenario coverage drift")
+    required_result_fields = {
+        "id", "test", "result", "transition", "state_digest",
+        "transaction_state", "gate_invalidations", "prohibited_outcome_observed",
+    }
+    if any(
+        set(item) != required_result_fields or item["result"] != "PASS"
+        or item["prohibited_outcome_observed"] is not False
+        or not re.fullmatch(r"[0-9a-f]{64}", item["state_digest"])
+        for item in scenarios
+    ):
+        raise ControlPlaneError("acceptance scenario result is incomplete or non-passing")
+    baseline = results["baseline"]
+    for key in ("state_digest", "selected_transition", "permitted_transitions", "invalidated_gate_ids", "open_transaction"):
+        state_key = "open_transaction" if key == "open_transaction" else key
+        result_key = "transaction_state" if key == "open_transaction" else key
+        if baseline[result_key] != stored_state[state_key]:
+            raise ControlPlaneError(f"acceptance baseline drift: {result_key}")
 
 
 def validate(*, root: Path = ROOT) -> None:
