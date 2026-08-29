@@ -1,8 +1,8 @@
 {
   "record_type": "GHOS_CONTROL_PLANE_ACCEPTANCE_EVIDENCE",
   "schema_version": "1.0.0",
-  "implementation_head": "ef3c1bb7e54c4d548106134b47c786eb4c702ff8",
-  "implementation_tree": "3044a4479355754ab42df1f202ee2e1e22a00694",
+  "implementation_head": "94b3a016b4d22e29e205a2f4d03f5cc2d227334f",
+  "implementation_tree": "d1563c27a6a3d98e4a2ed84edde6bb88dd05811e",
   "catalog_digest": "2cb71132cc72e88fad6e530d2634c67b27640776c2dda6d19589b4295de3e341",
   "validation": {
     "command": "python ci/validate.py",
@@ -15,7 +15,7 @@
     "full_suite_result": "PASS"
   },
   "artifact_sha256": {
-    "ci/ghos_control_plane.py": "906db52f9fd37d0bb14b719f08349feb645980ee3a09868b942bbc031b23dd05",
+    "ci/ghos_control_plane.py": "2d5f8b8c70a4eff522742ecafe98a249e24848a8d02116427943f36d1928a5ea",
     "schemas/ghos_control_plane.schema.json": "92d30438859ae8abe213e3e822bfd571da3ccea7796b602d2e7ff5494d8e3ed1",
     "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/transition-catalog.json": "fea957844e068e93eb53d3a7d38253d520e1510adf643750de39ab7c9a24394f",
     "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/candidate-work-package-admission.json": "3cdc352a8a45bfd2258917dbf6a6013a6fa83bed5a7f5aff3ae70d80ae3fc410",
@@ -26,7 +26,7 @@
   },
   "execution_results": {
     "path": "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/ACCEPTANCE_RESULTS.json",
-    "sha256": "2408afb7c6c9e736dd8268896a18d7edf605cd03b7002ce722626ae7357bce77"
+    "sha256": "8017fd8068d85f643c5926b91d0d03a6cb09febad5900749610dea003d766d23"
   },
   "scenarios": {
     "T01_COLD_RESUME": "test_t01_cold_resume_is_byte_deterministic",

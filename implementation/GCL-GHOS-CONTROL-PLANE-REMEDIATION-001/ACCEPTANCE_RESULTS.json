@@ -2,8 +2,8 @@
   "record_type": "GHOS_CONTROL_PLANE_EXECUTION_RESULTS",
   "schema_version": "1.0.0",
   "executed_at": "2026-08-29T00:00:00-07:00",
-  "implementation_head": "ef3c1bb7e54c4d548106134b47c786eb4c702ff8",
-  "implementation_tree": "3044a4479355754ab42df1f202ee2e1e22a00694",
+  "implementation_head": "94b3a016b4d22e29e205a2f4d03f5cc2d227334f",
+  "implementation_tree": "d1563c27a6a3d98e4a2ed84edde6bb88dd05811e",
   "commands": [
     {"command": "python ci/validate.py", "exit_code": 0, "result": "gcl-standards validation passed"},
     {"command": "python -m unittest tests.test_ghos_control_plane -q", "exit_code": 0, "tests": 29, "result": "OK"},
@@ -18,20 +18,20 @@
     "contradictions": ["STALE_CURRENT_PROJECTION", "ACTIVE_VERSION_PROPAGATION_INCOMPLETE"]
   },
   "scenarios": [
-    {"id": "T01", "test": "test_t01_cold_resume_is_byte_deterministic", "result": "PASS", "transition": "RECONCILE_CURRENT_VERSION_PROJECTION", "state_digest": "7d4ef4882b0a8dadccee38d76f7c6d639626c7a43e1cc74d1a3ea4d36427fe8c", "transaction_state": null, "gate_invalidations": [], "prohibited_outcome_observed": false},
-    {"id": "T02", "test": "test_t02_agent_replacement_does_not_change_transition", "result": "PASS", "transition": "RECONCILE_CURRENT_VERSION_PROJECTION", "state_digest": "7d4ef4882b0a8dadccee38d76f7c6d639626c7a43e1cc74d1a3ea4d36427fe8c", "transaction_state": null, "gate_invalidations": [], "prohibited_outcome_observed": false},
-    {"id": "T03", "test": "test_t03_stale_chat_loses_to_protected_authority", "result": "PASS", "transition": "RECONCILE_CURRENT_VERSION_PROJECTION", "state_digest": "7d4ef4882b0a8dadccee38d76f7c6d639626c7a43e1cc74d1a3ea4d36427fe8c", "transaction_state": null, "gate_invalidations": [], "prohibited_outcome_observed": false},
-    {"id": "T04", "test": "test_transaction_cutoff_states_are_unambiguous", "result": "PASS", "transition": "RECONCILE_CURRENT_VERSION_PROJECTION", "state_digest": "7d4ef4882b0a8dadccee38d76f7c6d639626c7a43e1cc74d1a3ea4d36427fe8c", "transaction_state": "PREPARED_APPLYING_RECONCILING", "gate_invalidations": [], "prohibited_outcome_observed": false},
-    {"id": "T05", "test": "test_cold_replacement_can_take_over_expired_transaction_and_abort", "result": "PASS", "transition": "RECONCILE_INTERRUPTED_MUTATION", "state_digest": "7d4ef4882b0a8dadccee38d76f7c6d639626c7a43e1cc74d1a3ea4d36427fe8c", "transaction_state": "ABORTED_TO_READY", "gate_invalidations": [], "prohibited_outcome_observed": false},
-    {"id": "T06", "test": "test_t06_stale_review_is_invalidated_on_head_change", "result": "PASS", "transition": "MUTATE_CANDIDATE_BRANCH", "state_digest": "7d4ef4882b0a8dadccee38d76f7c6d639626c7a43e1cc74d1a3ea4d36427fe8c", "transaction_state": null, "gate_invalidations": ["REVIEW-A"], "prohibited_outcome_observed": false},
-    {"id": "T07", "test": "test_t07_projection_contradiction_names_the_authoritative_record", "result": "PASS", "transition": "RECONCILE_CURRENT_VERSION_PROJECTION", "state_digest": "7d4ef4882b0a8dadccee38d76f7c6d639626c7a43e1cc74d1a3ea4d36427fe8c", "transaction_state": null, "gate_invalidations": [], "prohibited_outcome_observed": false},
-    {"id": "T08", "test": "test_stale_external_result_cannot_complete_another_wait", "result": "PASS", "transition": "OBSERVE_EXTERNAL_WAIT", "state_digest": "7d4ef4882b0a8dadccee38d76f7c6d639626c7a43e1cc74d1a3ea4d36427fe8c", "transaction_state": null, "gate_invalidations": [], "prohibited_outcome_observed": false},
-    {"id": "T09", "test": "test_t09_superseded_diagnostic_is_invalidated_with_subject", "result": "PASS", "transition": "MUTATE_CANDIDATE_BRANCH", "state_digest": "7d4ef4882b0a8dadccee38d76f7c6d639626c7a43e1cc74d1a3ea4d36427fe8c", "transaction_state": null, "gate_invalidations": ["DIAGNOSTIC-A"], "prohibited_outcome_observed": false},
-    {"id": "T10", "test": "test_t10_unauthorized_transition_fails_closed", "result": "PASS", "transition": null, "state_digest": "7d4ef4882b0a8dadccee38d76f7c6d639626c7a43e1cc74d1a3ea4d36427fe8c", "transaction_state": null, "gate_invalidations": [], "prohibited_outcome_observed": false},
-    {"id": "T11", "test": "test_t11_loss_of_summaries_changes_no_input_or_digest", "result": "PASS", "transition": "RECONCILE_CURRENT_VERSION_PROJECTION", "state_digest": "7d4ef4882b0a8dadccee38d76f7c6d639626c7a43e1cc74d1a3ea4d36427fe8c", "transaction_state": null, "gate_invalidations": [], "prohibited_outcome_observed": false},
-    {"id": "T12", "test": "test_cold_replacement_can_take_over_expired_transaction_and_abort", "result": "PASS", "transition": "RECONCILE_INTERRUPTED_MUTATION", "state_digest": "7d4ef4882b0a8dadccee38d76f7c6d639626c7a43e1cc74d1a3ea4d36427fe8c", "transaction_state": "RECOVERY_TAKEOVER_ABORTED_TO_READY", "gate_invalidations": [], "prohibited_outcome_observed": false},
-    {"id": "T13", "test": "test_t13_active_version_manifest_blocks_stale_consumers", "result": "PASS", "transition": "RECONCILE_ACTIVE_VERSION_PROPAGATION", "state_digest": "7d4ef4882b0a8dadccee38d76f7c6d639626c7a43e1cc74d1a3ea4d36427fe8c", "transaction_state": null, "gate_invalidations": [], "prohibited_outcome_observed": false},
-    {"id": "T14", "test": "test_t14_capability_topology_mismatch_requires_decomposition", "result": "PASS", "transition": "DECOMPOSE_FOR_RESUMABILITY", "state_digest": "7d4ef4882b0a8dadccee38d76f7c6d639626c7a43e1cc74d1a3ea4d36427fe8c", "transaction_state": null, "gate_invalidations": [], "prohibited_outcome_observed": false}
+    {"id": "T01", "test": "test_t01_cold_resume_is_byte_deterministic"},
+    {"id": "T02", "test": "test_t02_agent_replacement_does_not_change_transition"},
+    {"id": "T03", "test": "test_t03_stale_chat_loses_to_protected_authority"},
+    {"id": "T04", "test": "test_transaction_cutoff_states_are_unambiguous"},
+    {"id": "T05", "test": "test_cold_replacement_can_take_over_expired_transaction_and_abort"},
+    {"id": "T06", "test": "test_t06_stale_review_is_invalidated_on_head_change"},
+    {"id": "T07", "test": "test_t07_projection_contradiction_names_the_authoritative_record"},
+    {"id": "T08", "test": "test_stale_external_result_cannot_complete_another_wait"},
+    {"id": "T09", "test": "test_t09_superseded_diagnostic_is_invalidated_with_subject"},
+    {"id": "T10", "test": "test_t10_unauthorized_transition_fails_closed"},
+    {"id": "T11", "test": "test_t11_loss_of_summaries_changes_no_input_or_digest"},
+    {"id": "T12", "test": "test_cold_replacement_can_take_over_expired_transaction_and_abort"},
+    {"id": "T13", "test": "test_t13_active_version_manifest_blocks_stale_consumers"},
+    {"id": "T14", "test": "test_t14_capability_topology_mismatch_requires_decomposition"}
   ],
   "claim_boundaries": {"approval": false, "merge": false, "activation": false, "certification": false, "production": false, "publication": false, "claim_promotion": false}
 }
