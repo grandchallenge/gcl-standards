@@ -1,0 +1,64 @@
+{
+  "record_type": "GHOS_CONTROL_PLANE_ACCEPTANCE_EVIDENCE",
+  "schema_version": "1.0.0",
+  "implementation_head": "ecb11573d8d18da36892990f320addd2add6bbf5",
+  "implementation_tree": "7fb451b8eb13714d136f15bf5eed930d0b305571",
+  "catalog_digest": "2cb71132cc72e88fad6e530d2634c67b27640776c2dda6d19589b4295de3e341",
+  "validation": {
+    "command": "python ci/validate.py",
+    "result": "PASS",
+    "adversarial_command": "python -m unittest tests.test_ghos_control_plane -v",
+    "adversarial_tests": 29,
+    "adversarial_result": "PASS",
+    "full_suite_command": "python -m unittest discover -s tests -v",
+    "full_suite_tests": 199,
+    "full_suite_result": "PASS"
+  },
+  "artifact_sha256": {
+    "ci/ghos_control_plane.py": "4938493a529ab425f8bc253082a5e487e337b7a16d3380b4735704441a9a437b",
+    "schemas/ghos_control_plane.schema.json": "92d30438859ae8abe213e3e822bfd571da3ccea7796b602d2e7ff5494d8e3ed1",
+    "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/transition-catalog.json": "fea957844e068e93eb53d3a7d38253d520e1510adf643750de39ab7c9a24394f",
+    "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/candidate-work-package-admission.json": "3cdc352a8a45bfd2258917dbf6a6013a6fa83bed5a7f5aff3ae70d80ae3fc410",
+    "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/candidate-harness-ledger.json": "d2a8f397be4d1df04ebcd446252be9e02a04bac4da8422936feb8c09633f0fc3",
+    "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/candidate-harness-state.json": "744bd2522538be68cce109dd761035575148209f76ddddc6e60935cf073b34e7",
+    "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/active-version-propagation-manifest.json": "4bdf97cefb0ade0856e755a408f186f15399cbf22d0beac05a7c683b80b186e6",
+    "tests/test_ghos_control_plane.py": "e7388090ae9272f2bc1c8a3e2313d3a0f5b85a404930ef3d5b8feb21b9cf4574"
+  },
+  "execution_results": {
+    "path": "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/ACCEPTANCE_RESULTS.json",
+    "sha256": "99bd80febfb74b26810a836c998f89de2121c4c5e483b6e588dce4d16bfcf067"
+  },
+  "scenarios": {
+    "T01_COLD_RESUME": "test_t01_cold_resume_is_byte_deterministic",
+    "T02_AGENT_REPLACEMENT": "test_t02_agent_replacement_does_not_change_transition",
+    "T03_STALE_CHAT": "test_t03_stale_chat_loses_to_protected_authority",
+    "T04_CUTOFF_BOUNDARIES": "test_transaction_cutoff_states_are_unambiguous",
+    "T05_INTERRUPTED_MUTATION": "test_cold_replacement_can_take_over_expired_transaction_and_abort",
+    "T06_STALE_REVIEW": "test_t06_stale_review_is_invalidated_on_head_change",
+    "T07_PROJECTION_CONTRADICTION": "test_t07_projection_contradiction_names_the_authoritative_record",
+    "T08_ASYNCHRONOUS_CI": "test_stale_external_result_cannot_complete_another_wait",
+    "T09_SUPERSEDED_DIAGNOSTIC": "test_t09_superseded_diagnostic_is_invalidated_with_subject",
+    "T10_UNAUTHORIZED_TRANSITION": "test_t10_unauthorized_transition_fails_closed",
+    "T11_LOSS_OF_SUMMARIES": "test_t11_loss_of_summaries_changes_no_input_or_digest",
+    "T12_COORDINATOR_DEATH": "test_cold_replacement_can_take_over_expired_transaction_and_abort",
+    "T13_ACTIVE_VERSION_COHERENCE": "test_t13_active_version_manifest_blocks_stale_consumers",
+    "T14_CAPABILITY_TOPOLOGY": "test_t14_capability_topology_mismatch_requires_decomposition"
+  },
+  "prohibited_outcomes": [
+    "conversation_overrides_protected_authority",
+    "stale_review_or_diagnostic_survives_head_change",
+    "expired_executor_applies_or_commits",
+    "recovery_only_coordinator_commits_original_transition",
+    "authority_bearing_transition_while_propagation_is_incomplete",
+    "bounded_only_executor_controls_multi_session_work"
+  ],
+  "claim_boundaries": {
+    "approval": false,
+    "merge": false,
+    "activation": false,
+    "certification": false,
+    "production": false,
+    "publication": false,
+    "claim_promotion": false
+  }
+}

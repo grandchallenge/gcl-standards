@@ -409,11 +409,13 @@ def validate() -> None:
         validate_schemas as validate_status_schemas,
     )
     from optimality_scorecard import validate_schema as validate_scorecard_schema
+    from ghos_control_plane import validate as validate_ghos_control_plane
 
     validate_ghos_successor()
     validate_status_schemas()
     validate_current_status()
     validate_scorecard_schema()
+    validate_ghos_control_plane()
 
     validate_regret_contract()
     validate_aether_evidence()

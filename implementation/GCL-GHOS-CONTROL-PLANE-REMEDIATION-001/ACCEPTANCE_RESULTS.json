@@ -1,0 +1,37 @@
+{
+  "record_type": "GHOS_CONTROL_PLANE_EXECUTION_RESULTS",
+  "schema_version": "1.0.0",
+  "executed_at": "2026-08-29T00:00:00-07:00",
+  "implementation_head": "ecb11573d8d18da36892990f320addd2add6bbf5",
+  "implementation_tree": "7fb451b8eb13714d136f15bf5eed930d0b305571",
+  "commands": [
+    {"command": "python ci/validate.py", "exit_code": 0, "result": "gcl-standards validation passed"},
+    {"command": "python -m unittest tests.test_ghos_control_plane -q", "exit_code": 0, "tests": 29, "result": "OK"},
+    {"command": "python -m unittest discover -s tests -q", "exit_code": 0, "tests": 199, "elapsed_seconds": 76.585, "result": "OK"}
+  ],
+  "baseline": {
+    "state_digest": "7d4ef4882b0a8dadccee38d76f7c6d639626c7a43e1cc74d1a3ea4d36427fe8c",
+    "selected_transition": "RECONCILE_CURRENT_VERSION_PROJECTION",
+    "permitted_transitions": ["RECONCILE_CURRENT_VERSION_PROJECTION", "RECONCILE_ACTIVE_VERSION_PROPAGATION"],
+    "transaction_state": null,
+    "invalidated_gate_ids": [],
+    "contradictions": ["STALE_CURRENT_PROJECTION", "ACTIVE_VERSION_PROPAGATION_INCOMPLETE"]
+  },
+  "scenarios": [
+    {"id": "T01", "test": "test_t01_cold_resume_is_byte_deterministic"},
+    {"id": "T02", "test": "test_t02_agent_replacement_does_not_change_transition"},
+    {"id": "T03", "test": "test_t03_stale_chat_loses_to_protected_authority"},
+    {"id": "T04", "test": "test_transaction_cutoff_states_are_unambiguous"},
+    {"id": "T05", "test": "test_cold_replacement_can_take_over_expired_transaction_and_abort"},
+    {"id": "T06", "test": "test_t06_stale_review_is_invalidated_on_head_change"},
+    {"id": "T07", "test": "test_t07_projection_contradiction_names_the_authoritative_record"},
+    {"id": "T08", "test": "test_stale_external_result_cannot_complete_another_wait"},
+    {"id": "T09", "test": "test_t09_superseded_diagnostic_is_invalidated_with_subject"},
+    {"id": "T10", "test": "test_t10_unauthorized_transition_fails_closed"},
+    {"id": "T11", "test": "test_t11_loss_of_summaries_changes_no_input_or_digest"},
+    {"id": "T12", "test": "test_cold_replacement_can_take_over_expired_transaction_and_abort"},
+    {"id": "T13", "test": "test_t13_active_version_manifest_blocks_stale_consumers"},
+    {"id": "T14", "test": "test_t14_capability_topology_mismatch_requires_decomposition"}
+  ],
+  "claim_boundaries": {"approval": false, "merge": false, "activation": false, "certification": false, "production": false, "publication": false, "claim_promotion": false}
+}

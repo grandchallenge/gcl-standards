@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "work_package": "GCL-GHOS-CONTROL-PLANE-REMEDIATION-001",
+  "evidence_snapshot": "2026-08-28T10:22:25Z",
+  "repositories": {
+    "grandchallenge/gcl-standards": {
+      "protected_predecessor": "1a5e9cb24257be578b091ecd2c99d4119ff73b2c",
+      "harness_candidate": "04a4030338f48bacefe99e3ddb838fc0e3c6062a",
+      "harness_protected_merge": "5ee1c2134222ff696efabdef4e57b8e0ced1ecab",
+      "issue": 56,
+      "pull_request": 57,
+      "paths": [
+        "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001_CODEX_SPEC.md",
+        "standards/GCL-GHOS-00.md",
+        "standards/history/GCL-GHOS-00-0.1.0.md",
+        "standards/history/GCL-GHOS-00-0.1.1.md",
+        "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md",
+        "admissions/GCL-GHOS-00-0.1.0.json",
+        "admissions/GCL-GHOS-00-0.1.1.json",
+        "admissions/GCL-GHOS-00-0.2.0.json",
+        "programme-adoption/MATH-PROGRAMME.yaml",
+        "status/GCL-GHOS-00-current.json",
+        "ci/status_coherence.py",
+        "ci/math_programme_pilot_adoption.py",
+        "ci/ghos_documentary_successor.py",
+        "ci/validate.py"
+      ]
+    },
+    "grandchallenge/MATH-PROGRAMME": {
+      "protected_head_at_audit": "f0953f4591b40df4d6775a8582658c0b94d760d8",
+      "paths": [
+        "AGENTS.md",
+        "docs/governance/EXECUTION_RECOVERY_OPERATING_GUIDE.md"
+      ],
+      "related_candidate_issue": 701,
+      "related_candidate_pull_request": 702
+    }
+  },
+  "version_history": [
+    {"version":"0.1.0","reviewed_source":"fa90ffc2bd23a6b0c8e184c7da2dd6ef1174a4ee","admission":"31211b286a9c4a2874da5559118ef2f026f7de52","adoption":"9aea6a49153b9c524319544b8f94cf7eeea2e65e"},
+    {"version":"0.1.1","reviewed_source":"3a5ed516bb9ccb43e2d67e9270e1ec2a793e01ac","admission":"5c4e73e55d362a5198b9076ead694909a5e0ebf3","adoption":"c39aab2bfbb2725accd18d69a0daea7fe96a0eee"},
+    {"version":"0.2.0","reviewed_source":"f416092f67c91ea4843fea12abe54c34b12242e5","admission":"87307a0c1fe5ff19b34bb08451e7d6281a7d5dea","adoption":"1a5e9cb24257be578b091ecd2c99d4119ff73b2c"}
+  ]
+}

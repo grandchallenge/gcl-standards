@@ -1,0 +1,102 @@
+{
+  "$schema": "../../../schemas/ghos_control_plane.schema.json",
+  "record_type": "WORK_PACKAGE_ADMISSION",
+  "schema_version": "1.0.0",
+  "work_package": "GCL-GHOS-CONTROL-PLANE-REMEDIATION-001",
+  "authority_repository": "grandchallenge/gcl-standards",
+  "authority_head": "1a5e9cb24257be578b091ecd2c99d4119ff73b2c",
+  "working_repository": "grandchallenge/gcl-standards",
+  "working_branch": "remediation/ghos-control-plane-implementation-001",
+  "protected_base": "2b4551432fda2d45560d4d71c99b3458bb277530",
+  "work_graph": {
+    "bounded_transition_count": 8,
+    "has_external_wait": true,
+    "requires_uninterrupted_monitoring": false,
+    "requires_autonomous_wake": false,
+    "maximum_safe_handoff_seconds": null,
+    "mutation_reconcilable": true
+  },
+  "topology": "MULTI_SESSION_RESUMABLE",
+  "human_decision_required": true,
+  "required_capabilities": [
+    "durable_compare_and_swap",
+    "durable_read",
+    "exact_external_object_readback",
+    "exact_git_readback",
+    "git_write"
+  ],
+  "available_executor_classes": ["BOUNDED_CONVERSATIONAL", "MULTI_SESSION_WORKER", "HUMAN"],
+  "disposition": "ADMITTED",
+  "required_decomposition": null,
+  "roles": [
+    {
+      "role": "CONTROL_PLANE_DESIGNER",
+      "actor_id": "immutable-design-commit-2b455143",
+      "session_id": "fixed-before-implementation",
+      "status": "COMPLETE",
+      "input_digest": "f5ff99acde25de6261d1b84fbb7e5ff4a9ef76e4731fec9944b6d10dc7043a2d",
+      "result_digest": "f5ff99acde25de6261d1b84fbb7e5ff4a9ef76e4731fec9944b6d10dc7043a2d",
+      "may_authorize": false
+    },
+    {
+      "role": "IMPLEMENTER",
+      "actor_id": "codex-implementer-ghos-control-plane-001",
+      "session_id": "candidate-implementation-session",
+      "status": "DISPATCHED",
+      "input_digest": "f5ff99acde25de6261d1b84fbb7e5ff4a9ef76e4731fec9944b6d10dc7043a2d",
+      "result_digest": null,
+      "may_authorize": false
+    },
+    {
+      "role": "ADVERSARY",
+      "actor_id": null,
+      "session_id": null,
+      "status": "PENDING",
+      "input_digest": "f5ff99acde25de6261d1b84fbb7e5ff4a9ef76e4731fec9944b6d10dc7043a2d",
+      "result_digest": null,
+      "may_authorize": false
+    },
+    {
+      "role": "REFEREE",
+      "actor_id": null,
+      "session_id": null,
+      "status": "PENDING",
+      "input_digest": "f5ff99acde25de6261d1b84fbb7e5ff4a9ef76e4731fec9944b6d10dc7043a2d",
+      "result_digest": null,
+      "may_authorize": false
+    },
+    {
+      "role": "HARNESS_COORDINATOR",
+      "actor_id": null,
+      "session_id": null,
+      "status": "PENDING",
+      "input_digest": "f5ff99acde25de6261d1b84fbb7e5ff4a9ef76e4731fec9944b6d10dc7043a2d",
+      "result_digest": null,
+      "may_authorize": false
+    },
+    {
+      "role": "HUMAN_STEWARD",
+      "actor_id": "fyremael",
+      "session_id": null,
+      "status": "RESERVED",
+      "input_digest": "f5ff99acde25de6261d1b84fbb7e5ff4a9ef76e4731fec9944b6d10dc7043a2d",
+      "result_digest": null,
+      "may_authorize": true
+    }
+  ],
+  "separation_constraints": [
+    "IMPLEMENTER!=ADVERSARY",
+    "IMPLEMENTER!=REFEREE",
+    "ADVERSARY!=REFEREE"
+  ],
+  "claim_boundaries": {
+    "constitutional": false,
+    "merge": false,
+    "certification": false,
+    "production": false,
+    "publication": false,
+    "mathematical_claim": false,
+    "claim_promotion": false,
+    "commercial": false
+  }
+}

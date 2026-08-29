@@ -1,0 +1,338 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/ghos-control-plane-1.0.0.json",
+  "title": "GH-OS MATH-PROGRAMME control-plane records",
+  "oneOf": [
+    {"$ref": "#/$defs/admissionRecord"},
+    {"$ref": "#/$defs/eventLedger"},
+    {"$ref": "#/$defs/derivedState"},
+    {"$ref": "#/$defs/transitionCatalog"},
+    {"$ref": "#/$defs/propagationManifest"}
+  ],
+  "$defs": {
+    "sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "identifier": {"type": "string", "pattern": "^[A-Z0-9][A-Z0-9_.:-]*$"},
+    "stringArray": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "claimBoundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["constitutional", "merge", "certification", "production", "publication", "mathematical_claim", "claim_promotion", "commercial"],
+      "properties": {
+        "constitutional": {"const": false},
+        "merge": {"const": false},
+        "certification": {"const": false},
+        "production": {"const": false},
+        "publication": {"const": false},
+        "mathematical_claim": {"const": false},
+        "claim_promotion": {"const": false},
+        "commercial": {"const": false}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "path", "commit_sha", "authority_class"],
+      "properties": {
+        "repository": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"},
+        "path": {"type": "string", "minLength": 1},
+        "commit_sha": {"$ref": "#/$defs/sha"},
+        "git_blob_sha1": {"$ref": "#/$defs/sha"},
+        "authority_class": {"enum": ["CONSTITUTIONAL", "ADMITTED_STANDARD", "PROGRAMME_ADOPTION", "DELEGATED_POLICY", "EXTERNAL_FACT", "DERIVED_CURRENT", "HISTORICAL", "CONVERSATIONAL"]}
+      }
+    },
+    "roleAssignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "actor_id", "session_id", "status", "input_digest", "may_authorize"],
+      "properties": {
+        "role": {"enum": ["ARCHAEOLOGIST", "FAILURE_AUDITOR", "CONTROL_PLANE_DESIGNER", "IMPLEMENTER", "ADVERSARY", "REFEREE", "HARNESS_COORDINATOR", "HUMAN_STEWARD", "INTEGRATOR"]},
+        "actor_id": {"type": ["string", "null"], "minLength": 1},
+        "session_id": {"type": ["string", "null"], "minLength": 1},
+        "status": {"enum": ["PENDING", "DISPATCHED", "COMPLETE", "BLOCKED", "RESERVED"]},
+        "input_digest": {"$ref": "#/$defs/digest"},
+        "result_digest": {"oneOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]},
+        "may_authorize": {"type": "boolean"}
+      }
+    },
+    "executorClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["executor_id", "session_id", "role", "executor_class", "capabilities", "acquired_at", "expires_at", "status"],
+      "properties": {
+        "executor_id": {"type": "string", "minLength": 1},
+        "session_id": {"type": "string", "minLength": 1},
+        "role": {"type": "string", "minLength": 1},
+        "executor_class": {"enum": ["BOUNDED_CONVERSATIONAL", "MULTI_SESSION_WORKER", "PERSISTENT_CONTROLLER", "HUMAN"]},
+        "capabilities": {"$ref": "#/$defs/stringArray"},
+        "acquired_at": {"$ref": "#/$defs/timestamp"},
+        "expires_at": {"$ref": "#/$defs/timestamp"},
+        "status": {"enum": ["ACTIVE", "RELEASED", "EXPIRED", "SUPERSEDED"]}
+      }
+    },
+    "subjectSelector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "kind", "identifier", "head_sha", "base_sha", "artifact_digest"],
+      "properties": {
+        "repository": {"type": "string", "minLength": 1},
+        "kind": {"enum": ["WORK_PACKAGE", "BRANCH", "PULL_REQUEST", "CHECK", "REVIEW", "ARTIFACT", "PROTECTED_REF"]},
+        "identifier": {"type": "string", "minLength": 1},
+        "head_sha": {"oneOf": [{"$ref": "#/$defs/sha"}, {"type": "null"}]},
+        "base_sha": {"oneOf": [{"$ref": "#/$defs/sha"}, {"type": "null"}]},
+        "artifact_digest": {"oneOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]}
+      }
+    },
+    "gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gate_id", "kind", "required", "subject", "evidence_id", "observed_status", "observation_id", "observed_at", "validity_rule", "invalidation_triggers", "disposition"],
+      "properties": {
+        "gate_id": {"$ref": "#/$defs/identifier"},
+        "kind": {"enum": ["CHECK", "REVIEW", "HUMAN_AUTHORIZATION", "PROTECTED_READBACK", "ROLE_SEPARATION", "CAPABILITY", "AUTHORITY_COHERENCE"]},
+        "required": {"type": "boolean"},
+        "subject": {"$ref": "#/$defs/subjectSelector"},
+        "evidence_id": {"type": ["string", "null"]},
+        "observed_status": {"enum": ["PENDING", "RUNNING", "PASSED", "APPROVED", "AUTHORIZED", "FAILED", "REJECTED", "STALE", "UNKNOWN"]},
+        "observation_id": {"type": ["string", "null"]},
+        "observed_at": {"oneOf": [{"$ref": "#/$defs/timestamp"}, {"type": "null"}]},
+        "validity_rule": {"enum": ["EXACT_HEAD", "EXACT_HEAD_TREE_BASE", "EXACT_DIGEST", "EXACT_PROTECTED_READBACK", "DISTINCT_ROLE_SESSION"]},
+        "invalidation_triggers": {"$ref": "#/$defs/stringArray"},
+        "disposition": {"enum": ["UNSETTLED", "SETTLED", "INVALIDATED"]}
+      }
+    },
+    "externalWait": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["wait_id", "provider", "repository", "object_kind", "object_id", "subject_head", "expected_terminal_observations", "wake_condition", "latest_observation_id", "latest_status", "observed_at", "poll_policy", "next_eligible_observation_at", "backoff_attempt", "deadline", "controller_class", "wake_mechanism", "outcome_transitions"],
+      "properties": {
+        "wait_id": {"$ref": "#/$defs/identifier"},
+        "provider": {"type": "string", "minLength": 1},
+        "repository": {"type": "string", "minLength": 1},
+        "object_kind": {"enum": ["WORKFLOW_RUN", "CHECK_RUN", "REVIEW_REQUEST", "DEPLOYMENT", "OTHER_EXACT_OBJECT"]},
+        "object_id": {"type": "string", "minLength": 1},
+        "subject_head": {"$ref": "#/$defs/sha"},
+        "expected_terminal_observations": {"$ref": "#/$defs/stringArray"},
+        "wake_condition": {"type": "string", "minLength": 1},
+        "latest_observation_id": {"type": ["string", "null"]},
+        "latest_status": {"type": "string", "minLength": 1},
+        "observed_at": {"oneOf": [{"$ref": "#/$defs/timestamp"}, {"type": "null"}]},
+        "poll_policy": {"enum": ["BOUNDED_EXPONENTIAL", "EXTERNAL_WAKE", "MANUAL_BOUNDED"]},
+        "next_eligible_observation_at": {"$ref": "#/$defs/timestamp"},
+        "backoff_attempt": {"type": "integer", "minimum": 0},
+        "deadline": {"oneOf": [{"$ref": "#/$defs/timestamp"}, {"type": "null"}]},
+        "controller_class": {"enum": ["ANY_REPLACEMENT_EXECUTOR", "PERSISTENT_CONTROLLER", "HUMAN"]},
+        "wake_mechanism": {"type": "string", "minLength": 1},
+        "outcome_transitions": {"type": "object", "additionalProperties": {"$ref": "#/$defs/identifier"}, "minProperties": 1}
+      }
+    },
+    "transaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["transaction_id", "transition_id", "state", "idempotency_key", "replay_class", "started_generation", "started_state_digest", "subjects", "preconditions", "intended_effects", "executor_claim", "effect_probes", "attempt_ids", "observed_side_effects", "postconditions", "evidence", "invalidated_gate_ids"],
+      "properties": {
+        "transaction_id": {"$ref": "#/$defs/identifier"},
+        "transition_id": {"$ref": "#/$defs/identifier"},
+        "state": {"enum": ["PREPARED", "APPLYING", "RECONCILING", "COMMITTED", "ABORTED", "BLOCKED"]},
+        "idempotency_key": {"type": "string", "minLength": 1},
+        "replay_class": {"enum": ["IDEMPOTENT_BY_KEY", "REPLAY_AFTER_ABSENCE_PROBE", "COMPENSATABLE_WITH_AUTHORITY", "NON_REPLAYABLE_REQUIRES_RECONCILIATION"]},
+        "started_generation": {"type": "integer", "minimum": 0},
+        "started_state_digest": {"$ref": "#/$defs/digest"},
+        "subjects": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/subjectSelector"}},
+        "preconditions": {"$ref": "#/$defs/stringArray"},
+        "intended_effects": {"$ref": "#/$defs/stringArray"},
+        "executor_claim": {"$ref": "#/$defs/executorClaim"},
+        "effect_probes": {"$ref": "#/$defs/stringArray"},
+        "attempt_ids": {"$ref": "#/$defs/stringArray"},
+        "observed_side_effects": {"$ref": "#/$defs/stringArray"},
+        "postconditions": {"$ref": "#/$defs/stringArray"},
+        "evidence": {"$ref": "#/$defs/stringArray"},
+        "invalidated_gate_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/identifier"}}
+      }
+    },
+    "admissionRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["$schema", "record_type", "schema_version", "work_package", "authority_repository", "authority_head", "working_repository", "working_branch", "protected_base", "work_graph", "topology", "human_decision_required", "required_capabilities", "available_executor_classes", "disposition", "required_decomposition", "roles", "separation_constraints", "claim_boundaries"],
+      "properties": {
+        "$schema": {"const": "../../../schemas/ghos_control_plane.schema.json"},
+        "record_type": {"const": "WORK_PACKAGE_ADMISSION"},
+        "schema_version": {"const": "1.0.0"},
+        "work_package": {"$ref": "#/$defs/identifier"},
+        "authority_repository": {"type": "string", "minLength": 1},
+        "authority_head": {"$ref": "#/$defs/sha"},
+        "working_repository": {"type": "string", "minLength": 1},
+        "working_branch": {"type": ["string", "null"]},
+        "protected_base": {"$ref": "#/$defs/sha"},
+        "work_graph": {
+          "type": "object", "additionalProperties": false,
+          "required": ["bounded_transition_count", "has_external_wait", "requires_uninterrupted_monitoring", "requires_autonomous_wake", "maximum_safe_handoff_seconds", "mutation_reconcilable"],
+          "properties": {
+            "bounded_transition_count": {"type": "integer", "minimum": 1},
+            "has_external_wait": {"type": "boolean"},
+            "requires_uninterrupted_monitoring": {"type": "boolean"},
+            "requires_autonomous_wake": {"type": "boolean"},
+            "maximum_safe_handoff_seconds": {"type": ["integer", "null"], "minimum": 0},
+            "mutation_reconcilable": {"type": "boolean"}
+          }
+        },
+        "topology": {"enum": ["BOUNDED_ATOMIC", "MULTI_SESSION_RESUMABLE", "PERSISTENT_CONTROLLER_REQUIRED"]},
+        "human_decision_required": {"type": "boolean"},
+        "required_capabilities": {"$ref": "#/$defs/stringArray"},
+        "available_executor_classes": {"type": "array", "uniqueItems": true, "items": {"enum": ["BOUNDED_CONVERSATIONAL", "MULTI_SESSION_WORKER", "PERSISTENT_CONTROLLER", "HUMAN"]}},
+        "disposition": {"enum": ["ADMITTED", "REJECTED", "DECOMPOSITION_REQUIRED"]},
+        "required_decomposition": {"type": ["string", "null"]},
+        "roles": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/roleAssignment"}},
+        "separation_constraints": {"$ref": "#/$defs/stringArray"},
+        "claim_boundaries": {"$ref": "#/$defs/claimBoundaries"}
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sequence", "event_id", "event_type", "occurred_at", "previous_event_digest", "payload", "event_digest"],
+      "properties": {
+        "sequence": {"type": "integer", "minimum": 1},
+        "event_id": {"$ref": "#/$defs/identifier"},
+        "event_type": {"enum": ["WORK_PACKAGE_ADMITTED", "ROLE_DISPATCHED", "ROLE_RESULT_RECORDED", "GATE_OBSERVED", "EXTERNAL_WAIT_OPENED", "EXTERNAL_WAIT_OBSERVED", "TRANSACTION_PREPARED", "TRANSACTION_CLAIM_REPLACED", "TRANSACTION_APPLYING", "TRANSACTION_RECONCILING", "TRANSACTION_COMMITTED", "TRANSACTION_ABORTED", "SUBJECT_MUTATED", "BOUNDARY_DECLARED", "WORK_PACKAGE_CLOSED"]},
+        "occurred_at": {"$ref": "#/$defs/timestamp"},
+        "previous_event_digest": {"oneOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]},
+        "payload": {"type": "object"},
+        "event_digest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "eventLedger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["$schema", "record_type", "schema_version", "ledger_id", "work_package", "storage_status", "candidate_branch_notice", "catalog_digest", "events", "ledger_head_digest", "claim_boundaries"],
+      "properties": {
+        "$schema": {"const": "../../../schemas/ghos_control_plane.schema.json"},
+        "record_type": {"const": "EVENT_LEDGER"},
+        "schema_version": {"const": "1.0.0"},
+        "ledger_id": {"$ref": "#/$defs/identifier"},
+        "work_package": {"$ref": "#/$defs/identifier"},
+        "storage_status": {"enum": ["CANDIDATE_BRANCH_NON_AUTHORITATIVE", "PROTECTED_CONTROL_REF"]},
+        "candidate_branch_notice": {"type": ["string", "null"]},
+        "catalog_digest": {"$ref": "#/$defs/digest"},
+        "events": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/event"}},
+        "ledger_head_digest": {"$ref": "#/$defs/digest"},
+        "claim_boundaries": {"$ref": "#/$defs/claimBoundaries"}
+      }
+    },
+    "derivedState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["$schema", "record_type", "schema_version", "work_package", "generation", "lifecycle_state", "domain_phase", "authority", "subjects", "roles", "gates", "external_waits", "open_transaction", "permitted_transitions", "selected_transition", "selection_rule", "stopping_boundary", "blocking_conditions", "invalidated_gate_ids", "catalog_digest", "ledger_head_digest", "state_digest", "claim_boundaries"],
+      "properties": {
+        "$schema": {"const": "../../../schemas/ghos_control_plane.schema.json"},
+        "record_type": {"const": "DERIVED_STATE"},
+        "schema_version": {"const": "1.0.0"},
+        "work_package": {"$ref": "#/$defs/identifier"},
+        "generation": {"type": "integer", "minimum": 0},
+        "lifecycle_state": {"enum": ["UNADMITTED", "READY", "TRANSACTION_OPEN", "WAITING_EXTERNAL", "CHOICE_REQUIRED", "BLOCKED", "TERMINAL"]},
+        "domain_phase": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"},
+        "authority": {
+          "type": "object", "additionalProperties": false,
+          "required": ["programme", "standard", "version", "adoption", "admission", "precedence_trace", "contradictions"],
+          "properties": {
+            "programme": {"const": "grandchallenge/MATH-PROGRAMME"},
+            "standard": {"const": "GCL-GHOS-00"},
+            "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+            "adoption": {"$ref": "#/$defs/source"},
+            "admission": {"$ref": "#/$defs/source"},
+            "precedence_trace": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+            "contradictions": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["code", "authoritative_source", "stale_source", "authoritative_value", "observed_value"], "properties": {"code": {"type": "string", "minLength": 1}, "authoritative_source": {"type": "string", "minLength": 1}, "stale_source": {"type": "string", "minLength": 1}, "authoritative_value": {"type": "string", "minLength": 1}, "observed_value": {"type": "string", "minLength": 1}}}}
+          }
+        },
+        "subjects": {"type": "array", "items": {"$ref": "#/$defs/subjectSelector"}},
+        "roles": {"type": "array", "items": {"$ref": "#/$defs/roleAssignment"}},
+        "gates": {"type": "array", "items": {"$ref": "#/$defs/gate"}},
+        "external_waits": {"type": "array", "items": {"$ref": "#/$defs/externalWait"}},
+        "open_transaction": {"oneOf": [{"$ref": "#/$defs/transaction"}, {"type": "null"}]},
+        "permitted_transitions": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/identifier"}},
+        "selected_transition": {"oneOf": [{"$ref": "#/$defs/identifier"}, {"type": "null"}]},
+        "selection_rule": {"const": "LOWEST_PRIORITY_THEN_LEXICAL"},
+        "stopping_boundary": {"type": ["string", "null"]},
+        "blocking_conditions": {"$ref": "#/$defs/stringArray"},
+        "invalidated_gate_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/identifier"}},
+        "catalog_digest": {"$ref": "#/$defs/digest"},
+        "ledger_head_digest": {"$ref": "#/$defs/digest"},
+        "state_digest": {"$ref": "#/$defs/digest"},
+        "claim_boundaries": {"$ref": "#/$defs/claimBoundaries"}
+      }
+    },
+    "transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["transition_id", "priority", "input_phases", "lifecycle_states", "mode", "authority_effect", "required_gate_kinds", "required_roles", "required_capabilities", "requires_no_contradictions", "requires_open_transaction", "requires_external_wait", "replay_class", "effect_probes", "invalidation_triggers", "successor_phase"],
+      "properties": {
+        "transition_id": {"$ref": "#/$defs/identifier"},
+        "priority": {"type": "integer", "minimum": 0},
+        "input_phases": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"}},
+        "lifecycle_states": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["READY", "TRANSACTION_OPEN", "WAITING_EXTERNAL", "CHOICE_REQUIRED", "BLOCKED"]}},
+        "mode": {"enum": ["READ_ONLY", "MUTATING", "RESERVED_HUMAN"]},
+        "authority_effect": {"enum": ["NONE", "MERGE", "PROTECTED_MUTATION", "AUTHORIZATION_RECORD"]},
+        "required_gate_kinds": {"type": "array", "uniqueItems": true, "items": {"enum": ["CHECK", "REVIEW", "HUMAN_AUTHORIZATION", "PROTECTED_READBACK", "ROLE_SEPARATION", "CAPABILITY", "AUTHORITY_COHERENCE"]}},
+        "required_roles": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "required_capabilities": {"$ref": "#/$defs/stringArray"},
+        "requires_no_contradictions": {"type": "boolean"},
+        "requires_open_transaction": {"type": "boolean"},
+        "requires_external_wait": {"type": "boolean"},
+        "replay_class": {"enum": ["READ_ONLY_REPEATABLE", "IDEMPOTENT_BY_KEY", "REPLAY_AFTER_ABSENCE_PROBE", "COMPENSATABLE_WITH_AUTHORITY", "NON_REPLAYABLE_REQUIRES_RECONCILIATION"]},
+        "effect_probes": {"$ref": "#/$defs/stringArray"},
+        "invalidation_triggers": {"$ref": "#/$defs/stringArray"},
+        "successor_phase": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"}
+      }
+    },
+    "transitionCatalog": {
+      "type": "object", "additionalProperties": false,
+      "required": ["$schema", "record_type", "schema_version", "catalog_id", "catalog_version", "selection_rule", "transitions", "claim_boundaries"],
+      "properties": {
+        "$schema": {"const": "../../../schemas/ghos_control_plane.schema.json"},
+        "record_type": {"const": "TRANSITION_CATALOG"},
+        "schema_version": {"const": "1.0.0"},
+        "catalog_id": {"$ref": "#/$defs/identifier"},
+        "catalog_version": {"const": "1.0.0"},
+        "selection_rule": {"const": "LOWEST_PRIORITY_THEN_LEXICAL"},
+        "transitions": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/transition"}},
+        "claim_boundaries": {"$ref": "#/$defs/claimBoundaries"}
+      }
+    },
+    "propagationConsumer": {
+      "type": "object", "additionalProperties": false,
+      "required": ["consumer_id", "repository", "path", "authority_class", "expected_version", "observed_version", "status", "exact_source", "blocking_for_authority_use", "note"],
+      "properties": {
+        "consumer_id": {"$ref": "#/$defs/identifier"},
+        "repository": {"type": "string", "minLength": 1},
+        "path": {"type": "string", "minLength": 1},
+        "authority_class": {"enum": ["AUTHORITATIVE", "DERIVED_CURRENT", "HISTORICAL"]},
+        "expected_version": {"const": "0.2.0"},
+        "observed_version": {"type": ["string", "null"]},
+        "status": {"enum": ["COHERENT", "STALE", "UNRESOLVED_EXTERNAL", "HISTORICAL_NOT_CURRENT"]},
+        "exact_source": {"$ref": "#/$defs/source"},
+        "blocking_for_authority_use": {"type": "boolean"},
+        "note": {"type": "string", "minLength": 1}
+      }
+    },
+    "propagationManifest": {
+      "type": "object", "additionalProperties": false,
+      "required": ["$schema", "record_type", "schema_version", "manifest_id", "programme", "standard", "authoritative_version", "adoption_source", "admission_source", "consumers", "all_derived_current_coherent", "external_reconciliation_complete", "claim_boundaries"],
+      "properties": {
+        "$schema": {"const": "../../../schemas/ghos_control_plane.schema.json"},
+        "record_type": {"const": "ACTIVE_VERSION_PROPAGATION_MANIFEST"},
+        "schema_version": {"const": "1.0.0"},
+        "manifest_id": {"$ref": "#/$defs/identifier"},
+        "programme": {"const": "grandchallenge/MATH-PROGRAMME"},
+        "standard": {"const": "GCL-GHOS-00"},
+        "authoritative_version": {"const": "0.2.0"},
+        "adoption_source": {"$ref": "#/$defs/source"},
+        "admission_source": {"$ref": "#/$defs/source"},
+        "consumers": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/propagationConsumer"}},
+        "all_derived_current_coherent": {"type": "boolean"},
+        "external_reconciliation_complete": {"type": "boolean"},
+        "claim_boundaries": {"$ref": "#/$defs/claimBoundaries"}
+      }
+    }
+  }
+}

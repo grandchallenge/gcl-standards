@@ -16,11 +16,28 @@ concurrency:
 jobs:
   standards-policy:
     runs-on: ubuntu-24.04
+    env:
+      GHOS_MATH_PROGRAMME_REPO: ${{ github.workspace }}/external/MATH-PROGRAMME
+      GHOS_ORG_PROFILE_REPO: ${{ github.workspace }}/external/organization-profile
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # Admission validation resolves canonical blobs at historical commits.
           fetch-depth: 0
+      - name: Check out exact MATH-PROGRAMME consumer history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: grandchallenge/MATH-PROGRAMME
+          ref: f0953f4591b40df4d6775a8582658c0b94d760d8
+          fetch-depth: 0
+          path: external/MATH-PROGRAMME
+      - name: Check out exact organization-profile consumer history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: grandchallenge/.github
+          ref: a69c5c8b8091809e35b0afffd0456428ca195386
+          fetch-depth: 0
+          path: external/organization-profile
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v6
         with:
           python-version: "3.12.13"

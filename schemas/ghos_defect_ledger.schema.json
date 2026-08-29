@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/ghos-defect-ledger-1.0.0.json",
+  "title": "GH-OS control-plane defect ledger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "work_package", "fixed_before_reconciliation", "findings"],
+  "properties": {
+    "$schema": {"const": "../../../schemas/ghos_defect_ledger.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "work_package": {"type": "string", "pattern": "^[A-Z0-9-]+$"},
+    "fixed_before_reconciliation": {"const": true},
+    "findings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/finding"}
+    }
+  },
+  "$defs": {
+    "nonEmptyStrings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "controlExpectation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["prevent", "detect", "contain", "recover"],
+      "properties": {
+        "prevent": {"type": "string", "minLength": 1},
+        "detect": {"type": "string", "minLength": 1},
+        "contain": {"type": "string", "minLength": 1},
+        "recover": {"type": "string", "minLength": 1}
+      }
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "category", "title", "status", "earliest_detectable", "evidence", "control_expectation", "consequence", "waste_or_risk", "originating_assistant_contribution", "existing_controls_should_have_prevented", "confidence"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^GCL-GHOS-DEFECT-[0-9]{3}$"},
+        "category": {"enum": ["SPECIFICATION_DEFECT", "IMPLEMENTATION_DEFECT", "ENFORCEMENT_DEFECT", "ADOPTION_OR_PROPAGATION_DEFECT", "VALIDATOR_DEFECT", "OPERATING_PROCEDURE_DEFECT", "EXECUTOR_CAPABILITY_MISMATCH", "EXTERNAL_PLATFORM_LIMITATION", "DOCUMENTATION_OR_PROJECTION_DRIFT", "HUMAN_OR_AGENT_GOVERNANCE_PROCESS_DEFECT", "NO_DEFECT_EXPECTED_BEHAVIOR"]},
+        "title": {"type": "string", "minLength": 1},
+        "status": {"type": "string", "pattern": "^[A-Z0-9_]+$"},
+        "earliest_detectable": {"type": "string", "minLength": 1},
+        "evidence": {"$ref": "#/$defs/nonEmptyStrings"},
+        "control_expectation": {"$ref": "#/$defs/controlExpectation"},
+        "consequence": {"type": "string", "minLength": 1},
+        "waste_or_risk": {"$ref": "#/$defs/nonEmptyStrings"},
+        "originating_assistant_contribution": {"type": "string", "pattern": "^[A-Z0-9_]+$"},
+        "existing_controls_should_have_prevented": {"type": "string", "minLength": 1},
+        "confidence": {"enum": ["LOW", "MEDIUM", "HIGH", "VERY_HIGH"]}
+      }
+    }
+  }
+}
