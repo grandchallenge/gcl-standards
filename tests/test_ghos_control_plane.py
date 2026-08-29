@@ -170,8 +170,48 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
             "subject": {**state["subjects"][0], "head_sha": "d" * 40}, "evidence_id": "claim",
             "observed_status": "APPROVED", "observation_id": "claim", "observed_at": "2026-08-28T12:00:00Z",
             "validity_rule": "EXACT_HEAD", "invalidation_triggers": [], "disposition": "SETTLED"}
-        with self.assertRaisesRegex(MODULE.LedgerError, "exact current subject"):
+        with self.assertRaisesRegex(MODULE.LedgerError, "digest-addressed"):
             MODULE._upsert_gate(state, gate)
+
+    def test_direct_subject_mutation_event_is_rejected(self):
+        state = self.reduced()
+        subject = state["subjects"][0]
+        event = {"event_type": "SUBJECT_MUTATED", "payload": {
+            "repository": subject["repository"], "identifier": subject["identifier"],
+            "old_head": subject["head_sha"], "new_head": "f" * 40}}
+        with self.assertRaisesRegex(MODULE.LedgerError, "committed transaction effect"):
+            MODULE._apply_event(state, event, self.admission, self.catalog)
+
+    def test_expired_executor_claim_cannot_prepare_transaction(self):
+        state = self.reduced()
+        assignment = next(x for x in state["roles"] if x["role"] == "IMPLEMENTER")
+        executor = MODULE.Executor(assignment["actor_id"], assignment["session_id"], "IMPLEMENTER",
+            "MULTI_SESSION_WORKER", ("durable_compare_and_swap", "git_write", "exact_git_readback"))
+        transaction = MODULE.TransactionController(self.catalog).prepare(state,
+            "RECONCILE_CURRENT_VERSION_PROJECTION", executor, transaction_id="TX-EXPIRED",
+            idempotency_key="KEY-EXPIRED", expires_at="2026-08-28T12:01:00Z", now="2026-08-28T12:00:00Z")
+        event = {"event_type": "TRANSACTION_PREPARED", "occurred_at": "2026-08-29T12:00:00Z",
+            "payload": {"transaction": transaction}}
+        with self.assertRaisesRegex(MODULE.LedgerError, "inactive or expired"):
+            MODULE._apply_event(state, event, self.admission, self.catalog)
+
+    def test_transaction_cutoff_states_are_unambiguous(self):
+        state = self.reduced()
+        assignment = next(x for x in state["roles"] if x["role"] == "IMPLEMENTER")
+        executor = MODULE.Executor(assignment["actor_id"], assignment["session_id"], "IMPLEMENTER",
+            "MULTI_SESSION_WORKER", ("durable_compare_and_swap", "git_write", "exact_git_readback"))
+        transaction = MODULE.TransactionController(self.catalog).prepare(state,
+            "RECONCILE_CURRENT_VERSION_PROJECTION", executor, transaction_id="TX-CUTOFF",
+            idempotency_key="KEY-CUTOFF", expires_at="2026-08-28T13:00:00Z", now="2026-08-28T12:00:00Z")
+        MODULE._apply_event(state, {"event_type": "TRANSACTION_PREPARED", "occurred_at": "2026-08-28T12:00:01Z",
+            "payload": {"transaction": transaction}}, self.admission, self.catalog)
+        self.assertEqual(state["open_transaction"]["state"], "PREPARED")
+        MODULE._apply_event(state, {"event_type": "TRANSACTION_APPLYING", "occurred_at": "2026-08-28T12:00:02Z",
+            "payload": {"transaction_id": "TX-CUTOFF", "attempt_id": "ATTEMPT-1"}}, self.admission, self.catalog)
+        self.assertEqual(state["open_transaction"]["state"], "APPLYING")
+        MODULE._apply_event(state, {"event_type": "TRANSACTION_RECONCILING", "occurred_at": "2026-08-28T12:00:03Z",
+            "payload": {"transaction_id": "TX-CUTOFF", "observed_side_effects": ["partial"]}}, self.admission, self.catalog)
+        self.assertEqual(state["open_transaction"]["state"], "RECONCILING")
 
     def test_candidate_artifacts_and_closed_schemas_validate(self):
         MODULE.validate()

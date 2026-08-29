@@ -380,11 +380,23 @@ def _replace_role(state: dict[str, Any], payload: Mapping[str, Any], status: str
 
 
 def _upsert_gate(state: dict[str, Any], gate: Mapping[str, Any]) -> None:
+    if gate["kind"] in {"ROLE_SEPARATION", "CAPABILITY", "AUTHORITY_COHERENCE"}:
+        raise LedgerError("derived gate kind cannot be asserted by an observation event")
     if gate["disposition"] == "SETTLED":
         if not gate["evidence_id"] or not gate["observation_id"] or not gate["observed_at"]:
             raise LedgerError("settled gate requires exact evidence and observation identity")
         if gate["observed_status"] not in SETTLED_GATE_STATUSES:
             raise LedgerError("settled gate has non-settled observation")
+        expected_status = {
+            "CHECK": "PASSED",
+            "REVIEW": "APPROVED",
+            "HUMAN_AUTHORIZATION": "AUTHORIZED",
+            "PROTECTED_READBACK": "PASSED",
+        }.get(gate["kind"])
+        if gate["observed_status"] != expected_status:
+            raise LedgerError("gate kind and settled status are incompatible")
+        if not gate["evidence_id"].startswith("sha256:") or len(gate["evidence_id"]) != 71:
+            raise LedgerError("settled gate evidence must be digest-addressed")
         if not any(
             gate["subject"].get("repository") == subject.get("repository")
             and gate["subject"].get("head_sha") is not None
@@ -467,7 +479,16 @@ def _apply_event(
     elif kind == "EXTERNAL_WAIT_OPENED":
         if state["open_transaction"] is not None:
             raise LedgerError("external wait cannot open during mutation")
-        state["external_waits"].append(copy.deepcopy(payload["wait"]))
+        wait = payload["wait"]
+        if not any(
+            wait["repository"] == subject["repository"]
+            and wait["subject_head"] == subject["head_sha"]
+            for subject in state["subjects"]
+        ):
+            raise LedgerError("external wait is not bound to an exact current subject")
+        if any(item["wait_id"] == wait["wait_id"] for item in state["external_waits"]):
+            raise LedgerError("duplicate external wait identity")
+        state["external_waits"].append(copy.deepcopy(wait))
         state["lifecycle_state"] = "WAITING_EXTERNAL"
     elif kind == "EXTERNAL_WAIT_OBSERVED":
         wait = next(
@@ -498,7 +519,12 @@ def _apply_event(
         role = next((item for item in state["roles"] if item["role"] == claim["role"]), None)
         if role is None or role.get("actor_id") != claim["executor_id"] or role.get("session_id") != claim["session_id"]:
             raise LedgerError("transaction executor is not the durable role assignment")
-        if claim["status"] != "ACTIVE" or claim["expires_at"] <= claim["acquired_at"]:
+        if (
+            claim["status"] != "ACTIVE"
+            or claim["expires_at"] <= claim["acquired_at"]
+            or event["occurred_at"] < claim["acquired_at"]
+            or event["occurred_at"] >= claim["expires_at"]
+        ):
             raise LedgerError("transaction executor claim is inactive or expired")
         if claim["role"] not in transition["required_roles"] or not set(transition["required_capabilities"]).issubset(claim["capabilities"]):
             raise LedgerError("transaction executor lacks transition authority")
@@ -546,7 +572,7 @@ def _apply_event(
         state["open_transaction"] = None
         state["lifecycle_state"] = "READY"
     elif kind == "SUBJECT_MUTATED":
-        _mutate_subject(state, payload)
+        raise LedgerError("subject mutation is valid only as a committed transaction effect")
     elif kind == "BOUNDARY_DECLARED":
         state["lifecycle_state"] = "BLOCKED"
         state["blocking_conditions"] = [payload["category"]]
@@ -568,13 +594,20 @@ def _apply_event(
 
 
 def _gate_kinds_settled(state: Mapping[str, Any]) -> set[str]:
-    return {
+    settled = {
         gate["kind"]
         for gate in state["gates"]
         if gate["required"]
         and gate["disposition"] == "SETTLED"
         and gate["observed_status"] in SETTLED_GATE_STATUSES
     }
+    validate_role_separation(state["roles"], [
+        "IMPLEMENTER!=ADVERSARY", "IMPLEMENTER!=REFEREE", "ADVERSARY!=REFEREE"
+    ])
+    settled.add("ROLE_SEPARATION")
+    if not state["authority"]["contradictions"]:
+        settled.add("AUTHORITY_COHERENCE")
+    return settled
 
 
 def derive_permitted_transitions(
