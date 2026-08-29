@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import importlib.util
 import json
+import os
 import sys
 import tempfile
 import unittest
@@ -140,6 +141,21 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
         with patch.dict("os.environ", {"GHOS_MATH_PROGRAMME_REPO": str(ROOT)}, clear=True):
             with self.assertRaisesRegex(MODULE.AuthorityContradiction, "configuration is incomplete"):
                 MODULE.validate_propagation_manifest(manifest, self.authority)
+        configured_math = os.environ.get("GHOS_MATH_PROGRAMME_REPO")
+        configured_profile = os.environ.get("GHOS_ORG_PROFILE_REPO")
+        if configured_math and configured_profile:
+            math_root, profile_root = configured_math, configured_profile
+        else:
+            workspace = next(
+                candidate for candidate in ROOT.parents
+                if (candidate / "MATH-PROGRAMME").exists() and (candidate / ".github").exists()
+            )
+            math_root, profile_root = str(workspace / "MATH-PROGRAMME"), str(workspace / ".github")
+        with patch.dict("os.environ", {
+            "GHOS_MATH_PROGRAMME_REPO": math_root,
+            "GHOS_ORG_PROFILE_REPO": profile_root,
+        }, clear=True):
+            MODULE.validate_propagation_manifest(manifest, self.authority)
         self.assertFalse(manifest["all_derived_current_coherent"])
         self.assertTrue(any(x["status"] == "STALE" for x in manifest["consumers"]))
         codes = {x["code"] for x in self.authority["contradictions"]}

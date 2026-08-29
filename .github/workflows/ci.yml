@@ -16,6 +16,9 @@ concurrency:
 jobs:
   standards-policy:
     runs-on: ubuntu-24.04
+    env:
+      GHOS_MATH_PROGRAMME_REPO: ${{ github.workspace }}/external/MATH-PROGRAMME
+      GHOS_ORG_PROFILE_REPO: ${{ github.workspace }}/external/organization-profile
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -43,8 +46,5 @@ jobs:
         run: python -m pip install --requirement requirements.txt
       - name: Validate standards
         run: python ci/validate.py
-        env:
-          GHOS_MATH_PROGRAMME_REPO: ${{ github.workspace }}/external/MATH-PROGRAMME
-          GHOS_ORG_PROFILE_REPO: ${{ github.workspace }}/external/organization-profile
       - name: Run adversarial tests
         run: python -m unittest discover -s tests -p "test_*.py"
