@@ -254,17 +254,51 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
         MODULE._apply_event(state, {"event_type": "TRANSACTION_PREPARED", "occurred_at": "2026-08-28T12:00:01Z",
             "payload": {"transaction": transaction}}, self.admission, self.catalog)
         with self.assertRaisesRegex(MODULE.LedgerError, "cannot commit before"):
-            MODULE._apply_event(state, {"event_type": "TRANSACTION_COMMITTED", "payload": {
+            MODULE._apply_event(state, {"event_type": "TRANSACTION_COMMITTED", "occurred_at": "2026-08-28T12:00:02Z", "payload": {
                 "transaction_id": "TX-ORDER", "evidence": ["self"],
                 "effects": [{"kind": "PHASE_CHANGED", "phase": "VALIDATION"}]}}, self.admission, self.catalog)
-        MODULE._apply_event(state, {"event_type": "TRANSACTION_RECONCILING", "payload": {
+        MODULE._apply_event(state, {"event_type": "TRANSACTION_RECONCILING", "occurred_at": "2026-08-28T12:00:02Z", "payload": {
             "transaction_id": "TX-ORDER", "observed_side_effects": []}}, self.admission, self.catalog)
         with self.assertRaisesRegex(MODULE.LedgerError, "only from PREPARED"):
-            MODULE._apply_event(state, {"event_type": "TRANSACTION_APPLYING", "payload": {
+            MODULE._apply_event(state, {"event_type": "TRANSACTION_APPLYING", "occurred_at": "2026-08-28T12:00:03Z", "payload": {
                 "transaction_id": "TX-ORDER", "attempt_id": "LATE"}}, self.admission, self.catalog)
 
     def test_observation_time_is_compared_as_an_instant(self):
         self.assertEqual(MODULE.instant("2026-08-28T12:00:00Z"), MODULE.instant("2026-08-28T05:00:00-07:00"))
+
+    def test_expired_lease_rejects_later_transaction_events(self):
+        state = self.reduced()
+        assignment = next(x for x in state["roles"] if x["role"] == "IMPLEMENTER")
+        executor = MODULE.Executor(assignment["actor_id"], assignment["session_id"], "IMPLEMENTER",
+            "MULTI_SESSION_WORKER", ("durable_compare_and_swap", "git_write", "exact_git_readback"))
+        transaction = MODULE.TransactionController(self.catalog).prepare(state,
+            "RECONCILE_CURRENT_VERSION_PROJECTION", executor, transaction_id="TX-LEASE",
+            idempotency_key="KEY-LEASE", expires_at="2026-08-28T12:01:00Z", now="2026-08-28T12:00:00Z")
+        MODULE._apply_event(state, {"event_type": "TRANSACTION_PREPARED", "occurred_at": "2026-08-28T12:00:01Z",
+            "payload": {"transaction": transaction}}, self.admission, self.catalog)
+        with self.assertRaisesRegex(MODULE.LedgerError, "outside the active executor lease"):
+            MODULE._apply_event(state, {"event_type": "TRANSACTION_APPLYING", "occurred_at": "2026-08-29T12:00:00Z",
+                "payload": {"transaction_id": "TX-LEASE", "attempt_id": "TOO-LATE"}}, self.admission, self.catalog)
+
+    def test_unrelated_repository_file_is_not_commit_evidence(self):
+        import hashlib
+        state = self.reduced()
+        assignment = next(x for x in state["roles"] if x["role"] == "IMPLEMENTER")
+        executor = MODULE.Executor(assignment["actor_id"], assignment["session_id"], "IMPLEMENTER",
+            "MULTI_SESSION_WORKER", ("durable_compare_and_swap", "git_write", "exact_git_readback"))
+        transaction = MODULE.TransactionController(self.catalog).prepare(state,
+            "RECONCILE_CURRENT_VERSION_PROJECTION", executor, transaction_id="TX-EVIDENCE",
+            idempotency_key="KEY-EVIDENCE", expires_at="2026-08-28T13:00:00Z", now="2026-08-28T12:00:00Z")
+        MODULE._apply_event(state, {"event_type": "TRANSACTION_PREPARED", "occurred_at": "2026-08-28T12:00:01Z",
+            "payload": {"transaction": transaction}}, self.admission, self.catalog)
+        MODULE._apply_event(state, {"event_type": "TRANSACTION_APPLYING", "occurred_at": "2026-08-28T12:00:02Z",
+            "payload": {"transaction_id": "TX-EVIDENCE", "attempt_id": "ATTEMPT"}}, self.admission, self.catalog)
+        path = ROOT / "schemas" / "ghos_control_plane.schema.json"
+        ref = f"file:schemas/ghos_control_plane.schema.json#sha256:{hashlib.sha256(path.read_bytes()).hexdigest()}"
+        with self.assertRaisesRegex(MODULE.LedgerError, "exact outcome"):
+            MODULE._apply_event(state, {"event_type": "TRANSACTION_COMMITTED", "occurred_at": "2026-08-28T12:00:03Z",
+                "payload": {"transaction_id": "TX-EVIDENCE", "evidence": [ref],
+                "effects": [{"kind": "PHASE_CHANGED", "phase": "VALIDATION"}]}}, self.admission, self.catalog)
 
     def test_candidate_artifacts_and_closed_schemas_validate(self):
         MODULE.validate()

@@ -473,6 +473,17 @@ def _mutate_subject(state: dict[str, Any], payload: Mapping[str, Any]) -> None:
     state["invalidated_gate_ids"] = sorted(set(state["invalidated_gate_ids"]))
 
 
+def _assert_active_transaction_lease(transaction: Mapping[str, Any], event: Mapping[str, Any]) -> None:
+    claim = transaction["executor_claim"]
+    occurred_at = instant(event["occurred_at"])
+    if (
+        claim["status"] != "ACTIVE"
+        or occurred_at < instant(claim["acquired_at"])
+        or occurred_at >= instant(claim["expires_at"])
+    ):
+        raise LedgerError("transaction event is outside the active executor lease")
+
+
 def _apply_event(
     state: dict[str, Any],
     event: Mapping[str, Any],
@@ -595,6 +606,7 @@ def _apply_event(
             raise LedgerError("APPLYING references no open transaction")
         if transaction["state"] != "PREPARED":
             raise LedgerError("transaction can enter APPLYING only from PREPARED")
+        _assert_active_transaction_lease(transaction, event)
         transaction["state"] = "APPLYING"
         transaction["attempt_ids"].append(payload["attempt_id"])
     elif kind == "TRANSACTION_RECONCILING":
@@ -603,6 +615,7 @@ def _apply_event(
             raise LedgerError("RECONCILING references no open transaction")
         if transaction["state"] not in {"PREPARED", "APPLYING"}:
             raise LedgerError("transaction can enter RECONCILING only from PREPARED or APPLYING")
+        _assert_active_transaction_lease(transaction, event)
         transaction["state"] = "RECONCILING"
         transaction["observed_side_effects"] = payload["observed_side_effects"]
     elif kind == "TRANSACTION_COMMITTED":
@@ -613,13 +626,29 @@ def _apply_event(
             raise LedgerError("transaction cannot commit before APPLYING or RECONCILING")
         if transaction["replay_class"] == "NON_REPLAYABLE_REQUIRES_RECONCILIATION" and transaction["state"] != "RECONCILING":
             raise LedgerError("non-replayable transaction requires reconciliation before commit")
+        _assert_active_transaction_lease(transaction, event)
         if not payload["evidence"]:
             raise LedgerError("transaction cannot commit without authoritative evidence")
         for evidence_ref in payload["evidence"]:
             match = re.fullmatch(r"file:([^#]+)#sha256:([0-9a-f]{64})", evidence_ref)
             if not match:
                 raise LedgerError("transaction evidence must be a local digest-addressed record")
-            verified_local_file(match.group(1), match.group(2))
+            evidence_bytes = verified_local_file(match.group(1), match.group(2))
+            try:
+                evidence = json.loads(evidence_bytes)
+            except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+                raise LedgerError("transaction commit evidence is not JSON") from exc
+            expected = {
+                "record_type": "TRANSACTION_COMMIT_EVIDENCE",
+                "transaction_id": transaction["transaction_id"],
+                "transition_id": transaction["transition_id"],
+                "subjects": transaction["subjects"],
+                "effect_probes": transaction["effect_probes"],
+                "observed_outcome": "COMMITTED",
+                "effects": payload["effects"],
+            }
+            if not isinstance(evidence, dict) or any(evidence.get(key) != value for key, value in expected.items()):
+                raise LedgerError("transaction commit evidence does not bind the exact outcome")
         if catalog is None:
             raise LedgerError("transaction commit requires transition catalog")
         transition = transition_by_id(catalog, transaction["transition_id"])
@@ -639,6 +668,7 @@ def _apply_event(
         transaction = state["open_transaction"]
         if transaction is None or transaction["transaction_id"] != payload["transaction_id"]:
             raise LedgerError("ABORTED references no open transaction")
+        _assert_active_transaction_lease(transaction, event)
         state["open_transaction"] = None
         state["lifecycle_state"] = "READY"
     elif kind == "SUBJECT_MUTATED":
