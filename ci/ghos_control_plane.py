@@ -4,6 +4,7 @@ import copy
 import hashlib
 import json
 import re
+import subprocess
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -1052,6 +1053,23 @@ def validate_candidate_artifacts(*, root: Path = ROOT) -> None:
     authority = apply_propagation_barrier(authority, manifest)
     reduced = reduce_ledger(ledger, catalog, authority, admission)
     assert_stored_state(stored_state, reduced)
+    acceptance = load_json(
+        root / "implementation" / "GCL-GHOS-CONTROL-PLANE-REMEDIATION-001" / "ACCEPTANCE_EVIDENCE.json"
+    )
+    head = acceptance["implementation_head"]
+    tree = subprocess.check_output(
+        ["git", "show", "-s", "--format=%T", head], cwd=root, text=True
+    ).strip()
+    if tree != acceptance["implementation_tree"]:
+        raise ControlPlaneError("acceptance evidence implementation tree drift")
+    if acceptance["catalog_digest"] != catalog_digest(catalog):
+        raise ControlPlaneError("acceptance evidence catalog digest drift")
+    for relative, expected in acceptance["artifact_sha256"].items():
+        contents = subprocess.check_output(
+            ["git", "show", f"{head}:{relative}"], cwd=root
+        )
+        if hashlib.sha256(contents).hexdigest() != expected:
+            raise ControlPlaneError(f"acceptance evidence artifact drift: {relative}")
 
 
 def validate(*, root: Path = ROOT) -> None:
