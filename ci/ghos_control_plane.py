@@ -1057,26 +1057,11 @@ def validate_propagation_manifest(
         if source_record["path"].endswith(".json"):
             parsed = json.loads(text_value)
             observed_version = parsed.get("selected_admission", {}).get("version")
+            derived_status = "COHERENT" if observed_version == consumer["expected_version"] else "STALE"
         else:
-            versions = re.findall(r"\b0\.[0-9]+\.[0-9]+\b", text_value)
-            lowered = text_value.lower()
-            if any(marker in lowered for marker in (
-                "remains the version selected", "0.1.1 has completed that sequence",
-                "coordinated candidate, not current authority",
-            )):
-                observed_version = "0.1.1"
-            else:
-                observed_version = consumer["expected_version"] if consumer["expected_version"] in versions else (versions[-1] if versions else None)
-        stale_markers = (
-            "remains the version selected",
-            "candidate normative successor",
-            "coordinated candidate, not current authority",
-            "0.1.1 has completed that sequence",
-        )
-        derived_status = "STALE" if (
-            observed_version != consumer["expected_version"]
-            or any(marker in text_value.lower() for marker in stale_markers)
-        ) else "COHERENT"
+            observed_version, derived_status = derive_text_consumer_status(
+                consumer["consumer_id"], text_value, consumer["expected_version"]
+            )
         status_matches = (
             consumer["status"] == derived_status
             or (derived_status == "STALE" and consumer["status"] == "UNRESOLVED_EXTERNAL")
@@ -1085,6 +1070,48 @@ def validate_propagation_manifest(
             raise AuthorityContradiction(
                 f"propagation consumer status is not derived from exact content: {consumer['consumer_id']}"
             )
+
+
+def derive_text_consumer_status(
+    consumer_id: str, text_value: str, expected_version: str
+) -> tuple[str | None, str]:
+    lowered = text_value.lower()
+    if consumer_id == "GCL_README":
+        match = re.search(
+            r"Version `(?P<version>0\.[0-9]+\.[0-9]+)` (?:remains the version selected|is the current selected version|is current authority)",
+            text_value,
+        )
+        observed = match.group("version") if match else None
+    elif consumer_id == "GCL_STANDARD_FRONT_MATTER":
+        version_match = re.search(r"^\*\*Version:\*\* (?P<version>0\.[0-9]+\.[0-9]+)$", text_value, re.MULTILINE)
+        status_match = re.search(r"^\*\*Status:\*\* (?P<status>.+)$", text_value, re.MULTILINE)
+        observed = version_match.group("version") if version_match else None
+        status = status_match.group("status").lower() if status_match else ""
+        return observed, (
+            "COHERENT" if observed == expected_version and "admitted" in status and "candidate" not in status
+            else "STALE"
+        )
+    elif consumer_id == "MATH_PROGRAMME_RECOVERY_GUIDE":
+        current = re.search(
+            r"`GCL-GHOS-00` `?(?P<version>0\.[0-9]+\.[0-9]+)`? is current authority",
+            text_value,
+        )
+        if current:
+            observed = current.group("version")
+        elif "coordinated candidate, not current authority" in lowered:
+            observed = "0.1.1"
+        else:
+            observed = None
+    elif consumer_id == "ORGANIZATION_PUBLIC_PROFILE":
+        current = re.search(
+            r"`GCL-GHOS-00` `(?P<version>0\.[0-9]+\.[0-9]+)` is the admitted .* selected",
+            text_value,
+            re.IGNORECASE | re.DOTALL,
+        )
+        observed = current.group("version") if current else None
+    else:
+        raise AuthorityContradiction(f"no typed propagation extractor: {consumer_id}")
+    return observed, "COHERENT" if observed == expected_version else "STALE"
 
 
 def validate_candidate_artifacts(*, root: Path = ROOT) -> None:

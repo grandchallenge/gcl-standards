@@ -168,6 +168,18 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
         target["status"] = "COHERENT"
         with self.assertRaisesRegex(MODULE.AuthorityContradiction, "exact-source substitution"):
             MODULE.validate_propagation_manifest(substituted, self.authority)
+        observed, status = MODULE.derive_text_consumer_status(
+            "GCL_README",
+            "Version `0.3.0` is current authority. Version `0.2.0` is historical.\n",
+            "0.2.0",
+        )
+        self.assertEqual((observed, status), ("0.3.0", "STALE"))
+        observed, status = MODULE.derive_text_consumer_status(
+            "MATH_PROGRAMME_RECOVERY_GUIDE",
+            "This document mentions 0.2.0 but makes no typed current-authority assertion.\n",
+            "0.2.0",
+        )
+        self.assertEqual((observed, status), (None, "STALE"))
 
     def test_t14_capability_topology_mismatch_requires_decomposition(self):
         candidate = copy.deepcopy(self.admission)
