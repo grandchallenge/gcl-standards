@@ -7,6 +7,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -136,6 +137,9 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
     def test_t13_active_version_manifest_blocks_stale_consumers(self):
         manifest = MODULE.load_json(MODULE.PROPAGATION_PATH)
         MODULE.validate_propagation_manifest(manifest, self.authority)
+        with patch.dict("os.environ", {"GHOS_MATH_PROGRAMME_REPO": str(ROOT)}, clear=True):
+            with self.assertRaisesRegex(MODULE.AuthorityContradiction, "configuration is incomplete"):
+                MODULE.validate_propagation_manifest(manifest, self.authority)
         self.assertFalse(manifest["all_derived_current_coherent"])
         self.assertTrue(any(x["status"] == "STALE" for x in manifest["consumers"]))
         codes = {x["code"] for x in self.authority["contradictions"]}

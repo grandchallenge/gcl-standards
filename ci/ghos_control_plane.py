@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import os
 import re
 import subprocess
 import sys
@@ -1013,17 +1014,29 @@ def validate_propagation_manifest(
         raise AuthorityContradiction("external reconciliation summary mismatch")
     if manifest["claim_boundaries"] != CLAIM_BOUNDARIES:
         raise AuthorityContradiction("propagation manifest widens authority")
-    workspace = next(
-        (candidate for candidate in (ROOT, *ROOT.parents)
-         if (candidate / "MATH-PROGRAMME").is_dir() and (candidate / ".github").is_dir()),
-        None,
-    )
-    if workspace is None:
-        raise AuthorityContradiction("cannot locate exact propagation consumer repositories")
+    configured_math = os.environ.get("GHOS_MATH_PROGRAMME_REPO")
+    configured_profile = os.environ.get("GHOS_ORG_PROFILE_REPO")
+    if bool(configured_math) != bool(configured_profile):
+        raise AuthorityContradiction("propagation repository configuration is incomplete")
+    if configured_math and configured_profile:
+        math_root = Path(configured_math).resolve()
+        profile_root = Path(configured_profile).resolve()
+    else:
+        workspace = next(
+            (candidate for candidate in (ROOT, *ROOT.parents)
+             if (candidate / "MATH-PROGRAMME").is_dir() and (candidate / ".github").is_dir()),
+            None,
+        )
+        if workspace is None:
+            raise AuthorityContradiction("cannot locate exact propagation consumer repositories")
+        math_root = workspace / "MATH-PROGRAMME"
+        profile_root = workspace / ".github"
+    if not (math_root / ".git").exists() or not (profile_root / ".git").exists():
+        raise AuthorityContradiction("propagation repository configuration is not a Git checkout")
     repository_roots = {
         "grandchallenge/gcl-standards": ROOT,
-        "grandchallenge/MATH-PROGRAMME": workspace / "MATH-PROGRAMME",
-        "grandchallenge/.github": workspace / ".github",
+        "grandchallenge/MATH-PROGRAMME": math_root,
+        "grandchallenge/.github": profile_root,
     }
     for consumer in derived:
         source_record = consumer["exact_source"]
