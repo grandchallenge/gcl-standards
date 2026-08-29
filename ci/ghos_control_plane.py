@@ -1026,6 +1026,14 @@ def validate_propagation_manifest(
     }
     for consumer in derived:
         source_record = consumer["exact_source"]
+        if (
+            source_record["repository"] != consumer["repository"]
+            or source_record["path"] != consumer["path"]
+            or source_record["authority_class"] != consumer["authority_class"]
+        ):
+            raise AuthorityContradiction(
+                f"propagation consumer exact-source substitution: {consumer['consumer_id']}"
+            )
         repository_root = repository_roots.get(source_record["repository"])
         if repository_root is None:
             raise AuthorityContradiction(f"unknown propagation repository: {source_record['repository']}")

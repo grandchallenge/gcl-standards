@@ -161,6 +161,13 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
         false_coherent["external_reconciliation_complete"] = True
         with self.assertRaisesRegex(MODULE.AuthorityContradiction, "not derived from exact content"):
             MODULE.validate_propagation_manifest(false_coherent, self.authority)
+        substituted = copy.deepcopy(manifest)
+        target = next(x for x in substituted["consumers"] if x["consumer_id"] == "GCL_README")
+        target["exact_source"] = copy.deepcopy(substituted["adoption_source"])
+        target["observed_version"] = "0.2.0"
+        target["status"] = "COHERENT"
+        with self.assertRaisesRegex(MODULE.AuthorityContradiction, "exact-source substitution"):
+            MODULE.validate_propagation_manifest(substituted, self.authority)
 
     def test_t14_capability_topology_mismatch_requires_decomposition(self):
         candidate = copy.deepcopy(self.admission)
