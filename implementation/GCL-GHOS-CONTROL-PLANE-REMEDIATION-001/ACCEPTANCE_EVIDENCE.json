@@ -1,8 +1,8 @@
 {
   "record_type": "GHOS_CONTROL_PLANE_ACCEPTANCE_EVIDENCE",
   "schema_version": "1.0.0",
-  "implementation_head": "f0900d921a8f3cbf55632986fdd2f97651f83829",
-  "implementation_tree": "b9098837c792427466eb0e6d035fa1f668e189cc",
+  "implementation_head": "70425edd60755d8257d4aa03518c3a75de6c14f3",
+  "implementation_tree": "6dc5dd45e46300b03123582127625bc03418ddab",
   "catalog_digest": "2cb71132cc72e88fad6e530d2634c67b27640776c2dda6d19589b4295de3e341",
   "validation": {
     "command": "python ci/validate.py",
@@ -15,14 +15,14 @@
     "full_suite_result": "PASS"
   },
   "artifact_sha256": {
-    "ci/ghos_control_plane.py": "e16a12d99563603cd616e49812a90399d4aa5ea27c14a9aa1c552cbd5e4b203b",
+    "ci/ghos_control_plane.py": "aeacbed04c2e1f830acc72ec827a63f15e2cec66160897a8e2ab693f6c63f73d",
     "schemas/ghos_control_plane.schema.json": "92d30438859ae8abe213e3e822bfd571da3ccea7796b602d2e7ff5494d8e3ed1",
     "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/transition-catalog.json": "fea957844e068e93eb53d3a7d38253d520e1510adf643750de39ab7c9a24394f",
     "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/candidate-work-package-admission.json": "3cdc352a8a45bfd2258917dbf6a6013a6fa83bed5a7f5aff3ae70d80ae3fc410",
     "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/candidate-harness-ledger.json": "d2a8f397be4d1df04ebcd446252be9e02a04bac4da8422936feb8c09633f0fc3",
     "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/candidate-harness-state.json": "744bd2522538be68cce109dd761035575148209f76ddddc6e60935cf073b34e7",
     "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/active-version-propagation-manifest.json": "4bdf97cefb0ade0856e755a408f186f15399cbf22d0beac05a7c683b80b186e6",
-    "tests/test_ghos_control_plane.py": "bd9998d22ed64b90e849f63ebddd6e1a9a70117e6adb6fa767c1b6963fc46908"
+    "tests/test_ghos_control_plane.py": "278e12b3deed3c69699b21b3aa7f11aa3680ab35eccedbac0c31d0cdf27072a7"
   },
   "scenarios": {
     "T01_COLD_RESUME": "test_t01_cold_resume_is_byte_deterministic",
