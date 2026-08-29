@@ -2,8 +2,8 @@
   "record_type": "GHOS_CONTROL_PLANE_EXECUTION_RESULTS",
   "schema_version": "1.0.0",
   "executed_at": "2026-08-29T00:00:00-07:00",
-  "implementation_head": "94b3a016b4d22e29e205a2f4d03f5cc2d227334f",
-  "implementation_tree": "d1563c27a6a3d98e4a2ed84edde6bb88dd05811e",
+  "implementation_head": "ee99e268a15002df949d5949c961ef6f627a02d6",
+  "implementation_tree": "a2ead4a3663fbfe1a67092741aa01be0a175deed",
   "commands": [
     {"command": "python ci/validate.py", "exit_code": 0, "result": "gcl-standards validation passed"},
     {"command": "python -m unittest tests.test_ghos_control_plane -q", "exit_code": 0, "tests": 29, "result": "OK"},
