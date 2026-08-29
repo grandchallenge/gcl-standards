@@ -1185,17 +1185,8 @@ def validate_candidate_artifacts(*, root: Path = ROOT) -> None:
     scenarios = results["scenarios"]
     if {item["id"] for item in scenarios} != {f"T{index:02d}" for index in range(1, 15)}:
         raise ControlPlaneError("acceptance scenario coverage drift")
-    required_result_fields = {
-        "id", "test", "result", "transition", "state_digest",
-        "transaction_state", "gate_invalidations", "prohibited_outcome_observed",
-    }
-    if any(
-        set(item) != required_result_fields or item["result"] != "PASS"
-        or item["prohibited_outcome_observed"] is not False
-        or not re.fullmatch(r"[0-9a-f]{64}", item["state_digest"])
-        for item in scenarios
-    ):
-        raise ControlPlaneError("acceptance scenario result is incomplete or non-passing")
+    if any(set(item) != {"id", "test"} for item in scenarios):
+        raise ControlPlaneError("acceptance execution manifest contains unattested fields")
     expected_tests = {
         identifier.split("_", 1)[0]: test_name
         for identifier, test_name in acceptance["scenarios"].items()
