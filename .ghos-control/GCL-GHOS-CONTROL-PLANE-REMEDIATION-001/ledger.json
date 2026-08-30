@@ -59,8 +59,24 @@
         "observed_at": "2026-08-30T11:57:44Z"
       },
       "event_digest": "a007f098c5138b2a00c44d9b683b9d56ac37948e1caa7b64e8fc3c77db4f9650"
+    },
+    {
+      "sequence": 5,
+      "event_id": "PILOT-EVENT-0005",
+      "event_type": "TRANSACTION_PREPARED",
+      "occurred_at": "2026-08-30T12:07:01Z",
+      "previous_event_digest": "a007f098c5138b2a00c44d9b683b9d56ac37948e1caa7b64e8fc3c77db4f9650",
+      "payload": {"transaction": {
+        "transaction_id": "PILOT-TX-EXPIRED-001", "transition_id": "MUTATE_CANDIDATE_BRANCH", "state": "PREPARED", "idempotency_key": "ghos-pilot-expired-lease-001", "replay_class": "REPLAY_AFTER_ABSENCE_PROBE",
+        "started_generation": 4, "started_state_digest": "464a9e26f9eef9ab72921eff2f07ea613b73a270ef4fa32e3ffe4c3f8bf165a5",
+        "subjects": [{"repository": "grandchallenge/gcl-standards", "kind": "BRANCH", "identifier": "remediation/ghos-reconciliation-readback-001", "head_sha": "301766aacd30d185a70010c814352e6e16897538", "base_sha": "301766aacd30d185a70010c814352e6e16897538", "artifact_digest": null}],
+        "preconditions": ["reducer_transition_permitted", "exact_subjects_rechecked"], "intended_effects": ["VALIDATION"],
+        "executor_claim": {"executor_id": "root-implementer", "session_id": "initial-session", "role": "IMPLEMENTER", "executor_class": "MULTI_SESSION_WORKER", "capabilities": ["durable_compare_and_swap", "git_write", "exact_git_readback"], "acquired_at": "2026-08-30T12:07:00Z", "expires_at": "2026-08-30T12:08:00Z", "status": "ACTIVE"},
+        "effect_probes": ["working_branch_ref_equals_prepared_new_head"], "attempt_ids": [], "observed_side_effects": [], "postconditions": ["phase=VALIDATION"], "evidence": [], "invalidated_gate_ids": []
+      }},
+      "event_digest": "28701ce3f27d4c36712bcb146680d962041a7f793f15a2897810c5296687f855"
     }
   ],
-  "ledger_head_digest": "a007f098c5138b2a00c44d9b683b9d56ac37948e1caa7b64e8fc3c77db4f9650",
+  "ledger_head_digest": "28701ce3f27d4c36712bcb146680d962041a7f793f15a2897810c5296687f855",
   "claim_boundaries": {"constitutional": false, "merge": false, "certification": false, "production": false, "publication": false, "mathematical_claim": false, "claim_promotion": false, "commercial": false}
 }
