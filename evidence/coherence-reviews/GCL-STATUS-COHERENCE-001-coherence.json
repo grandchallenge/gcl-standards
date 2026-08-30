@@ -20,7 +20,7 @@
   "review_packet": {
     "campaign": "GCL-GHOS-ACTIVE-VERSION-RECONCILIATION-001",
     "packet_sha256": "2814819c88c21fce61194485d28312d9e22b2d43bd6b6c105af53fbd7cbf62d7",
-    "steward_authorization_url": "https://github.com/grandchallenge/gcl-standards/issues/56#issuecomment-5467122516"
+    "governing_issue_disposition_url": "https://github.com/grandchallenge/gcl-standards/issues/56#issuecomment-5467122516"
   },
   "reviewed_source_heads": {
     "intellect": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",

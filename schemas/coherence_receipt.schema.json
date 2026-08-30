@@ -28,11 +28,11 @@
     "review_packet": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["campaign", "packet_sha256", "steward_authorization_url"],
+      "required": ["campaign", "packet_sha256", "governing_issue_disposition_url"],
       "properties": {
         "campaign": {"const": "GCL-GHOS-ACTIVE-VERSION-RECONCILIATION-001"},
         "packet_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-        "steward_authorization_url": {"type": "string", "format": "uri"}
+        "governing_issue_disposition_url": {"type": "string", "format": "uri"}
       }
     },
     "reviewed_source_heads": {
