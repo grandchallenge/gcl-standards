@@ -1,0 +1,8 @@
+{
+  "record_type": "PROTECTED_CONTROL_STORE", "schema_version": "1.0.0", "work_package": "GCL-GHOS-CONTROL-PLANE-REMEDIATION-001",
+  "repository": "grandchallenge/gcl-standards", "ref": "refs/heads/control/GCL-GHOS-CONTROL-PLANE-REMEDIATION-002", "ruleset_id": 21856524,
+  "ruleset_url": "https://github.com/grandchallenge/gcl-standards/rules/21856524", "deletion_prohibited": true, "non_fast_forward_prohibited": true,
+  "append_protocol": "pull request against exact control-ref base; validate immutable admission/store and exact prior event prefix; require standards-policy; merge expected head",
+  "candidate_branch_independent": true,
+  "claim_boundaries": {"constitutional": false, "merge": false, "certification": false, "production": false, "publication": false, "mathematical_claim": false, "claim_promotion": false, "commercial": false}
+}
