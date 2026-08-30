@@ -1,5 +1,5 @@
 {
-  "$schema": "../schemas/coherence_receipt.schema.json",
+  "$schema": "../schemas/active_version_reconciliation_receipt.schema.json",
   "schema_version": "1.0.0",
   "operation_id": "GCL-GHOS-ACTIVE-VERSION-RECONCILIATION-001",
   "status": "candidate_awaiting_protected_readback",

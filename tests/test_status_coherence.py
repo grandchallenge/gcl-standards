@@ -239,7 +239,7 @@ def canonical_projection(
 
 def canonical_receipt() -> dict[str, object]:
     return {
-        "$schema": "../schemas/coherence_receipt.schema.json",
+        "$schema": "../schemas/active_version_reconciliation_receipt.schema.json",
         "schema_version": "1.0.0",
         "operation_id": "GCL-GHOS-ACTIVE-VERSION-RECONCILIATION-001",
         "status": "candidate_awaiting_protected_readback",
@@ -504,7 +504,7 @@ class StatusCoherenceTests(unittest.TestCase):
             self.validate(broken)
 
     def test_exact_coherence_receipt_schema_is_closed_and_zero_conflict(self) -> None:
-        schema = MODULE.load_json(ROOT / "schemas" / "coherence_receipt.schema.json")
+        schema = MODULE.load_json(ROOT / "schemas" / "active_version_reconciliation_receipt.schema.json")
         MODULE.jsonschema.validate(
             canonical_receipt(),
             schema,
@@ -521,6 +521,21 @@ class StatusCoherenceTests(unittest.TestCase):
         broken["descriptive_assertions"]["intellect_status_page_amendment_status"] = "proposed"
         with self.assertRaisesRegex(MODULE.StatusCoherenceError, "effective amendment"):
             MODULE.validate_projection(broken)
+
+    def test_historical_phase1_receipt_is_byte_preserved_and_schema_valid(self) -> None:
+        relative = "evidence/coherence-reviews/GCL-STATUS-COHERENCE-001-coherence.json"
+        current = (ROOT / relative).read_bytes()
+        protected = subprocess.check_output(
+            ["git", "show", f"3e4468b93943d6cb280241f5c815a668e8dc93e3:{relative}"],
+            cwd=ROOT,
+        )
+        self.assertEqual(current, protected)
+        schema = MODULE.load_json(ROOT / "schemas" / "coherence_receipt.schema.json")
+        MODULE.jsonschema.validate(
+            MODULE.load_json(ROOT / relative), schema,
+            cls=MODULE.jsonschema.Draft202012Validator,
+            format_checker=MODULE.jsonschema.FormatChecker(),
+        )
 
     def test_admitted_standard_with_candidate_front_matter_is_rejected(self) -> None:
         broken = copy.deepcopy(self.projection)
@@ -559,7 +574,7 @@ class StatusCoherenceTests(unittest.TestCase):
             MODULE.validate_projection(broken)
 
     def test_receipt_requires_every_fixed_nonclaim_boundary(self) -> None:
-        schema = MODULE.load_json(ROOT / "schemas" / "coherence_receipt.schema.json")
+        schema = MODULE.load_json(ROOT / "schemas" / "active_version_reconciliation_receipt.schema.json")
         broken = canonical_receipt()
         del broken["claim_boundaries"]["commercial_claim_authorized"]
         with self.assertRaises(MODULE.jsonschema.ValidationError):

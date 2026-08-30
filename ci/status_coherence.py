@@ -362,7 +362,7 @@ def validate_projection(
 def validate_coherence_receipt(
     receipt: dict[str, Any], projection: dict[str, Any], *, root: Path = ROOT
 ) -> None:
-    schema = load_json(root / "schemas" / "coherence_receipt.schema.json")
+    schema = load_json(root / "schemas" / "active_version_reconciliation_receipt.schema.json")
     jsonschema.Draft202012Validator.check_schema(schema)
     jsonschema.validate(
         receipt,
@@ -475,6 +475,7 @@ def validate_schemas(*, root: Path = ROOT) -> None:
         "current_programme_adoption_selection.schema.json",
         "current_status_projection.schema.json",
         "coherence_receipt.schema.json",
+        "active_version_reconciliation_receipt.schema.json",
     ):
         jsonschema.Draft202012Validator.check_schema(load_json(root / "schemas" / name))
 
