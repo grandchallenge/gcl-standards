@@ -8,7 +8,7 @@
   "properties": {
     "programme": {"const": "grandchallenge/MATH-PROGRAMME"},
     "path": {"const": "programme-adoption/MATH-PROGRAMME.yaml"},
-    "standard_version": {"const": "0.1.1"},
+    "standard_version": {"const": "0.2.0"},
     "status": {"const": "active"},
     "commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
     "admission_commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"}

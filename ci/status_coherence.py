@@ -212,7 +212,7 @@ def validate_descriptive_evidence(
     public_profile = _text(evidence_contents, "github_profile")
     required_profile_assertions = (
         r"`GI-AMEND-0001`(?::| is) effective",
-        r"`GCL-GHOS-00` `0\.1\.1`.*(?:: |is (?:the )?)admitted",
+        r"`GCL-GHOS-00` `0\.2\.0`.*(?:admitted|selected)",
         r"(?:`MATH-PROGRAMME` adoption: active|MATH-PROGRAMME actively adopts)",
         r"GitHub (?:remains\s+|is our\s+)?operational and evidentiary",
     )
@@ -266,9 +266,9 @@ def validate_descriptive_evidence(
         ),
         "standard_front_matter_status": _status_from_text(
             _text(evidence_contents, "standard"),
-            positive="**Status:** Admitted documentary successor",
-            negative_patterns=(r"\*\*Status:\*\* Candidate",),
-            status="admitted",
+            positive="**Status:** Candidate normative successor; no effect until protected successor admission and programme adoption",
+            negative_patterns=(),
+            status="historical_candidate_metadata",
             key="standard",
         ),
         "admission_adoption_gate_status": (
@@ -304,11 +304,11 @@ def validate_projection(
             "effective amendment cannot have a proposed current status projection"
         )
     if admission.get("status") == "admitted" and (
-        admission.get("front_matter_status") == "candidate"
-        or assertions.get("standard_front_matter_status") == "candidate"
+        admission.get("front_matter_status") != "historical_candidate_metadata"
+        or assertions.get("standard_front_matter_status") != "historical_candidate_metadata"
     ):
         raise StatusCoherenceError(
-            "admitted selected standard cannot have candidate current front matter"
+            "selected admission must classify immutable candidate-era front matter as historical metadata"
         )
     if adoption.get("status") == "active" and (
         assertions.get("admission_adoption_gate_status") == "not_started"
@@ -341,9 +341,11 @@ def validate_projection(
     )):
         raise StatusCoherenceError("INTELLECT evidence does not bind schedule commit")
     if any(evidence[key]["commit_sha"] != admission_commit for key in (
-        "gcl_readme", "adr", "standard", "admission"
+        "standard", "admission"
     )):
-        raise StatusCoherenceError("standards evidence does not bind admission commit")
+        raise StatusCoherenceError("admission evidence does not bind admission commit")
+    if evidence["gcl_readme"]["commit_sha"] != evidence["adr"]["commit_sha"]:
+        raise StatusCoherenceError("registry prose evidence does not bind one exact projection commit")
     if evidence["programme_adoption"]["commit_sha"] != adoption_commit:
         raise StatusCoherenceError("adoption evidence does not bind adoption commit")
     if (

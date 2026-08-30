@@ -3,7 +3,7 @@
 **Date:** 2026-07-29  
 **Status:** Accepted
 **Accepted lineage:** `admissions/GCL-GHOS-00-0.1.0.json`
-**Documentary successor:** `GCL-GHOS-00` `0.1.1`; current selection resolved by exact admission record
+**Historical documentary successor:** `GCL-GHOS-00` `0.1.1`; superseded for the bounded MATH-PROGRAMME pilot by admitted and adopted `0.2.0`
 **Owner:** Amanuensis with Security and Referee review
 
 ## Context
@@ -52,8 +52,8 @@ ADR-0001 was accepted through the protected `0.1.0` admission lineage after
 `GI-AMEND-0001` became effective. Those completed events are historical
 predecessors, not gates to repeat for this documentary successor.
 
-Selection of the `0.1.1` documentary successor as the current standard is
-valid only when its protected admission proves that:
+The historical selection of the `0.1.1` documentary successor was valid only
+when its protected admission proved that:
 
 1. one exact source packet binds the corrective INTELLECT and
    `gcl-standards` revisions;
@@ -63,7 +63,8 @@ valid only when its protected admission proves that:
 4. a protected `gcl-standards` admission record selects byte-identical reviewed
    source blobs and records their predecessor lineage.
 
-MATH-PROGRAMME adoption follows the protected `0.1.1` admission. It does not
+The historical MATH-PROGRAMME `0.1.1` adoption followed that protected
+admission. It did not
 retroactively accept this ADR or make `GI-AMEND-0001` effective. Organization-
 wide activation or conformance claims remain blocked until separately
 authorized evidence resolves their outstanding boundaries.

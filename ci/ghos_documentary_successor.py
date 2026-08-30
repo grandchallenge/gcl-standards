@@ -136,20 +136,20 @@ def validate(*, root: Path = ROOT) -> None:
 
     readme_text = readme.read_text(encoding="utf-8")
     for required in (
-        "Version `0.1.1` remains the version selected by the existing",
+        "Version `0.2.0` is current authority for the bounded",
         "Version `0.2.0` is the reviewed normative successor adding bounded execution",
         "[`admissions/GCL-GHOS-00-0.2.0.json`](admissions/GCL-GHOS-00-0.2.0.json)",
-        "which becomes effective only through protected merge of that exact record.",
+        "which became effective through protected merge of that exact record.",
         "The\nreviewed standard source remains byte-identical to PR #52 head",
-        "MATH-PROGRAMME adoption of\n`0.2.0` remains a separate later gate",
+        "MATH-PROGRAMME actively adopts\n`0.2.0`",
     ):
         if required not in readme_text:
             raise DocumentarySuccessorError(
                 f"README 0.2.0 admission projection is incomplete: {required}"
             )
     for forbidden in (
-        "0.2.0 adoption is active",
-        "MATH-PROGRAMME actively adopts `0.2.0`",
+        "0.1.1` remains the version selected",
+        "adoption of\n`0.2.0` remains a separate later gate",
         "organization-wide conformance is authorized",
     ):
         if forbidden in readme_text:
