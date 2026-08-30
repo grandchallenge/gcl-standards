@@ -251,7 +251,7 @@ def canonical_receipt() -> dict[str, object]:
             ],
         },
         "review_packet": {
-            "campaign": "GCL-STATUS-COHERENCE-001",
+            "campaign": "GCL-GHOS-ACTIVE-VERSION-RECONCILIATION-001",
             "packet_sha256": "a" * 64,
             "governing_issue_disposition_url": "https://github.com/grandchallenge/.github/issues/1#issuecomment-1",
         },
@@ -405,14 +405,14 @@ class StatusCoherenceTests(unittest.TestCase):
         ):
             self.validate(projection)
 
-    def test_admitted_and_candidate_standard_blob_is_rejected(self) -> None:
+    def test_standard_without_exact_historical_front_matter_is_rejected(self) -> None:
         projection = self.replace_and_commit(
             "standard",
             b"**Status:** Admitted documentary successor\n**Status:** Candidate\n",
         )
         with self.assertRaisesRegex(
             MODULE.StatusCoherenceError,
-            "contradictory governed status assertions: standard",
+            "missing governed status assertion: standard",
         ):
             self.validate(projection)
 
