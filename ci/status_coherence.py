@@ -403,6 +403,21 @@ def validate_coherence_receipt(
     ).hexdigest()
     if receipt["review_packet"]["packet_sha256"] != expected_packet:
         raise StatusCoherenceError("coherence receipt packet binding drift")
+    if receipt["status"] == "coherent_on_protected_main":
+        merge = receipt["reconciliation_merge"]
+        try:
+            subprocess.run(
+                ["git", "merge-base", "--is-ancestor", merge, "HEAD"],
+                cwd=root, check=True, capture_output=True,
+            )
+            protected_blob = subprocess.check_output(
+                ["git", "rev-parse", f"{merge}:{receipt['current_status_projection']['path']}"],
+                cwd=root, text=True,
+            ).strip()
+        except (OSError, subprocess.CalledProcessError) as exc:
+            raise StatusCoherenceError("reconciliation merge is not in protected readback history") from exc
+        if protected_blob != receipt["current_status_projection"]["git_blob_sha1"]:
+            raise StatusCoherenceError("reconciliation merge does not contain the exact coherent projection")
 
 
 def _run_git(*arguments: str, cwd: Path | None = None) -> None:

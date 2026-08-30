@@ -2,7 +2,7 @@
   "$schema": "../schemas/active_version_reconciliation_receipt.schema.json",
   "schema_version": "1.0.0",
   "operation_id": "GCL-GHOS-ACTIVE-VERSION-RECONCILIATION-001",
-  "status": "candidate_awaiting_protected_readback",
+  "status": "coherent_on_protected_main",
   "contradictions": {
     "open_count": 0,
     "closed_ids": ["SC-01", "SC-02", "SC-03", "SC-04", "SC-05", "SC-06", "SC-07", "SC-08", "VAL-01"]
@@ -22,7 +22,7 @@
     "intellect_projection": "8dbd7d9288aab03a97b46d2de7830d06553d0d8d",
     "github_profile": "a0949181be646ed7c6804c3316a65425d74e7fa9"
   },
-  "reconciliation_merge": null,
+  "reconciliation_merge": "0b8980e4f8da773d63425b2ac8090643304bafe1",
   "current_status_projection": {
     "path": "status/GCL-GHOS-00-current.json",
     "git_blob_sha1": "d5266c42a8ac3f9b452560083686db1cdee5d1b4"

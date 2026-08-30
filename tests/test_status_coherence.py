@@ -516,6 +516,16 @@ class StatusCoherenceTests(unittest.TestCase):
         with self.assertRaises(MODULE.jsonschema.ValidationError):
             MODULE.jsonschema.validate(broken, schema)
 
+    def test_terminal_reconciliation_receipt_requires_exact_merge_readback(self) -> None:
+        receipt = MODULE.load_json(MODULE.COHERENCE_RECEIPT_PATH)
+        receipt["reconciliation_merge"] = "f" * 40
+        with self.assertRaisesRegex(
+            MODULE.StatusCoherenceError, "not in protected readback history"
+        ):
+            MODULE.validate_coherence_receipt(
+                receipt, MODULE.load_json(MODULE.CURRENT_STATUS_PATH), root=ROOT
+            )
+
     def test_effective_amendment_with_proposed_page_is_rejected(self) -> None:
         broken = copy.deepcopy(self.projection)
         broken["descriptive_assertions"]["intellect_status_page_amendment_status"] = "proposed"
