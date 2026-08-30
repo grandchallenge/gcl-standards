@@ -32,7 +32,7 @@ COHERENCE_RECEIPT_PATH = (
     ROOT
     / "evidence"
     / "coherence-reviews"
-    / "GCL-STATUS-COHERENCE-001-coherence.json"
+    / "GCL-GHOS-ACTIVE-VERSION-RECONCILIATION-001.json"
 )
 REVIEW_RECEIPT_PATH = (
     ROOT
@@ -443,7 +443,7 @@ def validate_current_status(*, root: Path = ROOT) -> None:
         root
         / "evidence"
         / "coherence-reviews"
-        / "GCL-STATUS-COHERENCE-001-coherence.json"
+        / "GCL-GHOS-ACTIVE-VERSION-RECONCILIATION-001.json"
     )
     commits_by_repository: dict[str, set[str]] = {}
     for source in projection["descriptive_evidence"].values():

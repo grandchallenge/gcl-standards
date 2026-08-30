@@ -241,7 +241,7 @@ def canonical_receipt() -> dict[str, object]:
     return {
         "$schema": "../schemas/coherence_receipt.schema.json",
         "schema_version": "1.0.0",
-        "operation_id": "GCL-STATUS-COHERENCE-001",
+        "operation_id": "GCL-GHOS-ACTIVE-VERSION-RECONCILIATION-001",
         "status": "candidate_awaiting_protected_readback",
         "contradictions": {
             "open_count": 0,

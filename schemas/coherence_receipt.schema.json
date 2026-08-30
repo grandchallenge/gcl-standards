@@ -8,7 +8,7 @@
   "properties": {
     "$schema": {"const": "../schemas/coherence_receipt.schema.json"},
     "schema_version": {"const": "1.0.0"},
-    "operation_id": {"const": "GCL-STATUS-COHERENCE-001"},
+    "operation_id": {"const": "GCL-GHOS-ACTIVE-VERSION-RECONCILIATION-001"},
     "status": {"enum": ["candidate_awaiting_protected_readback", "coherent_on_protected_main"]},
     "contradictions": {
       "type": "object",
