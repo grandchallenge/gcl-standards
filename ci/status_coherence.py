@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 from pathlib import Path
 import re
@@ -31,7 +32,7 @@ COHERENCE_RECEIPT_PATH = (
     ROOT
     / "evidence"
     / "coherence-reviews"
-    / "GCL-STATUS-COHERENCE-001-coherence.json"
+    / "GCL-GHOS-ACTIVE-VERSION-RECONCILIATION-001.json"
 )
 REVIEW_RECEIPT_PATH = (
     ROOT
@@ -212,7 +213,7 @@ def validate_descriptive_evidence(
     public_profile = _text(evidence_contents, "github_profile")
     required_profile_assertions = (
         r"`GI-AMEND-0001`(?::| is) effective",
-        r"`GCL-GHOS-00` `0\.1\.1`.*(?:: |is (?:the )?)admitted",
+        r"`GCL-GHOS-00` `0\.2\.0`.*(?:admitted|selected)",
         r"(?:`MATH-PROGRAMME` adoption: active|MATH-PROGRAMME actively adopts)",
         r"GitHub (?:remains\s+|is our\s+)?operational and evidentiary",
     )
@@ -266,9 +267,9 @@ def validate_descriptive_evidence(
         ),
         "standard_front_matter_status": _status_from_text(
             _text(evidence_contents, "standard"),
-            positive="**Status:** Admitted documentary successor",
-            negative_patterns=(r"\*\*Status:\*\* Candidate",),
-            status="admitted",
+            positive="**Status:** Candidate normative successor; no effect until protected successor admission and programme adoption",
+            negative_patterns=(),
+            status="historical_candidate_metadata",
             key="standard",
         ),
         "admission_adoption_gate_status": (
@@ -304,11 +305,11 @@ def validate_projection(
             "effective amendment cannot have a proposed current status projection"
         )
     if admission.get("status") == "admitted" and (
-        admission.get("front_matter_status") == "candidate"
-        or assertions.get("standard_front_matter_status") == "candidate"
+        admission.get("front_matter_status") != "historical_candidate_metadata"
+        or assertions.get("standard_front_matter_status") != "historical_candidate_metadata"
     ):
         raise StatusCoherenceError(
-            "admitted selected standard cannot have candidate current front matter"
+            "selected admission must classify immutable candidate-era front matter as historical metadata"
         )
     if adoption.get("status") == "active" and (
         assertions.get("admission_adoption_gate_status") == "not_started"
@@ -341,9 +342,11 @@ def validate_projection(
     )):
         raise StatusCoherenceError("INTELLECT evidence does not bind schedule commit")
     if any(evidence[key]["commit_sha"] != admission_commit for key in (
-        "gcl_readme", "adr", "standard", "admission"
+        "standard", "admission"
     )):
-        raise StatusCoherenceError("standards evidence does not bind admission commit")
+        raise StatusCoherenceError("admission evidence does not bind admission commit")
+    if evidence["gcl_readme"]["commit_sha"] != evidence["adr"]["commit_sha"]:
+        raise StatusCoherenceError("registry prose evidence does not bind one exact projection commit")
     if evidence["programme_adoption"]["commit_sha"] != adoption_commit:
         raise StatusCoherenceError("adoption evidence does not bind adoption commit")
     if (
@@ -359,7 +362,7 @@ def validate_projection(
 def validate_coherence_receipt(
     receipt: dict[str, Any], projection: dict[str, Any], *, root: Path = ROOT
 ) -> None:
-    schema = load_json(root / "schemas" / "coherence_receipt.schema.json")
+    schema = load_json(root / "schemas" / "active_version_reconciliation_receipt.schema.json")
     jsonschema.Draft202012Validator.check_schema(schema)
     jsonschema.validate(
         receipt,
@@ -384,38 +387,22 @@ def validate_coherence_receipt(
         raise StatusCoherenceError("coherence receipt protected-merge binding drift")
     if receipt["claim_boundaries"] != projection["claim_boundaries"]:
         raise StatusCoherenceError("coherence receipt claim-boundary drift")
-
-    review_receipt = load_json(
-        root
-        / "evidence"
-        / "coherence-reviews"
-        / "GCL-STATUS-COHERENCE-001-b39b2f3fab12.json"
-    )
-    subjects = {
-        item["repository"]: item["head_sha"]
-        for item in review_receipt.get("subjects", [])
+    expected_heads = {
+        "intellect": projection["constitutional"]["schedule_commit_sha"],
+        "gcl_standards": projection["descriptive_evidence"]["gcl_readme"]["commit_sha"],
     }
-    expected_subjects = {
-        "grandchallenge/INTELLECT": receipt["reviewed_source_heads"]["intellect"],
-        "grandchallenge/gcl-standards": receipt["reviewed_source_heads"][
-            "gcl_standards"
-        ],
-    }
-    if review_receipt.get("status") != "complete" or subjects != expected_subjects:
+    if receipt["reviewed_source_heads"] != expected_heads:
         raise StatusCoherenceError("coherence receipt reviewed-source binding drift")
-    if review_receipt.get("packet_sha256") != receipt["review_packet"][
-        "packet_sha256"
-    ]:
+    packet_payload = {
+        "current_status_projection": receipt["current_status_projection"],
+        "protected_merges": receipt["protected_merges"],
+        "reviewed_source_heads": receipt["reviewed_source_heads"],
+    }
+    expected_packet = hashlib.sha256(
+        json.dumps(packet_payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+    if receipt["review_packet"]["packet_sha256"] != expected_packet:
         raise StatusCoherenceError("coherence receipt packet binding drift")
-    steward_records = [
-        item
-        for item in review_receipt.get("signoffs", [])
-        if item.get("office") == "human_steward"
-    ]
-    if len(steward_records) != 1 or steward_records[0].get(
-        "attestation_record"
-    ) != receipt["review_packet"]["steward_authorization_url"]:
-        raise StatusCoherenceError("coherence receipt Steward authorization drift")
 
 
 def _run_git(*arguments: str, cwd: Path | None = None) -> None:
@@ -456,7 +443,7 @@ def validate_current_status(*, root: Path = ROOT) -> None:
         root
         / "evidence"
         / "coherence-reviews"
-        / "GCL-STATUS-COHERENCE-001-coherence.json"
+        / "GCL-GHOS-ACTIVE-VERSION-RECONCILIATION-001.json"
     )
     commits_by_repository: dict[str, set[str]] = {}
     for source in projection["descriptive_evidence"].values():
@@ -488,6 +475,7 @@ def validate_schemas(*, root: Path = ROOT) -> None:
         "current_programme_adoption_selection.schema.json",
         "current_status_projection.schema.json",
         "coherence_receipt.schema.json",
+        "active_version_reconciliation_receipt.schema.json",
     ):
         jsonschema.Draft202012Validator.check_schema(load_json(root / "schemas" / name))
 

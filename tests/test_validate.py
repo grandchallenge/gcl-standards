@@ -179,7 +179,7 @@ class StandardsValidationTests(unittest.TestCase):
         for ordinal in range(1, 9):
             self.assertIn(f"{ordinal}.", decision)
         self.assertIn(
-            "MATH-PROGRAMME adoption follows the protected `0.1.1` admission",
+            "The historical MATH-PROGRAMME `0.1.1` adoption followed that protected",
             decision,
         )
         self.assertNotIn("the mathematics pilot records its adoption commit", decision)

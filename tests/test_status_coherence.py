@@ -31,23 +31,23 @@ def canonical_evidence(admission_commit: str = "0" * 40) -> dict[str, bytes]:
         "amendment": b"**Status:** Effective\n**GCL-GHOS status at activation:** Candidate; not yet admitted\n",
         "gcl_readme": b"`GCL-GHOS-00` is the admitted GitHub Constitutional Operating System.\n",
         "adr": b"**Status:** Accepted\n",
-        "standard": b"**Status:** Admitted documentary successor; effective only when selected by a protected admission record\n",
+        "standard": b"**Version:** 0.2.0\n**Status:** Candidate normative successor; no effect until protected successor admission and programme adoption\n",
         "admission": (
-            b'{"operation_id":"GCL-GHOS-00-0.1.1-ADMISSION-001",'
+            b'{"operation_id":"GCL-GHOS-00-0.2.0-ADMISSION-001",'
             b'"status":"admitted","standard":{"identifier":"GCL-GHOS-00",'
-            b'"version":"0.1.1"},"next_gate":{"operation":"MATH-PROGRAMME adoption",'
+            b'"version":"0.2.0"},"next_gate":{"operation":"MATH-PROGRAMME adoption",'
             b'"status":"not_started"}}\n'
         ),
         "programme_adoption": (
             "programme: grandchallenge/MATH-PROGRAMME\n"
             "status: active\n"
-            "standard_version: 0.1.1\n"
+            "standard_version: 0.2.0\n"
             "standard_admission:\n"
             f"  commit_sha: {admission_commit}\n"
         ).encode("utf-8"),
         "github_profile": (
             b"`GI-AMEND-0001`: effective\n"
-            b"`GCL-GHOS-00` `0.1.1`: admitted\n"
+            b"`GCL-GHOS-00` `0.2.0`: admitted and selected\n"
             b"`MATH-PROGRAMME` adoption: active\n"
             b"GitHub remains operational and evidentiary only.\n"
         ),
@@ -73,7 +73,7 @@ EVIDENCE_COORDINATES = {
     "standard": ("grandchallenge/gcl-standards", "standards/GCL-GHOS-00.md"),
     "admission": (
         "grandchallenge/gcl-standards",
-        "admissions/GCL-GHOS-00-0.1.1.json",
+        "admissions/GCL-GHOS-00-0.2.0.json",
     ),
     "programme_adoption": (
         "grandchallenge/gcl-standards",
@@ -192,17 +192,17 @@ def canonical_projection(
             "normative_body_unchanged": True,
         },
         "selected_admission": {
-            "operation_id": "GCL-GHOS-00-0.1.1-ADMISSION-001",
-            "path": "admissions/GCL-GHOS-00-0.1.1.json",
-            "version": "0.1.1",
+            "operation_id": "GCL-GHOS-00-0.2.0-ADMISSION-001",
+            "path": "admissions/GCL-GHOS-00-0.2.0.json",
+            "version": "0.2.0",
             "status": "admitted",
-            "front_matter_status": "admitted",
+            "front_matter_status": "historical_candidate_metadata",
             "admission_commit_sha": admission_commit,
         },
         "selected_programme_adoption": {
             "programme": "grandchallenge/MATH-PROGRAMME",
             "path": "programme-adoption/MATH-PROGRAMME.yaml",
-            "standard_version": "0.1.1",
+            "standard_version": "0.2.0",
             "status": "active",
             "commit_sha": adoption_commit,
             "admission_commit_sha": admission_commit,
@@ -218,7 +218,7 @@ def canonical_projection(
             "amendment_gcl_status_scope": "candidate_at_activation",
             "gcl_readme_standard_status": "admitted",
             "adr_status": "accepted",
-            "standard_front_matter_status": "admitted",
+            "standard_front_matter_status": "historical_candidate_metadata",
             "admission_adoption_gate_status": "complete",
             "programme_adoption_status": "active",
             "github_profile_status": "effective_admitted_adopted",
@@ -239,10 +239,10 @@ def canonical_projection(
 
 def canonical_receipt() -> dict[str, object]:
     return {
-        "$schema": "../schemas/coherence_receipt.schema.json",
+        "$schema": "../schemas/active_version_reconciliation_receipt.schema.json",
         "schema_version": "1.0.0",
-        "operation_id": "GCL-STATUS-COHERENCE-001",
-        "status": "coherent",
+        "operation_id": "GCL-GHOS-ACTIVE-VERSION-RECONCILIATION-001",
+        "status": "candidate_awaiting_protected_readback",
         "contradictions": {
             "open_count": 0,
             "closed_ids": [
@@ -251,9 +251,9 @@ def canonical_receipt() -> dict[str, object]:
             ],
         },
         "review_packet": {
-            "campaign": "GCL-STATUS-COHERENCE-001",
+            "campaign": "GCL-GHOS-ACTIVE-VERSION-RECONCILIATION-001",
             "packet_sha256": "a" * 64,
-            "steward_authorization_url": "https://github.com/grandchallenge/.github/issues/1#issuecomment-1",
+            "governing_issue_disposition_url": "https://github.com/grandchallenge/.github/issues/1#issuecomment-1",
         },
         "reviewed_source_heads": {
             "intellect": "b" * 40,
@@ -265,6 +265,7 @@ def canonical_receipt() -> dict[str, object]:
             "intellect_projection": "f" * 40,
             "github_profile": "1" * 40,
         },
+        "reconciliation_merge": None,
         "current_status_projection": {
             "path": "status/GCL-GHOS-00-current.json",
             "git_blob_sha1": "2" * 40,
@@ -404,14 +405,14 @@ class StatusCoherenceTests(unittest.TestCase):
         ):
             self.validate(projection)
 
-    def test_admitted_and_candidate_standard_blob_is_rejected(self) -> None:
+    def test_standard_without_exact_historical_front_matter_is_rejected(self) -> None:
         projection = self.replace_and_commit(
             "standard",
             b"**Status:** Admitted documentary successor\n**Status:** Candidate\n",
         )
         with self.assertRaisesRegex(
             MODULE.StatusCoherenceError,
-            "contradictory governed status assertions: standard",
+            "missing governed status assertion: standard",
         ):
             self.validate(projection)
 
@@ -503,7 +504,7 @@ class StatusCoherenceTests(unittest.TestCase):
             self.validate(broken)
 
     def test_exact_coherence_receipt_schema_is_closed_and_zero_conflict(self) -> None:
-        schema = MODULE.load_json(ROOT / "schemas" / "coherence_receipt.schema.json")
+        schema = MODULE.load_json(ROOT / "schemas" / "active_version_reconciliation_receipt.schema.json")
         MODULE.jsonschema.validate(
             canonical_receipt(),
             schema,
@@ -521,10 +522,25 @@ class StatusCoherenceTests(unittest.TestCase):
         with self.assertRaisesRegex(MODULE.StatusCoherenceError, "effective amendment"):
             MODULE.validate_projection(broken)
 
+    def test_historical_phase1_receipt_is_byte_preserved_and_schema_valid(self) -> None:
+        relative = "evidence/coherence-reviews/GCL-STATUS-COHERENCE-001-coherence.json"
+        current = (ROOT / relative).read_bytes()
+        protected = subprocess.check_output(
+            ["git", "show", f"3e4468b93943d6cb280241f5c815a668e8dc93e3:{relative}"],
+            cwd=ROOT,
+        )
+        self.assertEqual(current, protected)
+        schema = MODULE.load_json(ROOT / "schemas" / "coherence_receipt.schema.json")
+        MODULE.jsonschema.validate(
+            MODULE.load_json(ROOT / relative), schema,
+            cls=MODULE.jsonschema.Draft202012Validator,
+            format_checker=MODULE.jsonschema.FormatChecker(),
+        )
+
     def test_admitted_standard_with_candidate_front_matter_is_rejected(self) -> None:
         broken = copy.deepcopy(self.projection)
         broken["descriptive_assertions"]["standard_front_matter_status"] = "candidate"
-        with self.assertRaisesRegex(MODULE.StatusCoherenceError, "candidate current front matter"):
+        with self.assertRaisesRegex(MODULE.StatusCoherenceError, "historical metadata"):
             MODULE.validate_projection(broken)
 
     def test_active_adoption_with_not_started_gate_is_rejected(self) -> None:
@@ -558,7 +574,7 @@ class StatusCoherenceTests(unittest.TestCase):
             MODULE.validate_projection(broken)
 
     def test_receipt_requires_every_fixed_nonclaim_boundary(self) -> None:
-        schema = MODULE.load_json(ROOT / "schemas" / "coherence_receipt.schema.json")
+        schema = MODULE.load_json(ROOT / "schemas" / "active_version_reconciliation_receipt.schema.json")
         broken = canonical_receipt()
         del broken["claim_boundaries"]["commercial_claim_authorized"]
         with self.assertRaises(MODULE.jsonschema.ValidationError):

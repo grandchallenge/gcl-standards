@@ -28,9 +28,19 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
         cls.admission = MODULE.load_json(MODULE.ADMISSION_PATH)
         cls.ledger = MODULE.load_json(MODULE.LEDGER_PATH)
         cls.projection = MODULE.load_json(ROOT / "status" / "GCL-GHOS-00-current.json")
-        base_authority = MODULE.resolve_effective_authority(projection=cls.projection)
+        cls.live_authority = MODULE.resolve_effective_authority(projection=cls.projection)
+        historical_projection = copy.deepcopy(cls.projection)
+        historical_projection["selected_admission"]["version"] = "0.1.1"
+        base_authority = MODULE.resolve_effective_authority(projection=historical_projection)
+        historical_manifest = MODULE.load_json(MODULE.PROPAGATION_PATH)
+        historical_manifest = copy.deepcopy(historical_manifest)
+        for item in historical_manifest["consumers"]:
+            if item["consumer_id"] == "GCL_CURRENT_STATUS":
+                item["status"] = "STALE"
+                item["observed_version"] = "0.1.1"
+                item["blocking_for_authority_use"] = True
         cls.authority = MODULE.apply_propagation_barrier(
-            base_authority, MODULE.load_json(MODULE.PROPAGATION_PATH)
+            base_authority, historical_manifest
         )
 
     def reduced(self):
@@ -137,10 +147,10 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
 
     def test_t13_active_version_manifest_blocks_stale_consumers(self):
         manifest = MODULE.load_json(MODULE.PROPAGATION_PATH)
-        MODULE.validate_propagation_manifest(manifest, self.authority)
+        MODULE.validate_propagation_manifest(manifest, self.live_authority)
         with patch.dict("os.environ", {"GHOS_MATH_PROGRAMME_REPO": str(ROOT)}, clear=True):
             with self.assertRaisesRegex(MODULE.AuthorityContradiction, "configuration is incomplete"):
-                MODULE.validate_propagation_manifest(manifest, self.authority)
+                MODULE.validate_propagation_manifest(manifest, self.live_authority)
         configured_math = os.environ.get("GHOS_MATH_PROGRAMME_REPO")
         configured_profile = os.environ.get("GHOS_ORG_PROFILE_REPO")
         if configured_math and configured_profile:
@@ -155,39 +165,27 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
             "GHOS_MATH_PROGRAMME_REPO": math_root,
             "GHOS_ORG_PROFILE_REPO": profile_root,
         }, clear=False):
-            MODULE.validate_propagation_manifest(manifest, self.authority)
-        self.assertFalse(manifest["all_derived_current_coherent"])
-        self.assertTrue(any(x["status"] == "STALE" for x in manifest["consumers"]))
-        codes = {x["code"] for x in self.authority["contradictions"]}
-        self.assertIn("ACTIVE_VERSION_PROPAGATION_INCOMPLETE", codes)
-        after_local_repair = copy.deepcopy(self.authority)
-        after_local_repair["contradictions"] = [
-            item for item in after_local_repair["contradictions"]
-            if item["code"] != "STALE_CURRENT_PROJECTION"
-        ]
-        state = self.reduced()
-        state["authority"] = after_local_repair
-        state["domain_phase"] = "INTEGRATION"
-        state["lifecycle_state"] = "READY"
-        permitted, selected, _ = MODULE.derive_permitted_transitions(state, self.catalog)
-        self.assertNotIn("EXECUTE_AUTHORIZED_INTEGRATION", permitted)
-        self.assertEqual(selected, "RECONCILE_ACTIVE_VERSION_PROPAGATION")
+            MODULE.validate_propagation_manifest(manifest, self.live_authority)
+        self.assertTrue(manifest["all_derived_current_coherent"])
+        self.assertTrue(manifest["external_reconciliation_complete"])
+        self.assertFalse(any(
+            x["status"] in {"STALE", "UNRESOLVED_EXTERNAL"}
+            for x in manifest["consumers"] if x["authority_class"] == "DERIVED_CURRENT"
+        ))
         false_coherent = copy.deepcopy(manifest)
-        for consumer in false_coherent["consumers"]:
-            if consumer["authority_class"] == "DERIVED_CURRENT":
-                consumer["observed_version"] = "0.2.0"
-                consumer["status"] = "COHERENT"
-        false_coherent["all_derived_current_coherent"] = True
-        false_coherent["external_reconciliation_complete"] = True
+        target = next(x for x in false_coherent["consumers"] if x["consumer_id"] == "GCL_README")
+        target["observed_version"] = "0.1.1"
+        target["status"] = "STALE"
+        false_coherent["all_derived_current_coherent"] = False
         with self.assertRaisesRegex(MODULE.AuthorityContradiction, "not derived from exact content"):
-            MODULE.validate_propagation_manifest(false_coherent, self.authority)
+            MODULE.validate_propagation_manifest(false_coherent, self.live_authority)
         substituted = copy.deepcopy(manifest)
         target = next(x for x in substituted["consumers"] if x["consumer_id"] == "GCL_README")
         target["exact_source"] = copy.deepcopy(substituted["adoption_source"])
         target["observed_version"] = "0.2.0"
         target["status"] = "COHERENT"
         with self.assertRaisesRegex(MODULE.AuthorityContradiction, "exact-source substitution"):
-            MODULE.validate_propagation_manifest(substituted, self.authority)
+            MODULE.validate_propagation_manifest(substituted, self.live_authority)
         observed, status = MODULE.derive_text_consumer_status(
             "GCL_README",
             "Version `0.3.0` is current authority. Version `0.2.0` is historical.\n",

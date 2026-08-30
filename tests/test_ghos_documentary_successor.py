@@ -125,9 +125,9 @@ class GhosDocumentarySuccessorTests(unittest.TestCase):
             ):
                 MODULE.validate(root=root)
 
-    def test_programme_adoption_cannot_be_prematurely_promoted(self) -> None:
+    def test_programme_adoption_cannot_be_widened_to_organization_conformance(self) -> None:
         readme = MODULE.README.read_text(encoding="utf-8") + (
-            "\nMATH-PROGRAMME actively adopts `0.2.0`.\n"
+            "\norganization-wide conformance is authorized\n"
         )
         temporary, root = self._fixture(readme=readme)
         with temporary:

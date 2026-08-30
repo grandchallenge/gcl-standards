@@ -383,10 +383,10 @@ def validate() -> None:
     ).read_text(encoding="utf-8")
     required_sequence = [
         "**Status:** Accepted",
-        "**Documentary successor:** `GCL-GHOS-00` `0.1.1`; current selection resolved by exact admission record",
+        "**Historical documentary successor:** `GCL-GHOS-00` `0.1.1`; superseded for the bounded MATH-PROGRAMME pilot by admitted and adopted `0.2.0`",
         "ADR-0001 was accepted through the protected `0.1.0` admission lineage",
-        "Selection of the `0.1.1` documentary successor as the current standard is",
-        "MATH-PROGRAMME adoption follows the protected `0.1.1` admission",
+        "The historical selection of the `0.1.1` documentary successor was valid only",
+        "The historical MATH-PROGRAMME `0.1.1` adoption followed that protected",
         "Admit byte-identical reviewed `0.1.1` source blobs",
     ]
     for boundary in required_sequence:

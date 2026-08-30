@@ -47,7 +47,7 @@
         "amendment_gcl_status_scope": {"const": "candidate_at_activation"},
         "gcl_readme_standard_status": {"const": "admitted"},
         "adr_status": {"const": "accepted"},
-        "standard_front_matter_status": {"const": "admitted"},
+        "standard_front_matter_status": {"const": "historical_candidate_metadata"},
         "admission_adoption_gate_status": {"const": "complete"},
         "programme_adoption_status": {"const": "active"},
         "github_profile_status": {"const": "effective_admitted_adopted"}
@@ -65,7 +65,7 @@
         "gcl_readme": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/gcl-standards"}, "path": {"const": "README.md"}}}]},
         "adr": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/gcl-standards"}, "path": {"const": "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md"}}}]},
         "standard": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/gcl-standards"}, "path": {"const": "standards/GCL-GHOS-00.md"}}}]},
-        "admission": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/gcl-standards"}, "path": {"const": "admissions/GCL-GHOS-00-0.1.1.json"}}}]},
+        "admission": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/gcl-standards"}, "path": {"const": "admissions/GCL-GHOS-00-0.2.0.json"}}}]},
         "programme_adoption": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/gcl-standards"}, "path": {"const": "programme-adoption/MATH-PROGRAMME.yaml"}}}]},
         "github_profile": {"allOf": [{"$ref": "#/$defs/sourceEvidence"}, {"properties": {"repository": {"const": "grandchallenge/.github"}, "path": {"const": "profile/README.md"}}}]}
       }

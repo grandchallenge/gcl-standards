@@ -29,9 +29,10 @@ adjudicate a claim through an accepted certification route.
 
 ### GCL-GHOS-00
 
-[`GCL-GHOS-00`](standards/GCL-GHOS-00.md) is the GitHub Constitutional
-Operating System. Version `0.1.1` remains the version selected by the existing
-MATH-PROGRAMME adoption record. Its exact admitted source is preserved at
+[`GCL-GHOS-00`](standards/GCL-GHOS-00.md) is the admitted GitHub Constitutional
+Operating System. Version `0.2.0` is current authority for the bounded
+MATH-PROGRAMME pilot through the active protected adoption record. The exact
+`0.1.1` admitted source is preserved as predecessor history at
 [`standards/history/GCL-GHOS-00-0.1.1.md`](standards/history/GCL-GHOS-00-0.1.1.md),
 with the admitted `0.1.0` source retained as the earlier historical predecessor.
 
@@ -39,11 +40,12 @@ Version `0.2.0` is the reviewed normative successor adding bounded execution
 continuity for recoverable operational failures. Its standards-layer admission
 authority is exclusively
 [`admissions/GCL-GHOS-00-0.2.0.json`](admissions/GCL-GHOS-00-0.2.0.json),
-which becomes effective only through protected merge of that exact record. The
+which became effective through protected merge of that exact record. The
 reviewed standard source remains byte-identical to PR #52 head
-`f416092f67c91ea4843fea12abe54c34b12242e5`. MATH-PROGRAMME adoption of
-`0.2.0` remains a separate later gate; admission does not silently update any
-programme adoption record.
+`f416092f67c91ea4843fea12abe54c34b12242e5`. MATH-PROGRAMME actively adopts
+`0.2.0` at protected commit `1a5e9cb24257be578b091ecd2c99d4119ff73b2c`
+for its recorded bounded pilot scope. This does not establish organization-wide
+conformance or widen any claim authority.
 
 ### GCL-RC-00
 
