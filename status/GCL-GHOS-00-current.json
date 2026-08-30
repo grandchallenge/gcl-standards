@@ -20,25 +20,25 @@
     "normative_body_unchanged": true
   },
   "selected_admission": {
-    "operation_id": "GCL-GHOS-00-0.1.1-ADMISSION-001",
-    "path": "admissions/GCL-GHOS-00-0.1.1.json",
-    "version": "0.1.1",
+    "operation_id": "GCL-GHOS-00-0.2.0-ADMISSION-001",
+    "path": "admissions/GCL-GHOS-00-0.2.0.json",
+    "version": "0.2.0",
     "status": "admitted",
-    "front_matter_status": "admitted",
-    "admission_commit_sha": "5c4e73e55d362a5198b9076ead694909a5e0ebf3"
+    "front_matter_status": "historical_candidate_metadata",
+    "admission_commit_sha": "87307a0c1fe5ff19b34bb08451e7d6281a7d5dea"
   },
   "selected_programme_adoption": {
     "programme": "grandchallenge/MATH-PROGRAMME",
     "path": "programme-adoption/MATH-PROGRAMME.yaml",
-    "standard_version": "0.1.1",
+    "standard_version": "0.2.0",
     "status": "active",
-    "commit_sha": "c39aab2bfbb2725accd18d69a0daea7fe96a0eee",
-    "admission_commit_sha": "5c4e73e55d362a5198b9076ead694909a5e0ebf3"
+    "commit_sha": "1a5e9cb24257be578b091ecd2c99d4119ff73b2c",
+    "admission_commit_sha": "87307a0c1fe5ff19b34bb08451e7d6281a7d5dea"
   },
   "public_profile": {
     "repository": "grandchallenge/.github",
     "path": "profile/README.md",
-    "commit_sha": "a69c5c8b8091809e35b0afffd0456428ca195386"
+    "commit_sha": "a0949181be646ed7c6804c3316a65425d74e7fa9"
   },
   "descriptive_assertions": {
     "intellect_readme_amendment_status": "effective",
@@ -46,7 +46,7 @@
     "amendment_gcl_status_scope": "candidate_at_activation",
     "gcl_readme_standard_status": "admitted",
     "adr_status": "accepted",
-    "standard_front_matter_status": "admitted",
+    "standard_front_matter_status": "historical_candidate_metadata",
     "admission_adoption_gate_status": "complete",
     "programme_adoption_status": "active",
     "github_profile_status": "effective_admitted_adopted"
@@ -79,38 +79,38 @@
     "gcl_readme": {
       "repository": "grandchallenge/gcl-standards",
       "path": "README.md",
-      "commit_sha": "5c4e73e55d362a5198b9076ead694909a5e0ebf3",
-      "git_blob_sha1": "d7e68ecd929691beb268417fdfcc7de660e84468"
+      "commit_sha": "e2bc3840020254b702682cf5eccc5ed2b3a1b89c",
+      "git_blob_sha1": "666a5ffe206fb1bb0af4d32e388099a1352d4d2b"
     },
     "adr": {
       "repository": "grandchallenge/gcl-standards",
       "path": "decisions/ADR-0001_GITHUB_CONSTITUTIONAL_OPERATING_SYSTEM.md",
-      "commit_sha": "5c4e73e55d362a5198b9076ead694909a5e0ebf3",
-      "git_blob_sha1": "e4d61cfcc5e8ed330b350ab34323bb36a29fcd4c"
+      "commit_sha": "e2bc3840020254b702682cf5eccc5ed2b3a1b89c",
+      "git_blob_sha1": "feb74757841b4f4b81c137b222417eabe7cad24f"
     },
     "standard": {
       "repository": "grandchallenge/gcl-standards",
       "path": "standards/GCL-GHOS-00.md",
-      "commit_sha": "5c4e73e55d362a5198b9076ead694909a5e0ebf3",
-      "git_blob_sha1": "fd2651ba5036cf2455bf925dcd85364894d55726"
+      "commit_sha": "87307a0c1fe5ff19b34bb08451e7d6281a7d5dea",
+      "git_blob_sha1": "fdb8c9575725281f73649f160cab6b7b01cd09e0"
     },
     "admission": {
       "repository": "grandchallenge/gcl-standards",
-      "path": "admissions/GCL-GHOS-00-0.1.1.json",
-      "commit_sha": "5c4e73e55d362a5198b9076ead694909a5e0ebf3",
-      "git_blob_sha1": "ed51ff1245bfa89a9f4d995ab52f8a19fe2d37f2"
+      "path": "admissions/GCL-GHOS-00-0.2.0.json",
+      "commit_sha": "87307a0c1fe5ff19b34bb08451e7d6281a7d5dea",
+      "git_blob_sha1": "1d1723f829f9d7fc5d92f3a44e518e849aaeda4a"
     },
     "programme_adoption": {
       "repository": "grandchallenge/gcl-standards",
       "path": "programme-adoption/MATH-PROGRAMME.yaml",
-      "commit_sha": "c39aab2bfbb2725accd18d69a0daea7fe96a0eee",
-      "git_blob_sha1": "11ba41b241e4860e93a024436b716a930305c9df"
+      "commit_sha": "1a5e9cb24257be578b091ecd2c99d4119ff73b2c",
+      "git_blob_sha1": "6a9f87450c1fd442d7337e1e6fd70ae38b813a41"
     },
     "github_profile": {
       "repository": "grandchallenge/.github",
       "path": "profile/README.md",
-      "commit_sha": "a69c5c8b8091809e35b0afffd0456428ca195386",
-      "git_blob_sha1": "bebf754a779213c7b2f214dac3152af85f443170"
+      "commit_sha": "a0949181be646ed7c6804c3316a65425d74e7fa9",
+      "git_blob_sha1": "9573cf0f89a650f0406e9fbb38ffa312e648ac49"
     }
   },
   "claim_boundaries": {
