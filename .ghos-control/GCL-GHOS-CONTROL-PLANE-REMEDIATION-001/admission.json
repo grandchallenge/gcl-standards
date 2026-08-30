@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../schemas/ghos_control_plane.schema.json",
+  "record_type": "WORK_PACKAGE_ADMISSION",
+  "schema_version": "1.0.0",
+  "work_package": "GCL-GHOS-CONTROL-PLANE-REMEDIATION-001",
+  "authority_repository": "grandchallenge/gcl-standards",
+  "authority_head": "1a5e9cb24257be578b091ecd2c99d4119ff73b2c",
+  "working_repository": "grandchallenge/gcl-standards",
+  "working_branch": "remediation/ghos-reconciliation-readback-001",
+  "protected_base": "301766aacd30d185a70010c814352e6e16897538",
+  "work_graph": {
+    "bounded_transition_count": 4,
+    "has_external_wait": true,
+    "requires_uninterrupted_monitoring": false,
+    "requires_autonomous_wake": false,
+    "maximum_safe_handoff_seconds": null,
+    "mutation_reconcilable": true
+  },
+  "topology": "MULTI_SESSION_RESUMABLE",
+  "human_decision_required": false,
+  "required_capabilities": ["durable_compare_and_swap", "durable_read", "exact_external_object_readback", "exact_git_readback"],
+  "available_executor_classes": ["BOUNDED_CONVERSATIONAL", "MULTI_SESSION_WORKER", "HUMAN"],
+  "disposition": "ADMITTED",
+  "required_decomposition": null,
+  "roles": [
+    {"role": "IMPLEMENTER", "actor_id": "root-implementer", "session_id": "initial-session", "status": "DISPATCHED", "input_digest": "2814819c88c21fce61194485d28312d9e22b2d43bd6b6c105af53fbd7cbf62d7", "result_digest": null, "may_authorize": false},
+    {"role": "HARNESS_COORDINATOR", "actor_id": null, "session_id": null, "status": "PENDING", "input_digest": "2814819c88c21fce61194485d28312d9e22b2d43bd6b6c105af53fbd7cbf62d7", "result_digest": null, "may_authorize": false},
+    {"role": "ADVERSARY", "actor_id": "kepler", "session_id": "distinct-agent-adversary", "status": "COMPLETE", "input_digest": "2814819c88c21fce61194485d28312d9e22b2d43bd6b6c105af53fbd7cbf62d7", "result_digest": "2814819c88c21fce61194485d28312d9e22b2d43bd6b6c105af53fbd7cbf62d7", "may_authorize": false},
+    {"role": "REFEREE", "actor_id": "bacon", "session_id": "distinct-agent-referee", "status": "COMPLETE", "input_digest": "2814819c88c21fce61194485d28312d9e22b2d43bd6b6c105af53fbd7cbf62d7", "result_digest": "2814819c88c21fce61194485d28312d9e22b2d43bd6b6c105af53fbd7cbf62d7", "may_authorize": false}
+  ],
+  "separation_constraints": ["IMPLEMENTER!=ADVERSARY", "IMPLEMENTER!=REFEREE", "ADVERSARY!=REFEREE"],
+  "claim_boundaries": {"constitutional": false, "merge": false, "certification": false, "production": false, "publication": false, "mathematical_claim": false, "claim_promotion": false, "commercial": false}
+}
