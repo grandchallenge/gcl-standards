@@ -1120,7 +1120,7 @@ def derive_text_consumer_status(
             observed = None
     elif consumer_id == "ORGANIZATION_PUBLIC_PROFILE":
         current = re.findall(
-            r"`GCL-GHOS-00` `(0\.[0-9]+\.[0-9]+)` is the admitted [^\r\n]* selected",
+            r"`GCL-GHOS-00` `(0\.[0-9]+\.[0-9]+)` is the admitted [\s\S]{0,240}? selected",
             text_value,
             re.IGNORECASE,
         )
@@ -1156,19 +1156,10 @@ def validate_candidate_artifacts(*, root: Path = ROOT) -> None:
         raise ControlPlaneError("stored admission does not match topology reducer")
     projection = load_json(root / "status" / "GCL-GHOS-00-current.json")
     authority = resolve_effective_authority(root=root, projection=projection)
-    contradiction_codes = {
-        item["code"] for item in authority["contradictions"]
-    }
-    if contradiction_codes - {"STALE_CURRENT_PROJECTION"}:
-        raise AuthorityContradiction("unexpected authority contradiction")
-    if "STALE_CURRENT_PROJECTION" not in contradiction_codes:
-        raise AuthorityContradiction(
-            "baseline coherence defect disappeared without a governed transition"
-        )
+    if authority["contradictions"]:
+        raise AuthorityContradiction("current authority projection remains contradictory")
     validate_propagation_manifest(manifest, authority)
     authority = apply_propagation_barrier(authority, manifest)
-    reduced = reduce_ledger(ledger, catalog, authority, admission)
-    assert_stored_state(stored_state, reduced)
     acceptance = load_json(
         root / "implementation" / "GCL-GHOS-CONTROL-PLANE-REMEDIATION-001" / "ACCEPTANCE_EVIDENCE.json"
     )
@@ -1195,6 +1186,28 @@ def validate_candidate_artifacts(*, root: Path = ROOT) -> None:
         raise ControlPlaneError("acceptance results implementation identity drift")
     if any(item["exit_code"] != 0 or item["result"] not in {"OK", "gcl-standards validation passed"} for item in results["commands"]):
         raise ControlPlaneError("acceptance command result is not passing")
+
+    # The candidate ledger/state and acceptance bundle are historical fixtures
+    # for the exact implementation head.  Reconstruct their authority from that
+    # revision instead of treating them as the live coordinator state.
+    def historical_json(relative: str) -> Any:
+        return json.loads(subprocess.check_output(["git", "show", f"{head}:{relative}"], cwd=root))
+
+    historical_projection = historical_json("status/GCL-GHOS-00-current.json")
+    historical_manifest = historical_json(
+        "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/active-version-propagation-manifest.json"
+    )
+    historical_ledger = historical_json(
+        "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/candidate-harness-ledger.json"
+    )
+    historical_state = historical_json(
+        "implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/control-plane/candidate-harness-state.json"
+    )
+    historical_authority = apply_propagation_barrier(
+        resolve_effective_authority(root=root, projection=historical_projection), historical_manifest
+    )
+    historical_reduced = reduce_ledger(historical_ledger, catalog, historical_authority, admission)
+    assert_stored_state(historical_state, historical_reduced)
     scenarios = results["scenarios"]
     if {item["id"] for item in scenarios} != {f"T{index:02d}" for index in range(1, 15)}:
         raise ControlPlaneError("acceptance scenario coverage drift")
@@ -1221,7 +1234,7 @@ def validate_candidate_artifacts(*, root: Path = ROOT) -> None:
     for key in ("state_digest", "selected_transition", "permitted_transitions", "invalidated_gate_ids", "open_transaction"):
         state_key = "open_transaction" if key == "open_transaction" else key
         result_key = "transaction_state" if key == "open_transaction" else key
-        if baseline[result_key] != stored_state[state_key]:
+        if baseline[result_key] != historical_state[state_key]:
             raise ControlPlaneError(f"acceptance baseline drift: {result_key}")
 
 
