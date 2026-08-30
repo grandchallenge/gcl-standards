@@ -30,8 +30,37 @@
         "outcome_transitions": {"SUCCESS": "REQUEST_EXACT_HEAD_REVIEW", "FAILURE": "RECONCILE_INTERRUPTED_MUTATION"}
       }},
       "event_digest": "e0d37a10fa4a240fc42ab781211534b56ee237b471f35cf64ce2453af9b3f9bb"
+    },
+    {
+      "sequence": 3,
+      "event_id": "PILOT-EVENT-0003",
+      "event_type": "ROLE_DISPATCHED",
+      "occurred_at": "2026-08-30T11:57:43Z",
+      "previous_event_digest": "e0d37a10fa4a240fc42ab781211534b56ee237b471f35cf64ce2453af9b3f9bb",
+      "payload": {
+        "role": "HARNESS_COORDINATOR",
+        "actor_id": "failure-auditor-replacement",
+        "session_id": "harness-coordinator-replacement-20260830"
+      },
+      "event_digest": "ace07e575e43c8faae05862f156ad65ac73c7c743f37a684e50ea8a0b5d90e1c"
+    },
+    {
+      "sequence": 4,
+      "event_id": "PILOT-EVENT-0004",
+      "event_type": "EXTERNAL_WAIT_OBSERVED",
+      "occurred_at": "2026-08-30T11:57:44Z",
+      "previous_event_digest": "ace07e575e43c8faae05862f156ad65ac73c7c743f37a684e50ea8a0b5d90e1c",
+      "payload": {
+        "wait_id": "PR60-STANDARDS-POLICY",
+        "object_id": "33310040678",
+        "subject_head": "301766aacd30d185a70010c814352e6e16897538",
+        "observation_id": "github-run-33310040678-completed-success",
+        "status": "SUCCESS",
+        "observed_at": "2026-08-30T11:57:44Z"
+      },
+      "event_digest": "a007f098c5138b2a00c44d9b683b9d56ac37948e1caa7b64e8fc3c77db4f9650"
     }
   ],
-  "ledger_head_digest": "e0d37a10fa4a240fc42ab781211534b56ee237b471f35cf64ce2453af9b3f9bb",
+  "ledger_head_digest": "a007f098c5138b2a00c44d9b683b9d56ac37948e1caa7b64e8fc3c77db4f9650",
   "claim_boundaries": {"constitutional": false, "merge": false, "certification": false, "production": false, "publication": false, "mathematical_claim": false, "claim_promotion": false, "commercial": false}
 }
