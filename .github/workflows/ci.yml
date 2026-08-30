@@ -19,6 +19,8 @@ jobs:
     env:
       GHOS_MATH_PROGRAMME_REPO: ${{ github.workspace }}/external/MATH-PROGRAMME
       GHOS_ORG_PROFILE_REPO: ${{ github.workspace }}/external/organization-profile
+      GHOS_CONTROL_TARGET_REF: ${{ github.event.pull_request.base.ref && format('refs/heads/{0}', github.event.pull_request.base.ref) || '' }}
+      GHOS_CONTROL_BASE_SHA: ${{ github.event.pull_request.base.sha || '' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
