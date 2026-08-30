@@ -6,6 +6,7 @@ import json
 import sys
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 
@@ -32,6 +33,10 @@ class ProtectedControlStoreTests(unittest.TestCase):
         (directory / "ledger.json").write_text(json.dumps(ledger), encoding="utf-8")
         store = {
             "work_package": ledger["work_package"],
+            "repository": "grandchallenge/gcl-standards",
+            "ref": STORE.CONTROL_REF,
+            "ruleset_id": STORE.CONTROL_RULESET_ID,
+            "ruleset_url": f"https://github.com/grandchallenge/gcl-standards/rules/{STORE.CONTROL_RULESET_ID}",
             "deletion_prohibited": True,
             "non_fast_forward_prohibited": True,
             "claim_boundaries": copy.deepcopy(CONTROL.CLAIM_BOUNDARIES),
@@ -64,6 +69,50 @@ class ProtectedControlStoreTests(unittest.TestCase):
             (directory / "store.json").write_text(json.dumps(store), encoding="utf-8")
             with self.assertRaisesRegex(STORE.ControlStoreError, "append-only"):
                 STORE.validate_control_directory(directory)
+
+    def test_append_must_preserve_exact_prior_prefix_and_store(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary) / "control"
+            self.fixture(directory)
+            admission = json.loads((directory / "admission.json").read_text())
+            base_ledger = json.loads((directory / "ledger.json").read_text())
+            store = json.loads((directory / "store.json").read_text())
+            rewritten = copy.deepcopy(base_ledger)
+            rewritten["events"][0]["payload"]["admission_path"] = "substituted.json"
+            rewritten["events"][0]["event_digest"] = CONTROL.event_digest(rewritten["events"][0])
+            rewritten["ledger_head_digest"] = rewritten["events"][0]["event_digest"]
+            rewritten["events"].append(copy.deepcopy(rewritten["events"][0]))
+            (directory / "ledger.json").write_text(json.dumps(rewritten), encoding="utf-8")
+            with self.assertRaisesRegex(STORE.ControlStoreError, "rewrites prior"):
+                STORE.validate_append_prefix(
+                    directory, base_admission=admission, base_ledger=base_ledger, base_store=store
+                )
+
+    def test_append_rejects_admission_or_ruleset_substitution(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary) / "control"
+            self.fixture(directory)
+            admission = json.loads((directory / "admission.json").read_text())
+            ledger = json.loads((directory / "ledger.json").read_text())
+            store = json.loads((directory / "store.json").read_text())
+            ledger["events"].append(copy.deepcopy(ledger["events"][0]))
+            (directory / "ledger.json").write_text(json.dumps(ledger), encoding="utf-8")
+            changed_store = copy.deepcopy(store)
+            changed_store["ruleset_id"] = 1
+            (directory / "store.json").write_text(json.dumps(changed_store), encoding="utf-8")
+            with self.assertRaisesRegex(STORE.ControlStoreError, "admission/store identity"):
+                STORE.validate_append_prefix(
+                    directory, base_admission=admission, base_ledger=json.loads((directory / "ledger.json").read_text()), base_store=store
+                )
+
+    def test_target_control_ref_fails_on_zero_match(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            with mock.patch.dict("os.environ", {
+                "GHOS_CONTROL_TARGET_REF": STORE.CONTROL_REF,
+                "GHOS_CONTROL_BASE_SHA": "a" * 40,
+            }, clear=False):
+                with self.assertRaisesRegex(STORE.ControlStoreError, "deleted, renamed, or duplicated"):
+                    STORE.validate(root=Path(temporary))
 
 
 if __name__ == "__main__":
