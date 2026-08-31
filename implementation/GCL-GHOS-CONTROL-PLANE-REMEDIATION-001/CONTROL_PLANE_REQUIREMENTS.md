@@ -77,6 +77,16 @@ The current executor SHALL present an identity, session or instance identity, ex
 
 A conversational executor MAY perform a bounded transition in `MULTI_SESSION_RESUMABLE` work only when the ledger is current, the transition can be reconciled after interruption, and no continued presence is required. It SHALL NOT be the sole scheduler for `PERSISTENT_CONTROLLER_REQUIRED` work. Such work must be decomposed or assigned to a persistent controller before admission.
 
+### 4.3 Mandatory workflow routing
+
+Protected policy SHALL enumerate the complete repository workflow surface. Each
+workflow SHALL have one routing record whose observed unattended, wake, wait,
+reuse, and write-capability features are derived from workflow bytes. Missing or
+stale records SHALL fail closed. Any non-bounded topology SHALL either identify
+an admitted persistent controller with a durable wake mechanism and state store,
+or identify a complete decomposition into registered non-persistent workflows.
+Adding a workflow without adding valid routing is prohibited by the same check.
+
 ## 5. Durable execution-state contract
 
 The final schema need not copy the harness example. It SHALL contain the following semantic groups because each is needed to resolve a demonstrated ambiguity.
