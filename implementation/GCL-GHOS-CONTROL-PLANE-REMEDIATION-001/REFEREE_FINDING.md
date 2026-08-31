@@ -32,3 +32,19 @@ This finding conveys no approval, authorization, merge, activation,
 certification, publication, production, commercial, claim-promotion, or
 protected-state authority. Any implementation byte change invalidates the
 reviewed exact-head disposition.
+
+## Final closeout pass
+
+- Reviewed exact revision: `9eed42dc2559d2b58e3ef7f59a68545f27223f1c`
+- Reviewed tree: `f1ed33b23201806aff8116335841f2bd0e1a0039`
+- Protected-main parent: `45ea6ac85edf5e5c6174bee16071a153642767f7`
+- Disposition: `PASS`
+
+After the final Adversary pass, the distinct Referee independently verified the
+live refs, protected ruleset, pilot merge chain, terminal ledger and reducer
+state, active-work inventory, 36 focused tests, and repository validation. The
+Referee concluded that `GO_WITH_RESTRICTED_EXECUTOR_TOPOLOGY` is supported: the
+evidence establishes replaceable bounded execution and multi-session resume,
+while persistent unattended control remains rejected or requires an admitted
+persistent controller. The finding is technical and conveys no reserved
+authority.

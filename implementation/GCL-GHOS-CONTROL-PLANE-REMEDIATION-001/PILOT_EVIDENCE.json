@@ -1,0 +1,43 @@
+{
+  "record_type": "GHOS_CONTROL_PLANE_PILOT_EVIDENCE",
+  "schema_version": "1.0.0",
+  "work_package": "GCL-GHOS-CONTROL-PLANE-REMEDIATION-001",
+  "failed_pilot": {
+    "ref": "refs/heads/control/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001",
+    "terminal_head": "799a7c235dc498adf845ada01507cf3479f8d077",
+    "preserved": true,
+    "findings": [
+      "client-side validation failure did not stop the invoking shell before a push",
+      "the reducer did not publish a replayable digest at every event boundary"
+    ]
+  },
+  "repairs": [
+    {"pull_request": 61, "head": "083188daa0e15e371a58a62c26e193fb939e4f9a", "merge": "6acc09bc0aa8267281761e4457c1fd0f06254a26", "effect": "server-reachable protected control-store enforcement"},
+    {"pull_request": 63, "head": "d088a0a42b0d8961c2f8d75fe9f6261263dc59b0", "merge": "45ea6ac85edf5e5c6174bee16071a153642767f7", "effect": "replayable reducer state at every event boundary"}
+  ],
+  "successful_pilot": {
+    "ref": "refs/heads/control/GCL-GHOS-CONTROL-PLANE-REMEDIATION-002",
+    "ruleset_id": 21856524,
+    "direct_push_probe_rejected": true,
+    "direct_push_probe_candidate": "482d5f9bb7d19bd55529895f15f33c43edca1ab5",
+    "wait_recovery_head": "b52c1b261d30eff060cdc487f3f61d10cdf5ce28",
+    "prepared_boundary": {"pull_request": 64, "head": "c60c49f69b66f7a0a6c644369ba2d7fad0525908", "merge": "996b5ce9cc992660a57f440ccfd211ee6110c370"},
+    "replacement_recovery": {"pull_request": 65, "head": "4b850e9d55cdbab341235ffde5f9cc7b2f0960a2", "merge": "b57be599bb0eb9b50ae7cc8f761670be5202b36c"},
+    "replacement_actor": "failure-auditor-replacement",
+    "reconstructed_without_conversation": true,
+    "recovered_generation": 7,
+    "recovered_lifecycle_state": "READY",
+    "open_transaction": null,
+    "selected_transition": "MUTATE_CANDIDATE_BRANCH",
+    "state_digest": "f3a5cc79bf8ba535e207cb08b51a19a2d8b9734f37d9818c1f89ff0c9915cf45",
+    "ledger_head_digest": "2bd70ee65ed844bf1e119ca56ac499bc85c31df4c9d881423f50b24c5879773d"
+  },
+  "coherence_reconciliation": {
+    "gcl_status_merge": "0b8980e4f8da773d63425b2ac8090643304bafe1",
+    "gcl_readback_merge": "b60222303ae1adfae4f6ebe0a73c04de1765b6f2",
+    "math_programme_guide_merge": "773b8a190c1d275cb83c811dd14be3c2f1ade189",
+    "math_programme_closure_seal": "066f07eee8ac8c8529723dc5676722b4e450d540",
+    "organization_profile_merge": "a0949181be646ed7c6804c3316a65425d74e7fa9"
+  },
+  "claim_boundaries": {"constitutional": false, "merge": false, "certification": false, "production": false, "publication": false, "mathematical_claim": false, "claim_promotion": false, "commercial": false}
+}
