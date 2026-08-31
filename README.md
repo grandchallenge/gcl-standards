@@ -66,6 +66,11 @@ conformance.
 
 ## Validation
 
+The protected workflow surface uses mandatory execution routing. See the
+[`GH-OS execution routing guide`](implementation/GCL-GHOS-CONTROL-PLANE-REMEDIATION-001/EXECUTION_ROUTING_GUIDE.md)
+for the enforcement diagram, topology rules, operator procedure, and failure
+interpretation.
+
 ```bash
 python ci/validate.py
 python -m unittest discover -s tests -p "test_*.py"
