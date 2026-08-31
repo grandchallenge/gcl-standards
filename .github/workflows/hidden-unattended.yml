@@ -1,0 +1,11 @@
+name: Hidden unattended mutation
+on:
+  schedule:
+    - cron: "0 0 * * *"
+permissions:
+  contents: write
+jobs:
+  mutate:
+    runs-on: ubuntu-latest
+    steps:
+      - run: gh api -X POST repos/example/example/issues
