@@ -310,6 +310,27 @@ class GhosControlPlaneAdversarialTests(unittest.TestCase):
             "payload": {"transaction_id": "TX-CUTOFF", "observed_side_effects": ["partial"]}}, self.admission, self.catalog)
         self.assertEqual(state["open_transaction"]["state"], "RECONCILING")
 
+    def test_prepared_transaction_appends_and_reduces_from_published_state(self):
+        state = self.reduced()
+        assignment = next(x for x in state["roles"] if x["role"] == "IMPLEMENTER")
+        executor = MODULE.Executor(
+            assignment["actor_id"], assignment["session_id"], "IMPLEMENTER",
+            "MULTI_SESSION_WORKER", ("durable_compare_and_swap", "git_write", "exact_git_readback"),
+        )
+        transaction = MODULE.TransactionController(self.catalog).prepare(
+            state, state["selected_transition"], executor,
+            transaction_id="TX-APPEND-REDUCE", idempotency_key="KEY-APPEND-REDUCE",
+            expires_at="2026-08-28T13:00:00Z", now="2026-08-28T12:00:00Z",
+        )
+        appended = MODULE.append_event(
+            self.ledger, event_id="EVENT-APPEND-REDUCE",
+            event_type="TRANSACTION_PREPARED", occurred_at="2026-08-28T12:00:01Z",
+            payload={"transaction": transaction},
+        )
+        reduced = MODULE.reduce_ledger(appended, self.catalog, self.authority, self.admission)
+        self.assertEqual(reduced["open_transaction"]["transaction_id"], "TX-APPEND-REDUCE")
+        self.assertEqual(reduced["open_transaction"]["state"], "PREPARED")
+
     def test_missing_reviewers_do_not_settle_role_separation(self):
         state = self.reduced()
         self.assertNotIn("ROLE_SEPARATION", MODULE._gate_kinds_settled(state))

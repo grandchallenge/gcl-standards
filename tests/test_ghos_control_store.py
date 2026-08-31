@@ -104,6 +104,14 @@ class ProtectedControlStoreTests(unittest.TestCase):
                 STORE.validate_append_prefix(
                     directory, base_admission=admission, base_ledger=json.loads((directory / "ledger.json").read_text()), base_store=store
                 )
+            (directory / "store.json").write_text(json.dumps(store), encoding="utf-8")
+            changed_admission = copy.deepcopy(admission)
+            changed_admission["human_decision_required"] = not admission["human_decision_required"]
+            (directory / "admission.json").write_text(json.dumps(changed_admission), encoding="utf-8")
+            with self.assertRaisesRegex(STORE.ControlStoreError, "admission/store identity"):
+                STORE.validate_append_prefix(
+                    directory, base_admission=admission, base_ledger=json.loads((directory / "ledger.json").read_text()), base_store=store
+                )
 
     def test_target_control_ref_fails_on_zero_match(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
