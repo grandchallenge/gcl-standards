@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "https://grandchallenge.github.io/gcl-standards/schemas/ghos_execution_routing.schema.json",
+  "title": "GH-OS universal execution-routing registry", "type": "object", "additionalProperties": false,
+  "required": ["record_type", "schema_version", "repository", "controllers", "workflows", "claim_boundaries"],
+  "properties": {
+    "record_type": {"const": "GHOS_EXECUTION_ROUTING_REGISTRY"}, "schema_version": {"const": "1.0.0"},
+    "repository": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"},
+    "controllers": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "object", "additionalProperties": false,
+      "required": ["controller_id", "executor_class", "provider", "durable_wake_mechanism", "state_store", "supported_features"],
+      "properties": {"controller_id": {"type": "string", "minLength": 1}, "executor_class": {"const": "PERSISTENT_CONTROLLER"},
+        "provider": {"type": "string", "minLength": 1}, "durable_wake_mechanism": {"type": "string", "minLength": 1},
+        "state_store": {"type": "string", "minLength": 1}, "supported_features": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/feature"}}}}},
+    "workflows": {"type": "array", "items": {"type": "object", "additionalProperties": false,
+      "required": ["path", "observed_features", "topology", "controller_id"], "properties": {
+        "path": {"type": "string", "pattern": "^\\.github/workflows/[^/]+\\.ya?ml$"},
+        "observed_features": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/feature"}},
+        "topology": {"enum": ["BOUNDED_ATOMIC", "MULTI_SESSION_RESUMABLE", "PERSISTENT_CONTROLLER_REQUIRED"]},
+        "controller_id": {"type": ["string", "null"]}}}},
+    "claim_boundaries": {"type": "object", "additionalProperties": false,
+      "required": ["constitutional", "merge", "certification", "production", "publication", "mathematical_claim", "claim_promotion", "commercial"],
+      "properties": {"constitutional": {"const": false}, "merge": {"const": false}, "certification": {"const": false}, "production": {"const": false},
+        "publication": {"const": false}, "mathematical_claim": {"const": false}, "claim_promotion": {"const": false}, "commercial": {"const": false}}}
+  },
+  "$defs": {"feature": {"enum": ["AUTONOMOUS_WAKE", "EXTERNAL_REUSABLE_JOB", "EXTERNAL_WAIT", "NON_RECONCILABLE_MUTATION", "OPAQUE_EXECUTION", "SCHEDULED", "SECRET_CREDENTIAL", "UNATTENDED_DISPATCH", "WRITE_CAPABLE"]}}
+}

@@ -11,6 +11,11 @@ bounded transaction or resume a multi-session ledger; it may not be admitted as
 the sole controller of persistent unattended work. Such work must be decomposed
 or assigned an admitted persistent controller.
 
+Protected policy now enumerates every workflow file and rejects missing routing,
+feature/topology drift, write-capable or autonomous work without an admitted
+persistent controller, and incomplete decomposition. This removes reliance on a
+workflow author remembering to invoke admission.
+
 ## Exit evidence
 
 The implementation, server-reachable store validator, and event-boundary repair
