@@ -2,33 +2,25 @@
 
 ## Current disposition
 
-`REMEDIATE_BEFORE_FURTHER_GOVERNED_OPERATION`
+`GO_WITH_RESTRICTED_EXECUTOR_TOPOLOGY`
 
-This disposition applies to multi-session or asynchronous governed work for
-which a bounded conversational executor is the sole coordinator. Existing
-bounded atomic operations may continue under their existing authority and
-exact-head controls. No active project should be closed solely because of this
-remediation; work that requires persistent unattended control must be paused,
-decomposed into resumable bounded transactions, or assigned an admitted
-persistent controller.
+GH-OS can now support interruptible and replaceable agent execution when the
+work is admitted to a compatible topology and all workflow state is carried by
+the protected control store. A bounded conversational executor may execute one
+bounded transaction or resume a multi-session ledger; it may not be admitted as
+the sole controller of persistent unattended work. Such work must be decomposed
+or assigned an admitted persistent controller.
 
-## Candidate exit disposition
+## Exit evidence
 
-The implementation candidate supports a future
-`GO_WITH_RESTRICTED_EXECUTOR_TOPOLOGY` conclusion only after all of the
-following occur through their separately authorized routes:
-
-1. independent exact-head Referee pass;
-2. ordinary protected integration authorization and merge;
-3. protected-main artifact and workflow readback;
-4. reconciliation of the stale `0.1.1` current projection and the
-   MATH-PROGRAMME operating guide through bounded recorded transactions; and
-5. a guarded pilot showing cold replacement and expired-lease recovery from
-   protected durable state.
-
-Until then, the candidate branch, ledger, and derived state are non-authoritative
-implementation evidence. They do not make GH-OS remediated or the governing
-issue complete.
+The implementation, server-reachable store validator, and event-boundary repair
+were admitted through protected main. The `0.1.1`/`0.2.0` contradiction and all
+declared local and external current projections were reconciled and read back.
+The first live pilot was preserved as failed evidence. Its successor ref then
+demonstrated direct-push rejection, cold asynchronous-wait recovery, exact prior
+prefix validation, a deliberately expired transaction, replacement of the dead
+executor claim, evidence-bound abort, and deterministic recovery to `READY`
+with no open transaction. Exact identities are in `PILOT_EVIDENCE.json`.
 
 ## Cost and project-value assessment
 

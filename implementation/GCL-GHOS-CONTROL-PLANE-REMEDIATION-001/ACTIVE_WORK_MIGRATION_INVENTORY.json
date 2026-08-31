@@ -1,0 +1,14 @@
+{
+  "record_type": "GHOS_ACTIVE_WORK_MIGRATION_INVENTORY",
+  "schema_version": "1.0.0",
+  "observed_at": "2026-08-31T06:12:00Z",
+  "repository": "grandchallenge/gcl-standards",
+  "items": [
+    {"pull_request": 62, "head": "36b98132b4c44885cc1215fb4dc0247114e2030f", "class": "BOUNDED_ATOMIC", "disposition": "existing draft automation; no control ledger required unless topology changes"},
+    {"pull_request": 50, "head": "375a2fcab69f927be0415b095c803092cfdb0704", "class": "BOUNDED_ATOMIC", "disposition": "existing draft automation; no control ledger required unless topology changes"},
+    {"pull_request": 47, "head": "be78b1744d5f26a3f73ce6cdf9b3b3243a82b5e6", "class": "BOUNDED_ATOMIC", "disposition": "existing draft automation; no control ledger required unless topology changes"},
+    {"pull_request": 46, "head": "5b6d75f14c4a861d775841f214787c3def4eafe0", "class": "BOUNDED_ATOMIC", "disposition": "existing draft automation; no control ledger required unless topology changes"}
+  ],
+  "persistent_controller_only_work": {"active_items": 0, "rule": "reject or decompose when no admitted persistent controller exists"},
+  "project_cost_assessment": "No active project should be paused or closed on remediation-cost grounds. Pause only an incompatible controller assignment at its next atomic boundary."
+}

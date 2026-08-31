@@ -3,10 +3,17 @@
 **Work package:** `GCL-GHOS-CONTROL-PLANE-REMEDIATION-001`  
 **Role:** `CONTROL_PLANE_DESIGNER`  
 **Fixed design-input commit:** `78d456ffa2e050caea7429732f3e4709cb2e66d9`  
-**Status:** candidate migration plan; no implementation or protected mutation authorized  
+**Status:** executed; protected reconciliation and successor-control pilot complete
 **Target:** MATH-PROGRAMME pilot conformance under admitted `GCL-GHOS-00` `0.2.0`
 
 ## 1. Migration disposition
+
+Closeout readback: the current-version reconciliation, external guide/profile
+propagation, protected control-store enforcement, and successor-ref replacement
+pilot are complete. The active-work inventory is recorded in
+`ACTIVE_WORK_MIGRATION_INVENTORY.json`. No active item requires a persistent
+controller at this readback; future topology changes remain subject to
+capability admission.
 
 Proceed in two gates: repair current-version coherence first, then pilot the durable control plane. Do not combine the coherence cure, generic control-plane implementation, migration of every active work package, and any normative-successor proposal into one review subject.
 
