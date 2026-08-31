@@ -836,6 +836,18 @@ def state_digest(state: Mapping[str, Any]) -> str:
     return digest(material)
 
 
+def _finalize_reduced_state(
+    state: dict[str, Any], catalog: Mapping[str, Any]
+) -> None:
+    permitted, selected, boundary = derive_permitted_transitions(state, catalog)
+    state["permitted_transitions"] = permitted
+    state["selected_transition"] = selected
+    if boundary == "POLICY_CHOICE_REQUIRED":
+        state["lifecycle_state"] = "CHOICE_REQUIRED"
+    state["stopping_boundary"] = boundary
+    state["state_digest"] = state_digest(state)
+
+
 def reduce_ledger(
     ledger: Mapping[str, Any],
     catalog: Mapping[str, Any],
@@ -855,13 +867,7 @@ def reduce_ledger(
         _apply_event(state, event, admission, catalog)
         state["generation"] = event["sequence"]
         state["ledger_head_digest"] = event["event_digest"]
-    permitted, selected, boundary = derive_permitted_transitions(state, catalog)
-    state["permitted_transitions"] = permitted
-    state["selected_transition"] = selected
-    if boundary == "POLICY_CHOICE_REQUIRED":
-        state["lifecycle_state"] = "CHOICE_REQUIRED"
-    state["stopping_boundary"] = boundary
-    state["state_digest"] = state_digest(state)
+        _finalize_reduced_state(state, catalog)
     if state["claim_boundaries"] != CLAIM_BOUNDARIES:
         raise LedgerError("derived state widens authority")
     validate_role_separation(state["roles"], [
