@@ -37,7 +37,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: grandchallenge/.github
-          ref: 355e029735961c29bf194985f885b0bda08579be
+          ref: ef1cce6029233a68cf46063cea2384772fcae613
           path: policy-runtime
           persist-credentials: false
       - name: Install routing gate dependency
@@ -45,7 +45,7 @@ jobs:
       - name: Verify and execute external gate
         shell: bash
         run: |
-          echo "1c4f9d82b1817d69187f3d87efbe0f6e60dd617d51a8aa330b119d48d3c95a43  policy-runtime/scripts/ghos_execution_routing_gate.py" | sha256sum --check --strict
+          echo "fc0a9a4d20de72e9fbc04c8cd54cffc3a6e4657fb09e7978b360616bd5e94a17  policy-runtime/scripts/ghos_execution_routing_gate.py" | sha256sum --check --strict
           python policy-runtime/scripts/ghos_execution_routing_gate.py \
             --root candidate \
             --repository "$GITHUB_REPOSITORY"

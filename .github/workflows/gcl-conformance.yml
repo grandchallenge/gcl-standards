@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   policy:
-    uses: grandchallenge/.github/.github/workflows/gcl-policy.yml@355e029735961c29bf194985f885b0bda08579be
+    uses: grandchallenge/.github/.github/workflows/gcl-policy.yml@bad0857a8345a30724107cae1fe7b327f1128dcc
     with:
       profile: Standards
       standards_ref: c5604226b306a1b6fe104757a3852ded5cba2bb9
