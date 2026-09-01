@@ -37,7 +37,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: grandchallenge/.github
-          ref: main
+          ref: 355e029735961c29bf194985f885b0bda08579be
           path: policy-runtime
           persist-credentials: false
       - name: Install routing gate dependency
