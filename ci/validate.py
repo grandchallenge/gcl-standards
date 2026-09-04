@@ -420,6 +420,7 @@ def validate() -> None:
     from ghos_control_plane import validate as validate_ghos_control_plane
     from ghos_control_store import validate as validate_ghos_control_store
     from ghos_execution_routing import validate as validate_ghos_execution_routing
+    from agent_staffing import validate as validate_agent_staffing
 
     validate_ghos_successor()
     validate_status_schemas()
@@ -428,6 +429,7 @@ def validate() -> None:
     validate_ghos_control_plane()
     validate_ghos_control_store()
     validate_ghos_execution_routing()
+    validate_agent_staffing()
 
     validate_regret_contract()
     validate_aether_evidence()

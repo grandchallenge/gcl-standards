@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0",
+  "standard": "GCL-AGENT-STAFFING-001",
+  "standard_version": "1.0.0",
+  "status": "candidate_pending_superior_authority",
+  "superior_authority": {
+    "repository": "grandchallenge/INTELLECT",
+    "directive": "GI-STEWARD-0003",
+    "candidate_commit": "0cd14da3960c601ba55419e2ce1ed0cc4dfacb9b",
+    "effective_commit": null
+  },
+  "standard_commit": null,
+  "repositories": [
+    {"repository": "grandchallenge/INTELLECT", "wave": "authority", "status": "pending_authority", "exceptions": ["constitutional changes and reserved office powers require Human Steward authorization"]},
+    {"repository": "grandchallenge/gcl-standards", "wave": "authority", "status": "candidate", "exceptions": []},
+    {"repository": "grandchallenge/.github", "wave": "authority", "status": "pending_standard", "exceptions": []},
+    {"repository": "grandchallenge/MATH-PROGRAMME", "wave": "governance", "status": "pending_standard", "exceptions": []},
+    {"repository": "grandchallenge/MATHFORGE", "wave": "governance", "status": "pending_standard", "exceptions": []},
+    {"repository": "grandchallenge/MATHSOLVE", "wave": "governance", "status": "pending_standard", "exceptions": []},
+    {"repository": "grandchallenge/MATHCERT", "wave": "governance", "status": "pending_standard", "exceptions": ["no system may certify a claim for which it supplied the sole construction or verification evidence"]},
+    {"repository": "grandchallenge/AETHER", "wave": "governance", "status": "pending_standard", "exceptions": ["production-semantic activation and autonomous permission escalation remain reserved"]},
+    {"repository": "grandchallenge/TROVE-CURATA", "wave": "governance", "status": "pending_standard", "exceptions": ["destructive disposal and corpus admission retain declared authority gates"]},
+    {"repository": "grandchallenge/BUTTERFLY", "wave": "programme", "status": "pending_standard", "exceptions": []},
+    {"repository": "grandchallenge/GLOSS", "wave": "programme", "status": "pending_standard", "exceptions": []},
+    {"repository": "grandchallenge/MODULUS", "wave": "programme", "status": "pending_standard", "exceptions": []},
+    {"repository": "grandchallenge/QUANTUM-TECHNOLOGIES", "wave": "programme", "status": "pending_standard", "exceptions": []},
+    {"repository": "grandchallenge/GCT-EXECUTIVE", "wave": "programme", "status": "pending_standard", "exceptions": []},
+    {"repository": "grandchallenge/lean-action", "wave": "utility", "status": "pending_standard", "exceptions": []},
+    {"repository": "grandchallenge/upload-pages-artifact", "wave": "utility", "status": "pending_standard", "exceptions": []}
+  ],
+  "unresolved_obligations": [
+    "protected INTELLECT selection of GI-STEWARD-0003",
+    "protected admission of this canonical standard",
+    "exact downstream adoption and readback for all 16 repositories"
+  ]
+}

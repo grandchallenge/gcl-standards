@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/repository-staffing-adoption-1.0.0.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "repository", "standard", "standard_version", "standard_commit", "standard_sha256", "authority", "repository_head", "status", "exceptions", "unresolved_obligations", "claim_boundaries"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "repository": {"type": "string", "pattern": "^grandchallenge/[A-Za-z0-9._-]+$"},
+    "standard": {"const": "GCL-AGENT-STAFFING-001"},
+    "standard_version": {"const": "1.0.0"},
+    "standard_commit": {"oneOf": [{"type": "null"}, {"type": "string", "pattern": "^[0-9a-f]{40}$"}]},
+    "standard_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "authority": {
+      "type": "object", "additionalProperties": false,
+      "required": ["repository", "directive", "effective_commit"],
+      "properties": {
+        "repository": {"const": "grandchallenge/INTELLECT"},
+        "directive": {"const": "GI-STEWARD-0003"},
+        "effective_commit": {"oneOf": [{"type": "null"}, {"type": "string", "pattern": "^[0-9a-f]{40}$"}]}
+      }
+    },
+    "repository_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "status": {"enum": ["candidate", "effective", "superseded"]},
+    "exceptions": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "unresolved_obligations": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "claim_boundaries": {
+      "type": "object", "additionalProperties": false,
+      "required": ["mathematical_certification", "production_activation", "safety_authority", "credential_authority", "destructive_authority"],
+      "properties": {
+        "mathematical_certification": {"const": false},
+        "production_activation": {"const": false},
+        "safety_authority": {"const": false},
+        "credential_authority": {"const": false},
+        "destructive_authority": {"const": false}
+      }
+    }
+  },
+  "allOf": [
+    {"if": {"properties": {"status": {"const": "effective"}}}, "then": {
+      "properties": {
+        "standard_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "authority": {"properties": {"effective_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"}}},
+        "unresolved_obligations": {"maxItems": 0}
+      }
+    }}
+  ]
+}
