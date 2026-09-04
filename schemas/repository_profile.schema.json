@@ -366,6 +366,25 @@
           }
         }
       }
+    },
+    {
+      "if": {
+        "properties": {
+          "repository": {
+            "const": "grandchallenge/BUTTERFLY"
+          }
+        },
+        "required": ["repository"]
+      },
+      "then": {
+        "properties": {
+          "profile": {"const": "programme"},
+          "claim_promotion_role": {"const": "work_package_only"},
+          "risk_tier": {"const": "high"},
+          "required_workflow_profile": {"const": "programme-research"},
+          "release_policy": {"const": "immutable_admitted"}
+        }
+      }
     }
   ]
 }
