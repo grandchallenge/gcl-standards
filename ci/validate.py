@@ -27,6 +27,7 @@ _DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 EXPECTED_PROFILES = {
     ".github.json",
     "AETHER.json",
+    "BUTTERFLY.json",
     "GLOSS.json",
     "INTELLECT.json",
     "MATH-PROGRAMME.json",
@@ -356,6 +357,13 @@ def validate() -> None:
     standards = profiles_by_repository["grandchallenge/gcl-standards"]
     if "Subordinate" not in standards["authority_scope"]:
         raise ValueError("gcl-standards must declare subordinate authority")
+    butterfly = profiles_by_repository["grandchallenge/BUTTERFLY"]
+    if butterfly["profile"] != "programme":
+        raise ValueError("BUTTERFLY must use the programme profile")
+    if butterfly["claim_promotion_role"] != "work_package_only":
+        raise ValueError("BUTTERFLY may promote only bounded work-package state")
+    if butterfly["risk_tier"] != "high":
+        raise ValueError("BUTTERFLY must retain the high risk tier")
 
     adoption = load_yaml(ROOT / "programme-adoption" / "MATH-PROGRAMME.yaml")
     validate_math_programme_adoption(adoption)

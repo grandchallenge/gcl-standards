@@ -21,6 +21,21 @@ class StandardsValidationTests(unittest.TestCase):
     def test_repository_profiles_and_adoption_validate(self) -> None:
         validate_module.validate()
 
+    def test_butterfly_profile_rejects_claim_authority_inflation(self) -> None:
+        schema = json.loads(
+            (ROOT / "schemas" / "repository_profile.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        profile = json.loads(
+            (ROOT / "fixtures" / "repository_profiles" / "BUTTERFLY.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        profile["claim_promotion_role"] = "certification"
+        with self.assertRaises(jsonschema.ValidationError):
+            jsonschema.validate(profile, schema)
+
     def math_adoption(self) -> dict[str, object]:
         return yaml.safe_load(
             (ROOT / "programme-adoption" / "MATH-PROGRAMME.yaml").read_text(
