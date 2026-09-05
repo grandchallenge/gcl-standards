@@ -2,34 +2,31 @@
   "schema_version": "1.0.0",
   "standard": "GCL-AGENT-STAFFING-001",
   "standard_version": "1.0.0",
-  "status": "candidate_ready_for_standard_admission",
+  "status": "effective",
   "superior_authority": {
     "repository": "grandchallenge/INTELLECT",
     "directive": "GI-STEWARD-0003",
     "candidate_commit": "d05bcf9d128333d49641de93df951355d8c2c041",
     "effective_commit": "7e01dc6b1be46171f0cba5e140ca881f6ab2f50f"
   },
-  "standard_commit": null,
+  "standard_commit": "94e94ddf2d4158494c084d0acaff04009971c16c",
   "repositories": [
-    {"repository": "grandchallenge/INTELLECT", "wave": "authority", "status": "effective", "exceptions": ["constitutional changes and reserved office powers require Human Steward authorization"]},
-    {"repository": "grandchallenge/gcl-standards", "wave": "authority", "status": "candidate", "exceptions": []},
-    {"repository": "grandchallenge/.github", "wave": "authority", "status": "pending_standard", "exceptions": []},
-    {"repository": "grandchallenge/MATH-PROGRAMME", "wave": "governance", "status": "pending_standard", "exceptions": []},
-    {"repository": "grandchallenge/MATHFORGE", "wave": "governance", "status": "pending_standard", "exceptions": []},
-    {"repository": "grandchallenge/MATHSOLVE", "wave": "governance", "status": "pending_standard", "exceptions": []},
-    {"repository": "grandchallenge/MATHCERT", "wave": "governance", "status": "pending_standard", "exceptions": ["no system may certify a claim for which it supplied the sole construction or verification evidence"]},
-    {"repository": "grandchallenge/AETHER", "wave": "governance", "status": "pending_standard", "exceptions": ["production-semantic activation and autonomous permission escalation remain reserved"]},
-    {"repository": "grandchallenge/TROVE-CURATA", "wave": "governance", "status": "pending_standard", "exceptions": ["destructive disposal and corpus admission retain declared authority gates"]},
-    {"repository": "grandchallenge/BUTTERFLY", "wave": "programme", "status": "pending_standard", "exceptions": []},
-    {"repository": "grandchallenge/GLOSS", "wave": "programme", "status": "pending_standard", "exceptions": []},
-    {"repository": "grandchallenge/MODULUS", "wave": "programme", "status": "pending_standard", "exceptions": []},
-    {"repository": "grandchallenge/QUANTUM-TECHNOLOGIES", "wave": "programme", "status": "pending_standard", "exceptions": []},
-    {"repository": "grandchallenge/GCT-EXECUTIVE", "wave": "programme", "status": "pending_standard", "exceptions": []},
-    {"repository": "grandchallenge/lean-action", "wave": "utility", "status": "pending_standard", "exceptions": []},
-    {"repository": "grandchallenge/upload-pages-artifact", "wave": "utility", "status": "pending_standard", "exceptions": []}
+    {"repository": "grandchallenge/INTELLECT", "wave": "authority", "status": "effective", "adoption_commit": "7e01dc6b1be46171f0cba5e140ca881f6ab2f50f", "exceptions": ["constitutional changes and reserved office powers require Human Steward authorization"]},
+    {"repository": "grandchallenge/gcl-standards", "wave": "authority", "status": "effective", "adoption_commit": "94e94ddf2d4158494c084d0acaff04009971c16c", "exceptions": []},
+    {"repository": "grandchallenge/.github", "wave": "authority", "status": "effective", "adoption_commit": "e74f334c5a589e968a7676a0942c5a002f140f18", "exceptions": []},
+    {"repository": "grandchallenge/MATH-PROGRAMME", "wave": "governance", "status": "effective", "adoption_commit": "bbe900f081d36e4a419c8841f8404ea4d7c1d8d9", "exceptions": []},
+    {"repository": "grandchallenge/MATHFORGE", "wave": "governance", "status": "effective", "adoption_commit": "7a9deb652d577b5b9c389b241ce29ddd2e35f41a", "exceptions": []},
+    {"repository": "grandchallenge/MATHSOLVE", "wave": "governance", "status": "effective", "adoption_commit": "a4aeb36461e76c504fe7531fb239f3c30ca67c0e", "exceptions": []},
+    {"repository": "grandchallenge/MATHCERT", "wave": "governance", "status": "effective", "adoption_commit": "0efcea2e4f99fda4ea1b2fc3534b61cac779333a", "exceptions": ["no system may certify a claim for which it supplied the sole construction or verification evidence"]},
+    {"repository": "grandchallenge/AETHER", "wave": "governance", "status": "effective", "adoption_commit": "159cf930ae9130060f16d9fbc2608ad8a4069fae", "exceptions": ["production-semantic activation and autonomous permission escalation remain reserved"]},
+    {"repository": "grandchallenge/TROVE-CURATA", "wave": "governance", "status": "effective", "adoption_commit": "2c5661f22e3b2d1ebf7ed0224f7cca9472b43068", "exceptions": ["destructive disposal and corpus admission retain declared authority gates"]},
+    {"repository": "grandchallenge/BUTTERFLY", "wave": "programme", "status": "effective", "adoption_commit": "e0e461b43e96a4b2cb2e6291927adc1d5c325674", "exceptions": []},
+    {"repository": "grandchallenge/GLOSS", "wave": "programme", "status": "effective", "adoption_commit": "eddf3da976a123c7f114046774aee41f44d572d6", "exceptions": []},
+    {"repository": "grandchallenge/MODULUS", "wave": "programme", "status": "effective", "adoption_commit": "6f7b6cbbdd532bad08da684d6bbb13476ddc9778", "exceptions": []},
+    {"repository": "grandchallenge/QUANTUM-TECHNOLOGIES", "wave": "programme", "status": "effective", "adoption_commit": "7afa7fcbf28dcd04f5ab47b6508cbd36a85a2d24", "exceptions": []},
+    {"repository": "grandchallenge/GCT-EXECUTIVE", "wave": "programme", "status": "effective", "adoption_commit": "2c9684821b6b1e7ece4c4dad0872f2a3dd751c4c", "exceptions": ["legal financial contractual employment capital and material public commitments retain Founder authority"]},
+    {"repository": "grandchallenge/lean-action", "wave": "utility", "status": "effective", "adoption_commit": "37f8471aecd2efbeab3b1e1a75ad18fb8f5c1b01", "exceptions": []},
+    {"repository": "grandchallenge/upload-pages-artifact", "wave": "utility", "status": "effective", "adoption_commit": "4934497e00858680775a65f544192e61e1b1b3cb", "exceptions": []}
   ],
-  "unresolved_obligations": [
-    "protected admission of this canonical standard",
-    "exact downstream adoption and readback for all 16 repositories"
-  ]
+  "unresolved_obligations": []
 }
