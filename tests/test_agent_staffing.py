@@ -11,6 +11,7 @@ sys.path.insert(0, str(ROOT / "ci"))
 from agent_staffing import (  # noqa: E402
     AgentStaffingError,
     validate,
+    validate_documentary_coverage,
     validate_review_set,
 )
 
@@ -44,6 +45,9 @@ def review(role: str, pass_id: str) -> dict[str, object]:
 class AgentStaffingTests(unittest.TestCase):
     def test_candidate_contract_is_well_formed(self) -> None:
         validate()
+
+    def test_documentary_coverage_is_complete(self) -> None:
+        validate_documentary_coverage()
 
     def test_one_system_may_staff_distinct_non_reserved_passes(self) -> None:
         validate_review_set([review("Adversary", "adversary-1"), review("Referee", "referee-1")])

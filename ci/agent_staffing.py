@@ -12,6 +12,8 @@ REVIEW_SCHEMA = ROOT / "schemas" / "multi_role_review.schema.json"
 ADOPTION_SCHEMA = ROOT / "schemas" / "repository_staffing_adoption.schema.json"
 STANDARD = ROOT / "standards" / "GCL-AGENT-STAFFING-001.md"
 ROLLOUT = ROOT / "status" / "GCL-AGENT-STAFFING-001-rollout.json"
+DOCUMENTARY_COVERAGE = ROOT / "status" / "GCL-AGENT-STAFFING-001-documentary-coverage.json"
+DOCUMENTARY_COVERAGE_SCHEMA = ROOT / "schemas" / "staffing_documentary_coverage.schema.json"
 EXPECTED_REPOSITORIES = {
     "grandchallenge/INTELLECT", "grandchallenge/gcl-standards",
     "grandchallenge/.github", "grandchallenge/MATH-PROGRAMME",
@@ -33,7 +35,7 @@ def _load(path: Path) -> object:
 
 
 def validate_schemas() -> None:
-    for path in (REVIEW_SCHEMA, ADOPTION_SCHEMA):
+    for path in (REVIEW_SCHEMA, ADOPTION_SCHEMA, DOCUMENTARY_COVERAGE_SCHEMA):
         jsonschema.Draft202012Validator.check_schema(_load(path))
 
 
@@ -132,10 +134,30 @@ def validate_rollout() -> None:
         raise AgentStaffingError("completed rollout cannot retain obligations")
 
 
+def validate_documentary_coverage() -> None:
+    coverage = _load(DOCUMENTARY_COVERAGE)
+    jsonschema.validate(
+        coverage,
+        _load(DOCUMENTARY_COVERAGE_SCHEMA),
+        format_checker=jsonschema.FormatChecker(),
+    )
+    rows = coverage["repositories"]
+    names = [row["repository"] for row in rows]
+    if len(names) != len(set(names)) or set(names) != EXPECTED_REPOSITORIES:
+        raise AgentStaffingError("documentary coverage must include every repository exactly once")
+    if any(row["operative_conflicting_language_count"] != 0 for row in rows):
+        raise AgentStaffingError("operative documentary conflicts remain")
+    if any(row["status"] != "covered" for row in rows):
+        raise AgentStaffingError("every repository must have covered documentary status")
+    if coverage["unresolved_obligations"] != []:
+        raise AgentStaffingError("documentary coverage cannot be complete with obligations")
+
+
 def validate() -> None:
     validate_schemas()
     validate_standard()
     validate_rollout()
+    validate_documentary_coverage()
 
 
 if __name__ == "__main__":
