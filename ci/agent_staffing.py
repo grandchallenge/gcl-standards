@@ -104,8 +104,8 @@ def validate_rollout() -> None:
     rollout = _load(ROLLOUT)
     if not isinstance(rollout, dict):
         raise AgentStaffingError("rollout matrix must be an object")
-    if rollout.get("status") != "candidate_ready_for_standard_admission":
-        raise AgentStaffingError("candidate may not claim standard admission early")
+    if rollout.get("status") != "effective":
+        raise AgentStaffingError("rollout matrix must record effective completion")
     authority = rollout.get("superior_authority", {})
     if authority != {
         "repository": "grandchallenge/INTELLECT",
@@ -121,11 +121,15 @@ def validate_rollout() -> None:
     if len(names) != len(set(names)) or set(names) != EXPECTED_REPOSITORIES:
         raise AgentStaffingError("rollout matrix must cover each active repository exactly once")
     effective = {row.get("repository") for row in rows if row.get("status") == "effective"}
-    if effective != {"grandchallenge/INTELLECT"}:
-        raise AgentStaffingError("only superior authority may be effective before admission")
+    if effective != EXPECTED_REPOSITORIES:
+        raise AgentStaffingError("all active repositories must have effective adoption")
+    for row in rows:
+        commit = row.get("adoption_commit")
+        if not isinstance(commit, str) or len(commit) != 40 or any(c not in "0123456789abcdef" for c in commit):
+            raise AgentStaffingError("effective adoption requires an exact commit")
     obligations = rollout.get("unresolved_obligations")
-    if not isinstance(obligations, list) or not obligations:
-        raise AgentStaffingError("candidate rollout must expose unresolved gates")
+    if obligations != []:
+        raise AgentStaffingError("completed rollout cannot retain obligations")
 
 
 def validate() -> None:
