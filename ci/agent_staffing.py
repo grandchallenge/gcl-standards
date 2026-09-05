@@ -86,7 +86,7 @@ def validate_review_set(reviews: Sequence[Mapping[str, object]]) -> None:
 def validate_standard() -> None:
     text = STANDARD.read_text(encoding="utf-8")
     required = (
-        "activation is conditional on protected selection of `GI-STEWARD-0003`",
+        "`GI-STEWARD-0003` is effective",
         "A single Codex system MAY staff multiple non-reserved roles",
         "MUST NOT claim that a different system, invocation, task, model,",
         "Automation MAY prepare, faithfully record, and mechanically execute",
@@ -104,19 +104,25 @@ def validate_rollout() -> None:
     rollout = _load(ROLLOUT)
     if not isinstance(rollout, dict):
         raise AgentStaffingError("rollout matrix must be an object")
-    if rollout.get("status") != "candidate_pending_superior_authority":
-        raise AgentStaffingError("candidate may not claim effective status")
+    if rollout.get("status") != "candidate_ready_for_standard_admission":
+        raise AgentStaffingError("candidate may not claim standard admission early")
     authority = rollout.get("superior_authority", {})
-    if authority.get("directive") != "GI-STEWARD-0003" or authority.get("effective_commit") is not None:
-        raise AgentStaffingError("candidate must remain fail-closed before authority cutover")
+    if authority != {
+        "repository": "grandchallenge/INTELLECT",
+        "directive": "GI-STEWARD-0003",
+        "candidate_commit": "d05bcf9d128333d49641de93df951355d8c2c041",
+        "effective_commit": "7e01dc6b1be46171f0cba5e140ca881f6ab2f50f",
+    }:
+        raise AgentStaffingError("candidate must bind the protected authority cutover")
     rows = rollout.get("repositories")
     if not isinstance(rows, list):
         raise AgentStaffingError("rollout rows must be a list")
     names = [row.get("repository") for row in rows if isinstance(row, dict)]
     if len(names) != len(set(names)) or set(names) != EXPECTED_REPOSITORIES:
         raise AgentStaffingError("rollout matrix must cover each active repository exactly once")
-    if any(row.get("status") == "effective" for row in rows):
-        raise AgentStaffingError("downstream adoption cannot precede authority and admission")
+    effective = {row.get("repository") for row in rows if row.get("status") == "effective"}
+    if effective != {"grandchallenge/INTELLECT"}:
+        raise AgentStaffingError("only superior authority may be effective before admission")
     obligations = rollout.get("unresolved_obligations")
     if not isinstance(obligations, list) or not obligations:
         raise AgentStaffingError("candidate rollout must expose unresolved gates")

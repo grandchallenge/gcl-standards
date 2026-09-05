@@ -2,16 +2,16 @@
   "schema_version": "1.0.0",
   "standard": "GCL-AGENT-STAFFING-001",
   "standard_version": "1.0.0",
-  "status": "candidate_pending_superior_authority",
+  "status": "candidate_ready_for_standard_admission",
   "superior_authority": {
     "repository": "grandchallenge/INTELLECT",
     "directive": "GI-STEWARD-0003",
-    "candidate_commit": "0cd14da3960c601ba55419e2ce1ed0cc4dfacb9b",
-    "effective_commit": null
+    "candidate_commit": "d05bcf9d128333d49641de93df951355d8c2c041",
+    "effective_commit": "7e01dc6b1be46171f0cba5e140ca881f6ab2f50f"
   },
   "standard_commit": null,
   "repositories": [
-    {"repository": "grandchallenge/INTELLECT", "wave": "authority", "status": "pending_authority", "exceptions": ["constitutional changes and reserved office powers require Human Steward authorization"]},
+    {"repository": "grandchallenge/INTELLECT", "wave": "authority", "status": "effective", "exceptions": ["constitutional changes and reserved office powers require Human Steward authorization"]},
     {"repository": "grandchallenge/gcl-standards", "wave": "authority", "status": "candidate", "exceptions": []},
     {"repository": "grandchallenge/.github", "wave": "authority", "status": "pending_standard", "exceptions": []},
     {"repository": "grandchallenge/MATH-PROGRAMME", "wave": "governance", "status": "pending_standard", "exceptions": []},
@@ -29,7 +29,6 @@
     {"repository": "grandchallenge/upload-pages-artifact", "wave": "utility", "status": "pending_standard", "exceptions": []}
   ],
   "unresolved_obligations": [
-    "protected INTELLECT selection of GI-STEWARD-0003",
     "protected admission of this canonical standard",
     "exact downstream adoption and readback for all 16 repositories"
   ]
