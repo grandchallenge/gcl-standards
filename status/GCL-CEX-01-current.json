@@ -3,25 +3,36 @@
   "record_type": "GCL_STANDARD_STATUS",
   "identifier": "GCL-CEX-01",
   "version": "0.1.0",
-  "status": "candidate",
+  "status": "admitted",
   "standard_path": "standards/GCL-CEX-01.md",
   "council_issue": "grandchallenge/gcl-standards#81",
-  "protected_registry_base": "12b842d8333861ebd5eb769591bb04c02ec7d046",
+  "reviewed_candidate_head": "386c3e1f667d139aa7d1534403c2c4f14361b4ed",
+  "protected_candidate_readback": "f20623dc6f8e8ef8c7c04ba4823f2773e2a0f407",
   "pilot": {
     "campaign": "BSD-001",
     "repository": "grandchallenge/MATHSOLVE",
     "operation": "BSD-WP60S",
-    "pull_request": 246,
-    "status": "live_bootstrap_candidate"
+    "protected_head": "b0854bb7770296b610b655753bc62b27365b27bb",
+    "status": "protected_machine_receipt_replay"
   },
   "admission": {
-    "status": "not_yet_admitted",
+    "status": "admitted",
     "required": true,
-    "note": "Protected registry custody of the candidate does not create cross-programme authority."
+    "record": "admissions/GCL-CEX-01-0.1.0.json",
+    "effective_condition": "protected_merge_of_exact_admission_record"
   },
   "programme_adoption": {
     "status": "not_yet_adopted",
-    "required": true
+    "required": true,
+    "repository": "grandchallenge/MATH-PROGRAMME"
+  },
+  "staffing_authority": {
+    "repository": "grandchallenge/INTELLECT",
+    "protected_anchor": "2badd8c3197ef4515591bba05ff782ff3cafc930",
+    "directive": "GI-STEWARD-0003",
+    "work_class": "substantive",
+    "reserved_action_required": false,
+    "human_steward_gate": "not_applicable_under_GI_STEWARD_0003"
   },
   "claim_boundaries": {
     "constitutional_authority_created": false,
