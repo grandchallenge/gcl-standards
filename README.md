@@ -47,6 +47,29 @@ reviewed standard source remains byte-identical to PR #52 head
 for its recorded bounded pilot scope. This does not establish organization-wide
 conformance or widen any claim authority.
 
+### GCL-CEX-01
+
+[`GCL-CEX-01`](standards/GCL-CEX-01.md) is the candidate Campaign Execution and
+Frontier Control standard version `0.1.0`. It defines the cold-start campaign
+state, bounded operation contract, theorem/frontier disposition taxonomy,
+content freeze, deterministic preflight, exact-head evidence invalidation,
+completion receipt, and bounded operation-lease model required for independent
+agents to assist a campaign without relying on conversational history.
+
+Its machine-readable contracts are:
+
+- [`schemas/gcl_campaign_state.schema.json`](schemas/gcl_campaign_state.schema.json);
+- [`schemas/gcl_operation_contract.schema.json`](schemas/gcl_operation_contract.schema.json);
+- [`schemas/gcl_content_freeze.schema.json`](schemas/gcl_content_freeze.schema.json);
+- [`schemas/gcl_completion_receipt.schema.json`](schemas/gcl_completion_receipt.schema.json).
+
+The first live bootstrap is BSD-001 WP60S in `grandchallenge/MATHSOLVE` PR #246.
+Current registry status is recorded in
+[`status/GCL-CEX-01-current.json`](status/GCL-CEX-01-current.json). Candidate
+custody does not admit the standard, create organization-wide conformance, or
+change mathematical or constitutional authority. Protected standard admission
+and programme adoption remain separate gates.
+
 ### GCL-RC-00
 
 [`GCL-RC-00`](standards/GCL-RC-00.md) is the candidate Regret Contract Standard
