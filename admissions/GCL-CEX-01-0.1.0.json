@@ -1,0 +1,67 @@
+{
+  "$schema": "../schemas/gcl_cex_admission.schema.json",
+  "schema_version": "1.0.0",
+  "record_type": "GCL_STANDARD_ADMISSION",
+  "operation_id": "GCL-CEX-01-0.1.0-ADMISSION-001",
+  "standard": "GCL-CEX-01",
+  "version": "0.1.0",
+  "status": "admitted",
+  "effective_condition": "protected_merge_of_this_exact_record",
+  "reviewed_source": {
+    "repository": "grandchallenge/gcl-standards",
+    "candidate_head": "386c3e1f667d139aa7d1534403c2c4f14361b4ed",
+    "protected_readback": "f20623dc6f8e8ef8c7c04ba4823f2773e2a0f407",
+    "standard_path": "standards/GCL-CEX-01.md",
+    "standard_git_blob_sha1": "36a0d7d17914a825d949396c42b74baf92377fc6"
+  },
+  "source_reviews": {
+    "adversary": {
+      "record_ref": "https://github.com/grandchallenge/gcl-standards/pull/83#pullrequestreview-5218040164",
+      "logical_pass_id": "gcl-cex-01-receipt-enforcement-adversary-386c3e1f-r1",
+      "reviewer_system_id": "openai-gpt-5.6-sol",
+      "candidate_head": "386c3e1f667d139aa7d1534403c2c4f14361b4ed",
+      "finding": "approved"
+    },
+    "referee": {
+      "record_ref": "https://github.com/grandchallenge/gcl-standards/pull/83#pullrequestreview-5218040955",
+      "logical_pass_id": "gcl-cex-01-receipt-enforcement-referee-386c3e1f-r1",
+      "reviewer_system_id": "openai-gpt-5.6-sol",
+      "candidate_head": "386c3e1f667d139aa7d1534403c2c4f14361b4ed",
+      "finding": "approved"
+    }
+  },
+  "protected_integration": {
+    "base": "f20623dc6f8e8ef8c7c04ba4823f2773e2a0f407",
+    "required_checks": ["Standards policy", "GCL conformance", "routing-enforcement", "CodeQL"],
+    "requires_exact_head_logical_passes": true
+  },
+  "staffing_authority": {
+    "repository": "grandchallenge/INTELLECT",
+    "protected_anchor": "2badd8c3197ef4515591bba05ff782ff3cafc930",
+    "directive": "GI-STEWARD-0003",
+    "work_class": "substantive",
+    "effects": ["public_contract"],
+    "reserved_action_required": false,
+    "human_steward_gate": "not_applicable_under_GI_STEWARD_0003"
+  },
+  "pilot_evidence": {
+    "repository": "grandchallenge/MATHSOLVE",
+    "protected_head": "b0854bb7770296b610b655753bc62b27365b27bb",
+    "operation": "BSD-WP60S",
+    "receipt_path": ".gcl/completions/BSD-WP60S/COMPLETION_RECEIPT.json",
+    "post_merge_replay_run": 35050310584
+  },
+  "programme_adoption": {
+    "required": true,
+    "status": "not_yet_adopted",
+    "repository": "grandchallenge/MATH-PROGRAMME"
+  },
+  "claim_boundaries": {
+    "constitutional_authority_created": false,
+    "organization_wide_conformance_authorized": false,
+    "programme_adoption_complete": false,
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "agent_permission_escalation_authorized": false
+  }
+}
