@@ -38,13 +38,27 @@ A conforming campaign SHALL maintain the following record classes.
 - exact protected input identities required by the active lane;
 - selected target and its current claim status;
 - current bounded operation;
-- current theorem, experiment, engineering, or evidentiary frontier;
+- the frontier entering that operation;
 - known-false or explicitly unrepaired conditions;
 - prohibited promotions;
 - cold-start entry points;
-- candidate frontier transition, if any.
+- the declared completion-receipt surface;
+- candidate frontier transition, if any; and
+- deterministic state-resolution rules.
 
 There SHALL be exactly one canonical campaign-state record for an active campaign within its authoritative work repository or programme-owned registry.
+
+The campaign-state record is an operation-entry snapshot. It SHALL NOT need a second bookkeeping-only protected mutation after the operation closes. Instead, a valid completion receipt for the exact current operation acts as the authoritative transition overlay until the next operation emits its successor campaign-state record.
+
+A cold-start agent SHALL resolve state as follows:
+
+1. read the protected campaign-state record;
+2. inspect the declared completion-receipt surface;
+3. accept a receipt only when its operation, candidate head, protected merge, and protected readback identities are coherent with the protected repository state;
+4. if such a receipt exists, treat its disposition and `next_frontier` as the resolved current state;
+5. otherwise, retain the operation-entry frontier from `CAMPAIGN_STATE`.
+
+A stale or mismatched receipt SHALL NOT alter campaign state.
 
 ### 3.2 Operation contract
 
@@ -103,6 +117,8 @@ The receipt SHALL identify at least:
 
 The receipt MAY be a protected repository artifact, an immutable or append-only programme record, or a durable issue record when programme policy admits that surface.
 
+When a campaign state declares that receipt surface, a valid exact-operation receipt is the transition overlay described in §3.1. This permits protected merge and readback to complete the operation without requiring an otherwise content-free state-roll-forward PR.
+
 A runtime failure after a valid protected transition SHALL NOT cause the system to fabricate a cleaner history or repeat an already valid transition. Recovery SHALL bind the actual protected transition and repair documentary readback around it.
 
 ## 4. Frontier disposition taxonomy
@@ -142,19 +158,20 @@ The agent SHALL then:
 
 1. re-fetch live protected authority and work heads;
 2. read the canonical `CAMPAIGN_STATE`;
-3. read the active `OPERATION` contract;
-4. compare live protected state with exact protected identities in the contract;
-5. reject stale evidence and reconcile material drift before mutation;
-6. read the named frontier, claim ledger, provider records, and direct predecessor artifacts;
-7. perform only the bounded work authorized by the operation;
-8. run deterministic preflight before expensive CI or admission review;
-9. freeze governed content;
-10. obtain exact-head non-authoring/read-only review required by superior policy;
-11. run affected CI and repository-required checks;
-12. perform protected mutation only when authorized gates are satisfied;
-13. read back protected state;
-14. publish the completion receipt;
-15. update canonical campaign state to the next admitted frontier.
+3. inspect and resolve the declared completion-receipt overlay before deciding which frontier is current;
+4. read the active `OPERATION` contract or the successor operation named by resolved state;
+5. compare live protected state with exact protected identities in the contract;
+6. reject stale evidence and reconcile material drift before mutation;
+7. read the named frontier, claim ledger, provider records, and direct predecessor artifacts;
+8. perform only the bounded work authorized by the operation;
+9. run deterministic preflight before expensive CI or admission review;
+10. freeze governed content;
+11. obtain exact-head non-authoring/read-only review required by superior policy;
+12. run affected CI and repository-required checks;
+13. perform protected mutation only when authorized gates are satisfied;
+14. read back protected state;
+15. publish the completion receipt;
+16. have the next material operation emit a successor `CAMPAIGN_STATE` that absorbs the resolved transition.
 
 The cold-start path SHOULD be shorter than the historical record. A new agent SHALL NOT be required to reconstruct the campaign from all predecessor issues or chats when canonical state already identifies the relevant dependency slice.
 
@@ -166,9 +183,11 @@ Preflight SHALL, where applicable, verify:
 
 - campaign/operation identity coherence;
 - exact protected base and provider bindings;
-- current frontier equals the operation objective;
+- entry frontier equals the operation objective;
 - candidate disposition is permitted;
 - completion-gate completeness;
+- completion-receipt surface matches between campaign state and operation contract;
+- deterministic state-resolution rules are present;
 - known-false facts remain in the claim firewall;
 - claim ledger and frontier records agree;
 - stale candidate/protected language is absent from canonical handoffs;
@@ -250,7 +269,8 @@ Programme adoption SHALL identify the repository paths and workflow checks that 
 A conforming enforcement profile SHOULD reject admission when:
 
 - campaign state is missing or incoherent;
-- the operation contract does not target the current frontier;
+- the operation contract does not target the entry frontier;
+- the campaign state and operation disagree on the completion-receipt surface;
 - a known-false fact is omitted or promoted;
 - the candidate has changed after its freeze without a new freeze;
 - exact-head review refers to a stale head;
@@ -292,7 +312,7 @@ Adoption SHOULD measure:
 
 ## 17. Conformance statement
 
-A campaign conforms to GCL-CEX-01 only when its adopted programme profile provides machine-readable campaign state, bounded operation contracts, deterministic preflight, content freeze, exact-head evidence invalidation, protected readback, and completion receipts.
+A campaign conforms to GCL-CEX-01 only when its adopted programme profile provides machine-readable campaign state, bounded operation contracts, deterministic preflight, content freeze, exact-head evidence invalidation, protected readback, completion receipts, and deterministic state resolution across a completed operation.
 
 Documentation that merely describes these concepts is not conformance.
 
