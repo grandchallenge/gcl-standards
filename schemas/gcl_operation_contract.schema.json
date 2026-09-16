@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/gcl_operation_contract.schema.json",
+  "title": "GCL Operation Contract",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "record_type",
+    "operation",
+    "campaign",
+    "protected_base",
+    "objective",
+    "acceptable_dispositions",
+    "scope",
+    "completion_requires",
+    "governed_artifacts",
+    "admission",
+    "stop_only_on",
+    "recoverable_events_are_not_stop_conditions",
+    "claim_firewall"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "minLength": 1},
+    "record_type": {"const": "GCL_OPERATION_CONTRACT"},
+    "operation": {"type": "string", "minLength": 1},
+    "campaign": {"type": "string", "minLength": 1},
+    "issue": {"type": "string"},
+    "protected_base": {"type": "string", "minLength": 7},
+    "provider_anchor": {"type": "string"},
+    "constitutional_anchor": {"type": "string"},
+    "objective": {
+      "type": "object",
+      "required": ["retire_frontier", "description"],
+      "properties": {
+        "retire_frontier": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": true
+    },
+    "acceptable_dispositions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"enum": ["CLOSED", "BLOCKED", "FALSIFIED", "RECONNAISSANCE", "MAINTENANCE"]},
+      "uniqueItems": true
+    },
+    "candidate_disposition": {"enum": ["CLOSED", "BLOCKED", "FALSIFIED", "RECONNAISSANCE", "MAINTENANCE"]},
+    "scope": {"type": "object", "minProperties": 1},
+    "completion_requires": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+    "completion_receipt": {"type": "object"},
+    "governed_artifacts": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "forbidden_successor_globs": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "admission": {
+      "type": "object",
+      "required": ["freeze_manifest", "preflight_command", "review_invalidation"],
+      "properties": {
+        "freeze_manifest": {"type": "string", "minLength": 1},
+        "preflight_command": {"type": "string", "minLength": 1},
+        "review_invalidation": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": true
+    },
+    "successor_policy": {"type": "object"},
+    "stop_only_on": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+    "recoverable_events_are_not_stop_conditions": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+    "claim_firewall": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "boolean"}}
+  },
+  "additionalProperties": true
+}
