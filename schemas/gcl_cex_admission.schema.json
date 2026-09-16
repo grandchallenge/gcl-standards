@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/gcl_cex_admission.schema.json",
+  "title": "GCL-CEX-01 Standard Admission",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "record_type",
+    "operation_id",
+    "standard",
+    "version",
+    "status",
+    "effective_condition",
+    "reviewed_source",
+    "source_reviews",
+    "protected_integration",
+    "staffing_authority",
+    "pilot_evidence",
+    "programme_adoption",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {"const": "../schemas/gcl_cex_admission.schema.json"},
+    "schema_version": {"const": "1.0.0"},
+    "record_type": {"const": "GCL_STANDARD_ADMISSION"},
+    "operation_id": {"const": "GCL-CEX-01-0.1.0-ADMISSION-001"},
+    "standard": {"const": "GCL-CEX-01"},
+    "version": {"const": "0.1.0"},
+    "status": {"const": "admitted"},
+    "effective_condition": {"const": "protected_merge_of_this_exact_record"},
+    "reviewed_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "candidate_head", "protected_readback", "standard_path", "standard_git_blob_sha1"],
+      "properties": {
+        "repository": {"const": "grandchallenge/gcl-standards"},
+        "candidate_head": {"const": "386c3e1f667d139aa7d1534403c2c4f14361b4ed"},
+        "protected_readback": {"const": "f20623dc6f8e8ef8c7c04ba4823f2773e2a0f407"},
+        "standard_path": {"const": "standards/GCL-CEX-01.md"},
+        "standard_git_blob_sha1": {"const": "36a0d7d17914a825d949396c42b74baf92377fc6"}
+      }
+    },
+    "source_reviews": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["adversary", "referee"],
+      "properties": {
+        "adversary": {"$ref": "#/$defs/reviewBinding"},
+        "referee": {"$ref": "#/$defs/reviewBinding"}
+      }
+    },
+    "protected_integration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["base", "required_checks", "requires_exact_head_logical_passes"],
+      "properties": {
+        "base": {"const": "f20623dc6f8e8ef8c7c04ba4823f2773e2a0f407"},
+        "required_checks": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": {"enum": ["Standards policy", "GCL conformance", "routing-enforcement", "CodeQL"]}
+        },
+        "requires_exact_head_logical_passes": {"const": true}
+      }
+    },
+    "staffing_authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "protected_anchor", "directive", "work_class", "effects", "reserved_action_required", "human_steward_gate"],
+      "properties": {
+        "repository": {"const": "grandchallenge/INTELLECT"},
+        "protected_anchor": {"const": "2badd8c3197ef4515591bba05ff782ff3cafc930"},
+        "directive": {"const": "GI-STEWARD-0003"},
+        "work_class": {"const": "substantive"},
+        "effects": {"const": ["public_contract"]},
+        "reserved_action_required": {"const": false},
+        "human_steward_gate": {"const": "not_applicable_under_GI_STEWARD_0003"}
+      }
+    },
+    "pilot_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "protected_head", "operation", "receipt_path", "post_merge_replay_run"],
+      "properties": {
+        "repository": {"const": "grandchallenge/MATHSOLVE"},
+        "protected_head": {"const": "b0854bb7770296b610b655753bc62b27365b27bb"},
+        "operation": {"const": "BSD-WP60S"},
+        "receipt_path": {"const": ".gcl/completions/BSD-WP60S/COMPLETION_RECEIPT.json"},
+        "post_merge_replay_run": {"const": 35050310584}
+      }
+    },
+    "programme_adoption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "status", "repository"],
+      "properties": {
+        "required": {"const": true},
+        "status": {"const": "not_yet_adopted"},
+        "repository": {"const": "grandchallenge/MATH-PROGRAMME"}
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["constitutional_authority_created", "organization_wide_conformance_authorized", "programme_adoption_complete", "mathematical_claim_authorized", "certification_claim_authorized", "agent_permission_escalation_authorized"],
+      "properties": {
+        "constitutional_authority_created": {"const": false},
+        "organization_wide_conformance_authorized": {"const": false},
+        "programme_adoption_complete": {"const": false},
+        "mathematical_claim_authorized": {"const": false},
+        "certification_claim_authorized": {"const": false},
+        "agent_permission_escalation_authorized": {"const": false}
+      }
+    }
+  },
+  "$defs": {
+    "reviewBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record_ref", "logical_pass_id", "reviewer_system_id", "candidate_head", "finding"],
+      "properties": {
+        "record_ref": {"type": "string", "format": "uri"},
+        "logical_pass_id": {"type": "string", "minLength": 1},
+        "reviewer_system_id": {"const": "openai-gpt-5.6-sol"},
+        "candidate_head": {"const": "386c3e1f667d139aa7d1534403c2c4f14361b4ed"},
+        "finding": {"const": "approved"}
+      }
+    }
+  }
+}

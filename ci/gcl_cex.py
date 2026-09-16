@@ -9,12 +9,14 @@ import jsonschema
 
 ROOT = Path(__file__).resolve().parents[1]
 RECEIPT_SCHEMA = ROOT / "schemas" / "gcl_completion_receipt.schema.json"
+ADMISSION_SCHEMA = ROOT / "schemas" / "gcl_cex_admission.schema.json"
+ADMISSION = ROOT / "admissions" / "GCL-CEX-01-0.1.0.json"
 STANDARD = ROOT / "standards" / "GCL-CEX-01.md"
 STATUS = ROOT / "status" / "GCL-CEX-01-current.json"
 
 
 class GCLCEXError(ValueError):
-    """Raised when a GCL-CEX campaign receipt is not admissible."""
+    """Raised when a GCL-CEX campaign receipt or admission is not admissible."""
 
 
 def _load(path: Path) -> object:
@@ -96,6 +98,35 @@ def validate_completion_receipt(receipt: Mapping[str, object]) -> None:
         raise GCLCEXError("receipt requires both candidate and protected-readback checks")
 
 
+def validate_admission() -> None:
+    admission_schema = _load(ADMISSION_SCHEMA)
+    jsonschema.Draft202012Validator.check_schema(admission_schema)
+    admission = _load(ADMISSION)
+    jsonschema.validate(
+        admission,
+        admission_schema,
+        cls=jsonschema.Draft202012Validator,
+        format_checker=jsonschema.FormatChecker(),
+    )
+    reviews = admission["source_reviews"]
+    adversary = reviews["adversary"]
+    referee = reviews["referee"]
+    if adversary["logical_pass_id"] == referee["logical_pass_id"]:
+        raise GCLCEXError("admission source reviews must use distinct logical passes")
+    if adversary["record_ref"] == referee["record_ref"]:
+        raise GCLCEXError("admission source reviews require distinct durable records")
+    if adversary["candidate_head"] != referee["candidate_head"]:
+        raise GCLCEXError("admission source review subject drift")
+    authority = admission["staffing_authority"]
+    if authority["reserved_action_required"]:
+        raise GCLCEXError("GCL-CEX admission was incorrectly classified as reserved")
+    if authority["human_steward_gate"] != "not_applicable_under_GI_STEWARD_0003":
+        raise GCLCEXError("GCL-CEX admission human gate does not match effective staffing authority")
+    claims = admission["claim_boundaries"]
+    if any(bool(value) for value in claims.values()):
+        raise GCLCEXError("standards admission cannot manufacture downstream authority")
+
+
 def validate_standard() -> None:
     schema = _load(RECEIPT_SCHEMA)
     jsonschema.Draft202012Validator.check_schema(schema)
@@ -119,6 +150,15 @@ def validate_standard() -> None:
         raise GCLCEXError("GCL-CEX-01 status identity drift")
     if status.get("status") not in {"candidate", "admitted"}:
         raise GCLCEXError("invalid GCL-CEX-01 status")
+    if status.get("status") == "admitted":
+        validate_admission()
+        admission = _load(ADMISSION)
+        if status.get("admission", {}).get("record") != "admissions/GCL-CEX-01-0.1.0.json":
+            raise GCLCEXError("admitted status does not bind the admission record")
+        if admission["programme_adoption"]["status"] != "not_yet_adopted":
+            raise GCLCEXError("registry admission must keep programme adoption separate")
+        if status.get("programme_adoption", {}).get("status") != "not_yet_adopted":
+            raise GCLCEXError("status prematurely claims programme adoption")
 
 
 def validate() -> None:
