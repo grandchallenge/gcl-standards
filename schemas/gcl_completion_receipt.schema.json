@@ -11,6 +11,7 @@
     "candidate_head",
     "merge_sha",
     "protected_readback_sha",
+    "staffing_authority",
     "adversary_record",
     "referee_record",
     "required_checks",
@@ -22,12 +23,30 @@
     "record_type": {"const": "GCL_COMPLETION_RECEIPT"},
     "campaign": {"type": "string", "minLength": 1},
     "operation": {"type": "string", "minLength": 1},
-    "candidate_head": {"type": "string", "pattern": "^[0-9a-fA-F]{40}$"},
-    "merge_sha": {"type": "string", "pattern": "^[0-9a-fA-F]{40}$"},
-    "protected_readback_sha": {"type": "string", "pattern": "^[0-9a-fA-F]{40}$"},
-    "adversary_record": {"type": "string", "minLength": 1},
-    "referee_record": {"type": "string", "minLength": 1},
-    "required_checks": {"type": "array", "minItems": 1, "items": {"type": "object"}},
+    "candidate_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "merge_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "protected_readback_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "staffing_authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "directive", "separation_model"],
+      "properties": {
+        "repository": {"const": "grandchallenge/INTELLECT"},
+        "directive": {"const": "GI-STEWARD-0003"},
+        "separation_model": {"const": "role_scoped_logical_passes"}
+      }
+    },
+    "adversary_record": {
+      "$ref": "#/$defs/adversaryReviewRecord"
+    },
+    "referee_record": {
+      "$ref": "#/$defs/refereeReviewRecord"
+    },
+    "required_checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "object"}
+    },
     "disposition": {
       "type": "object",
       "required": ["type", "frontier"],
@@ -39,8 +58,66 @@
       },
       "additionalProperties": true
     },
-    "preserved_false": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "preserved_false": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
     "notes": {"type": "string"}
+  },
+  "$defs": {
+    "reviewBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_ref",
+        "reviewer_system_id",
+        "logical_pass_id",
+        "role",
+        "mode",
+        "reviewed_repository",
+        "reviewed_candidate_head",
+        "criteria",
+        "finding",
+        "evidence",
+        "unresolved_obligations",
+        "authority_claims"
+      ],
+      "properties": {
+        "record_ref": {"type": "string", "format": "uri"},
+        "reviewer_system_id": {"type": "string", "minLength": 1},
+        "logical_pass_id": {"type": "string", "minLength": 1},
+        "role": {"type": "string", "minLength": 1},
+        "mode": {"const": "non_authoring_read_only"},
+        "reviewed_repository": {"type": "string", "pattern": "^grandchallenge/[A-Za-z0-9._-]+$"},
+        "reviewed_candidate_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "criteria": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "finding": {"enum": ["approved", "changes_requested", "rejected", "abstained"]},
+        "evidence": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "unresolved_obligations": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "authority_claims": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["human_authorized", "mathcert_certified"],
+          "properties": {
+            "human_authorized": {"const": false},
+            "mathcert_certified": {"const": false}
+          }
+        }
+      }
+    },
+    "adversaryReviewRecord": {
+      "allOf": [
+        {"$ref": "#/$defs/reviewBase"},
+        {"properties": {"role": {"const": "Adversary"}}}
+      ]
+    },
+    "refereeReviewRecord": {
+      "allOf": [
+        {"$ref": "#/$defs/reviewBase"},
+        {"properties": {"role": {"const": "Referee"}}}
+      ]
+    }
   },
   "additionalProperties": true
 }
