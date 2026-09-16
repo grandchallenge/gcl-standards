@@ -1,0 +1,34 @@
+{
+  "schema_version": "0.1.0",
+  "record_type": "GCL_STANDARD_STATUS",
+  "identifier": "GCL-CEX-01",
+  "version": "0.1.0",
+  "status": "candidate",
+  "standard_path": "standards/GCL-CEX-01.md",
+  "council_issue": "grandchallenge/gcl-standards#81",
+  "protected_registry_base": "12b842d8333861ebd5eb769591bb04c02ec7d046",
+  "pilot": {
+    "campaign": "BSD-001",
+    "repository": "grandchallenge/MATHSOLVE",
+    "operation": "BSD-WP60S",
+    "pull_request": 246,
+    "status": "live_bootstrap_candidate"
+  },
+  "admission": {
+    "status": "not_yet_admitted",
+    "required": true,
+    "note": "Protected registry custody of the candidate does not create cross-programme authority."
+  },
+  "programme_adoption": {
+    "status": "not_yet_adopted",
+    "required": true
+  },
+  "claim_boundaries": {
+    "constitutional_authority_created": false,
+    "organization_wide_conformance_authorized": false,
+    "programme_adoption_complete": false,
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "agent_permission_escalation_authorized": false
+  }
+}

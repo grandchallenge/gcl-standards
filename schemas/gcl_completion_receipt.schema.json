@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/gcl_completion_receipt.schema.json",
+  "title": "GCL Campaign Completion Receipt",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "record_type",
+    "campaign",
+    "operation",
+    "candidate_head",
+    "merge_sha",
+    "protected_readback_sha",
+    "adversary_record",
+    "referee_record",
+    "required_checks",
+    "disposition",
+    "preserved_false"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "minLength": 1},
+    "record_type": {"const": "GCL_COMPLETION_RECEIPT"},
+    "campaign": {"type": "string", "minLength": 1},
+    "operation": {"type": "string", "minLength": 1},
+    "candidate_head": {"type": "string", "pattern": "^[0-9a-fA-F]{40}$"},
+    "merge_sha": {"type": "string", "pattern": "^[0-9a-fA-F]{40}$"},
+    "protected_readback_sha": {"type": "string", "pattern": "^[0-9a-fA-F]{40}$"},
+    "adversary_record": {"type": "string", "minLength": 1},
+    "referee_record": {"type": "string", "minLength": 1},
+    "required_checks": {"type": "array", "minItems": 1, "items": {"type": "object"}},
+    "disposition": {
+      "type": "object",
+      "required": ["type", "frontier"],
+      "properties": {
+        "type": {"enum": ["CLOSED", "BLOCKED", "FALSIFIED", "RECONNAISSANCE", "MAINTENANCE"]},
+        "frontier": {"type": "string", "minLength": 1},
+        "established": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "next_frontier": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "preserved_false": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "notes": {"type": "string"}
+  },
+  "additionalProperties": true
+}

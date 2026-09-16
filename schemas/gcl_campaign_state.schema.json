@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/gcl_campaign_state.schema.json",
+  "title": "GCL Campaign State",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "record_type",
+    "campaign",
+    "authority",
+    "protected_inputs",
+    "selected_target",
+    "current_operation",
+    "current_frontier",
+    "known_false",
+    "prohibited_promotions",
+    "cold_start",
+    "state_resolution"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "minLength": 1},
+    "record_type": {"const": "GCL_CAMPAIGN_STATE"},
+    "campaign": {"type": "string", "minLength": 1},
+    "title": {"type": "string"},
+    "authority": {
+      "type": "object",
+      "required": ["constitution", "programme_repository", "work_repository", "certification_repository"],
+      "properties": {
+        "constitution": {"type": "string", "minLength": 1},
+        "programme_repository": {"type": "string", "minLength": 1},
+        "work_repository": {"type": "string", "minLength": 1},
+        "source_repository": {"type": "string"},
+        "certification_repository": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": true
+    },
+    "protected_inputs": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "string"}},
+    "selected_target": {
+      "type": "object",
+      "required": ["id", "status"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "status": {"type": "string", "minLength": 1},
+        "governing_identity": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "current_operation": {"type": "string", "minLength": 1},
+    "current_frontier": {
+      "type": "object",
+      "required": ["id", "class", "status"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "class": {"type": "string", "minLength": 1},
+        "status": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": true
+    },
+    "candidate_disposition": {
+      "type": "object",
+      "properties": {
+        "type": {"enum": ["CLOSED", "BLOCKED", "FALSIFIED", "RECONNAISSANCE", "MAINTENANCE"]},
+        "established": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "next_frontier_if_protected": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "known_false": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "prohibited_promotions": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "cold_start": {
+      "type": "object",
+      "required": ["operation_contract", "canonical_handoff", "preflight", "completion_receipt_surface"],
+      "properties": {
+        "operation_contract": {"type": "string", "minLength": 1},
+        "canonical_handoff": {"type": "string", "minLength": 1},
+        "frontier_record": {"type": "string"},
+        "claim_ledger": {"type": "string"},
+        "preflight": {"type": "string", "minLength": 1},
+        "completion_receipt_surface": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": {"type": "string"}
+    },
+    "state_resolution": {
+      "type": "object",
+      "required": ["entry_snapshot_rule", "completion_overlay_rule", "stale_receipt_rule"],
+      "properties": {
+        "entry_snapshot_rule": {"type": "string", "minLength": 1},
+        "completion_overlay_rule": {"type": "string", "minLength": 1},
+        "stale_receipt_rule": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": true
+    },
+    "execution_standard": {"type": "object"}
+  },
+  "additionalProperties": true
+}
