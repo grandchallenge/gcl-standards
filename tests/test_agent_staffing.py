@@ -43,7 +43,7 @@ def review(role: str, pass_id: str) -> dict[str, object]:
 
 
 class AgentStaffingTests(unittest.TestCase):
-    def test_candidate_contract_is_well_formed(self) -> None:
+    def test_effective_contract_is_well_formed(self) -> None:
         validate()
 
     def test_documentary_coverage_is_complete(self) -> None:

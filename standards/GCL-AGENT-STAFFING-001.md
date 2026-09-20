@@ -1,7 +1,7 @@
 # GCL-AGENT-STAFFING-001: Functional Multi-Role Agent Staffing
 
 **Version:** 1.0.0  
-**Status:** Candidate ready for protected admission; `GI-STEWARD-0003` is effective  
+**Status:** Effective; admitted at protected commit `94e94ddf2d4158494c084d0acaff04009971c16c`
 **Registry:** `grandchallenge/gcl-standards`  
 **Superior authority:** `grandchallenge/INTELLECT`  
 **Review schema:** `schemas/multi_role_review.schema.json`  
@@ -15,9 +15,10 @@ A single Codex system MAY staff multiple non-reserved roles when each role is a
 distinct logical audit pass over an exact subject and material evidence set.
 
 Superior authority became effective at INTELLECT protected merge
-`7e01dc6b1be46171f0cba5e140ca881f6ab2f50f`. This candidate becomes the
-canonical admitted standard only when this exact version is merged through the
-protected `gcl-standards` branch and read back.
+`7e01dc6b1be46171f0cba5e140ca881f6ab2f50f`. This exact version became the
+canonical admitted standard at protected `gcl-standards` merge
+`94e94ddf2d4158494c084d0acaff04009971c16c`; the completed 16-repository
+rollout is recorded in `status/GCL-AGENT-STAFFING-001-rollout.json`.
 
 ## 2. Work classification
 
