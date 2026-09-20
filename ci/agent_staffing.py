@@ -88,7 +88,9 @@ def validate_review_set(reviews: Sequence[Mapping[str, object]]) -> None:
 def validate_standard() -> None:
     text = STANDARD.read_text(encoding="utf-8")
     required = (
-        "`GI-STEWARD-0003` is effective",
+        "**Status:** Effective; admitted at protected commit `94e94ddf2d4158494c084d0acaff04009971c16c`",
+        "`7e01dc6b1be46171f0cba5e140ca881f6ab2f50f`",
+        "`status/GCL-AGENT-STAFFING-001-rollout.json`",
         "A single Codex system MAY staff multiple non-reserved roles",
         "MUST NOT claim that a different system, invocation, task, model,",
         "Automation MAY prepare, faithfully record, and mechanically execute",
@@ -162,4 +164,4 @@ def validate() -> None:
 
 if __name__ == "__main__":
     validate()
-    print("agent staffing candidate validation passed")
+    print("agent staffing validation passed")
