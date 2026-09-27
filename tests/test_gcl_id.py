@@ -21,6 +21,17 @@ class GCLIDTests(unittest.TestCase):
     def test_current_admission_is_well_formed(self) -> None:
         validate()
 
+    def test_current_programme_adoption_projection_is_effective(self) -> None:
+        from gcl_id import STATUS
+
+        status = _load_json(STATUS)
+        self.assertEqual(status["programme_adoption"]["status"], "effective")
+        self.assertEqual(
+            status["programme_adoption"]["protected_commit"],
+            "64ad90b3108f476225cc1ca5a2889e71b3719cc8",
+        )
+        self.assertTrue(status["claim_boundaries"]["programme_adoption_complete"])
+
     def test_duplicate_logical_pass_is_rejected(self) -> None:
         record = copy.deepcopy(_load_json(ADMISSION))
         record["source_reviews"]["referee"]["logical_pass_id"] = record["source_reviews"]["adversary"]["logical_pass_id"]

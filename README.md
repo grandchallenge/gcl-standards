@@ -92,8 +92,12 @@ The motivating protected example is VGSE-ENG-WP06. Current registry status is
 recorded in
 [`status/GCL-ID-00-current.json`](status/GCL-ID-00-current.json). Standards-layer
 admission is bound by [`admissions/GCL-ID-00-0.1.0.json`](admissions/GCL-ID-00-0.1.0.json).
-Programme adoption remains a separate gate, and admission creates no mathematical,
-constitutional, certification, or organization-wide conformance authority.
+MATH-PROGRAMME has adopted this version at protected commit
+`64ad90b3108f476225cc1ca5a2889e71b3719cc8`; the exact downstream adoption
+record is `governance/GCL-ID-00-ADOPTION.json` with Git blob
+`c56c8cf70a6caeaaf6c5306eb37b071fc9588c89`. Programme adoption creates no
+mathematical, constitutional, certification, or organization-wide conformance
+authority.
 
 ### GCL-RC-00
 
