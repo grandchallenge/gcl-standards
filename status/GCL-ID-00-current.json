@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.1.0",
+  "record_type": "GCL_STANDARD_STATUS",
+  "identifier": "GCL-ID-00",
+  "version": "0.1.0",
+  "status": "candidate",
+  "standard_path": "standards/GCL-ID-00.md",
+  "council_issue": "grandchallenge/gcl-standards#88",
+  "admission": {
+    "status": "not_yet_admitted",
+    "required": true,
+    "record": null
+  },
+  "programme_adoption": {
+    "status": "not_yet_adopted",
+    "required": true
+  },
+  "motivation": {
+    "programme": "grandchallenge/MATH-PROGRAMME",
+    "work_package": "VGSE-ENG-WP06",
+    "substantive_protected_merge": "9663a9bc8f71af808ea4578a02467cfd47c29d92",
+    "terminal_checkpoint": "f132000f8308c65ac89c31d90d5e22df6c5dc56c",
+    "certification_repository": "grandchallenge/MATHCERT",
+    "te3_audit_protected_merge": "15b68c196d020045bea42fc34236e0647b87cbb9",
+    "c05_reconciliation_protected_merge": "ff8f2509d8d0603a2712abcc43c1d450136ee4b3"
+  },
+  "claim_boundaries": {
+    "constitutional_authority_created": false,
+    "organization_wide_conformance_authorized": false,
+    "programme_adoption_complete": false,
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "agent_permission_escalation_authorized": false
+  }
+}
