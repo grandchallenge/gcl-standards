@@ -3,13 +3,17 @@
   "record_type": "GCL_STANDARD_STATUS",
   "identifier": "GCL-ID-00",
   "version": "0.1.0",
-  "status": "candidate",
+  "status": "admitted",
   "standard_path": "standards/GCL-ID-00.md",
   "council_issue": "grandchallenge/gcl-standards#88",
   "admission": {
-    "status": "not_yet_admitted",
+    "status": "admitted",
     "required": true,
-    "record": null
+    "record": "admissions/GCL-ID-00-0.1.0.json",
+    "effective_condition": "protected_merge_of_exact_admission_record",
+    "reviewed_candidate_head": "26425fbe30cfbef53cc31363486375290f8071c4",
+    "protected_candidate_readback": "027d97d348573bdcd071c6ab82f2f54487261715",
+    "standard_git_blob_sha1": "4a7d5968bdbce38e6e462ed7c17a61ea6d5ca992"
   },
   "programme_adoption": {
     "status": "not_yet_adopted",
