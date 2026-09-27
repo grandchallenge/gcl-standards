@@ -1,0 +1,57 @@
+# GCL-ID-00 non-authoritative starting point.
+# This file does not establish conformance or mathematical truth.
+
+identifier: ""
+work_package: ""
+standard: "GCL-ID-00"
+standard_version: "0.1.0"
+
+target:
+  description: ""
+  representation_dependencies: []
+  invariant_object: ""
+
+observation_contract:
+  forward_map_or_relation: ""
+  observed: []
+  omitted: []
+  side_information: []
+  tolerances_or_noise_model: ""
+  training_or_fixture_information_not_available_at_inference: []
+
+observational_equivalence:
+  known_transformations: []
+  constructive_indistinguishable_pair: null
+  local_kernel_or_null_directions: null
+  group_or_orbit_description: null
+  unresolved_equivalences: []
+
+recoverable_object:
+  classification: "UNRESOLVED"
+  quotient_or_invariants: ""
+  identifiable_rank_or_dimension: null
+  evidence: []
+
+symmetry_breaking:
+  required_for_full_representative_recovery: false
+  added_information_or_normalization: []
+  role_of_each_condition: []
+  minimality_status: "not_assessed"
+
+solver_gate:
+  target_after_preflight: ""
+  may_claim_full_recovery: false
+  reason: ""
+
+failure_classification:
+  - "UNRESOLVED"
+
+claim_boundary:
+  mathematical_certification: false
+  physical_truth: false
+  numerical_stability: false
+  estimator_optimality: false
+  product_or_commercial_authority: false
+
+evidence_refs: []
+unresolved_assumptions: []
