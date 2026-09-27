@@ -73,7 +73,7 @@ and programme adoption remain separate gates.
 
 ### GCL-ID-00
 
-[`GCL-ID-00`](standards/GCL-ID-00.md) is the candidate Identifiability
+[`GCL-ID-00`](standards/GCL-ID-00.md) is the admitted Identifiability
 Preflight and Symmetry-Kernel Doctrine version `0.1.0`. It requires inverse,
 reconstruction, calibration, and latent-recovery work to state the observation
 contract, characterize observation-preserving equivalence, identify the
@@ -90,9 +90,10 @@ A non-authoritative starting record is provided at
 [`templates/identifiability_preflight.yaml`](templates/identifiability_preflight.yaml).
 The motivating protected example is VGSE-ENG-WP06. Current registry status is
 recorded in
-[`status/GCL-ID-00-current.json`](status/GCL-ID-00-current.json). Candidate
-custody does not admit the standard or create mathematical, constitutional, or
-organization-wide authority.
+[`status/GCL-ID-00-current.json`](status/GCL-ID-00-current.json). Standards-layer
+admission is bound by [`admissions/GCL-ID-00-0.1.0.json`](admissions/GCL-ID-00-0.1.0.json).
+Programme adoption remains a separate gate, and admission creates no mathematical,
+constitutional, certification, or organization-wide conformance authority.
 
 ### GCL-RC-00
 
