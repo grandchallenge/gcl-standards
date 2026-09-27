@@ -70,6 +70,30 @@ custody does not admit the standard, create organization-wide conformance, or
 change mathematical or constitutional authority. Protected standard admission
 and programme adoption remain separate gates.
 
+
+### GCL-ID-00
+
+[`GCL-ID-00`](standards/GCL-ID-00.md) is the candidate Identifiability
+Preflight and Symmetry-Kernel Doctrine version `0.1.0`. It requires inverse,
+reconstruction, calibration, and latent-recovery work to state the observation
+contract, characterize observation-preserving equivalence, identify the
+recoverable quotient or partial target, and separate structural
+non-identifiability from conditioning, finite-data limits, model mismatch, and
+optimization failure.
+
+The compact rule is: before solving an inverse problem, characterize what the
+observation map has already transformed away. The doctrine does not assume every
+problem has a linear kernel or group symmetry; the invariant object is the
+observation-preserving equivalence class.
+
+A non-authoritative starting record is provided at
+[`templates/identifiability_preflight.yaml`](templates/identifiability_preflight.yaml).
+The motivating protected example is VGSE-ENG-WP06. Current registry status is
+recorded in
+[`status/GCL-ID-00-current.json`](status/GCL-ID-00-current.json). Candidate
+custody does not admit the standard or create mathematical, constitutional, or
+organization-wide authority.
+
 ### GCL-RC-00
 
 [`GCL-RC-00`](standards/GCL-RC-00.md) is the candidate Regret Contract Standard
