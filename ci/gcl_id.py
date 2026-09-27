@@ -121,8 +121,33 @@ def validate_status() -> None:
     if admission.get("record") != "admissions/GCL-ID-00-0.1.0.json":
         raise GCLIDError("GCL-ID-00 status admission record drift")
     programme = status.get("programme_adoption")
-    if not isinstance(programme, Mapping) or programme.get("status") != "not_yet_adopted":
-        raise GCLIDError("programme adoption must remain separate from standards admission")
+    expected_programme = {
+        "status": "effective",
+        "required": True,
+        "repository": "grandchallenge/MATH-PROGRAMME",
+        "protected_commit": "64ad90b3108f476225cc1ca5a2889e71b3719cc8",
+        "record": "governance/GCL-ID-00-ADOPTION.json",
+        "record_git_blob_sha1": "c56c8cf70a6caeaaf6c5306eb37b071fc9588c89",
+        "governing_issue": "grandchallenge/MATH-PROGRAMME#1070",
+        "pull_request": "grandchallenge/MATH-PROGRAMME#1071",
+    }
+    if programme != expected_programme:
+        raise GCLIDError("GCL-ID-00 programme adoption projection drift")
+
+    boundaries = status.get("claim_boundaries")
+    if not isinstance(boundaries, Mapping):
+        raise GCLIDError("GCL-ID-00 status claim boundaries must be structured")
+    if boundaries.get("programme_adoption_complete") is not True:
+        raise GCLIDError("GCL-ID-00 current status must project completed programme adoption")
+    for field in (
+        "constitutional_authority_created",
+        "organization_wide_conformance_authorized",
+        "mathematical_claim_authorized",
+        "certification_claim_authorized",
+        "agent_permission_escalation_authorized",
+    ):
+        if boundaries.get(field) is not False:
+            raise GCLIDError(f"GCL-ID-00 programme adoption may not widen authority: {field}")
 
 
 def validate() -> None:
