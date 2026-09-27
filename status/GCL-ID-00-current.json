@@ -16,8 +16,14 @@
     "standard_git_blob_sha1": "4a7d5968bdbce38e6e462ed7c17a61ea6d5ca992"
   },
   "programme_adoption": {
-    "status": "not_yet_adopted",
-    "required": true
+    "status": "effective",
+    "required": true,
+    "repository": "grandchallenge/MATH-PROGRAMME",
+    "protected_commit": "64ad90b3108f476225cc1ca5a2889e71b3719cc8",
+    "record": "governance/GCL-ID-00-ADOPTION.json",
+    "record_git_blob_sha1": "c56c8cf70a6caeaaf6c5306eb37b071fc9588c89",
+    "governing_issue": "grandchallenge/MATH-PROGRAMME#1070",
+    "pull_request": "grandchallenge/MATH-PROGRAMME#1071"
   },
   "motivation": {
     "programme": "grandchallenge/MATH-PROGRAMME",
@@ -31,7 +37,7 @@
   "claim_boundaries": {
     "constitutional_authority_created": false,
     "organization_wide_conformance_authorized": false,
-    "programme_adoption_complete": false,
+    "programme_adoption_complete": true,
     "mathematical_claim_authorized": false,
     "certification_claim_authorized": false,
     "agent_permission_escalation_authorized": false
