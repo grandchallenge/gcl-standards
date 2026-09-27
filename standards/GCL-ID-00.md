@@ -22,31 +22,21 @@ The phrase "symmetry kernel" is shorthand. This standard does not assume that ev
 
 ## 2. Governing principle
 
-Let (X) denote the admissible latent or parameter space, (Y) the declared observation space, and
+Let X denote the admissible latent or parameter space, Y the declared observation space, and
 
-[
-F:X	o Y
-]
+**F: X → Y**
 
 the observation map, forward model, evidence relation, or experimentally realized measurement process.
 
-Define observational equivalence by
+Define observational equivalence by:
 
-[
-xsim_F x'
-quadLongleftrightarrowquad
-F(x)=F(x')
-]
+**x ~F x' if and only if F(x) = F(x').**
 
-or by the declared equality/tolerance relation appropriate to the evidence model.
+For noisy, approximate, or set-valued observations, the work SHALL use the declared equality, tolerance, likelihood, or evidence relation appropriate to the model.
 
-The object recoverable from the observations is, in general, not (x) itself but its equivalence class
+The object recoverable from the observations is, in general, not x itself but its equivalence class **[x]F in X / ~F**.
 
-[
-[x]_Fin X/{sim_F}.
-]
-
-A stronger claim that a particular representative (x) is recoverable requires additional information sufficient to select that representative.
+A stronger claim that a particular representative x is recoverable requires additional information sufficient to select that representative.
 
 No solver can infer a distinction that the declared observation relation erases unless new information, prior structure, normalization, intervention, or measurement is introduced.
 
@@ -117,9 +107,9 @@ Absence of a known symmetry SHALL NOT be reported as proof of injectivity.
 
 ### ID-4: Kernel or orbit analysis
 
-Where a differentiable local model exists, the work SHOULD inspect the differential (DF_x) and identify null directions or rank deficiency.
+Where a differentiable local model exists, the work SHOULD inspect the differential DF(x) and identify null directions or rank deficiency.
 
-Where a group action (Gcurvearrowright X) is known to preserve observations, the work SHOULD characterize the induced orbit and stabilizer.
+Where a group action G ↷ X is known to preserve observations, the work SHOULD characterize the induced orbit and stabilizer.
 
 Where neither representation is appropriate, the work SHALL use the strongest available exact, algebraic, combinatorial, probabilistic, or constructive equivalence argument.
 
@@ -132,11 +122,11 @@ State what the observations do identify.
 The result SHOULD take one of these forms where possible:
 
 - an injective target;
-- a quotient (X/{sim_F});
+- a quotient X / ~F;
 - a set of invariants separating observational equivalence classes;
 - a locally identifiable subspace;
 - an identifiable rank or dimension;
-- an interval/set-valued identified region;
+- an interval or set-valued identified region;
 - an explicit unresolved equivalence class.
 
 A work package SHALL prefer a precise quotient-identifiable result over an unsupported full-recovery claim.
@@ -164,7 +154,7 @@ The work SHALL distinguish a genuine new observation from a convention that mere
 
 Where practical, test whether the proposed added information is sufficient and whether fewer independent conditions could suffice.
 
-If an ambiguity has dimension or rank (k), a proposal to remove it SHOULD account for how its added information constrains those (k) directions.
+If an ambiguity has dimension or rank k, a proposal to remove it SHOULD account for how its added information constrains those k directions.
 
 The standard does not require a universal minimality proof. It requires that the amount and role of symmetry-breaking information be made explicit.
 
@@ -229,17 +219,11 @@ An injective map may be badly conditioned. A non-injective map may be numericall
 
 Accordingly:
 
-[
-	ext{non-identifiable}
-otequiv	ext{ill-conditioned}
-]
+**non-identifiable ≠ ill-conditioned**
 
 and
 
-[
-	ext{ill-conditioned}
-otequiv	ext{non-identifiable}.
-]
+**ill-conditioned ≠ non-identifiable.**
 
 Solver benchmarks SHALL NOT substitute for this distinction.
 
@@ -266,9 +250,7 @@ This standard therefore treats representational ambiguity as first-class structu
 
 The practical question is:
 
-[
-oxed{	ext{What structure survives the observation map, and what has been transformed away?}}
-]
+> **What structure survives the observation map, and what has been transformed away?**
 
 ## 9. Motivating protected example: VGSE-ENG-WP06
 
@@ -298,9 +280,9 @@ An adopted programme SHOULD leave one concise identifiability preflight record c
 
 - target;
 - observation contract;
-- known equivalence/symmetry;
+- known equivalence or symmetry;
 - evidence for invariance;
-- identifiable quotient/invariants/rank;
+- identifiable quotient, invariants, or rank;
 - required symmetry-breaking information;
 - selected failure classification;
 - solver target after preflight;
@@ -328,7 +310,7 @@ The next research question must be one of:
 
 ## 12. Conformance statement
 
-A work package conforms to GCL-ID-00 only when its inverse/reconstruction target and observation contract are explicit, relevant observational equivalences have been investigated, the recoverable object is stated at the strongest supported level, structural ambiguity is separated from numerical/optimization failure, and any representative-selection mechanism is disclosed.
+A work package conforms to GCL-ID-00 only when its inverse or reconstruction target and observation contract are explicit, relevant observational equivalences have been investigated, the recoverable object is stated at the strongest supported level, structural ambiguity is separated from numerical or optimization failure, and any representative-selection mechanism is disclosed.
 
 Documentation that merely repeats the slogan "compute the symmetry kernel" without an observation contract and recoverability analysis is not conformance.
 
