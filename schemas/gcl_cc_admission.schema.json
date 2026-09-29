@@ -1,0 +1,223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/gcl_cc_admission.schema.json",
+  "title": "GCL-CC-00 Standard Admission",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "record_type",
+    "operation_id",
+    "standard",
+    "version",
+    "status",
+    "effective_condition",
+    "reviewed_source",
+    "source_reviews",
+    "protected_integration",
+    "human_steward_approval",
+    "programme_adoption",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "../schemas/gcl_cc_admission.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "record_type": {
+      "const": "GCL_STANDARD_ADMISSION"
+    },
+    "operation_id": {
+      "const": "GCL-CC-00-0.1.0-ADMISSION-001"
+    },
+    "standard": {
+      "const": "GCL-CC-00"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "status": {
+      "const": "admitted"
+    },
+    "effective_condition": {
+      "const": "protected_merge_of_this_exact_record"
+    },
+    "reviewed_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "candidate_head",
+        "protected_readback",
+        "standard_path",
+        "standard_git_blob_sha1"
+      ],
+      "properties": {
+        "repository": {
+          "const": "grandchallenge/gcl-standards"
+        },
+        "candidate_head": {
+          "const": "5f6214bf2a7df6c4a47af99408397305e4179a58"
+        },
+        "protected_readback": {
+          "const": "8fcbf1958f31d540115420c3304ca6317674caf1"
+        },
+        "standard_path": {
+          "const": "standards/GCL-CC-00.md"
+        },
+        "standard_git_blob_sha1": {
+          "const": "b166204c6204ec96dcbf48c48c8688cca3a4cce4"
+        }
+      }
+    },
+    "source_reviews": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "adversary",
+        "referee"
+      ],
+      "properties": {
+        "adversary": {
+          "$ref": "#/$defs/reviewBinding"
+        },
+        "referee": {
+          "$ref": "#/$defs/reviewBinding"
+        }
+      }
+    },
+    "protected_integration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "base",
+        "required_checks",
+        "requires_exact_head_logical_passes"
+      ],
+      "properties": {
+        "base": {
+          "const": "8fcbf1958f31d540115420c3304ca6317674caf1"
+        },
+        "required_checks": {
+          "type": "array",
+          "minItems": 4,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "requires_exact_head_logical_passes": {
+          "const": true
+        }
+      }
+    },
+    "human_steward_approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "statement",
+        "date",
+        "effect"
+      ],
+      "properties": {
+        "statement": {
+          "const": "I, Human Steward, approve."
+        },
+        "date": {
+          "const": "2026-09-28"
+        },
+        "effect": {
+          "const": "approve_normative_core_clarity_doctrine_and_bounded_openmath_reconciliation"
+        }
+      }
+    },
+    "programme_adoption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "status",
+        "repository"
+      ],
+      "properties": {
+        "required": {
+          "const": true
+        },
+        "status": {
+          "const": "not_yet_adopted"
+        },
+        "repository": {
+          "const": "grandchallenge/MATH-PROGRAMME"
+        }
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "constitutional_authority_created",
+        "organization_wide_conformance_authorized",
+        "programme_adoption_complete",
+        "mathematical_claim_authorized",
+        "certification_claim_authorized",
+        "agent_permission_escalation_authorized"
+      ],
+      "properties": {
+        "constitutional_authority_created": {
+          "const": false
+        },
+        "organization_wide_conformance_authorized": {
+          "const": false
+        },
+        "programme_adoption_complete": {
+          "const": false
+        },
+        "mathematical_claim_authorized": {
+          "const": false
+        },
+        "certification_claim_authorized": {
+          "const": false
+        },
+        "agent_permission_escalation_authorized": {
+          "const": false
+        }
+      }
+    }
+  },
+  "$defs": {
+    "reviewBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_ref",
+        "logical_pass_id",
+        "reviewer_system_id",
+        "candidate_head",
+        "finding"
+      ],
+      "properties": {
+        "record_ref": {
+          "type": "string",
+          "format": "uri"
+        },
+        "logical_pass_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewer_system_id": {
+          "const": "openai-gpt-5.6-sol"
+        },
+        "candidate_head": {
+          "const": "5f6214bf2a7df6c4a47af99408397305e4179a58"
+        },
+        "finding": {
+          "const": "approved"
+        }
+      }
+    }
+  }
+}
