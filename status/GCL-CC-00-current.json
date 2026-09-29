@@ -1,0 +1,34 @@
+{
+  "schema_version": "0.1.0",
+  "record_type": "GCL_STANDARD_STATUS",
+  "identifier": "GCL-CC-00",
+  "version": "0.1.0",
+  "status": "candidate",
+  "standard_path": "standards/GCL-CC-00.md",
+  "council_issue": "grandchallenge/gcl-standards#95",
+  "admission": {
+    "status": "pending",
+    "required": true,
+    "record": "admissions/GCL-CC-00-0.1.0.json",
+    "effective_condition": "protected_merge_of_exact_admission_record"
+  },
+  "programme_adoption": {
+    "status": "not_yet_adopted",
+    "required": true,
+    "repository": "grandchallenge/MATH-PROGRAMME"
+  },
+  "motivation": {
+    "doctrine": "CORE CLARITY",
+    "human_steward_approval": "2026-09-28",
+    "initiating_campaign": "OPENMATH-2026",
+    "defect_class": "operational_presentational_drift_and_remediation_stacking"
+  },
+  "claim_boundaries": {
+    "constitutional_authority_created": false,
+    "organization_wide_conformance_authorized": false,
+    "programme_adoption_complete": false,
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "agent_permission_escalation_authorized": false
+  }
+}
