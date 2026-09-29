@@ -422,6 +422,7 @@ def validate() -> None:
     from ghos_execution_routing import validate as validate_ghos_execution_routing
     from agent_staffing import validate as validate_agent_staffing
     from gcl_id import validate as validate_gcl_id
+    from gcl_cc import validate as validate_gcl_cc
 
     validate_ghos_successor()
     validate_status_schemas()
@@ -432,6 +433,7 @@ def validate() -> None:
     validate_ghos_execution_routing()
     validate_agent_staffing()
     validate_gcl_id()
+    validate_gcl_cc()
 
     validate_regret_contract()
     validate_aether_evidence()
