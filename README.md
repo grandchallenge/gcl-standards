@@ -73,7 +73,7 @@ and programme adoption remain separate gates.
 
 ### GCL-CC-00
 
-[`GCL-CC-00`](standards/GCL-CC-00.md) is the candidate Core Clarity Campaign
+[`GCL-CC-00`](standards/GCL-CC-00.md) is the admitted Core Clarity Campaign
 Control standard version `0.1.0`. It requires operational state and declared
 campaign state to remain one protected system, makes operational/presentational
 drift a blocking defect, requires explicit external-agent and competition
@@ -85,9 +85,11 @@ the human-readable view, supersession state, and the deterministic next action
 agree.
 
 Current registry status is recorded in
-[`status/GCL-CC-00-current.json`](status/GCL-CC-00-current.json). Candidate
-custody does not admit the standard, establish organization-wide conformance,
-certify mathematics, or authorize competition submission.
+[`status/GCL-CC-00-current.json`](status/GCL-CC-00-current.json), with admission
+bound by [`admissions/GCL-CC-00-0.1.0.json`](admissions/GCL-CC-00-0.1.0.json).
+Standards-layer admission does not establish organization-wide conformance,
+certify mathematics, authorize competition submission, or replace explicit
+programme adoption.
 
 ### GCL-ID-00
 
