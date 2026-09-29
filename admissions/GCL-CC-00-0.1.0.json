@@ -1,0 +1,61 @@
+{
+  "$schema": "../schemas/gcl_cc_admission.schema.json",
+  "schema_version": "1.0.0",
+  "record_type": "GCL_STANDARD_ADMISSION",
+  "operation_id": "GCL-CC-00-0.1.0-ADMISSION-001",
+  "standard": "GCL-CC-00",
+  "version": "0.1.0",
+  "status": "admitted",
+  "effective_condition": "protected_merge_of_this_exact_record",
+  "reviewed_source": {
+    "repository": "grandchallenge/gcl-standards",
+    "candidate_head": "5f6214bf2a7df6c4a47af99408397305e4179a58",
+    "protected_readback": "8fcbf1958f31d540115420c3304ca6317674caf1",
+    "standard_path": "standards/GCL-CC-00.md",
+    "standard_git_blob_sha1": "b166204c6204ec96dcbf48c48c8688cca3a4cce4"
+  },
+  "source_reviews": {
+    "adversary": {
+      "record_ref": "https://github.com/grandchallenge/gcl-standards/pull/96#pullrequestreview-5346326479",
+      "logical_pass_id": "gcl-cc-00-adversary-5f6214bf-r1",
+      "reviewer_system_id": "openai-gpt-5.6-sol",
+      "candidate_head": "5f6214bf2a7df6c4a47af99408397305e4179a58",
+      "finding": "approved"
+    },
+    "referee": {
+      "record_ref": "https://github.com/grandchallenge/gcl-standards/pull/96#pullrequestreview-5346326863",
+      "logical_pass_id": "gcl-cc-00-referee-5f6214bf-r1",
+      "reviewer_system_id": "openai-gpt-5.6-sol",
+      "candidate_head": "5f6214bf2a7df6c4a47af99408397305e4179a58",
+      "finding": "approved"
+    }
+  },
+  "protected_integration": {
+    "base": "8fcbf1958f31d540115420c3304ca6317674caf1",
+    "required_checks": [
+      "standards-policy",
+      "policy / policy",
+      "security / action-policy",
+      "routing-enforcement"
+    ],
+    "requires_exact_head_logical_passes": true
+  },
+  "human_steward_approval": {
+    "statement": "I, Human Steward, approve.",
+    "date": "2026-09-28",
+    "effect": "approve_normative_core_clarity_doctrine_and_bounded_openmath_reconciliation"
+  },
+  "programme_adoption": {
+    "required": true,
+    "status": "not_yet_adopted",
+    "repository": "grandchallenge/MATH-PROGRAMME"
+  },
+  "claim_boundaries": {
+    "constitutional_authority_created": false,
+    "organization_wide_conformance_authorized": false,
+    "programme_adoption_complete": false,
+    "mathematical_claim_authorized": false,
+    "certification_claim_authorized": false,
+    "agent_permission_escalation_authorized": false
+  }
+}
