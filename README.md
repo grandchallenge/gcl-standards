@@ -119,6 +119,14 @@ record is `governance/GCL-ID-00-ADOPTION.json` with Git blob
 mathematical, constitutional, certification, or organization-wide conformance
 authority.
 
+### GCL-GS-00
+
+[GCL-GS-00](standards/GCL-GS-00.md) is the candidate Generalization-State Evidence Doctrine version 0.1.0. It requires training-state and learned-mechanism work to distinguish acquisition, persistence, accessibility/control, and behavioural expression, and forbids treating smooth loss, more training, or endpoint benchmark improvement as sufficient evidence of a monotone mechanism trajectory.
+
+The compact rule is: **treat checkpoints as potentially distinct computational states.**
+
+The motivating external source is arXiv:2609.33150v1. Its reported mode-hopping results motivate the doctrine; its proposed capacity-allocation explanation remains a hypothesis. Council review is tracked in issue #98. Candidate custody creates no cross-programme effect until protected admission and programme adoption.
+
 ### GCL-RC-00
 
 [`GCL-RC-00`](standards/GCL-RC-00.md) is the candidate Regret Contract Standard
