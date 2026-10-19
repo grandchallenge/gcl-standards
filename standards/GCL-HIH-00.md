@@ -38,7 +38,7 @@ We regard artificial intelligence neither as an origin without antecedents nor a
 
 ### Disclosure of AI Participation
 
-Artificial intelligence contributed to the preparation of this work as disclosed in the accompanying authorship or methodology statement. Responsibility for its substantive claims, evidentiary standards, interpretation, and publication rests with the identified accountable authors or publishers, except where responsibility is explicitly allocated otherwise.
+Artificial intelligence contributed to the preparation of this work as disclosed in the accompanying authorship or methodology statement. The identified accountable authors or publishers remain responsible for its substantive claims, evidentiary standards, interpretation, and publication, subject to applicable law and publication policies.
 
 ## 3. Short acknowledgment (candidate publication text)
 
