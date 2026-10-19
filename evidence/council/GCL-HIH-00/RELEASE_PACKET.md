@@ -50,8 +50,8 @@ No automated review result, earlier expression of release intent, GitHub merge, 
 
 ## Current disposition
 
-**STANDARDS ADMITTED. FORMAL PUBLIC RELEASE ON HOLD.**  
-Human Steward exact-publication authorization: **NOT RECORDED**.  
+**STANDARDS ADMITTED. FORMAL PUBLIC RELEASE ON HOLD.**
+Human Steward exact-publication authorization: **NOT RECORDED**.
 GitHub tag and public release: **NOT CREATED BY THIS PACKET**.
 
 **Next lawful action:** Obtain an exact-packet decision from the authenticated Human Steward and execute the already-specified release steps only if authorized.
