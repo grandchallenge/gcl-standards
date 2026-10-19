@@ -1,0 +1,38 @@
+{
+  "schema_version": "0.1.0",
+  "record_type": "GCL_STANDARD_STATUS",
+  "identifier": "GCL-HIH-00",
+  "version": "0.1.0",
+  "status": "admitted_on_protected_admission_merge",
+  "purpose": "optional acknowledgment of collective human intellectual heritage and factual AI participation disclosure",
+  "source": {
+    "reviewed_candidate_head": "edbf6f3924e9d78efe4e222ed0be249496bb483b",
+    "protected_source_commit": "5de39e59b16f170c54bcda690937dddbf63d07b8",
+    "standard": "standards/GCL-HIH-00.md",
+    "standard_git_blob_sha1": "7f381080b7dd98a7f922274a9693bbc7ead0f40c",
+    "disclosure_template": "templates/AI_PARTICIPATION_DISCLOSURE.md",
+    "disclosure_git_blob_sha1": "4b5577a396214e3090e969808bf601ab035413de"
+  },
+  "admission": {
+    "record": "admissions/GCL-HIH-00-0.1.0.json",
+    "effective_condition": "protected_merge_of_exact_admission_record",
+    "council_issue": "https://github.com/grandchallenge/gcl-standards/issues/103",
+    "council_result": "https://github.com/grandchallenge/gcl-standards/issues/103#issuecomment-6279230502"
+  },
+  "programme_adoption": {
+    "status": "not_yet_adopted",
+    "organization_wide_required_use": false
+  },
+  "public_release": {
+    "status": "HOLD",
+    "formal_release_authorized": false,
+    "reason": "separate reserved Human Steward public-representation decision"
+  },
+  "claim_boundaries": {
+    "source_specific_training_influence_verified": false,
+    "rights_clearance": false,
+    "public_release": false,
+    "mandatory_org_policy": false,
+    "certification": false
+  }
+}
