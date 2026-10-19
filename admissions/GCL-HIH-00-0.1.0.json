@@ -44,8 +44,9 @@
     "constitutional_source": "grandchallenge/INTELLECT/CONSTITUTION.md",
     "active_schedule": "grandchallenge/INTELLECT/governance/constitutional_authority_schedule.json",
     "work_class": "substantive_non_reserved_standards_admission",
-    "reserved_public_representation": false,
-    "no_extra_human_approval_for_standards_admission": true
+    "no_extra_human_approval_for_standards_admission": true,
+    "public_representation_remains_human_reserved": true,
+    "this_admission_is_not_public_release": true
   },
   "public_release": {
     "status": "HOLD_NOT_FORMALLY_RELEASED",
