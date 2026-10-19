@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "GCL_STANDARD_ADMISSION",
+  "operation_id": "GCL-HIH-00-0.1.0-ADMISSION-001",
+  "standard": "GCL-HIH-00",
+  "version": "0.1.0",
+  "status": "admitted",
+  "effective_condition": "protected_merge_of_this_exact_record",
+  "scope": "optional cross-programme publication acknowledgment and separately verifiable AI participation disclosure; no organization-wide mandatory conformance",
+  "review_subject": {
+    "repository": "grandchallenge/gcl-standards",
+    "council_issue": "https://github.com/grandchallenge/gcl-standards/issues/103",
+    "candidate_pr": "https://github.com/grandchallenge/gcl-standards/pull/104",
+    "reviewed_candidate_head": "edbf6f3924e9d78efe4e222ed0be249496bb483b",
+    "protected_candidate_readback": "5de39e59b16f170c54bcda690937dddbf63d07b8",
+    "standard_path": "standards/GCL-HIH-00.md",
+    "standard_git_blob_sha1": "7f381080b7dd98a7f922274a9693bbc7ead0f40c",
+    "disclosure_template_path": "templates/AI_PARTICIPATION_DISCLOSURE.md",
+    "disclosure_template_git_blob_sha1": "4b5577a396214e3090e969808bf601ab035413de",
+    "initial_review_packet_path": "evidence/council/GCL-HIH-00/REVIEW_PACKET.md",
+    "initial_review_packet_git_blob_sha1": "4c6fcee62e9238930e4b2791f7cb106cd25c646b"
+  },
+  "council_disposition": {
+    "result": "ACCEPT_FOR_STANDARDS_ADMISSION",
+    "evidence": "https://github.com/grandchallenge/gcl-standards/issues/103#issuecomment-6279230502",
+    "documented_offices": [
+      "axiomatist",
+      "amanuensis",
+      "grammarian",
+      "composer",
+      "formalist",
+      "verifier",
+      "adversary",
+      "steward",
+      "referee"
+    ],
+    "reviewer_system_id": "openai-gpt-6",
+    "staffing_directive": "GI-STEWARD-0003",
+    "functional_separation": "role_scoped_logical_passes_non_authoring_read_only",
+    "no_external_independence_claim": true,
+    "text_responsibility_correction_applied_before_final_review": true
+  },
+  "authority": {
+    "constitutional_source": "grandchallenge/INTELLECT/CONSTITUTION.md",
+    "active_schedule": "grandchallenge/INTELLECT/governance/constitutional_authority_schedule.json",
+    "work_class": "substantive_non_reserved_standards_admission",
+    "reserved_public_representation": false,
+    "no_extra_human_approval_for_standards_admission": true
+  },
+  "public_release": {
+    "status": "HOLD_NOT_FORMALLY_RELEASED",
+    "reason": "Human Steward public-representation authorization is a separate constitutional reserved action requiring an exact publication packet",
+    "must_not_claim_release_on_standards_admission": true
+  },
+  "programme_adoption": {
+    "status": "NONE_ASSERTED",
+    "required_for_programme_specific_conformance": true,
+    "organization_wide_mandate": false
+  },
+  "claim_boundaries": {
+    "constitutional_amendment": false,
+    "source_training_attribution": false,
+    "individual_creator_consent": false,
+    "rights_clearance": false,
+    "legal_opinion": false,
+    "mathematical_certification": false,
+    "public_release_authorized": false,
+    "organization_wide_mandate": false
+  },
+  "supersedes": "evidence/council/GCL-HIH-00/REVIEW_PACKET.md candidate-status statements only after admission; its historical submission record is preserved verbatim",
+  "reversal_conditions": [
+    "new material misleading-provenance evidence",
+    "inconsistent citation or rights obligations",
+    "materially revised acknowledgment requiring new exact-head review",
+    "changed superior authority"
+  ]
+}
