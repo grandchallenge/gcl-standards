@@ -1,11 +1,11 @@
 # GCL-HIH-00: Human Intellectual Heritage Acknowledgment for AI-Assisted Works
 
-**Version:** 0.1.0  
-**Status:** CANDIDATE FOR COUNCIL REVIEW; NOT ADMITTED, ADOPTED, OR RELEASED  
-**Council docket:** https://github.com/grandchallenge/gcl-standards/issues/103  
-**Custodian:** Grand Challenge Labs standards registry  
-**Scope:** Scientific, mathematical, technical, literary, artistic, educational, and other human/AI-assisted publications  
-**Authority:** Subordinate to the compact Constitution and applicable programme, third-party, legal, licensing, and publication requirements
+- **Version:** 0.1.0
+- **Status:** CANDIDATE FOR COUNCIL REVIEW; NOT ADMITTED, ADOPTED, OR RELEASED
+- **Council docket:** https://github.com/grandchallenge/gcl-standards/issues/103
+- **Custodian:** Grand Challenge Labs standards registry
+- **Scope:** Scientific, mathematical, technical, literary, artistic, educational, and other human/AI-assisted publications
+- **Authority:** Subordinate to the compact Constitution and applicable programme, third-party, legal, licensing, and publication requirements
 
 ## 1. Purpose and boundaries
 
@@ -84,5 +84,5 @@ A favorable Council disposition may recommend protected standards-layer admissio
 
 Prepared from a human-directed discussion concerning recognition of earlier human authors and the cumulative works on which AI-assisted creation depends; agreed long and short formulations preserved in this candidate without asserting that the AI system knows its precise training contributors.
 
-**Proposal date:** 2026-10-19.  
+- **Proposal date:** 2026-10-19.
 **Next obligation:** exact-head Council review on [issue #103](https://github.com/grandchallenge/gcl-standards/issues/103), with decision and release custody preserved.
