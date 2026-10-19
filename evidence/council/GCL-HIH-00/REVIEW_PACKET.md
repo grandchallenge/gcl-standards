@@ -1,10 +1,10 @@
 # Council Release Review Packet: GCL-HIH-00
 
-**Docket:** https://github.com/grandchallenge/gcl-standards/issues/103  
-**Submitted:** 2026-10-19  
-**Disposition:** PENDING COUNCIL REVIEW  
-**Artifact:** [GCL-HIH-00 v0.1.0 candidate](../../../standards/GCL-HIH-00.md)  
-**Companion:** [AI participation disclosure template](../../../templates/AI_PARTICIPATION_DISCLOSURE.md)
+- **Docket:** https://github.com/grandchallenge/gcl-standards/issues/103
+- **Submitted:** 2026-10-19
+- **Disposition:** PENDING COUNCIL REVIEW
+- **Artifact:** [GCL-HIH-00 v0.1.0 candidate](../../../standards/GCL-HIH-00.md)
+- **Companion:** [AI participation disclosure template](../../../templates/AI_PARTICIPATION_DISCLOSURE.md)
 
 ## Charter and decision
 
