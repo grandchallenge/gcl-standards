@@ -1,16 +1,16 @@
 # Candidate Template: Work-Specific AI Participation and Provenance Disclosure
 
-**Companion candidate:** [GCL-HIH-00](../standards/GCL-HIH-00.md)  
-**Status:** DRAFT; NOT ADMITTED OR REQUIRED IN GCL PUBLICATIONS  
-**Council review:** https://github.com/grandchallenge/gcl-standards/issues/103
+- **Companion candidate:** [GCL-HIH-00](../standards/GCL-HIH-00.md)
+- **Status:** DRAFT; NOT ADMITTED OR REQUIRED IN GCL PUBLICATIONS
+- **Council review:** https://github.com/grandchallenge/gcl-standards/issues/103
 
 > Copy the sections relevant to the actual work. Replace bracketed prompts with verified facts, or write **not known**, **not applicable**, or **not independently verifiable**. Do not fill an unknown field by inference. Remove instructional text before publication.
 
 ## Disclosure of AI Participation
 
-**Work:** [title, version, persistent identifier or commit]  
-**Accountable human author(s) / publisher:** [identified accountable parties]  
-**Disclosure date:** [YYYY-MM-DD]
+- **Work:** [title, version, persistent identifier or commit]
+- **Accountable human author(s) / publisher:** [identified accountable parties]
+- **Disclosure date:** [YYYY-MM-DD]
 
 **AI assistance and purpose:** [Describe whether AI systems were used for brainstorming, drafting, editing, translation, data analysis, coding, formalization, research assistance, figure creation, or other specific tasks. Name substantial non-AI computational tools separately where material.]
 
