@@ -48,7 +48,7 @@ def test_successor_admission_is_exact_and_release_stays_held():
     assert admission["predecessor"]["historical_standard_git_blob_sha1"]==blob("standards/history/GCL-HIH-00-0.1.0.md")
     assert admission["predecessor"]["historical_disclosure_git_blob_sha1"]==blob("templates/history/AI_PARTICIPATION_DISCLOSURE-0.1.0.md")
     assert admission["effective_condition"]=="protected_merge_of_this_exact_admission_record"
-    assert status["public_release"]["status"]=="HOLD"
-    assert admission["public_release"]["human_steward_exact_release_authorization_recorded"] is False
+    assert status["public_release"]["status"]=="PUBLISHED"
+    assert admission["public_release"]["human_steward_exact_release_authorization_recorded"] is False  # historical admission snapshot
     assert status["programme_adoption"]["status"]=="not_yet_adopted"
     assert "gcl-hih-00-v0.1.1" not in (ROOT/"evidence/council/GCL-HIH-00/RELEASE_PACKET.md").read_text()

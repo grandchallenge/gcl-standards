@@ -85,13 +85,18 @@ The authoritative version and admission appear in
 [`status/GCL-HIH-00-current.json`](status/GCL-HIH-00-current.json)
 and [`admissions/GCL-HIH-00-0.1.1.json`](admissions/GCL-HIH-00-0.1.1.json).
 No organization-wide use mandate or programme-specific adoption is inferred.
-**Formal external institutional release remains on HOLD.** The
-[v0.1.1 exact-artifact release packet](evidence/council/GCL-HIH-00/RELEASE_PACKET-0.1.1.md),
+**Formal institutional publication is complete:** [GCL-HIH-00 v0.1.1 GitHub Release](https://github.com/grandchallenge/gcl-standards/releases/tag/gcl-hih-00-v0.1.1)
+was issued with the Human Steward's exact authorization, using tag
+`gcl-hih-00-v0.1.1` at protected admission commit
+`a4f3544aafdfde0c8095fec7371cb776ea0b5703`. The
+[publication receipt](evidence/council/GCL-HIH-00/RELEASE_RECEIPT-0.1.1.json)
+records the verified immutable release, authorization relay and notes digest.
+The [v0.1.1 exact release packet](evidence/council/GCL-HIH-00/RELEASE_PACKET-0.1.1.md),
 [release notes](evidence/council/GCL-HIH-00/RELEASE_NOTES-0.1.1.md), and
-[verification manifest](evidence/council/GCL-HIH-00/RELEASE_MANIFEST-0.1.1.json)
-are prepared for the Human Steward's separate authorization; existing public
-source access is not a GitHub Release. The original v0.1.0 packet is retained
-unaltered for historical provenance.
+[manifest](evidence/council/GCL-HIH-00/RELEASE_MANIFEST-0.1.1.json)
+remain as preparation evidence. The original v0.1.0 release packet is
+unaltered historical evidence; formal release does not impose mandatory use
+or programme adoption.
 
 ### GCL-CC-00
 

@@ -24,14 +24,23 @@
     "organization_wide_required_use": false
   },
   "public_release": {
-    "status": "HOLD",
-    "formal_release_authorized": false,
-    "reason": "separate reserved Human Steward public-representation decision"
+    "status": "PUBLISHED",
+    "formal_release_authorized": true,
+    "authorization_relay": "https://github.com/grandchallenge/gcl-standards/issues/103#issuecomment-6303104055",
+    "authorization_packet": "evidence/council/GCL-HIH-00/RELEASE_PACKET-0.1.1.md",
+    "release_url": "https://github.com/grandchallenge/gcl-standards/releases/tag/gcl-hih-00-v0.1.1",
+    "tag": "gcl-hih-00-v0.1.1",
+    "tag_target_protected_commit": "a4f3544aafdfde0c8095fec7371cb776ea0b5703",
+    "published_at": "2026-10-20T22:24:05Z",
+    "published_release_id": 418941201,
+    "release_immutable": true,
+    "publication_receipt": "evidence/council/GCL-HIH-00/RELEASE_RECEIPT-0.1.1.json",
+    "release_notes_sha256": "afe8d1dc76e4a956517772eed86717b7a55eeeccf796a36dba43f992c2f97f62"
   },
   "claim_boundaries": {
     "source_specific_training_influence_verified": false,
     "rights_clearance": false,
-    "public_release": false,
+    "public_release": true,
     "mandatory_org_policy": false,
     "certification": false
   },
