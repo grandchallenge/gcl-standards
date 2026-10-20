@@ -37,3 +37,18 @@ def test_no_stale_current_candidate_labels():
     assert "DRAFT; NOT ADMITTED" not in template
     assert "status/GCL-HIH-00-current.json" in standard and "status/GCL-HIH-00-current.json" in template
     assert "public release" in standard.lower() and "programme" in template.lower()
+
+def test_successor_admission_is_exact_and_release_stays_held():
+    import json
+    admission=json.loads((ROOT/"admissions/GCL-HIH-00-0.1.1.json").read_text())
+    status=json.loads((ROOT/"status/GCL-HIH-00-current.json").read_text())
+    assert admission["version"]==status["version"]=="0.1.1"
+    assert admission["source"]["standard_git_blob_sha1"]==blob("standards/GCL-HIH-00.md")
+    assert admission["source"]["disclosure_template_git_blob_sha1"]==blob("templates/AI_PARTICIPATION_DISCLOSURE.md")
+    assert admission["predecessor"]["historical_standard_git_blob_sha1"]==blob("standards/history/GCL-HIH-00-0.1.0.md")
+    assert admission["predecessor"]["historical_disclosure_git_blob_sha1"]==blob("templates/history/AI_PARTICIPATION_DISCLOSURE-0.1.0.md")
+    assert admission["effective_condition"]=="protected_merge_of_this_exact_admission_record"
+    assert status["public_release"]["status"]=="HOLD"
+    assert admission["public_release"]["human_steward_exact_release_authorization_recorded"] is False
+    assert status["programme_adoption"]["status"]=="not_yet_adopted"
+    assert "gcl-hih-00-v0.1.1" not in (ROOT/"evidence/council/GCL-HIH-00/RELEASE_PACKET.md").read_text()

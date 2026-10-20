@@ -71,6 +71,24 @@ change mathematical or constitutional authority. Protected standard admission
 and programme adoption remain separate gates.
 
 
+### GCL-HIH-00
+
+[`GCL-HIH-00`](standards/GCL-HIH-00.md) is the optional Human Intellectual
+Heritage Acknowledgment and AI Participation Disclosure convention. Its
+original `0.1.0` wording was Council accepted and admitted; the current
+`0.1.1` editorial successor corrects obsolete candidate labels while
+preserving the full and short acknowledgments verbatim. The original text and
+disclosure template are retained under `standards/history/` and
+`templates/history/` for exact provenance.
+
+The authoritative version and admission appear in
+[`status/GCL-HIH-00-current.json`](status/GCL-HIH-00-current.json)
+and [`admissions/GCL-HIH-00-0.1.1.json`](admissions/GCL-HIH-00-0.1.1.json).
+No organization-wide use mandate or programme-specific adoption is inferred.
+**Formal external institutional release remains on HOLD** pending a separately
+authorized Human Steward exact-release packet; existing public source access
+is not a GitHub Release.
+
 ### GCL-CC-00
 
 [`GCL-CC-00`](standards/GCL-CC-00.md) is the admitted Core Clarity Campaign

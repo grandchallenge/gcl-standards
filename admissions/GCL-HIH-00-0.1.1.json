@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0.0",
+  "record_type": "GCL_STANDARD_ADMISSION",
+  "operation_id": "GCL-HIH-00-0.1.1-EDITORIAL-ADMISSION-001",
+  "standard": "GCL-HIH-00",
+  "version": "0.1.1",
+  "status": "admitted",
+  "effective_condition": "protected_merge_of_this_exact_admission_record",
+  "scope": "optional editorial successor correcting time-bound candidate/draft labels; full and short acknowledgment and disclosure fields unchanged; no organization-wide mandate",
+  "source": {
+    "repository": "grandchallenge/gcl-standards",
+    "source_pr": "https://github.com/grandchallenge/gcl-standards/pull/107",
+    "reviewed_editorial_head": "f44b7b5574b1afbcbc754a4fb4ae81475784f6d5",
+    "protected_editorial_source_commit": "0c0305ab8e17638fc5b6bf0151a2ad9ebb1ff9fd",
+    "standard_path": "standards/GCL-HIH-00.md",
+    "standard_git_blob_sha1": "a64c68459ca0f3ed8c586fd53f5ce6b8351ba535",
+    "disclosure_template_path": "templates/AI_PARTICIPATION_DISCLOSURE.md",
+    "disclosure_template_git_blob_sha1": "52e9d9cc667ad5b492d1ebae112360c157f11361"
+  },
+  "predecessor": {
+    "version": "0.1.0",
+    "admission_path": "admissions/GCL-HIH-00-0.1.0.json",
+    "historical_standard_path": "standards/history/GCL-HIH-00-0.1.0.md",
+    "historical_standard_git_blob_sha1": "7f381080b7dd98a7f922274a9693bbc7ead0f40c",
+    "historical_disclosure_path": "templates/history/AI_PARTICIPATION_DISCLOSURE-0.1.0.md",
+    "historical_disclosure_git_blob_sha1": "4b5577a396214e3090e969808bf601ab035413de"
+  },
+  "council": {
+    "decision": "ACCEPT_EDITORIAL_SUCCESSOR_FOR_PROTECTED_ADMISSION",
+    "review_issue": "https://github.com/grandchallenge/gcl-standards/issues/103#issuecomment-6290234825",
+    "review_subject_head": "f44b7b5574b1afbcbc754a4fb4ae81475784f6d5",
+    "reviewer_system_id": "openai-gpt-6",
+    "role_scoped_logical_passes_non_authoring_read_only": true,
+    "no_external_independence_claim": true,
+    "fidelity_evidence": "evidence/council/GCL-HIH-00/EDITORIAL_0.1.1_FIDELITY.md",
+    "protected_source_ci_passed": true
+  },
+  "public_release": {
+    "status": "HOLD_NOT_AUTHORIZED",
+    "human_steward_exact_release_authorization_recorded": false,
+    "original_0_1_0_packet_remains_distinct": "evidence/council/GCL-HIH-00/RELEASE_PACKET.md"
+  },
+  "programme_adoption": {
+    "status": "NONE_ASSERTED",
+    "organization_wide_mandate": false
+  },
+  "claim_boundaries": {
+    "normative_acknowledgment_change": false,
+    "training_influence_traced": false,
+    "creator_consent_inferred": false,
+    "rights_clearance": false,
+    "public_release_authorized": false,
+    "mandatory_org_policy": false
+  }
+}
