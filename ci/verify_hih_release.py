@@ -53,7 +53,32 @@ def validate() -> dict:
         assert blob==expected["git_blob_sha1"],path
         assert sha==expected["sha256"],path
         assert len(raw)==expected["size_bytes"],path
-        assert (ROOT/path).read_bytes()==raw, "source drift: "+path
+        local=(ROOT/path).read_bytes()
+        if local != raw:
+            # The admission-tree status was HOLD before publication.
+            # A later protected receipt may promote only release status;
+            # the signed admission and source artifact identities cannot drift.
+            assert path=="status/GCL-HIH-00-current.json", "source drift: "+path
+            receipt_path=ROOT/DIR/"RELEASE_RECEIPT-0.1.1.json"
+            assert receipt_path.is_file(), "unreceipted status promotion"
+            original=json.loads(raw)
+            current=json.loads(local)
+            receipt=json.loads(receipt_path.read_text())
+            assert receipt["status"]=="PUBLISHED_AND_VERIFIED"
+            assert receipt["release"]["immutable"] is True
+            assert receipt["tag"]["verified_target_commit_sha1"]==SUBJECT
+            assert receipt["release"]["tag"]==TAG
+            assert receipt["notes"]["sha256"]==data["release_notes"]["sha256"]
+            assert current["public_release"]["status"]=="PUBLISHED"
+            assert current["public_release"]["formal_release_authorized"] is True
+            assert current["public_release"]["publication_receipt"]==str(DIR/"RELEASE_RECEIPT-0.1.1.json")
+            assert current["public_release"]["tag_target_protected_commit"]==SUBJECT
+            assert current["claim_boundaries"]["public_release"] is True
+            del original["public_release"]
+            del current["public_release"]
+            original["claim_boundaries"].pop("public_release")
+            current["claim_boundaries"].pop("public_release")
+            assert original==current, "non-release admission/status drift"
     status=json.loads(subject_blob("status/GCL-HIH-00-current.json"))
     admission=json.loads(subject_blob("admissions/GCL-HIH-00-0.1.1.json"))
     assert status["version"]=="0.1.1"
