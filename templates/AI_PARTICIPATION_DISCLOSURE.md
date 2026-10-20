@@ -1,8 +1,10 @@
-# Candidate Template: Work-Specific AI Participation and Provenance Disclosure
+# Work-Specific AI Participation and Provenance Disclosure Template
 
-- **Companion candidate:** [GCL-HIH-00](../standards/GCL-HIH-00.md)
-- **Status:** DRAFT; NOT ADMITTED OR REQUIRED IN GCL PUBLICATIONS
-- **Council review:** https://github.com/grandchallenge/gcl-standards/issues/103
+- **Companion standard:** [GCL-HIH-00](../standards/GCL-HIH-00.md)
+- **Version:** 0.1.1; editorial successor to admitted 0.1.0
+- **Status:** Consult [current registry status](../status/GCL-HIH-00-current.json) and protected admission records; use is optional unless separately adopted by a programme
+- **Immutable predecessor:** [v0.1.0 companion template](history/AI_PARTICIPATION_DISCLOSURE-0.1.0.md), Git blob `4b5577a396214e3090e969808bf601ab035413de`
+- **Original Council review:** https://github.com/grandchallenge/gcl-standards/issues/103
 
 > Copy the sections relevant to the actual work. Replace bracketed prompts with verified facts, or write **not known**, **not applicable**, or **not independently verifiable**. Do not fill an unknown field by inference. Remove instructional text before publication.
 
@@ -48,4 +50,4 @@
 
 ## Scope note
 
-This is a *disclosure aid*, not a legal opinion, evidence of training-data lineage, a rights clearance, an admission record, an AI-author status policy, or an authorization to publish. Council review and subsequent protected admission are required before this becomes an active institutional publication convention.
+This is a *disclosure aid*, not a legal opinion, evidence of training-data lineage, a rights clearance, an admission record, an AI-author status policy, or an authorization to publish. An editorial successor becomes admitted through its own protected exact-revision admission record; this template does not independently authorize formal release or require adoption by a programme.
