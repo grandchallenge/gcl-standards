@@ -2,22 +2,22 @@
   "schema_version": "0.1.0",
   "record_type": "GCL_STANDARD_STATUS",
   "identifier": "GCL-HIH-00",
-  "version": "0.1.0",
-  "status": "admitted_on_protected_admission_merge",
-  "purpose": "optional acknowledgment of collective human intellectual heritage and factual AI participation disclosure",
+  "version": "0.1.1",
+  "status": "admitted_on_protected_editorial_successor_admission_merge",
+  "purpose": "optional acknowledgment of collective human intellectual heritage and work-specific factual AI participation disclosure; editorial-only status correction",
   "source": {
-    "reviewed_candidate_head": "edbf6f3924e9d78efe4e222ed0be249496bb483b",
-    "protected_source_commit": "5de39e59b16f170c54bcda690937dddbf63d07b8",
+    "reviewed_editorial_head": "f44b7b5574b1afbcbc754a4fb4ae81475784f6d5",
+    "protected_source_commit": "0c0305ab8e17638fc5b6bf0151a2ad9ebb1ff9fd",
     "standard": "standards/GCL-HIH-00.md",
-    "standard_git_blob_sha1": "7f381080b7dd98a7f922274a9693bbc7ead0f40c",
+    "standard_git_blob_sha1": "a64c68459ca0f3ed8c586fd53f5ce6b8351ba535",
     "disclosure_template": "templates/AI_PARTICIPATION_DISCLOSURE.md",
-    "disclosure_git_blob_sha1": "4b5577a396214e3090e969808bf601ab035413de"
+    "disclosure_git_blob_sha1": "52e9d9cc667ad5b492d1ebae112360c157f11361"
   },
   "admission": {
-    "record": "admissions/GCL-HIH-00-0.1.0.json",
-    "effective_condition": "protected_merge_of_exact_admission_record",
+    "record": "admissions/GCL-HIH-00-0.1.1.json",
+    "effective_condition": "protected_merge_of_this_exact_admission_record",
     "council_issue": "https://github.com/grandchallenge/gcl-standards/issues/103",
-    "council_result": "https://github.com/grandchallenge/gcl-standards/issues/103#issuecomment-6279230502"
+    "council_result": "https://github.com/grandchallenge/gcl-standards/issues/103#issuecomment-6290234825"
   },
   "programme_adoption": {
     "status": "not_yet_adopted",
@@ -34,5 +34,12 @@
     "public_release": false,
     "mandatory_org_policy": false,
     "certification": false
+  },
+  "predecessor": {
+    "version": "0.1.0",
+    "admission_record": "admissions/GCL-HIH-00-0.1.0.json",
+    "protected_admission_commit": "79898fffae53175c251b4c55991ef885cb852032",
+    "standard_git_blob_sha1": "7f381080b7dd98a7f922274a9693bbc7ead0f40c",
+    "disclosure_template_git_blob_sha1": "4b5577a396214e3090e969808bf601ab035413de"
   }
 }
