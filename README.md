@@ -85,9 +85,13 @@ The authoritative version and admission appear in
 [`status/GCL-HIH-00-current.json`](status/GCL-HIH-00-current.json)
 and [`admissions/GCL-HIH-00-0.1.1.json`](admissions/GCL-HIH-00-0.1.1.json).
 No organization-wide use mandate or programme-specific adoption is inferred.
-**Formal external institutional release remains on HOLD** pending a separately
-authorized Human Steward exact-release packet; existing public source access
-is not a GitHub Release.
+**Formal external institutional release remains on HOLD.** The
+[v0.1.1 exact-artifact release packet](evidence/council/GCL-HIH-00/RELEASE_PACKET-0.1.1.md),
+[release notes](evidence/council/GCL-HIH-00/RELEASE_NOTES-0.1.1.md), and
+[verification manifest](evidence/council/GCL-HIH-00/RELEASE_MANIFEST-0.1.1.json)
+are prepared for the Human Steward's separate authorization; existing public
+source access is not a GitHub Release. The original v0.1.0 packet is retained
+unaltered for historical provenance.
 
 ### GCL-CC-00
 
