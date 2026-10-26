@@ -1,0 +1,64 @@
+{
+  "record_type": "GCL_HIH_PUBLIC_RELEASE_RECEIPT/1",
+  "schema_version": "1.0.0",
+  "operation_id": "GCL-HIH-00-PUBLIC-RELEASE-011-EXECUTION-001",
+  "status": "PUBLISHED_AND_VERIFIED",
+  "standard": "GCL-HIH-00",
+  "version": "0.1.1",
+  "repository": "grandchallenge/gcl-standards",
+  "steward_authorization": {
+    "decision": "AUTHORIZE",
+    "packet_id": "GCL-HIH-00-PUBLIC-RELEASE-011",
+    "origin": "explicit_user_instruction_in_current_ChatGPT_conversation",
+    "github_relay": "https://github.com/grandchallenge/gcl-standards/issues/103#issuecomment-6303104055",
+    "relay_authored_by_authenticated_github_actor": "fyremael",
+    "relay_was_mechanical_transcription_not_independent_human_github_message": true,
+    "chat_identity_independently_verified_by_github": false
+  },
+  "packet": {
+    "path": "evidence/council/GCL-HIH-00/RELEASE_PACKET-0.1.1.md",
+    "protected_source_commit": "4271342a83c5cb2c592f484208cd21e1e8dab141",
+    "git_blob_sha1": "e0c1308fe24accb79e7476985c9467e205616550",
+    "manifest_path": "evidence/council/GCL-HIH-00/RELEASE_MANIFEST-0.1.1.json",
+    "manifest_git_blob_sha1": "ace63dc18ab8eb0b70b18c331f62f82bc718be21"
+  },
+  "release": {
+    "release_id": 418941201,
+    "url": "https://github.com/grandchallenge/gcl-standards/releases/tag/gcl-hih-00-v0.1.1",
+    "tag": "gcl-hih-00-v0.1.1",
+    "title": "Human Intellectual Heritage Acknowledgment and AI Participation Disclosure, GCL-HIH-00 v0.1.1",
+    "published_at": "2026-10-20T22:24:05Z",
+    "author": "fyremael",
+    "draft": false,
+    "prerelease": false,
+    "immutable": true,
+    "source_assets_uploaded": 0
+  },
+  "tag": {
+    "git_ref": "refs/tags/gcl-hih-00-v0.1.1",
+    "type": "commit",
+    "verified_target_commit_sha1": "a4f3544aafdfde0c8095fec7371cb776ea0b5703",
+    "target_matches_authorization": true,
+    "release_target_commitish_metadata": "main",
+    "target_commitish_is_not_tag_reference": true
+  },
+  "notes": {
+    "path": "evidence/council/GCL-HIH-00/RELEASE_NOTES-0.1.1.md",
+    "git_blob_sha1": "d912231e6bd4a1aba745df70e8417bbc6a37d399",
+    "sha256": "afe8d1dc76e4a956517772eed86717b7a55eeeccf796a36dba43f992c2f97f62",
+    "exact_byte_match_to_protected_notes": true
+  },
+  "scope": {
+    "institutional_public_release": true,
+    "organization_wide_mandatory_adoption": false,
+    "programme_specific_adoption": false,
+    "rights_clearance_or_consent_inferred": false,
+    "specific_model_training_provenance_verified": false
+  },
+  "independent_live_readback": {
+    "authenticated_github_release_and_tag_endpoints": true,
+    "exact_immutable_tag": true,
+    "release_notes_verified_against_protected_file": true,
+    "tag_target_commit_preferred_over_informational_release_target_commitish": true
+  }
+}

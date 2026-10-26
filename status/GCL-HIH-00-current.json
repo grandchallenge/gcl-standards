@@ -1,0 +1,54 @@
+{
+  "schema_version": "0.1.0",
+  "record_type": "GCL_STANDARD_STATUS",
+  "identifier": "GCL-HIH-00",
+  "version": "0.1.1",
+  "status": "admitted_on_protected_editorial_successor_admission_merge",
+  "purpose": "optional acknowledgment of collective human intellectual heritage and work-specific factual AI participation disclosure; editorial-only status correction",
+  "source": {
+    "reviewed_editorial_head": "f44b7b5574b1afbcbc754a4fb4ae81475784f6d5",
+    "protected_source_commit": "0c0305ab8e17638fc5b6bf0151a2ad9ebb1ff9fd",
+    "standard": "standards/GCL-HIH-00.md",
+    "standard_git_blob_sha1": "a64c68459ca0f3ed8c586fd53f5ce6b8351ba535",
+    "disclosure_template": "templates/AI_PARTICIPATION_DISCLOSURE.md",
+    "disclosure_git_blob_sha1": "52e9d9cc667ad5b492d1ebae112360c157f11361"
+  },
+  "admission": {
+    "record": "admissions/GCL-HIH-00-0.1.1.json",
+    "effective_condition": "protected_merge_of_this_exact_admission_record",
+    "council_issue": "https://github.com/grandchallenge/gcl-standards/issues/103",
+    "council_result": "https://github.com/grandchallenge/gcl-standards/issues/103#issuecomment-6290234825"
+  },
+  "programme_adoption": {
+    "status": "not_yet_adopted",
+    "organization_wide_required_use": false
+  },
+  "public_release": {
+    "status": "PUBLISHED",
+    "formal_release_authorized": true,
+    "authorization_relay": "https://github.com/grandchallenge/gcl-standards/issues/103#issuecomment-6303104055",
+    "authorization_packet": "evidence/council/GCL-HIH-00/RELEASE_PACKET-0.1.1.md",
+    "release_url": "https://github.com/grandchallenge/gcl-standards/releases/tag/gcl-hih-00-v0.1.1",
+    "tag": "gcl-hih-00-v0.1.1",
+    "tag_target_protected_commit": "a4f3544aafdfde0c8095fec7371cb776ea0b5703",
+    "published_at": "2026-10-20T22:24:05Z",
+    "published_release_id": 418941201,
+    "release_immutable": true,
+    "publication_receipt": "evidence/council/GCL-HIH-00/RELEASE_RECEIPT-0.1.1.json",
+    "release_notes_sha256": "afe8d1dc76e4a956517772eed86717b7a55eeeccf796a36dba43f992c2f97f62"
+  },
+  "claim_boundaries": {
+    "source_specific_training_influence_verified": false,
+    "rights_clearance": false,
+    "public_release": true,
+    "mandatory_org_policy": false,
+    "certification": false
+  },
+  "predecessor": {
+    "version": "0.1.0",
+    "admission_record": "admissions/GCL-HIH-00-0.1.0.json",
+    "protected_admission_commit": "79898fffae53175c251b4c55991ef885cb852032",
+    "standard_git_blob_sha1": "7f381080b7dd98a7f922274a9693bbc7ead0f40c",
+    "disclosure_template_git_blob_sha1": "4b5577a396214e3090e969808bf601ab035413de"
+  }
+}

@@ -71,6 +71,33 @@ change mathematical or constitutional authority. Protected standard admission
 and programme adoption remain separate gates.
 
 
+### GCL-HIH-00
+
+[`GCL-HIH-00`](standards/GCL-HIH-00.md) is the optional Human Intellectual
+Heritage Acknowledgment and AI Participation Disclosure convention. Its
+original `0.1.0` wording was Council accepted and admitted; the current
+`0.1.1` editorial successor corrects obsolete candidate labels while
+preserving the full and short acknowledgments verbatim. The original text and
+disclosure template are retained under `standards/history/` and
+`templates/history/` for exact provenance.
+
+The authoritative version and admission appear in
+[`status/GCL-HIH-00-current.json`](status/GCL-HIH-00-current.json)
+and [`admissions/GCL-HIH-00-0.1.1.json`](admissions/GCL-HIH-00-0.1.1.json).
+No organization-wide use mandate or programme-specific adoption is inferred.
+**Formal institutional publication is complete:** [GCL-HIH-00 v0.1.1 GitHub Release](https://github.com/grandchallenge/gcl-standards/releases/tag/gcl-hih-00-v0.1.1)
+was issued with the Human Steward's exact authorization, using tag
+`gcl-hih-00-v0.1.1` at protected admission commit
+`a4f3544aafdfde0c8095fec7371cb776ea0b5703`. The
+[publication receipt](evidence/council/GCL-HIH-00/RELEASE_RECEIPT-0.1.1.json)
+records the verified immutable release, authorization relay and notes digest.
+The [v0.1.1 exact release packet](evidence/council/GCL-HIH-00/RELEASE_PACKET-0.1.1.md),
+[release notes](evidence/council/GCL-HIH-00/RELEASE_NOTES-0.1.1.md), and
+[manifest](evidence/council/GCL-HIH-00/RELEASE_MANIFEST-0.1.1.json)
+remain as preparation evidence. The original v0.1.0 release packet is
+unaltered historical evidence; formal release does not impose mandatory use
+or programme adoption.
+
 ### GCL-CC-00
 
 [`GCL-CC-00`](standards/GCL-CC-00.md) is the admitted Core Clarity Campaign
