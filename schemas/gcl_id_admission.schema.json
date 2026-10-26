@@ -1,0 +1,285 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://grandchallenge.ai/schemas/gcl_id_admission.schema.json",
+  "title": "GCL-ID-00 Standard Admission",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "record_type",
+    "operation_id",
+    "standard",
+    "version",
+    "status",
+    "effective_condition",
+    "reviewed_source",
+    "source_reviews",
+    "protected_integration",
+    "staffing_authority",
+    "pilot_evidence",
+    "programme_adoption",
+    "claim_boundaries"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "../schemas/gcl_id_admission.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "record_type": {
+      "const": "GCL_STANDARD_ADMISSION"
+    },
+    "operation_id": {
+      "const": "GCL-ID-00-0.1.0-ADMISSION-001"
+    },
+    "standard": {
+      "const": "GCL-ID-00"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "status": {
+      "const": "admitted"
+    },
+    "effective_condition": {
+      "const": "protected_merge_of_this_exact_record"
+    },
+    "reviewed_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "candidate_head",
+        "protected_readback",
+        "standard_path",
+        "standard_git_blob_sha1"
+      ],
+      "properties": {
+        "repository": {
+          "const": "grandchallenge/gcl-standards"
+        },
+        "candidate_head": {
+          "const": "26425fbe30cfbef53cc31363486375290f8071c4"
+        },
+        "protected_readback": {
+          "const": "027d97d348573bdcd071c6ab82f2f54487261715"
+        },
+        "standard_path": {
+          "const": "standards/GCL-ID-00.md"
+        },
+        "standard_git_blob_sha1": {
+          "const": "4a7d5968bdbce38e6e462ed7c17a61ea6d5ca992"
+        }
+      }
+    },
+    "source_reviews": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "adversary",
+        "referee"
+      ],
+      "properties": {
+        "adversary": {
+          "$ref": "#/$defs/reviewBinding"
+        },
+        "referee": {
+          "$ref": "#/$defs/reviewBinding"
+        }
+      }
+    },
+    "protected_integration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "base",
+        "required_checks",
+        "requires_exact_head_logical_passes"
+      ],
+      "properties": {
+        "base": {
+          "const": "027d97d348573bdcd071c6ab82f2f54487261715"
+        },
+        "required_checks": {
+          "type": "array",
+          "minItems": 4,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "standards-policy",
+              "policy / policy",
+              "security / action-policy",
+              "routing-enforcement",
+              "CodeQL",
+              "Analyze (python)",
+              "Analyze (actions)"
+            ]
+          }
+        },
+        "requires_exact_head_logical_passes": {
+          "const": true
+        }
+      }
+    },
+    "staffing_authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "protected_anchor",
+        "directive",
+        "work_class",
+        "effects",
+        "reserved_action_required",
+        "human_steward_gate"
+      ],
+      "properties": {
+        "repository": {
+          "const": "grandchallenge/INTELLECT"
+        },
+        "protected_anchor": {
+          "const": "cacfe1f749b91a335e1d1734352cecff56bad7c1"
+        },
+        "directive": {
+          "const": "GI-STEWARD-0003"
+        },
+        "work_class": {
+          "const": "substantive"
+        },
+        "effects": {
+          "const": [
+            "public_contract"
+          ]
+        },
+        "reserved_action_required": {
+          "const": false
+        },
+        "human_steward_gate": {
+          "const": "not_applicable_under_GI_STEWARD_0003"
+        }
+      }
+    },
+    "pilot_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "programme_repository",
+        "work_package",
+        "programme_substantive_merge",
+        "programme_terminal_checkpoint",
+        "certification_repository",
+        "te3_audit_merge",
+        "c05_reconciliation_merge"
+      ],
+      "properties": {
+        "programme_repository": {
+          "const": "grandchallenge/MATH-PROGRAMME"
+        },
+        "work_package": {
+          "const": "VGSE-ENG-WP06"
+        },
+        "programme_substantive_merge": {
+          "const": "9663a9bc8f71af808ea4578a02467cfd47c29d92"
+        },
+        "programme_terminal_checkpoint": {
+          "const": "f132000f8308c65ac89c31d90d5e22df6c5dc56c"
+        },
+        "certification_repository": {
+          "const": "grandchallenge/MATHCERT"
+        },
+        "te3_audit_merge": {
+          "const": "15b68c196d020045bea42fc34236e0647b87cbb9"
+        },
+        "c05_reconciliation_merge": {
+          "const": "ff8f2509d8d0603a2712abcc43c1d450136ee4b3"
+        }
+      }
+    },
+    "programme_adoption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "status",
+        "repository"
+      ],
+      "properties": {
+        "required": {
+          "const": true
+        },
+        "status": {
+          "const": "not_yet_adopted"
+        },
+        "repository": {
+          "const": "grandchallenge/MATH-PROGRAMME"
+        }
+      }
+    },
+    "claim_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "constitutional_authority_created",
+        "organization_wide_conformance_authorized",
+        "programme_adoption_complete",
+        "mathematical_claim_authorized",
+        "certification_claim_authorized",
+        "agent_permission_escalation_authorized"
+      ],
+      "properties": {
+        "constitutional_authority_created": {
+          "const": false
+        },
+        "organization_wide_conformance_authorized": {
+          "const": false
+        },
+        "programme_adoption_complete": {
+          "const": false
+        },
+        "mathematical_claim_authorized": {
+          "const": false
+        },
+        "certification_claim_authorized": {
+          "const": false
+        },
+        "agent_permission_escalation_authorized": {
+          "const": false
+        }
+      }
+    }
+  },
+  "$defs": {
+    "reviewBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "record_ref",
+        "logical_pass_id",
+        "reviewer_system_id",
+        "candidate_head",
+        "finding"
+      ],
+      "properties": {
+        "record_ref": {
+          "type": "string",
+          "format": "uri"
+        },
+        "logical_pass_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewer_system_id": {
+          "const": "openai-gpt-5.6-sol"
+        },
+        "candidate_head": {
+          "const": "26425fbe30cfbef53cc31363486375290f8071c4"
+        },
+        "finding": {
+          "const": "approved"
+        }
+      }
+    }
+  }
+}

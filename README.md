@@ -70,6 +70,90 @@ custody does not admit the standard, create organization-wide conformance, or
 change mathematical or constitutional authority. Protected standard admission
 and programme adoption remain separate gates.
 
+
+### GCL-HIH-00
+
+[`GCL-HIH-00`](standards/GCL-HIH-00.md) is the optional Human Intellectual
+Heritage Acknowledgment and AI Participation Disclosure convention. Its
+original `0.1.0` wording was Council accepted and admitted; the current
+`0.1.1` editorial successor corrects obsolete candidate labels while
+preserving the full and short acknowledgments verbatim. The original text and
+disclosure template are retained under `standards/history/` and
+`templates/history/` for exact provenance.
+
+The authoritative version and admission appear in
+[`status/GCL-HIH-00-current.json`](status/GCL-HIH-00-current.json)
+and [`admissions/GCL-HIH-00-0.1.1.json`](admissions/GCL-HIH-00-0.1.1.json).
+No organization-wide use mandate or programme-specific adoption is inferred.
+**Formal institutional publication is complete:** [GCL-HIH-00 v0.1.1 GitHub Release](https://github.com/grandchallenge/gcl-standards/releases/tag/gcl-hih-00-v0.1.1)
+was issued with the Human Steward's exact authorization, using tag
+`gcl-hih-00-v0.1.1` at protected admission commit
+`a4f3544aafdfde0c8095fec7371cb776ea0b5703`. The
+[publication receipt](evidence/council/GCL-HIH-00/RELEASE_RECEIPT-0.1.1.json)
+records the verified immutable release, authorization relay and notes digest.
+The [v0.1.1 exact release packet](evidence/council/GCL-HIH-00/RELEASE_PACKET-0.1.1.md),
+[release notes](evidence/council/GCL-HIH-00/RELEASE_NOTES-0.1.1.md), and
+[manifest](evidence/council/GCL-HIH-00/RELEASE_MANIFEST-0.1.1.json)
+remain as preparation evidence. The original v0.1.0 release packet is
+unaltered historical evidence; formal release does not impose mandatory use
+or programme adoption.
+
+### GCL-CC-00
+
+[`GCL-CC-00`](standards/GCL-CC-00.md) is the admitted Core Clarity Campaign
+Control standard version `0.1.0`. It requires operational state and declared
+campaign state to remain one protected system, makes operational/presentational
+drift a blocking defect, requires explicit external-agent and competition
+lifecycles, and forbids remediation stacking without migration and retirement.
+
+Its compact rule is: **state intelligibility is a correctness invariant**.
+A campaign is not complete until protected reality, canonical machine state,
+the human-readable view, supersession state, and the deterministic next action
+agree.
+
+Current registry status is recorded in
+[`status/GCL-CC-00-current.json`](status/GCL-CC-00-current.json), with admission
+bound by [`admissions/GCL-CC-00-0.1.0.json`](admissions/GCL-CC-00-0.1.0.json).
+Standards-layer admission does not establish organization-wide conformance,
+certify mathematics, authorize competition submission, or replace explicit
+programme adoption.
+
+### GCL-ID-00
+
+[`GCL-ID-00`](standards/GCL-ID-00.md) is the admitted Identifiability
+Preflight and Symmetry-Kernel Doctrine version `0.1.0`. It requires inverse,
+reconstruction, calibration, and latent-recovery work to state the observation
+contract, characterize observation-preserving equivalence, identify the
+recoverable quotient or partial target, and separate structural
+non-identifiability from conditioning, finite-data limits, model mismatch, and
+optimization failure.
+
+The compact rule is: before solving an inverse problem, characterize what the
+observation map has already transformed away. The doctrine does not assume every
+problem has a linear kernel or group symmetry; the invariant object is the
+observation-preserving equivalence class.
+
+A non-authoritative starting record is provided at
+[`templates/identifiability_preflight.yaml`](templates/identifiability_preflight.yaml).
+The motivating protected example is VGSE-ENG-WP06. Current registry status is
+recorded in
+[`status/GCL-ID-00-current.json`](status/GCL-ID-00-current.json). Standards-layer
+admission is bound by [`admissions/GCL-ID-00-0.1.0.json`](admissions/GCL-ID-00-0.1.0.json).
+MATH-PROGRAMME has adopted this version at protected commit
+`64ad90b3108f476225cc1ca5a2889e71b3719cc8`; the exact downstream adoption
+record is `governance/GCL-ID-00-ADOPTION.json` with Git blob
+`c56c8cf70a6caeaaf6c5306eb37b071fc9588c89`. Programme adoption creates no
+mathematical, constitutional, certification, or organization-wide conformance
+authority.
+
+### GCL-GS-00
+
+[GCL-GS-00](standards/GCL-GS-00.md) is the candidate Generalization-State Evidence Doctrine version 0.1.0. It requires training-state and learned-mechanism work to distinguish acquisition, persistence, accessibility/control, and behavioural expression, and forbids treating smooth loss, more training, or endpoint benchmark improvement as sufficient evidence of a monotone mechanism trajectory.
+
+The compact rule is: **treat checkpoints as potentially distinct computational states.**
+
+The motivating external source is arXiv:2609.33150v1. Its reported mode-hopping results motivate the doctrine; its proposed capacity-allocation explanation remains a hypothesis. Council review is tracked in issue #98. Candidate custody creates no cross-programme effect until protected admission and programme adoption.
+
 ### GCL-RC-00
 
 [`GCL-RC-00`](standards/GCL-RC-00.md) is the candidate Regret Contract Standard

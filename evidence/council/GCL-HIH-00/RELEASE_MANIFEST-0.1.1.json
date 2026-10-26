@@ -1,0 +1,57 @@
+{
+  "record_type": "GCL_HIH_RELEASE_CANDIDATE_MANIFEST/1",
+  "identifier": "GCL-HIH-00",
+  "version": "0.1.1",
+  "release_tag": "gcl-hih-00-v0.1.1",
+  "tag_target_protected_commit": "a4f3544aafdfde0c8095fec7371cb776ea0b5703",
+  "repository": "grandchallenge/gcl-standards",
+  "publication_state": "PREPARED_NOT_AUTHORIZED_NOT_RELEASED",
+  "readme_note": "The source files are publicly readable; no formal GitHub Release is implied.",
+  "council_editorial_review": "https://github.com/grandchallenge/gcl-standards/issues/103#issuecomment-6290234825",
+  "admission_protected_merge": "a4f3544aafdfde0c8095fec7371cb776ea0b5703",
+  "publication_authorization_required": true,
+  "requested_authorizing_actor": "Human Steward, as authenticated through GCL governance",
+  "licence_scope": "Repository MIT license; third-party works and data not implied licensed",
+  "release_notes": {
+    "path": "evidence/council/GCL-HIH-00/RELEASE_NOTES-0.1.1.md",
+    "sha256": "afe8d1dc76e4a956517772eed86717b7a55eeeccf796a36dba43f992c2f97f62",
+    "git_blob_sha1": "d912231e6bd4a1aba745df70e8417bbc6a37d399"
+  },
+  "source_artifacts": {
+    "standards/GCL-HIH-00.md": {
+      "git_blob_sha1": "a64c68459ca0f3ed8c586fd53f5ce6b8351ba535",
+      "sha256": "c09182d2da9b3caaa4a215b34037f35e0c1ec9985c066e69e864c88413021fdd",
+      "size_bytes": 9962
+    },
+    "templates/AI_PARTICIPATION_DISCLOSURE.md": {
+      "git_blob_sha1": "52e9d9cc667ad5b492d1ebae112360c157f11361",
+      "sha256": "ab8244f6778e5cfb406165ad305fec00e98bf6371a12cf28b3c7f722f525f28c",
+      "size_bytes": 5118
+    },
+    "admissions/GCL-HIH-00-0.1.1.json": {
+      "git_blob_sha1": "ae3d7a76d9a3f0c885a50da9e9215fa89663e3b9",
+      "sha256": "95dcd8c1c201744f54819171868fa770c0e005fe9e31646c9be9ecafd6133e6c",
+      "size_bytes": 2620
+    },
+    "status/GCL-HIH-00-current.json": {
+      "git_blob_sha1": "c697caa5d6c3f78dea331b65871d416a631aa865",
+      "sha256": "148de0a4734c458ff6670b94be690445c1b6309bca33913d4706a42bf60cc756",
+      "size_bytes": 1967
+    },
+    "standards/history/GCL-HIH-00-0.1.0.md": {
+      "git_blob_sha1": "7f381080b7dd98a7f922274a9693bbc7ead0f40c",
+      "sha256": "bfa5ccf93d44e3668fece1ee179b05921ae92f61be992c98153dafa914476f94",
+      "size_bytes": 9080
+    },
+    "templates/history/AI_PARTICIPATION_DISCLOSURE-0.1.0.md": {
+      "git_blob_sha1": "4b5577a396214e3090e969808bf601ab035413de",
+      "sha256": "896aafa0cfa19c420ab4c8eb58e3b4977c7bdace847ebde9f1c709c91364d8a4",
+      "size_bytes": 4732
+    },
+    "LICENSE": {
+      "git_blob_sha1": "4cd5a9a275d37e2f9e352345e839b5d9cc23db54",
+      "sha256": "e9addfda732d503154225c0d3abe4973debd77ab408beae2c28a5297a4571b9d",
+      "size_bytes": 1077
+    }
+  }
+}
