@@ -36,7 +36,7 @@ def _read(path: Path) -> dict:
 def _relative(path: str) -> str:
     if not isinstance(path, str) or not path or path.startswith(("/", "./")):
         raise RoutingError(f"invalid path: {path!r}")
-    if "\\" in path or any(part in {"", ".", ".."} for part in path.split("/")):
+    if "\\" in path or any(part in {"", ".", ".."} for part in path.rstrip("/").split("/")):
         raise RoutingError(f"unsafe path: {path}")
     if any(c in path for c in "*?[]"):
         raise RoutingError(f"glob not permitted in component path: {path}")
