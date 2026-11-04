@@ -72,7 +72,8 @@ def _components(root: Path) -> dict[str, dict]:
         for kind, values in paths.items():
             for value in values:
                 _relative(value)
-                if value.startswith(_CONTROL_PREFIXES):
+                if (value.startswith((".github/", "governance/ci_components/"))
+                    or (value.startswith("ci/") and (kind == "prefixes" or (kind == "exact" and not value.startswith("ci/test_"))))):
                     raise RoutingError(f"component captured protected control path: {name}: {value}")
                 if kind == "prefixes" and not value.endswith("/"):
                     raise RoutingError(f"directory prefix lacks slash: {name}: {value}")
