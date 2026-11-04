@@ -1,0 +1,41 @@
+{
+  "contract_id": "GCL-CIR-001",
+  "version": "1.0.0",
+  "repository": "grandchallenge/gcl-standards",
+  "mode": "ENFORCE_DISCOVERY_PRESERVE_EXISTING_CI",
+  "checks": [
+    {
+      "id": "standards-policy",
+      "test_globs": [
+        "tests/test_*.py"
+      ]
+    }
+  ],
+  "legacy_test_paths": [
+    "tests/test_agent_staffing.py",
+    "tests/test_gcl_cex.py",
+    "tests/test_gcl_id.py",
+    "tests/test_gcl_rc_chronology_cure.py",
+    "tests/test_ghos_control_plane.py",
+    "tests/test_ghos_control_store.py",
+    "tests/test_ghos_documentary_successor.py",
+    "tests/test_ghos_execution_routing.py",
+    "tests/test_git_content.py",
+    "tests/test_hih_editorial_fidelity.py",
+    "tests/test_hih_public_release_receipt.py",
+    "tests/test_hih_release_preparation.py",
+    "tests/test_intellect_profile_phase_b_overlay.py",
+    "tests/test_intellect_profile_reconciliation.py",
+    "tests/test_math_programme_pilot_adoption.py",
+    "tests/test_optimality_scorecard.py",
+    "tests/test_phase12_closeout.py",
+    "tests/test_settings_readback.py",
+    "tests/test_settings_readback_modulus_closure_overlay.py",
+    "tests/test_settings_readback_owner_export_overlay.py",
+    "tests/test_settings_readback_quantum_closure_overlay.py",
+    "tests/test_standard_admission.py",
+    "tests/test_standard_successor_admission.py",
+    "tests/test_status_coherence.py",
+    "tests/test_validate.py"
+  ]
+}
