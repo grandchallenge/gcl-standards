@@ -29,15 +29,21 @@ All times above refer to 2026-11-05 UTC. The protected `main` component-manifest
 
 - `MATH-PROGRAMME`: protected-admitted `MP-POLICY-IMPACT-GATING-001` with declarative component routing (PRs #3127, #3128, #3129), exact-head OAI26 and negative-test execution proof. This is the authoritative native implementation, **not replaced** by the portable adapter.
 
-## Open substantive admission obligations
+## Final substantive admissions — protected and verified
 
-| Repository | PR / dependency | State and next permitted action |
-| --- | --- | --- |
-| INTELLECT | [#134](https://github.com/grandchallenge/INTELLECT/pull/134) | `OPEN / REVIEW_REQUIRED`. Candidate exact-head CI green, nine regression tests executed; await genuinely eligible protected approval, merge and protected-main readback. Do not impersonate a reviewer or bypass protection. |
-| MATHCERT | [#357](https://github.com/grandchallenge/MATHCERT/pull/357) | `OPEN / REVIEW_REQUIRED`. Staged passive source, frozen test inventory and manifest; exact-head Cert checks/conformance green. Obtain protected approval, merge and readback. |
-| MATHCERT execution | [#358](https://github.com/grandchallenge/MATHCERT/pull/358) | Mandated `platform/certification/*` branch; only workflow path modified; platform scope preflight PASS. CI intentionally stops because source test file from #357 is absent on `main`. Once #357 merges, rebase/replay #358 and obtain its own protected review, merge and executed-test proof. Preserve full Lean/certification scope. |
+**Disposition: `GCL-CIR-001_ORG_ADOPTION_CLOSED` (2026-11-05 UTC).** The last two applicable repositories were admitted through three protected PRs. The source and execution changes in MATHCERT are one two-stage adoption, not two repositories.
 
-The two MATHCERT PRs are **one two-stage repository adoption**, not two independent repositories. No claim of full organization-wide completion is valid while these remain unmerged.
+| Repository / stage | PR | Approved reviewer | Exact candidate head | Protected merge UTC | Protected merge SHA | Required CI evidence |
+| --- | --- | --- | --- | --- | --- | --- |
+| INTELLECT source | [#134](https://github.com/grandchallenge/INTELLECT/pull/134) | jimsteeg, 12:14:23 UTC | `f9955d433fef390a232a1dce13328f2c81994878` | 12:21:56 | `1c22839042da4b98fb8a979bc20edc0b3002f78e` | [CI Python 3.11/3.12](https://github.com/grandchallenge/INTELLECT/actions/runs/41939540499); [validation](https://github.com/grandchallenge/INTELLECT/actions/runs/41939540584); nine routing tests executed |
+| MATHCERT source | [#357](https://github.com/grandchallenge/MATHCERT/pull/357) | jimsteeg, 12:14:37 UTC | `d9442a979c95be548c1966b1d27563ced6ad308d` | 12:15:09 | `f6b72807d5ab82b33ed73b74604d1bcdf06e2662` | [Cert checks, job 126989883761](https://github.com/grandchallenge/MATHCERT/actions/runs/41949365091/job/126989883761) |
+| MATHCERT executing workflow | [#358](https://github.com/grandchallenge/MATHCERT/pull/358) | jimsteeg, 12:14:54 UTC; still APPROVED on updated head | `f940d28f5dfb1c6ce2f410d94c96d890342e022f` | 12:39:12 | `7a97ac1131d5a80840d59c3f172499e92e29e182` | [Cert checks, job 127246986119](https://github.com/grandchallenge/MATHCERT/actions/runs/42028008138/job/127246986119): nine `test_gcl_component_routing.py` tests executed and passed, plus existing cert checks |
+
+The explicit dependency sequence was preserved: #357 protected-merged before #358's head was updated to consume its source. The first #358 certification check failed because that source test was absent; the refreshed exact head ran all nine new routing tests successfully and its required checks completed green. No failed check was waived. Full Lean/certification scope was preserved.
+
+**Protected readback:** INTELLECT `main=1c22839042da4b98fb8a979bc20edc0b3002f78e`; MATHCERT `main=7a97ac1131d5a80840d59c3f172499e92e29e182`. All three PRs returned `MERGED` with these exact protected merge commits, and #358 returned `APPROVED`, `CLEAN`, and successful certification before admission.
+
+**Applicability inventory rechecked on 2026-11-05 UTC:** 21 organization repositories observed, comprising 19 active non-fork repositories and two forks. Of the 19 first-party repositories, 17 have applicable Python-v1 implementations (16 portable including the canonical standards repository, plus MATH-PROGRAMME's pre-existing native implementation); GCT-EXECUTIVE and gcl-public-web-preview remain `NOT_APPLICABLE_PYTHON_V1`. The two forks remain excluded. This closes the declared Python-v1 CI-routing adoption scope only; it does not certify all other-language CI, mathematical claims, deployments or future repositories.
 
 ## Other repository disposition
 
