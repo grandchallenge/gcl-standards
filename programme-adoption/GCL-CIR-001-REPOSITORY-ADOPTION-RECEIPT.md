@@ -2,7 +2,7 @@
 
 **Snapshot:** 2026-11-05 UTC. **Scope:** active, non-fork repositories of `grandchallenge`. **Contract:** [GCL-CIR-001](../standards/GCL-CIR-001.md) v1.0.0. **Canonical source:** protected-merged standards PR [#114](https://github.com/grandchallenge/gcl-standards/pull/114), exact candidate `cab9749f74e55cf4126b98a372984d35974189a1` (merged 2026-11-05T03:45:04Z).
 
-This ledger is an **immutable-as-of evidence snapshot**, not permission to skip live GitHub checks. The exact PR head, protected merge, required CI and on-main file readback govern the current state. Refresh after every successful admission; never treat staged source or green PR CI alone as `ADMITTED`.
+This ledger is a **versioned evidence receipt**, not permission to skip live GitHub checks. The exact PR head, protected merge, required CI and on-main file readback govern the current state. Refresh after every successful admission; never treat staged source or green PR CI alone as `ADMITTED`.
 
 ## Admitted protected implementations
 
@@ -22,6 +22,8 @@ This ledger is an **immutable-as-of evidence snapshot**, not permission to skip 
 | ADAPTIVE-INTELLIGENCE-ATLAS | [447](https://github.com/grandchallenge/ADAPTIVE-INTELLIGENCE-ATLAS/pull/447) | 08:31:40 | Atlas validation; editorial authority unchanged |
 | COMPUTATIONAL-DIFFICULTY-ATLAS | [62](https://github.com/grandchallenge/COMPUTATIONAL-DIFFICULTY-ATLAS/pull/62) | 08:32:05 | Native operational test checks; editorial authority unchanged |
 | .github | [115](https://github.com/grandchallenge/.github/pull/115) | 08:40:49 | Shared constitutional-review tests and scoped path triggers |
+| INTELLECT | [134](https://github.com/grandchallenge/INTELLECT/pull/134) | 12:21:56 | Native 3.11/3.12 CI, nine GCL-CIR-001 routing tests, code scanning, policy and routing enforcement; protected merge `1c22839042da4b98fb8a979bc20edc0b3002f78e` |
+| MATHCERT | [357](https://github.com/grandchallenge/MATHCERT/pull/357), [358](https://github.com/grandchallenge/MATHCERT/pull/358) | 12:15:09, 12:39:12 | Passive routing engine and manifest admitted first at `f6b72807d5ab82b33ed73b74604d1bcdf06e2662`; workflow execution admitted after dependent replay at `7a97ac1131d5a80840d59c3f172499e92e29e182`; Lean/certification scope preserved |
 
 All times above refer to 2026-11-05 UTC. The protected `main` component-manifest or engine was read back in each admission transaction; original exact-head CI evidence belongs to the linked PR. These are CI engineering adoptions, not mathematical result certification or protected state promotion.
 
@@ -29,15 +31,16 @@ All times above refer to 2026-11-05 UTC. The protected `main` component-manifest
 
 - `MATH-PROGRAMME`: protected-admitted `MP-POLICY-IMPACT-GATING-001` with declarative component routing (PRs #3127, #3128, #3129), exact-head OAI26 and negative-test execution proof. This is the authoritative native implementation, **not replaced** by the portable adapter.
 
-## Open substantive admission obligations
+## Final cross-repository admission closure
 
-| Repository | PR / dependency | State and next permitted action |
-| --- | --- | --- |
-| INTELLECT | [#134](https://github.com/grandchallenge/INTELLECT/pull/134) | `OPEN / REVIEW_REQUIRED`. Candidate exact-head CI green, nine regression tests executed; await genuinely eligible protected approval, merge and protected-main readback. Do not impersonate a reviewer or bypass protection. |
-| MATHCERT | [#357](https://github.com/grandchallenge/MATHCERT/pull/357) | `OPEN / REVIEW_REQUIRED`. Staged passive source, frozen test inventory and manifest; exact-head Cert checks/conformance green. Obtain protected approval, merge and readback. |
-| MATHCERT execution | [#358](https://github.com/grandchallenge/MATHCERT/pull/358) | Mandated `platform/certification/*` branch; only workflow path modified; platform scope preflight PASS. CI intentionally stops because source test file from #357 is absent on `main`. Once #357 merges, rebase/replay #358 and obtain its own protected review, merge and executed-test proof. Preserve full Lean/certification scope. |
+**Disposition:** `GCL-CIR-001_ORG_ADOPTION_CLOSED` for the Python v1.0.0 applicability set, evidenced as of 2026-11-05 UTC. **17 of 17 applicable non-fork repositories admitted**, counting MATH-PROGRAMME's existing protected native implementation. MATHCERT #357 and #358 form one two-stage adoption, not two repository counts.
 
-The two MATHCERT PRs are **one two-stage repository adoption**, not two independent repositories. No claim of full organization-wide completion is valid while these remain unmerged.
+- **INTELLECT:** PR #134 approved by eligible reviewer `jimsteeg` at 12:14:23Z; exact candidate `f9955d433fef390a232a1dce13328f2c81994878`; protected squash merge `1c22839042da4b98fb8a979bc20edc0b3002f78e` at 12:21:56Z, matching protected `main` readback. Original CI: Python 3.11 job `126956490702`, Python 3.12 job `126956490524`, routing enforcement job `126956492645`, policy job `126956492970`, and validation job `126956490997`; all SUCCESS. Protected-main engine `ci/gcl_component_routing.py` blob `c8ca0e9209835d96cf4c61c3986db33fca656739`.
+- **MATHCERT source:** PR #357 approved by `jimsteeg` at 12:14:37Z; exact candidate `d9442a979c95be548c1966b1d27563ced6ad308d`; protected squash merge `f6b72807d5ab82b33ed73b74604d1bcdf06e2662` at 12:15:09Z. Original certify job `126989883761` and policy/routing/code-scanning checks SUCCESS. Protected-main engine `ci/gcl_component_routing.py` blob `c8ca0e9209835d96cf4c61c3986db33fca656739`.
+- **MATHCERT execution:** PR #358 approved by `jimsteeg` at 12:14:54Z. Following #357 admission, exact candidate `f940d28f5dfb1c6ce2f410d94c96d890342e022f` integrated the protected source dependency. Cert workflow run `42028008138`, job `127246986119`, SUCCESS, explicitly executed all nine `test_gcl_component_routing.py` tests, in addition to the existing certification checks. Conformance and routing checks SUCCESS; merge state CLEAN; review APPROVED. Protected squash merge `7a97ac1131d5a80840d59c3f172499e92e29e182` at 12:39:12Z, matching protected MATHCERT `main` readback. Protected-main `.github/workflows/ci.yml` blob `db95d6584deb95beb1a6490f7a03d1d3423f517f` includes the explicit invoking test command.
+- **Inventory recheck:** live `gh repo list grandchallenge --limit 100` returned 21 repositories: 19 active non-forks and 2 forks. Of 19 non-forks, 17 are applicable and admitted, and `GCT-EXECUTIVE` plus `gcl-public-web-preview` remain `NOT_APPLICABLE_PYTHON_V1`. The forks `upload-pages-artifact` and `lean-action` remain excluded. This is Python-v1 adoption closure only, not other-language CI or scientific certification.
+
+All new admissions were made through GitHub's enforced protected review and merge controls, with source and execution kept distinct in MATHCERT. The earlier #358 failed check belongs to its obsolete pre-dependency head; the new exact-head replay passed. This closure does not widen certification or security authority.
 
 ## Other repository disposition
 
