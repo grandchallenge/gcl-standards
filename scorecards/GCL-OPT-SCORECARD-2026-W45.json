@@ -1,0 +1,1026 @@
+{
+  "$schema": "../schemas/optimality_scorecard.schema.json",
+  "claim_boundaries": {
+    "certification_claim_authorized": false,
+    "commercial_claim_authorized": false,
+    "deployment_claim_authorized": false,
+    "mathematical_claim_authorized": false,
+    "novelty_claim_authorized": false,
+    "organization_wide_conformance_authorized": false,
+    "production_claim_authorized": false
+  },
+  "deviations": [
+    {
+      "compensating_control": "Report unknown; do not coerce missing evidence to zero.",
+      "evidence": [
+        "workflow-run:42523725754"
+      ],
+      "expires_at": "2026-11-22T21:09:02Z",
+      "id": "GCL-OPT-UNKNOWN-UNPROTECTED-DEFAULT-BRANCHES",
+      "next_review": "2026-11-15T21:09:02Z",
+      "owner": "fyremael"
+    },
+    {
+      "compensating_control": "Report unknown; do not coerce missing evidence to zero.",
+      "evidence": [
+        "workflow-run:42523725754"
+      ],
+      "expires_at": "2026-11-22T21:09:02Z",
+      "id": "GCL-OPT-UNKNOWN-HUMAN-ACTIONS-PER-GOVERNED-DECISION",
+      "next_review": "2026-11-15T21:09:02Z",
+      "owner": "fyremael"
+    },
+    {
+      "compensating_control": "Report unknown; do not coerce missing evidence to zero.",
+      "evidence": [
+        "workflow-run:42523725754"
+      ],
+      "expires_at": "2026-11-22T21:09:02Z",
+      "id": "GCL-OPT-UNKNOWN-STRATEGIC-LANES-IN-PROGRESS",
+      "next_review": "2026-11-15T21:09:02Z",
+      "owner": "fyremael"
+    },
+    {
+      "compensating_control": "Report unknown; do not coerce missing evidence to zero.",
+      "evidence": [
+        "workflow-run:42523725754"
+      ],
+      "expires_at": "2026-11-22T21:09:02Z",
+      "id": "GCL-OPT-UNKNOWN-ACTIVE-ISSUES-WITHOUT-FINITE-NEXT-OBLIGATION",
+      "next_review": "2026-11-15T21:09:02Z",
+      "owner": "fyremael"
+    },
+    {
+      "compensating_control": "Report unknown; do not coerce missing evidence to zero.",
+      "evidence": [
+        "workflow-run:42523725754"
+      ],
+      "expires_at": "2026-11-22T21:09:02Z",
+      "id": "GCL-OPT-UNKNOWN-HANDOFFS-LACKING-EXACT-IDENTITIES",
+      "next_review": "2026-11-15T21:09:02Z",
+      "owner": "fyremael"
+    }
+  ],
+  "generated_at": "2026-11-08T21:09:02Z",
+  "generator": {
+    "app_slug": "gcl-council-clerk",
+    "repository": "grandchallenge/.github",
+    "run_id": "42523725754",
+    "workflow": ".github/workflows/weekly-optimality-scorecard.yml"
+  },
+  "measurement_window": {
+    "end": "2026-11-08T21:09:02Z",
+    "start": "2026-11-01T21:09:02Z"
+  },
+  "metrics": {
+    "active_issues_without_finite_next_obligation": {
+      "evidence_references": [
+        "workflow-run:42523725754"
+      ],
+      "exact_source_heads": [
+        {
+          "commit_sha": "903c7d116ae365b87431af0b94c6c8d8885261c1",
+          "repository": "grandchallenge/.github"
+        },
+        {
+          "commit_sha": "87d2084a9f0b8935ad503a641b62d0c5504e603c",
+          "repository": "grandchallenge/ADAPTIVE-INTELLIGENCE-ATLAS"
+        },
+        {
+          "commit_sha": "9d238db564fa6f21ae14267d1dff87da29bd8c5d",
+          "repository": "grandchallenge/AETHER"
+        },
+        {
+          "commit_sha": "cd6aec7c84323f8f1a05450eb841d26100bb1dad",
+          "repository": "grandchallenge/BUTTERFLY"
+        },
+        {
+          "commit_sha": "ea0a3ac7a522b107ae670a31f126abed8d7a0bca",
+          "repository": "grandchallenge/COMPUTATIONAL-DIFFICULTY-ATLAS"
+        },
+        {
+          "commit_sha": "e63aa0c4810d694ea75ab613fbb7ff3a81d83bc9",
+          "repository": "grandchallenge/CONTROL"
+        },
+        {
+          "commit_sha": "9ac51ce7c18f47ce3770e5757cb12bb0e409ec9f",
+          "repository": "grandchallenge/gcl-public-web-preview"
+        },
+        {
+          "commit_sha": "ceb39374bc861c64f165805bca53135ac03f6e3e",
+          "repository": "grandchallenge/gcl-standards"
+        },
+        {
+          "commit_sha": "0ca5a22f2895d26a3329c74afc26b0a107a44166",
+          "repository": "grandchallenge/GCT-EXECUTIVE"
+        },
+        {
+          "commit_sha": "3d5e47aa3467f5ad6da31b9549b3a133c5468cfd",
+          "repository": "grandchallenge/GLOSS"
+        },
+        {
+          "commit_sha": "a41d82d37b413f31a225e3a0d170517913accafe",
+          "repository": "grandchallenge/GSD"
+        },
+        {
+          "commit_sha": "78fc7c2a9434d84608c8b9a5182b874e046c71d3",
+          "repository": "grandchallenge/INTELLECT"
+        },
+        {
+          "commit_sha": "37f8471aecd2efbeab3b1e1a75ad18fb8f5c1b01",
+          "repository": "grandchallenge/lean-action"
+        },
+        {
+          "commit_sha": "663cfff23ca39261b25b2a2234d1752aaf4bb7d3",
+          "repository": "grandchallenge/MATH-PROGRAMME"
+        },
+        {
+          "commit_sha": "7a97ac1131d5a80840d59c3f172499e92e29e182",
+          "repository": "grandchallenge/MATHCERT"
+        },
+        {
+          "commit_sha": "2ca2c18a7e37201bbf5958857ef0b267beb19811",
+          "repository": "grandchallenge/MATHFORGE"
+        },
+        {
+          "commit_sha": "71ea1b6a47bf4dab1051fa3508dbb16526fccedd",
+          "repository": "grandchallenge/MATHSOLVE"
+        },
+        {
+          "commit_sha": "70eee4547750ac8a8d5c4dbadb179caa1285851d",
+          "repository": "grandchallenge/MODULUS"
+        },
+        {
+          "commit_sha": "dd85f84cab5a168e251c72fc3f888af164677961",
+          "repository": "grandchallenge/QUANTUM-TECHNOLOGIES"
+        },
+        {
+          "commit_sha": "a90a0d1a8f3b762dd9025ed91fd9e55f8dfc10c1",
+          "repository": "grandchallenge/TROVE-CURATA"
+        },
+        {
+          "commit_sha": "4934497e00858680775a65f544192e61e1b1b3cb",
+          "repository": "grandchallenge/upload-pages-artifact"
+        }
+      ],
+      "exclusions": [],
+      "measurement_window": {
+        "end": "2026-11-08T21:09:02Z",
+        "start": "2026-11-01T21:09:02Z"
+      },
+      "status": "unknown",
+      "target": {
+        "operator": "eq",
+        "value": 0
+      },
+      "unit": "issues",
+      "unknown": {
+        "deviation_id": "GCL-OPT-UNKNOWN-ACTIVE-ISSUES-WITHOUT-FINITE-NEXT-OBLIGATION",
+        "reason": "authoritative registry is deferred to revised phases 3-6"
+      }
+    },
+    "github_inferred_mathematical_claims": {
+      "evidence_references": [
+        "workflow-run:42523725754"
+      ],
+      "exact_source_heads": [
+        {
+          "commit_sha": "903c7d116ae365b87431af0b94c6c8d8885261c1",
+          "repository": "grandchallenge/.github"
+        },
+        {
+          "commit_sha": "87d2084a9f0b8935ad503a641b62d0c5504e603c",
+          "repository": "grandchallenge/ADAPTIVE-INTELLIGENCE-ATLAS"
+        },
+        {
+          "commit_sha": "9d238db564fa6f21ae14267d1dff87da29bd8c5d",
+          "repository": "grandchallenge/AETHER"
+        },
+        {
+          "commit_sha": "cd6aec7c84323f8f1a05450eb841d26100bb1dad",
+          "repository": "grandchallenge/BUTTERFLY"
+        },
+        {
+          "commit_sha": "ea0a3ac7a522b107ae670a31f126abed8d7a0bca",
+          "repository": "grandchallenge/COMPUTATIONAL-DIFFICULTY-ATLAS"
+        },
+        {
+          "commit_sha": "e63aa0c4810d694ea75ab613fbb7ff3a81d83bc9",
+          "repository": "grandchallenge/CONTROL"
+        },
+        {
+          "commit_sha": "9ac51ce7c18f47ce3770e5757cb12bb0e409ec9f",
+          "repository": "grandchallenge/gcl-public-web-preview"
+        },
+        {
+          "commit_sha": "ceb39374bc861c64f165805bca53135ac03f6e3e",
+          "repository": "grandchallenge/gcl-standards"
+        },
+        {
+          "commit_sha": "0ca5a22f2895d26a3329c74afc26b0a107a44166",
+          "repository": "grandchallenge/GCT-EXECUTIVE"
+        },
+        {
+          "commit_sha": "3d5e47aa3467f5ad6da31b9549b3a133c5468cfd",
+          "repository": "grandchallenge/GLOSS"
+        },
+        {
+          "commit_sha": "a41d82d37b413f31a225e3a0d170517913accafe",
+          "repository": "grandchallenge/GSD"
+        },
+        {
+          "commit_sha": "78fc7c2a9434d84608c8b9a5182b874e046c71d3",
+          "repository": "grandchallenge/INTELLECT"
+        },
+        {
+          "commit_sha": "37f8471aecd2efbeab3b1e1a75ad18fb8f5c1b01",
+          "repository": "grandchallenge/lean-action"
+        },
+        {
+          "commit_sha": "663cfff23ca39261b25b2a2234d1752aaf4bb7d3",
+          "repository": "grandchallenge/MATH-PROGRAMME"
+        },
+        {
+          "commit_sha": "7a97ac1131d5a80840d59c3f172499e92e29e182",
+          "repository": "grandchallenge/MATHCERT"
+        },
+        {
+          "commit_sha": "2ca2c18a7e37201bbf5958857ef0b267beb19811",
+          "repository": "grandchallenge/MATHFORGE"
+        },
+        {
+          "commit_sha": "71ea1b6a47bf4dab1051fa3508dbb16526fccedd",
+          "repository": "grandchallenge/MATHSOLVE"
+        },
+        {
+          "commit_sha": "70eee4547750ac8a8d5c4dbadb179caa1285851d",
+          "repository": "grandchallenge/MODULUS"
+        },
+        {
+          "commit_sha": "dd85f84cab5a168e251c72fc3f888af164677961",
+          "repository": "grandchallenge/QUANTUM-TECHNOLOGIES"
+        },
+        {
+          "commit_sha": "a90a0d1a8f3b762dd9025ed91fd9e55f8dfc10c1",
+          "repository": "grandchallenge/TROVE-CURATA"
+        },
+        {
+          "commit_sha": "4934497e00858680775a65f544192e61e1b1b3cb",
+          "repository": "grandchallenge/upload-pages-artifact"
+        }
+      ],
+      "exclusions": [
+        "zero observations do not imply global mathematical correctness"
+      ],
+      "measurement_window": {
+        "end": "2026-11-08T21:09:02Z",
+        "start": "2026-11-01T21:09:02Z"
+      },
+      "status": "observed",
+      "target": {
+        "operator": "eq",
+        "value": 0
+      },
+      "unit": "validated_violations",
+      "value": 0.0
+    },
+    "handoffs_lacking_exact_identities": {
+      "evidence_references": [
+        "workflow-run:42523725754"
+      ],
+      "exact_source_heads": [
+        {
+          "commit_sha": "903c7d116ae365b87431af0b94c6c8d8885261c1",
+          "repository": "grandchallenge/.github"
+        },
+        {
+          "commit_sha": "87d2084a9f0b8935ad503a641b62d0c5504e603c",
+          "repository": "grandchallenge/ADAPTIVE-INTELLIGENCE-ATLAS"
+        },
+        {
+          "commit_sha": "9d238db564fa6f21ae14267d1dff87da29bd8c5d",
+          "repository": "grandchallenge/AETHER"
+        },
+        {
+          "commit_sha": "cd6aec7c84323f8f1a05450eb841d26100bb1dad",
+          "repository": "grandchallenge/BUTTERFLY"
+        },
+        {
+          "commit_sha": "ea0a3ac7a522b107ae670a31f126abed8d7a0bca",
+          "repository": "grandchallenge/COMPUTATIONAL-DIFFICULTY-ATLAS"
+        },
+        {
+          "commit_sha": "e63aa0c4810d694ea75ab613fbb7ff3a81d83bc9",
+          "repository": "grandchallenge/CONTROL"
+        },
+        {
+          "commit_sha": "9ac51ce7c18f47ce3770e5757cb12bb0e409ec9f",
+          "repository": "grandchallenge/gcl-public-web-preview"
+        },
+        {
+          "commit_sha": "ceb39374bc861c64f165805bca53135ac03f6e3e",
+          "repository": "grandchallenge/gcl-standards"
+        },
+        {
+          "commit_sha": "0ca5a22f2895d26a3329c74afc26b0a107a44166",
+          "repository": "grandchallenge/GCT-EXECUTIVE"
+        },
+        {
+          "commit_sha": "3d5e47aa3467f5ad6da31b9549b3a133c5468cfd",
+          "repository": "grandchallenge/GLOSS"
+        },
+        {
+          "commit_sha": "a41d82d37b413f31a225e3a0d170517913accafe",
+          "repository": "grandchallenge/GSD"
+        },
+        {
+          "commit_sha": "78fc7c2a9434d84608c8b9a5182b874e046c71d3",
+          "repository": "grandchallenge/INTELLECT"
+        },
+        {
+          "commit_sha": "37f8471aecd2efbeab3b1e1a75ad18fb8f5c1b01",
+          "repository": "grandchallenge/lean-action"
+        },
+        {
+          "commit_sha": "663cfff23ca39261b25b2a2234d1752aaf4bb7d3",
+          "repository": "grandchallenge/MATH-PROGRAMME"
+        },
+        {
+          "commit_sha": "7a97ac1131d5a80840d59c3f172499e92e29e182",
+          "repository": "grandchallenge/MATHCERT"
+        },
+        {
+          "commit_sha": "2ca2c18a7e37201bbf5958857ef0b267beb19811",
+          "repository": "grandchallenge/MATHFORGE"
+        },
+        {
+          "commit_sha": "71ea1b6a47bf4dab1051fa3508dbb16526fccedd",
+          "repository": "grandchallenge/MATHSOLVE"
+        },
+        {
+          "commit_sha": "70eee4547750ac8a8d5c4dbadb179caa1285851d",
+          "repository": "grandchallenge/MODULUS"
+        },
+        {
+          "commit_sha": "dd85f84cab5a168e251c72fc3f888af164677961",
+          "repository": "grandchallenge/QUANTUM-TECHNOLOGIES"
+        },
+        {
+          "commit_sha": "a90a0d1a8f3b762dd9025ed91fd9e55f8dfc10c1",
+          "repository": "grandchallenge/TROVE-CURATA"
+        },
+        {
+          "commit_sha": "4934497e00858680775a65f544192e61e1b1b3cb",
+          "repository": "grandchallenge/upload-pages-artifact"
+        }
+      ],
+      "exclusions": [],
+      "measurement_window": {
+        "end": "2026-11-08T21:09:02Z",
+        "start": "2026-11-01T21:09:02Z"
+      },
+      "status": "unknown",
+      "target": {
+        "operator": "eq",
+        "value": 0
+      },
+      "unit": "handoffs",
+      "unknown": {
+        "deviation_id": "GCL-OPT-UNKNOWN-HANDOFFS-LACKING-EXACT-IDENTITIES",
+        "reason": "authoritative registry is deferred to revised phases 3-6"
+      }
+    },
+    "human_actions_per_governed_decision": {
+      "evidence_references": [
+        "workflow-run:42523725754"
+      ],
+      "exact_source_heads": [
+        {
+          "commit_sha": "903c7d116ae365b87431af0b94c6c8d8885261c1",
+          "repository": "grandchallenge/.github"
+        },
+        {
+          "commit_sha": "87d2084a9f0b8935ad503a641b62d0c5504e603c",
+          "repository": "grandchallenge/ADAPTIVE-INTELLIGENCE-ATLAS"
+        },
+        {
+          "commit_sha": "9d238db564fa6f21ae14267d1dff87da29bd8c5d",
+          "repository": "grandchallenge/AETHER"
+        },
+        {
+          "commit_sha": "cd6aec7c84323f8f1a05450eb841d26100bb1dad",
+          "repository": "grandchallenge/BUTTERFLY"
+        },
+        {
+          "commit_sha": "ea0a3ac7a522b107ae670a31f126abed8d7a0bca",
+          "repository": "grandchallenge/COMPUTATIONAL-DIFFICULTY-ATLAS"
+        },
+        {
+          "commit_sha": "e63aa0c4810d694ea75ab613fbb7ff3a81d83bc9",
+          "repository": "grandchallenge/CONTROL"
+        },
+        {
+          "commit_sha": "9ac51ce7c18f47ce3770e5757cb12bb0e409ec9f",
+          "repository": "grandchallenge/gcl-public-web-preview"
+        },
+        {
+          "commit_sha": "ceb39374bc861c64f165805bca53135ac03f6e3e",
+          "repository": "grandchallenge/gcl-standards"
+        },
+        {
+          "commit_sha": "0ca5a22f2895d26a3329c74afc26b0a107a44166",
+          "repository": "grandchallenge/GCT-EXECUTIVE"
+        },
+        {
+          "commit_sha": "3d5e47aa3467f5ad6da31b9549b3a133c5468cfd",
+          "repository": "grandchallenge/GLOSS"
+        },
+        {
+          "commit_sha": "a41d82d37b413f31a225e3a0d170517913accafe",
+          "repository": "grandchallenge/GSD"
+        },
+        {
+          "commit_sha": "78fc7c2a9434d84608c8b9a5182b874e046c71d3",
+          "repository": "grandchallenge/INTELLECT"
+        },
+        {
+          "commit_sha": "37f8471aecd2efbeab3b1e1a75ad18fb8f5c1b01",
+          "repository": "grandchallenge/lean-action"
+        },
+        {
+          "commit_sha": "663cfff23ca39261b25b2a2234d1752aaf4bb7d3",
+          "repository": "grandchallenge/MATH-PROGRAMME"
+        },
+        {
+          "commit_sha": "7a97ac1131d5a80840d59c3f172499e92e29e182",
+          "repository": "grandchallenge/MATHCERT"
+        },
+        {
+          "commit_sha": "2ca2c18a7e37201bbf5958857ef0b267beb19811",
+          "repository": "grandchallenge/MATHFORGE"
+        },
+        {
+          "commit_sha": "71ea1b6a47bf4dab1051fa3508dbb16526fccedd",
+          "repository": "grandchallenge/MATHSOLVE"
+        },
+        {
+          "commit_sha": "70eee4547750ac8a8d5c4dbadb179caa1285851d",
+          "repository": "grandchallenge/MODULUS"
+        },
+        {
+          "commit_sha": "dd85f84cab5a168e251c72fc3f888af164677961",
+          "repository": "grandchallenge/QUANTUM-TECHNOLOGIES"
+        },
+        {
+          "commit_sha": "a90a0d1a8f3b762dd9025ed91fd9e55f8dfc10c1",
+          "repository": "grandchallenge/TROVE-CURATA"
+        },
+        {
+          "commit_sha": "4934497e00858680775a65f544192e61e1b1b3cb",
+          "repository": "grandchallenge/upload-pages-artifact"
+        }
+      ],
+      "exclusions": [],
+      "measurement_window": {
+        "end": "2026-11-08T21:09:02Z",
+        "start": "2026-11-01T21:09:02Z"
+      },
+      "status": "unknown",
+      "target": {
+        "operator": "eq",
+        "value": 1
+      },
+      "unit": "actions_per_decision",
+      "unknown": {
+        "deviation_id": "GCL-OPT-UNKNOWN-HUMAN-ACTIONS-PER-GOVERNED-DECISION",
+        "reason": "no governed decision receipt occurred in the measurement window"
+      }
+    },
+    "median_pr_decision_time_hours": {
+      "evidence_references": [
+        "workflow-run:42523725754"
+      ],
+      "exact_source_heads": [
+        {
+          "commit_sha": "903c7d116ae365b87431af0b94c6c8d8885261c1",
+          "repository": "grandchallenge/.github"
+        },
+        {
+          "commit_sha": "87d2084a9f0b8935ad503a641b62d0c5504e603c",
+          "repository": "grandchallenge/ADAPTIVE-INTELLIGENCE-ATLAS"
+        },
+        {
+          "commit_sha": "9d238db564fa6f21ae14267d1dff87da29bd8c5d",
+          "repository": "grandchallenge/AETHER"
+        },
+        {
+          "commit_sha": "cd6aec7c84323f8f1a05450eb841d26100bb1dad",
+          "repository": "grandchallenge/BUTTERFLY"
+        },
+        {
+          "commit_sha": "ea0a3ac7a522b107ae670a31f126abed8d7a0bca",
+          "repository": "grandchallenge/COMPUTATIONAL-DIFFICULTY-ATLAS"
+        },
+        {
+          "commit_sha": "e63aa0c4810d694ea75ab613fbb7ff3a81d83bc9",
+          "repository": "grandchallenge/CONTROL"
+        },
+        {
+          "commit_sha": "9ac51ce7c18f47ce3770e5757cb12bb0e409ec9f",
+          "repository": "grandchallenge/gcl-public-web-preview"
+        },
+        {
+          "commit_sha": "ceb39374bc861c64f165805bca53135ac03f6e3e",
+          "repository": "grandchallenge/gcl-standards"
+        },
+        {
+          "commit_sha": "0ca5a22f2895d26a3329c74afc26b0a107a44166",
+          "repository": "grandchallenge/GCT-EXECUTIVE"
+        },
+        {
+          "commit_sha": "3d5e47aa3467f5ad6da31b9549b3a133c5468cfd",
+          "repository": "grandchallenge/GLOSS"
+        },
+        {
+          "commit_sha": "a41d82d37b413f31a225e3a0d170517913accafe",
+          "repository": "grandchallenge/GSD"
+        },
+        {
+          "commit_sha": "78fc7c2a9434d84608c8b9a5182b874e046c71d3",
+          "repository": "grandchallenge/INTELLECT"
+        },
+        {
+          "commit_sha": "37f8471aecd2efbeab3b1e1a75ad18fb8f5c1b01",
+          "repository": "grandchallenge/lean-action"
+        },
+        {
+          "commit_sha": "663cfff23ca39261b25b2a2234d1752aaf4bb7d3",
+          "repository": "grandchallenge/MATH-PROGRAMME"
+        },
+        {
+          "commit_sha": "7a97ac1131d5a80840d59c3f172499e92e29e182",
+          "repository": "grandchallenge/MATHCERT"
+        },
+        {
+          "commit_sha": "2ca2c18a7e37201bbf5958857ef0b267beb19811",
+          "repository": "grandchallenge/MATHFORGE"
+        },
+        {
+          "commit_sha": "71ea1b6a47bf4dab1051fa3508dbb16526fccedd",
+          "repository": "grandchallenge/MATHSOLVE"
+        },
+        {
+          "commit_sha": "70eee4547750ac8a8d5c4dbadb179caa1285851d",
+          "repository": "grandchallenge/MODULUS"
+        },
+        {
+          "commit_sha": "dd85f84cab5a168e251c72fc3f888af164677961",
+          "repository": "grandchallenge/QUANTUM-TECHNOLOGIES"
+        },
+        {
+          "commit_sha": "a90a0d1a8f3b762dd9025ed91fd9e55f8dfc10c1",
+          "repository": "grandchallenge/TROVE-CURATA"
+        },
+        {
+          "commit_sha": "4934497e00858680775a65f544192e61e1b1b3cb",
+          "repository": "grandchallenge/upload-pages-artifact"
+        }
+      ],
+      "exclusions": [
+        "bots",
+        "controlled external dependency with linked blocker"
+      ],
+      "measurement_window": {
+        "end": "2026-11-08T21:09:02Z",
+        "start": "2026-11-01T21:09:02Z"
+      },
+      "status": "derived",
+      "target": {
+        "operator": "lt",
+        "value": 48
+      },
+      "unit": "hours",
+      "value": 0.10861111111111112
+    },
+    "reproducible_governed_lifecycle": {
+      "evidence_references": [
+        "workflow-run:42523725754"
+      ],
+      "exact_source_heads": [
+        {
+          "commit_sha": "903c7d116ae365b87431af0b94c6c8d8885261c1",
+          "repository": "grandchallenge/.github"
+        },
+        {
+          "commit_sha": "87d2084a9f0b8935ad503a641b62d0c5504e603c",
+          "repository": "grandchallenge/ADAPTIVE-INTELLIGENCE-ATLAS"
+        },
+        {
+          "commit_sha": "9d238db564fa6f21ae14267d1dff87da29bd8c5d",
+          "repository": "grandchallenge/AETHER"
+        },
+        {
+          "commit_sha": "cd6aec7c84323f8f1a05450eb841d26100bb1dad",
+          "repository": "grandchallenge/BUTTERFLY"
+        },
+        {
+          "commit_sha": "ea0a3ac7a522b107ae670a31f126abed8d7a0bca",
+          "repository": "grandchallenge/COMPUTATIONAL-DIFFICULTY-ATLAS"
+        },
+        {
+          "commit_sha": "e63aa0c4810d694ea75ab613fbb7ff3a81d83bc9",
+          "repository": "grandchallenge/CONTROL"
+        },
+        {
+          "commit_sha": "9ac51ce7c18f47ce3770e5757cb12bb0e409ec9f",
+          "repository": "grandchallenge/gcl-public-web-preview"
+        },
+        {
+          "commit_sha": "ceb39374bc861c64f165805bca53135ac03f6e3e",
+          "repository": "grandchallenge/gcl-standards"
+        },
+        {
+          "commit_sha": "0ca5a22f2895d26a3329c74afc26b0a107a44166",
+          "repository": "grandchallenge/GCT-EXECUTIVE"
+        },
+        {
+          "commit_sha": "3d5e47aa3467f5ad6da31b9549b3a133c5468cfd",
+          "repository": "grandchallenge/GLOSS"
+        },
+        {
+          "commit_sha": "a41d82d37b413f31a225e3a0d170517913accafe",
+          "repository": "grandchallenge/GSD"
+        },
+        {
+          "commit_sha": "78fc7c2a9434d84608c8b9a5182b874e046c71d3",
+          "repository": "grandchallenge/INTELLECT"
+        },
+        {
+          "commit_sha": "37f8471aecd2efbeab3b1e1a75ad18fb8f5c1b01",
+          "repository": "grandchallenge/lean-action"
+        },
+        {
+          "commit_sha": "663cfff23ca39261b25b2a2234d1752aaf4bb7d3",
+          "repository": "grandchallenge/MATH-PROGRAMME"
+        },
+        {
+          "commit_sha": "7a97ac1131d5a80840d59c3f172499e92e29e182",
+          "repository": "grandchallenge/MATHCERT"
+        },
+        {
+          "commit_sha": "2ca2c18a7e37201bbf5958857ef0b267beb19811",
+          "repository": "grandchallenge/MATHFORGE"
+        },
+        {
+          "commit_sha": "71ea1b6a47bf4dab1051fa3508dbb16526fccedd",
+          "repository": "grandchallenge/MATHSOLVE"
+        },
+        {
+          "commit_sha": "70eee4547750ac8a8d5c4dbadb179caa1285851d",
+          "repository": "grandchallenge/MODULUS"
+        },
+        {
+          "commit_sha": "dd85f84cab5a168e251c72fc3f888af164677961",
+          "repository": "grandchallenge/QUANTUM-TECHNOLOGIES"
+        },
+        {
+          "commit_sha": "a90a0d1a8f3b762dd9025ed91fd9e55f8dfc10c1",
+          "repository": "grandchallenge/TROVE-CURATA"
+        },
+        {
+          "commit_sha": "4934497e00858680775a65f544192e61e1b1b3cb",
+          "repository": "grandchallenge/upload-pages-artifact"
+        }
+      ],
+      "exclusions": [],
+      "measurement_window": {
+        "end": "2026-11-08T21:09:02Z",
+        "start": "2026-11-01T21:09:02Z"
+      },
+      "status": "derived",
+      "target": {
+        "operator": "gte",
+        "value": 1
+      },
+      "unit": "admitted_demonstrations",
+      "value": 0.0
+    },
+    "status_contradictions": {
+      "evidence_references": [
+        "https://github.com/grandchallenge/gcl-standards/blob/ceb39374bc861c64f165805bca53135ac03f6e3e/evidence/coherence-reviews/GCL-STATUS-COHERENCE-001-coherence.json"
+      ],
+      "exact_source_heads": [
+        {
+          "commit_sha": "903c7d116ae365b87431af0b94c6c8d8885261c1",
+          "repository": "grandchallenge/.github"
+        },
+        {
+          "commit_sha": "87d2084a9f0b8935ad503a641b62d0c5504e603c",
+          "repository": "grandchallenge/ADAPTIVE-INTELLIGENCE-ATLAS"
+        },
+        {
+          "commit_sha": "9d238db564fa6f21ae14267d1dff87da29bd8c5d",
+          "repository": "grandchallenge/AETHER"
+        },
+        {
+          "commit_sha": "cd6aec7c84323f8f1a05450eb841d26100bb1dad",
+          "repository": "grandchallenge/BUTTERFLY"
+        },
+        {
+          "commit_sha": "ea0a3ac7a522b107ae670a31f126abed8d7a0bca",
+          "repository": "grandchallenge/COMPUTATIONAL-DIFFICULTY-ATLAS"
+        },
+        {
+          "commit_sha": "e63aa0c4810d694ea75ab613fbb7ff3a81d83bc9",
+          "repository": "grandchallenge/CONTROL"
+        },
+        {
+          "commit_sha": "9ac51ce7c18f47ce3770e5757cb12bb0e409ec9f",
+          "repository": "grandchallenge/gcl-public-web-preview"
+        },
+        {
+          "commit_sha": "ceb39374bc861c64f165805bca53135ac03f6e3e",
+          "repository": "grandchallenge/gcl-standards"
+        },
+        {
+          "commit_sha": "0ca5a22f2895d26a3329c74afc26b0a107a44166",
+          "repository": "grandchallenge/GCT-EXECUTIVE"
+        },
+        {
+          "commit_sha": "3d5e47aa3467f5ad6da31b9549b3a133c5468cfd",
+          "repository": "grandchallenge/GLOSS"
+        },
+        {
+          "commit_sha": "a41d82d37b413f31a225e3a0d170517913accafe",
+          "repository": "grandchallenge/GSD"
+        },
+        {
+          "commit_sha": "78fc7c2a9434d84608c8b9a5182b874e046c71d3",
+          "repository": "grandchallenge/INTELLECT"
+        },
+        {
+          "commit_sha": "37f8471aecd2efbeab3b1e1a75ad18fb8f5c1b01",
+          "repository": "grandchallenge/lean-action"
+        },
+        {
+          "commit_sha": "663cfff23ca39261b25b2a2234d1752aaf4bb7d3",
+          "repository": "grandchallenge/MATH-PROGRAMME"
+        },
+        {
+          "commit_sha": "7a97ac1131d5a80840d59c3f172499e92e29e182",
+          "repository": "grandchallenge/MATHCERT"
+        },
+        {
+          "commit_sha": "2ca2c18a7e37201bbf5958857ef0b267beb19811",
+          "repository": "grandchallenge/MATHFORGE"
+        },
+        {
+          "commit_sha": "71ea1b6a47bf4dab1051fa3508dbb16526fccedd",
+          "repository": "grandchallenge/MATHSOLVE"
+        },
+        {
+          "commit_sha": "70eee4547750ac8a8d5c4dbadb179caa1285851d",
+          "repository": "grandchallenge/MODULUS"
+        },
+        {
+          "commit_sha": "dd85f84cab5a168e251c72fc3f888af164677961",
+          "repository": "grandchallenge/QUANTUM-TECHNOLOGIES"
+        },
+        {
+          "commit_sha": "a90a0d1a8f3b762dd9025ed91fd9e55f8dfc10c1",
+          "repository": "grandchallenge/TROVE-CURATA"
+        },
+        {
+          "commit_sha": "4934497e00858680775a65f544192e61e1b1b3cb",
+          "repository": "grandchallenge/upload-pages-artifact"
+        }
+      ],
+      "exclusions": [],
+      "measurement_window": {
+        "end": "2026-11-08T21:09:02Z",
+        "start": "2026-11-01T21:09:02Z"
+      },
+      "status": "derived",
+      "target": {
+        "operator": "eq",
+        "value": 0
+      },
+      "unit": "contradictions",
+      "value": 0.0
+    },
+    "strategic_lanes_in_progress": {
+      "evidence_references": [
+        "workflow-run:42523725754"
+      ],
+      "exact_source_heads": [
+        {
+          "commit_sha": "903c7d116ae365b87431af0b94c6c8d8885261c1",
+          "repository": "grandchallenge/.github"
+        },
+        {
+          "commit_sha": "87d2084a9f0b8935ad503a641b62d0c5504e603c",
+          "repository": "grandchallenge/ADAPTIVE-INTELLIGENCE-ATLAS"
+        },
+        {
+          "commit_sha": "9d238db564fa6f21ae14267d1dff87da29bd8c5d",
+          "repository": "grandchallenge/AETHER"
+        },
+        {
+          "commit_sha": "cd6aec7c84323f8f1a05450eb841d26100bb1dad",
+          "repository": "grandchallenge/BUTTERFLY"
+        },
+        {
+          "commit_sha": "ea0a3ac7a522b107ae670a31f126abed8d7a0bca",
+          "repository": "grandchallenge/COMPUTATIONAL-DIFFICULTY-ATLAS"
+        },
+        {
+          "commit_sha": "e63aa0c4810d694ea75ab613fbb7ff3a81d83bc9",
+          "repository": "grandchallenge/CONTROL"
+        },
+        {
+          "commit_sha": "9ac51ce7c18f47ce3770e5757cb12bb0e409ec9f",
+          "repository": "grandchallenge/gcl-public-web-preview"
+        },
+        {
+          "commit_sha": "ceb39374bc861c64f165805bca53135ac03f6e3e",
+          "repository": "grandchallenge/gcl-standards"
+        },
+        {
+          "commit_sha": "0ca5a22f2895d26a3329c74afc26b0a107a44166",
+          "repository": "grandchallenge/GCT-EXECUTIVE"
+        },
+        {
+          "commit_sha": "3d5e47aa3467f5ad6da31b9549b3a133c5468cfd",
+          "repository": "grandchallenge/GLOSS"
+        },
+        {
+          "commit_sha": "a41d82d37b413f31a225e3a0d170517913accafe",
+          "repository": "grandchallenge/GSD"
+        },
+        {
+          "commit_sha": "78fc7c2a9434d84608c8b9a5182b874e046c71d3",
+          "repository": "grandchallenge/INTELLECT"
+        },
+        {
+          "commit_sha": "37f8471aecd2efbeab3b1e1a75ad18fb8f5c1b01",
+          "repository": "grandchallenge/lean-action"
+        },
+        {
+          "commit_sha": "663cfff23ca39261b25b2a2234d1752aaf4bb7d3",
+          "repository": "grandchallenge/MATH-PROGRAMME"
+        },
+        {
+          "commit_sha": "7a97ac1131d5a80840d59c3f172499e92e29e182",
+          "repository": "grandchallenge/MATHCERT"
+        },
+        {
+          "commit_sha": "2ca2c18a7e37201bbf5958857ef0b267beb19811",
+          "repository": "grandchallenge/MATHFORGE"
+        },
+        {
+          "commit_sha": "71ea1b6a47bf4dab1051fa3508dbb16526fccedd",
+          "repository": "grandchallenge/MATHSOLVE"
+        },
+        {
+          "commit_sha": "70eee4547750ac8a8d5c4dbadb179caa1285851d",
+          "repository": "grandchallenge/MODULUS"
+        },
+        {
+          "commit_sha": "dd85f84cab5a168e251c72fc3f888af164677961",
+          "repository": "grandchallenge/QUANTUM-TECHNOLOGIES"
+        },
+        {
+          "commit_sha": "a90a0d1a8f3b762dd9025ed91fd9e55f8dfc10c1",
+          "repository": "grandchallenge/TROVE-CURATA"
+        },
+        {
+          "commit_sha": "4934497e00858680775a65f544192e61e1b1b3cb",
+          "repository": "grandchallenge/upload-pages-artifact"
+        }
+      ],
+      "exclusions": [],
+      "measurement_window": {
+        "end": "2026-11-08T21:09:02Z",
+        "start": "2026-11-01T21:09:02Z"
+      },
+      "status": "unknown",
+      "target": {
+        "operator": "lte",
+        "value": 3
+      },
+      "unit": "lanes",
+      "unknown": {
+        "deviation_id": "GCL-OPT-UNKNOWN-STRATEGIC-LANES-IN-PROGRESS",
+        "reason": "authoritative registry is deferred to revised phases 3-6"
+      }
+    },
+    "unprotected_default_branches": {
+      "evidence_references": [
+        "workflow-run:42523725754"
+      ],
+      "exact_source_heads": [
+        {
+          "commit_sha": "903c7d116ae365b87431af0b94c6c8d8885261c1",
+          "repository": "grandchallenge/.github"
+        },
+        {
+          "commit_sha": "87d2084a9f0b8935ad503a641b62d0c5504e603c",
+          "repository": "grandchallenge/ADAPTIVE-INTELLIGENCE-ATLAS"
+        },
+        {
+          "commit_sha": "9d238db564fa6f21ae14267d1dff87da29bd8c5d",
+          "repository": "grandchallenge/AETHER"
+        },
+        {
+          "commit_sha": "cd6aec7c84323f8f1a05450eb841d26100bb1dad",
+          "repository": "grandchallenge/BUTTERFLY"
+        },
+        {
+          "commit_sha": "ea0a3ac7a522b107ae670a31f126abed8d7a0bca",
+          "repository": "grandchallenge/COMPUTATIONAL-DIFFICULTY-ATLAS"
+        },
+        {
+          "commit_sha": "e63aa0c4810d694ea75ab613fbb7ff3a81d83bc9",
+          "repository": "grandchallenge/CONTROL"
+        },
+        {
+          "commit_sha": "9ac51ce7c18f47ce3770e5757cb12bb0e409ec9f",
+          "repository": "grandchallenge/gcl-public-web-preview"
+        },
+        {
+          "commit_sha": "ceb39374bc861c64f165805bca53135ac03f6e3e",
+          "repository": "grandchallenge/gcl-standards"
+        },
+        {
+          "commit_sha": "0ca5a22f2895d26a3329c74afc26b0a107a44166",
+          "repository": "grandchallenge/GCT-EXECUTIVE"
+        },
+        {
+          "commit_sha": "3d5e47aa3467f5ad6da31b9549b3a133c5468cfd",
+          "repository": "grandchallenge/GLOSS"
+        },
+        {
+          "commit_sha": "a41d82d37b413f31a225e3a0d170517913accafe",
+          "repository": "grandchallenge/GSD"
+        },
+        {
+          "commit_sha": "78fc7c2a9434d84608c8b9a5182b874e046c71d3",
+          "repository": "grandchallenge/INTELLECT"
+        },
+        {
+          "commit_sha": "37f8471aecd2efbeab3b1e1a75ad18fb8f5c1b01",
+          "repository": "grandchallenge/lean-action"
+        },
+        {
+          "commit_sha": "663cfff23ca39261b25b2a2234d1752aaf4bb7d3",
+          "repository": "grandchallenge/MATH-PROGRAMME"
+        },
+        {
+          "commit_sha": "7a97ac1131d5a80840d59c3f172499e92e29e182",
+          "repository": "grandchallenge/MATHCERT"
+        },
+        {
+          "commit_sha": "2ca2c18a7e37201bbf5958857ef0b267beb19811",
+          "repository": "grandchallenge/MATHFORGE"
+        },
+        {
+          "commit_sha": "71ea1b6a47bf4dab1051fa3508dbb16526fccedd",
+          "repository": "grandchallenge/MATHSOLVE"
+        },
+        {
+          "commit_sha": "70eee4547750ac8a8d5c4dbadb179caa1285851d",
+          "repository": "grandchallenge/MODULUS"
+        },
+        {
+          "commit_sha": "dd85f84cab5a168e251c72fc3f888af164677961",
+          "repository": "grandchallenge/QUANTUM-TECHNOLOGIES"
+        },
+        {
+          "commit_sha": "a90a0d1a8f3b762dd9025ed91fd9e55f8dfc10c1",
+          "repository": "grandchallenge/TROVE-CURATA"
+        },
+        {
+          "commit_sha": "4934497e00858680775a65f544192e61e1b1b3cb",
+          "repository": "grandchallenge/upload-pages-artifact"
+        }
+      ],
+      "exclusions": [],
+      "measurement_window": {
+        "end": "2026-11-08T21:09:02Z",
+        "start": "2026-11-01T21:09:02Z"
+      },
+      "status": "unknown",
+      "target": {
+        "operator": "eq",
+        "value": 0
+      },
+      "unit": "repositories",
+      "unknown": {
+        "deviation_id": "GCL-OPT-UNKNOWN-UNPROTECTED-DEFAULT-BRANCHES",
+        "reason": "one or more protection endpoints returned incomplete or forbidden evidence"
+      }
+    }
+  },
+  "record_id": "GCL-OPT-SCORECARD-2026-W45",
+  "schema_version": "1.0.0"
+}
