@@ -3,11 +3,11 @@
   "standard": "GCL-ENGINEERING-001",
   "version": "1.0.0",
   "standard_admission_commit": "2a3cfed9419ba9b74eeaaee70b9db8c3f47f3c9b",
-  "status": "partial_adoption_with_exact_protected_ci_gates",
+  "status": "effective_all_17_protected_adoptions_verified",
   "snapshot_utc": "2026-11-14",
   "cohort_size": 17,
-  "adopted_verified": 15,
-  "pending_protected_admission": 2,
+  "adopted_verified": 17,
+  "pending_protected_admission": 0,
   "repository_adoptions": [
     {
       "repository": "grandchallenge/.github",
@@ -124,18 +124,18 @@
     {
       "repository": "grandchallenge/lean-action",
       "pr_url": "https://github.com/grandchallenge/lean-action/pull/10",
-      "status": "checks_missing",
-      "protected_admission_commit": null,
+      "status": "effective",
+      "protected_admission_commit": "f58ea9134a76be187238e5458998cc0ffffe3f6c",
       "entrypoint": "AGENTS.md",
-      "blocker": "Two of three required status checks not produced; existing repository rule blocks merge"
+      "blocker": null
     },
     {
       "repository": "grandchallenge/upload-pages-artifact",
       "pr_url": "https://github.com/grandchallenge/upload-pages-artifact/pull/7",
-      "status": "checks_missing",
-      "protected_admission_commit": null,
+      "status": "effective",
+      "protected_admission_commit": "a0090f836daefa6db1d85472a854ce8531c661dc",
       "entrypoint": "AGENTS.md",
-      "blocker": "Two of three required status checks not produced; existing repository rule blocks merge"
+      "blocker": null
     },
     {
       "repository": "grandchallenge/CONTROL",
@@ -153,6 +153,6 @@
     "No branch protection, status checks, history, or reserved authority were bypassed.",
     "Do not infer organization-wide effective status before all repository adoption gates are satisfied.",
     "INTELLECT #140 and MATHCERT #362 obtained required independent approvals and merged under protection. Their pinned adoption sources were read back on main.",
-    "Provider forks #10 and #7 have auto-merge enabled, but no mandatory policy/security check runs exist for their PR heads. A lean-action PR synchronize test confirmed the missing GCL-conformance trigger."
+    "2026-11-14: CHAD authenticated GitHub readback found both provider GCL conformance workflows disabled_inactivity; both were re-enabled using existing GitHub Actions workflow control and PRs reopened at unchanged exact heads. Required policy/security and other checks passed at exact PR heads. Provider PRs merged through protected controls and protected AGENTS.md read back."
   ]
 }
