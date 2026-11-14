@@ -3,11 +3,11 @@
   "standard": "GCL-ENGINEERING-001",
   "version": "1.0.0",
   "standard_admission_commit": "2a3cfed9419ba9b74eeaaee70b9db8c3f47f3c9b",
-  "status": "partial_adoption_with_explicit_protected_gates",
+  "status": "partial_adoption_with_exact_protected_ci_gates",
   "snapshot_utc": "2026-11-14",
   "cohort_size": 17,
-  "adopted_verified": 13,
-  "pending_protected_admission": 4,
+  "adopted_verified": 15,
+  "pending_protected_admission": 2,
   "repository_adoptions": [
     {
       "repository": "grandchallenge/.github",
@@ -20,10 +20,10 @@
     {
       "repository": "grandchallenge/INTELLECT",
       "pr_url": "https://github.com/grandchallenge/INTELLECT/pull/140",
-      "status": "review_required",
-      "protected_admission_commit": null,
+      "status": "effective",
+      "protected_admission_commit": "1448234a8107de3234e5425e7cf7226a29d5230f",
       "entrypoint": "governance/GCL_ENGINEERING_001_ADOPTION.md",
-      "blocker": "One approving reviewer with write access required; jimsteeg requested"
+      "blocker": null
     },
     {
       "repository": "grandchallenge/gcl-standards",
@@ -60,10 +60,10 @@
     {
       "repository": "grandchallenge/MATHCERT",
       "pr_url": "https://github.com/grandchallenge/MATHCERT/pull/362",
-      "status": "review_required",
-      "protected_admission_commit": null,
+      "status": "effective",
+      "protected_admission_commit": "377db7961c99715d7dae3de718282ff50da4b48b",
       "entrypoint": "AGENTS.md",
-      "blocker": "Approval by someone other than last pusher required; jimsteeg requested"
+      "blocker": null
     },
     {
       "repository": "grandchallenge/AETHER",
@@ -151,6 +151,8 @@
     "INTELLECT historical AGENTS.md is crypto-bound to prior closed staffing manifest; candidate instead adopts through dedicated governance document and README.",
     "MATHCERT candidate uses mandatory platform/certification/* lane after first branch was rejected.",
     "No branch protection, status checks, history, or reserved authority were bypassed.",
-    "Do not infer organization-wide effective status before all repository adoption gates are satisfied."
+    "Do not infer organization-wide effective status before all repository adoption gates are satisfied.",
+    "INTELLECT #140 and MATHCERT #362 obtained required independent approvals and merged under protection. Their pinned adoption sources were read back on main.",
+    "Provider forks #10 and #7 have auto-merge enabled, but no mandatory policy/security check runs exist for their PR heads. A lean-action PR synchronize test confirmed the missing GCL-conformance trigger."
   ]
 }
