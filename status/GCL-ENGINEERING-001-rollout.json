@@ -1,0 +1,156 @@
+{
+  "schema_version": "1.0.0",
+  "standard": "GCL-ENGINEERING-001",
+  "version": "1.0.0",
+  "standard_admission_commit": "2a3cfed9419ba9b74eeaaee70b9db8c3f47f3c9b",
+  "status": "partial_adoption_with_explicit_protected_gates",
+  "snapshot_utc": "2026-11-14",
+  "cohort_size": 17,
+  "adopted_verified": 13,
+  "pending_protected_admission": 4,
+  "repository_adoptions": [
+    {
+      "repository": "grandchallenge/.github",
+      "pr_url": "https://github.com/grandchallenge/.github/pull/116",
+      "status": "effective",
+      "protected_admission_commit": "1670d2330220f0c8b9d1bf9c8c87dc3e03dc0880",
+      "entrypoint": "AGENTS.md",
+      "blocker": null
+    },
+    {
+      "repository": "grandchallenge/INTELLECT",
+      "pr_url": "https://github.com/grandchallenge/INTELLECT/pull/140",
+      "status": "review_required",
+      "protected_admission_commit": null,
+      "entrypoint": "governance/GCL_ENGINEERING_001_ADOPTION.md",
+      "blocker": "One approving reviewer with write access required; jimsteeg requested"
+    },
+    {
+      "repository": "grandchallenge/gcl-standards",
+      "pr_url": "https://github.com/grandchallenge/gcl-standards/pull/120",
+      "status": "effective",
+      "protected_admission_commit": "4ac82e19e79d10865b75d0c2ad89565cbd97ae0f",
+      "entrypoint": "AGENTS.md",
+      "blocker": null
+    },
+    {
+      "repository": "grandchallenge/MATH-PROGRAMME",
+      "pr_url": "https://github.com/grandchallenge/MATH-PROGRAMME/pull/3328",
+      "status": "effective",
+      "protected_admission_commit": "d11f1be9f937a20ea0fccbb5e76836495882f709",
+      "entrypoint": "AGENTS.md",
+      "blocker": null
+    },
+    {
+      "repository": "grandchallenge/MATHFORGE",
+      "pr_url": "https://github.com/grandchallenge/MATHFORGE/pull/551",
+      "status": "effective",
+      "protected_admission_commit": "3103587982533e917674d61552510384b26e217f",
+      "entrypoint": "AGENTS.md",
+      "blocker": null
+    },
+    {
+      "repository": "grandchallenge/MATHSOLVE",
+      "pr_url": "https://github.com/grandchallenge/MATHSOLVE/pull/1237",
+      "status": "effective",
+      "protected_admission_commit": "a0af41fad9ad58d3e333092586119b4c660da382",
+      "entrypoint": "AGENTS.md",
+      "blocker": null
+    },
+    {
+      "repository": "grandchallenge/MATHCERT",
+      "pr_url": "https://github.com/grandchallenge/MATHCERT/pull/362",
+      "status": "review_required",
+      "protected_admission_commit": null,
+      "entrypoint": "AGENTS.md",
+      "blocker": "Approval by someone other than last pusher required; jimsteeg requested"
+    },
+    {
+      "repository": "grandchallenge/AETHER",
+      "pr_url": "https://github.com/grandchallenge/AETHER/pull/160",
+      "status": "effective",
+      "protected_admission_commit": "310b26ac6b8e0b449a90dd1e76cba1ad1327f1e6",
+      "entrypoint": "AGENTS.md",
+      "blocker": null
+    },
+    {
+      "repository": "grandchallenge/TROVE-CURATA",
+      "pr_url": "https://github.com/grandchallenge/TROVE-CURATA/pull/8",
+      "status": "effective",
+      "protected_admission_commit": "48a69a70aab2a1614eb034817096d49cc0649b90",
+      "entrypoint": "AGENTS.md",
+      "blocker": null
+    },
+    {
+      "repository": "grandchallenge/BUTTERFLY",
+      "pr_url": "https://github.com/grandchallenge/BUTTERFLY/pull/19",
+      "status": "effective",
+      "protected_admission_commit": "32c1f10edaf18e30cf7ecc882be6963ebbe1ae74",
+      "entrypoint": "AGENTS.md",
+      "blocker": null
+    },
+    {
+      "repository": "grandchallenge/GLOSS",
+      "pr_url": "https://github.com/grandchallenge/GLOSS/pull/14",
+      "status": "effective",
+      "protected_admission_commit": "db794a24ed6044d7d44620063da3a9409413eb72",
+      "entrypoint": "AGENTS.md",
+      "blocker": null
+    },
+    {
+      "repository": "grandchallenge/MODULUS",
+      "pr_url": "https://github.com/grandchallenge/MODULUS/pull/34",
+      "status": "effective",
+      "protected_admission_commit": "e7f0db457266a8028688ee3b128a7af1dd540a7b",
+      "entrypoint": "AGENTS.md",
+      "blocker": null
+    },
+    {
+      "repository": "grandchallenge/QUANTUM-TECHNOLOGIES",
+      "pr_url": "https://github.com/grandchallenge/QUANTUM-TECHNOLOGIES/pull/127",
+      "status": "effective",
+      "protected_admission_commit": "8637d9b7966b58f26334beaaa9630be4f65489c1",
+      "entrypoint": "AGENTS.md",
+      "blocker": null
+    },
+    {
+      "repository": "grandchallenge/GCT-EXECUTIVE",
+      "pr_url": "https://github.com/grandchallenge/GCT-EXECUTIVE/pull/39",
+      "status": "effective",
+      "protected_admission_commit": "9e626068bedcd959e1219a2fda0c49e68577136d",
+      "entrypoint": "AGENTS.md",
+      "blocker": null
+    },
+    {
+      "repository": "grandchallenge/lean-action",
+      "pr_url": "https://github.com/grandchallenge/lean-action/pull/10",
+      "status": "checks_missing",
+      "protected_admission_commit": null,
+      "entrypoint": "AGENTS.md",
+      "blocker": "Two of three required status checks not produced; existing repository rule blocks merge"
+    },
+    {
+      "repository": "grandchallenge/upload-pages-artifact",
+      "pr_url": "https://github.com/grandchallenge/upload-pages-artifact/pull/7",
+      "status": "checks_missing",
+      "protected_admission_commit": null,
+      "entrypoint": "AGENTS.md",
+      "blocker": "Two of three required status checks not produced; existing repository rule blocks merge"
+    },
+    {
+      "repository": "grandchallenge/CONTROL",
+      "pr_url": "https://github.com/grandchallenge/CONTROL/pull/85",
+      "status": "effective",
+      "protected_admission_commit": "a2cf610493b2798b88234ba3cf2cbf681b82860a",
+      "entrypoint": "AGENTS.md",
+      "blocker": null
+    }
+  ],
+  "authority_notes": [
+    "A merged PR alone is not accepted as repository adoption: protected main entrypoint was read back in 13 effective repositories.",
+    "INTELLECT historical AGENTS.md is crypto-bound to prior closed staffing manifest; candidate instead adopts through dedicated governance document and README.",
+    "MATHCERT candidate uses mandatory platform/certification/* lane after first branch was rejected.",
+    "No branch protection, status checks, history, or reserved authority were bypassed.",
+    "Do not infer organization-wide effective status before all repository adoption gates are satisfied."
+  ]
+}
